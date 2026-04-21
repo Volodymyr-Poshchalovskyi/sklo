@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Fonts */
+  --font-sans: var(--font-display);
+  --font-mono: var(--font-mono-custom);
+
+  /* Brand colors — темна 3D-студія */
+  --color-bg:          #0d0d0f;
+  --color-surface:     #141418;
+  --color-border:      rgba(255,255,255,0.08);
+  --color-text:        #e8e6e1;
+  --color-text-muted:  #6b6a68;
+  --color-accent:      #c8ff00;      /* неоново-жовтий акцент */
+  --color-accent-hover:#b0e000;
+
+  /* Spacing */
+  --spacing-section: clamp(4rem, 8vw, 8rem);
+}
+
+:root {
+  --background: #0d0d0f;
+  --foreground: #e8e6e1;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+}

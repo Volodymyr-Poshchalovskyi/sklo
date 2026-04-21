@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "work": "Arbeiten",
+    "about": "Über uns",
+    "services": "Leistungen",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "title": "Wir gestalten 3D-Erlebnisse",
+    "subtitle": "Ein Studio für 3D-Visualisierung, Motion & Produktrendering.",
+    "cta": "Unsere Arbeiten"
+  }
+}

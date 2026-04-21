@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "We craft 3D experiences",
+    "subtitle": "A studio specializing in 3D visualization, motion & product rendering.",
+    "cta": "See our work"
+  }
+}
