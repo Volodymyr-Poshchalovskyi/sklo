@@ -6,15 +6,33 @@ import { useState, useEffect, useRef } from "react";
 // Компонент однієї nav-кнопки з 3D-обертанням букв
 function NavLink({ href, label }) {
   const lettersRef = useRef([]);
+  const timeoutsRef = useRef([]);
 
   const handleMouseEnter = () => {
+    // Очистити попередні таймери
+    timeoutsRef.current.forEach(clearTimeout);
+    timeoutsRef.current = [];
+
     lettersRef.current.forEach((el, i) => {
       if (!el) return;
-      setTimeout(() => {
-        el.style.animation = "none";
-        el.offsetHeight; // reflow
+
+      // Спочатку скинути
+      el.style.animation = "none";
+      el.style.transform = "rotateY(0deg)";
+
+      const t = setTimeout(() => {
         el.style.animation = "spinLetter 0.5s cubic-bezier(0.4,0,0.2,1) forwards";
+
+        // Після завершення — прибрати animation щоб наступний hover спрацював
+        const cleanup = setTimeout(() => {
+          el.style.animation = "none";
+          el.style.transform = "rotateY(0deg)";
+        }, i * 35 + 520); // 500ms анімація + трохи запасу
+
+        timeoutsRef.current.push(cleanup);
       }, i * 35);
+
+      timeoutsRef.current.push(t);
     });
   };
 
@@ -22,8 +40,8 @@ function NavLink({ href, label }) {
     <a
       href={href}
       onMouseEnter={handleMouseEnter}
-      className="relative px-4 py-2 text-sm text-white/60 hover:text-white transition-colors duration-300 flex items-center gap-0"
-      style={{ perspective: "400px" }}
+      className="relative px-4 py-2 text-sm text-white/60 hover:text-white transition-colors duration-300 flex items-center"
+      style={{ perspective: "600px" }}
     >
       {label.split("").map((char, i) => (
         <span
@@ -38,12 +56,10 @@ function NavLink({ href, label }) {
           {char === " " ? "\u00A0" : char}
         </span>
       ))}
-      {/* Підкреслення */}
-      <span className="absolute bottom-1 left-4 right-4 h-px bg-white/40 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
 
       <style>{`
         @keyframes spinLetter {
-          0%   { transform: rotateY(0deg); }
+          0%   { transform: rotateY(0deg); opacity: 1; }
           50%  { transform: rotateY(180deg); opacity: 0.4; }
           100% { transform: rotateY(360deg); opacity: 1; }
         }
