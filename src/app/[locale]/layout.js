@@ -23,7 +23,7 @@ export async function generateMetadata({ params }) {
     description: isDe
       ? "SKLO ist ein 3D-Visualisierungsstudio für Architekten, Entwickler und Immobilien. Hochwertige Renderings, Motion Design und Produktvisualisierung."
       : "SKLO is a 3D visualization studio for architects, developers and real estate. High-quality renderings, motion design and product visualization.",
-    metadataBase: new URL("https://sklo.studio"), // ← замінити на свій домен
+    metadataBase: new URL("https://sklo-iota.vercel.app"), // ← замінити на свій домен
     openGraph: {
       title: isDe
         ? "SKLO Studio — 3D Visualisierung"
@@ -31,7 +31,7 @@ export async function generateMetadata({ params }) {
       description: isDe
         ? "3D-Visualisierungsstudio für Architekten, Entwickler & Immobilien."
         : "3D visualization studio for architects, developers & real estate.",
-      url: `https://sklo.studio/${locale}`,
+      url: `https://sklo-iota.vercel.app/${locale}`,
       siteName: "SKLO Studio",
       images: [
         {
