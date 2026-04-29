@@ -1,8 +1,7 @@
 {
   "nav": {
-    "work": "Arbeiten",
-    "about": "Über uns",
     "services": "Leistungen",
+    "about": "Über uns",
     "contact": "Kontakt"
   },
   "hero": {

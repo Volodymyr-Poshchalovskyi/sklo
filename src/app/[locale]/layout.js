@@ -1,5 +1,8 @@
 import { Inter, Space_Grotesk } from "next/font/google";
+import { cookies } from "next/headers";
 import "../globals.css";
+import Footer from "@/components/Footer";
+import ClientWrapper from "@/components/ClientWrapper";
 
 const inter = Inter({ variable: "--font-sans", subsets: ["latin"] });
 const spaceGrotesk = Space_Grotesk({
@@ -18,16 +21,16 @@ export async function generateMetadata({ params }) {
 
   return {
     title: isDe
-      ? "SKLO Studio — 3D Visualisierung für Architekten & Entwickler"
-      : "SKLO Studio — 3D Visualization for Architects & Developers",
+      ? "SKLO Studio | Where Vision Meets Reality | Stunnig 3D Visualizations"
+      : "SKLO Studio | Where Vision Meets Reality | Stunnig 3D Visualizations",
     description: isDe
       ? "SKLO ist ein 3D-Visualisierungsstudio für Architekten, Entwickler und Immobilien. Hochwertige Renderings, Motion Design und Produktvisualisierung."
       : "SKLO is a 3D visualization studio for architects, developers and real estate. High-quality renderings, motion design and product visualization.",
-    metadataBase: new URL("https://sklo-iota.vercel.app"), // ← замінити на свій домен
+    metadataBase: new URL("https://sklo-iota.vercel.app"),
     openGraph: {
       title: isDe
-        ? "SKLO Studio — 3D Visualisierung"
-        : "SKLO Studio — 3D Visualization",
+        ? "SKLO Studio | Where Vision Meets Reality | Stunnig 3D Visualizations"
+        : "SKLO Studio | Where Vision Meets Reality | Stunnig 3D Visualizations",
       description: isDe
         ? "3D-Visualisierungsstudio für Architekten, Entwickler & Immobilien."
         : "3D visualization studio for architects, developers & real estate.",
@@ -64,13 +67,31 @@ export async function generateMetadata({ params }) {
 
 export default async function LocaleLayout({ children, params }) {
   const { locale } = await params;
+  let t;
+  
+  try {
+    t = (await import(`@/locales/${locale}.json`)).default;
+  } catch (e) {
+    t = (await import(`@/locales/en.json`)).default;
+  }
+
+  const cookieStore = await cookies();
+  const lastLoad = cookieStore.get("sklo_last_load")?.value;
+  const today = new Date().toDateString();
+  const initialShowLoader = lastLoad !== today;
+
   return (
     <html
       lang={locale}
       className={`${inter.variable} ${spaceGrotesk.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-[--color-bg] text-[--color-text]">
-        {children}
+        <ClientWrapper locale={locale} t={t} initialShowLoader={initialShowLoader}>
+          <div className="flex-1">
+            {children}
+          </div>
+        </ClientWrapper>
+        <Footer locale={locale} />
       </body>
     </html>
   );
