@@ -34,7 +34,7 @@ function NavLink({ href, label, isActive }) {
     <Link
       href={href}
       onMouseEnter={handleMouseEnter}
-      className="relative px-4 py-1.5 text-sm transition-all duration-300 flex items-center rounded-full"
+      className="relative px-4 py-2 text-base transition-all duration-300 flex items-center rounded-full"
       style={{
         perspective: "600px",
         background: "transparent",
@@ -221,7 +221,7 @@ export default function Header({ t, locale, visible }) {
           
           <Link
             href={`/${locale}/contact`}
-            className={`ml-4 text-xs font-medium px-5 py-2 rounded-full bg-white text-black transition-all duration-500 hover:bg-white/80 ${
+            className={`ml-4 text-sm font-medium px-6 py-2.5 rounded-full bg-white text-black transition-all duration-500 hover:bg-white/80 ${
               scrolled ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 pointer-events-none"
             }`}
           >
