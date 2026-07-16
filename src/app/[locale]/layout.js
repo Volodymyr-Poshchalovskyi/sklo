@@ -1,4 +1,4 @@
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk, Cormorant_Garamond } from "next/font/google";
 import { cookies } from "next/headers";
 import "../globals.css";
 import Footer from "@/components/Footer";
@@ -9,6 +9,12 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+const cormorant = Cormorant_Garamond({
+  variable: "--font-script",
+  subsets: ["latin"],
+  weight: ["300"],
+  style: ["italic"],
 });
 
 export async function generateStaticParams() {
@@ -83,7 +89,7 @@ export default async function LocaleLayout({ children, params }) {
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${spaceGrotesk.variable}`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${cormorant.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-[--color-bg] text-[--color-text]">
         <ClientWrapper locale={locale} t={t} initialShowLoader={initialShowLoader}>

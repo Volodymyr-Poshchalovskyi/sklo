@@ -8,6 +8,14 @@ export default function HeroSection({ t, locale }) {
   const headRef = useRef(null);
   const btnsRef = useRef(null);
 
+  // SKLO letter refs
+  const sRef = useRef(null);
+  const kRef = useRef(null);
+  const lRef = useRef(null);
+  const oRef = useRef(null);
+  const studioRefs = useRef([]);
+
+  // Heading + buttons fade-in
   useEffect(() => {
     if (!ready) return;
     const els = [headRef.current, btnsRef.current];
@@ -17,6 +25,48 @@ export default function HeroSection({ t, locale }) {
       el.style.opacity = "1";
       el.style.transform = "translateY(0)";
     });
+  }, [ready]);
+
+  // SKLO spring animation
+  useEffect(() => {
+    if (!ready) return;
+
+    const DUR = 750;  // each letter duration ms
+    const GAP = 390;  // ms between letter starts (overlap = DUR - GAP)
+
+    const skloConfig = [
+      { ref: sRef, anim: "skloTop" },
+      { ref: kRef, anim: "skloRight" },
+      { ref: lRef, anim: "skloLeft" },
+      { ref: oRef, anim: "skloBottom" },
+    ];
+
+    const timeouts = [];
+
+    skloConfig.forEach(({ ref, anim }, i) => {
+      const t = setTimeout(() => {
+        if (ref.current) {
+          ref.current.style.animation = `${anim} ${DUR}ms ease-out both`;
+        }
+      }, i * GAP);
+      timeouts.push(t);
+    });
+
+    // studio starts after all SKLO finishes
+    const skloEnd = (skloConfig.length - 1) * GAP + DUR;
+    const STUDIO_DUR = 480;
+    const STUDIO_GAP = 170; // ms between each studio letter
+
+    studioRefs.current.forEach((el, i) => {
+      const t = setTimeout(() => {
+        if (el) {
+          el.style.animation = `skloBottom ${STUDIO_DUR}ms ease-out both`;
+        }
+      }, skloEnd + 100 + i * STUDIO_GAP);
+      timeouts.push(t);
+    });
+
+    return () => timeouts.forEach(clearTimeout);
   }, [ready]);
 
   const hidden = { opacity: 0, transform: "translateY(28px)" };
@@ -84,6 +134,99 @@ export default function HeroSection({ t, locale }) {
         </div>
       </div>
 
+      {/* SKLO studio — right side decorative text */}
+      <div
+        style={{
+          position: "absolute",
+          right: "22%",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 10,
+          overflow: "hidden",
+          userSelect: "none",
+        }}
+      >
+        {/* SK row */}
+        <div style={{ display: "flex", lineHeight: 0.95 }}>
+          <span
+            ref={sRef}
+            style={{
+              fontFamily: "var(--font-script)",
+              fontStyle: "italic",
+              fontWeight: 300,
+              fontSize: "clamp(7rem, 13vw, 13rem)",
+              color: "rgba(255,255,255,0.9)",
+              letterSpacing: "-0.02em",
+              display: "inline-block",
+              opacity: 0,
+            }}
+          >S</span>
+          <span
+            ref={kRef}
+            style={{
+              fontFamily: "var(--font-script)",
+              fontStyle: "italic",
+              fontWeight: 300,
+              fontSize: "clamp(7rem, 13vw, 13rem)",
+              color: "rgba(255,255,255,0.9)",
+              letterSpacing: "-0.02em",
+              display: "inline-block",
+              opacity: 0,
+            }}
+          >K</span>
+        </div>
+
+        {/* LO row */}
+        <div style={{ display: "flex", lineHeight: 0.95 }}>
+          <span
+            ref={lRef}
+            style={{
+              fontFamily: "var(--font-script)",
+              fontStyle: "italic",
+              fontWeight: 300,
+              fontSize: "clamp(7rem, 13vw, 13rem)",
+              color: "rgba(255,255,255,0.9)",
+              letterSpacing: "-0.02em",
+              display: "inline-block",
+              opacity: 0,
+            }}
+          >L</span>
+          <span
+            ref={oRef}
+            style={{
+              fontFamily: "var(--font-script)",
+              fontStyle: "italic",
+              fontWeight: 300,
+              fontSize: "clamp(7rem, 13vw, 13rem)",
+              color: "rgba(255,255,255,0.9)",
+              letterSpacing: "-0.02em",
+              display: "inline-block",
+              opacity: 0,
+            }}
+          >O</span>
+        </div>
+
+        {/* studio row — each letter animated individually */}
+        <div style={{ display: "flex", marginTop: "0.3em" }}>
+          {"studio".split("").map((char, i) => (
+            <span
+              key={i}
+              ref={el => (studioRefs.current[i] = el)}
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 400,
+                fontSize: "clamp(1.5rem, 2.8vw, 2.8rem)",
+                color: "rgba(255,255,255,0.9)",
+                letterSpacing: "0.55em",
+                textTransform: "uppercase",
+                display: "inline-block",
+                opacity: 0,
+              }}
+            >{char}</span>
+          ))}
+        </div>
+      </div>
+
       <style>{`
         .steel-shimmer {
           position: relative;
@@ -118,6 +261,26 @@ export default function HeroSection({ t, locale }) {
         @keyframes steelShimmer {
           0%   { background-position: 250% 0; }
           100% { background-position: -250% 0; }
+        }
+        @keyframes skloTop {
+          0%   { transform: translateY(-130%); opacity: 0; }
+          40%  { opacity: 1; }
+          100% { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes skloRight {
+          0%   { transform: translateX(130%); opacity: 0; }
+          40%  { opacity: 1; }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes skloLeft {
+          0%   { transform: translateX(-130%); opacity: 0; }
+          40%  { opacity: 1; }
+          100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes skloBottom {
+          0%   { transform: translateY(130%); opacity: 0; }
+          40%  { opacity: 1; }
+          100% { transform: translateY(0); opacity: 1; }
         }
       `}</style>
     </section>
