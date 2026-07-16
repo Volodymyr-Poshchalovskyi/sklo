@@ -1,17 +1,16 @@
 "use client";
 import { useEffect, useRef, useContext } from "react";
 import { LoaderContext } from "@/context/LoaderContext";
+import Link from "next/link";
 
-export default function HeroSection({ t }) {
+export default function HeroSection({ t, locale }) {
   const ready = useContext(LoaderContext);
-  const tagRef  = useRef(null);
   const headRef = useRef(null);
-  const subRef  = useRef(null);
   const btnsRef = useRef(null);
 
   useEffect(() => {
     if (!ready) return;
-    const els = [tagRef.current, headRef.current, subRef.current, btnsRef.current];
+    const els = [headRef.current, btnsRef.current];
     els.forEach((el, i) => {
       if (!el) return;
       el.style.transition = `opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 150}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 150}ms`;
@@ -32,38 +31,23 @@ export default function HeroSection({ t }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 pt-24 pb-16">
-        <div className="flex flex-col items-start justify-center max-w-2xl">
-          <p
-            ref={tagRef}
-            style={hidden}
-            className="text-xs tracking-[0.25em] uppercase text-[--color-accent] mb-5 font-medium"
-          >
-            3D Studio
-          </p>
-
+        <div className="flex flex-col items-start justify-center max-w-4xl">
           <h1
             ref={headRef}
             style={hidden}
-            className="font-bold leading-[1.05] tracking-tight text-white mb-6"
+            className="font-bold leading-[1.05] tracking-tight text-white mb-10"
           >
-            <span className="block text-5xl md:text-6xl xl:text-7xl">Visualization</span>
-            <span className="block text-5xl md:text-6xl xl:text-7xl text-white/90">services</span>
+            <span className="block text-3xl sm:text-5xl md:text-6xl xl:text-7xl sm:whitespace-nowrap">
+              Visualization <span className="text-white/90 font-bold">services</span>
+            </span>
             <span className="block text-xl md:text-2xl font-normal text-white/55 tracking-normal leading-snug mt-3">
               for architects, developers<br />& real estate
             </span>
           </h1>
 
-          <p
-            ref={subRef}
-            style={hidden}
-            className="text-sm text-white/50 max-w-sm mb-10 leading-relaxed"
-          >
-            {t.hero.subtitle}
-          </p>
-
           <div ref={btnsRef} style={hidden} className="flex flex-wrap gap-4">
-            <a
-              href="/services"
+            <Link
+              href={`/${locale}/services`}
               className="steel-shimmer group inline-flex items-center gap-2 text-white font-semibold text-sm px-7 py-3.5 rounded-full backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:scale-[1.03]"
             >
               {t.hero.cta}
@@ -73,10 +57,10 @@ export default function HeroSection({ t }) {
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </a>
+            </Link>
 
-            <a
-              href="/contact"
+            <Link
+              href={`/${locale}/contact`}
               className="group inline-flex items-center gap-2 border border-white/30 bg-white/5 text-white font-medium text-sm px-7 py-3.5 rounded-full backdrop-blur-sm transition-all duration-300 hover:bg-white/12 hover:border-white/60 hover:scale-[1.03]"
             >
               {t.hero.contact}
@@ -86,7 +70,7 @@ export default function HeroSection({ t }) {
               >
                 <path d="M7 17L17 7M7 7h10v10" />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

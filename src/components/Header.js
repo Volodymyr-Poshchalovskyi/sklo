@@ -203,9 +203,6 @@ export default function Header({ t, locale, visible }) {
           <div className="relative w-9 h-9 overflow-hidden rounded-md transition-all duration-300 group-hover:scale-110 group-hover:rounded-lg">
             <Image src="/LogoHeader.svg" alt="SKLO Logo" fill className="object-cover" priority />
           </div>
-          <span className="text-base font-semibold tracking-widest uppercase text-white/90 group-hover:text-white transition-colors duration-300">
-            SKLO
-          </span>
         </Link>
 
         <div className="hidden md:flex items-center gap-1">

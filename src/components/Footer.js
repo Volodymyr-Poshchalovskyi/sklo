@@ -80,6 +80,12 @@ export default function Footer({ locale }) {
             <Link href={`/${locale}/about`} className="text-sm text-white/70 hover:text-white transition-colors">About us</Link>
             <Link href={`/${locale}/contact`} className="text-sm text-white/70 hover:text-white transition-colors">Contact</Link>
             <Link href={`/${locale}/services`} className="text-sm text-white/70 hover:text-white transition-colors">Services</Link>
+            <Link 
+              href={`/${locale}/gallery`} 
+              className="inline-block bg-[#e6e6e6] text-black text-xs font-semibold px-4 py-2 hover:bg-white transition-colors mt-2 text-center w-fit"
+            >
+              Portfolio
+            </Link>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -88,12 +94,6 @@ export default function Footer({ locale }) {
             <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">Instagram</a>
             <a href="#" className="text-sm text-white/70 hover:text-white transition-colors">LinkedIn</a>
           </div>
-        </div>
-
-        <div className="w-full md:w-auto">
-          <Link href={`/${locale}/contact`} className="block w-full md:w-[280px] bg-[#e6e6e6] text-black text-center py-6 font-medium hover:bg-white transition-colors">
-            Contact us
-          </Link>
         </div>
       </div>
       
