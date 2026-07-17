@@ -9,5 +9,8 @@
     "subtitle": "A studio specializing in 3D visualization, motion & product rendering.",
     "cta": "Services",
     "contact": "Contact Us"
+  },
+  "whoWeAre": {
+    "viewAll": "View All Services"
   }
 }

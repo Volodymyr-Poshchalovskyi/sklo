@@ -9,5 +9,8 @@
     "subtitle": "Ein Studio für 3D-Visualisierung, Motion & Produktrendering.",
     "cta": "Leistungen",
     "contact": "Kontakt aufnehmen"
+  },
+  "whoWeAre": {
+    "viewAll": "Alle Leistungen"
   }
 }

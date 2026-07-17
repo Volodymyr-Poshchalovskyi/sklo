@@ -7,6 +7,35 @@ export default function HeroSection({ t, locale }) {
   const ready = useContext(LoaderContext);
   const headRef = useRef(null);
   const btnsRef = useRef(null);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          videoEl.play().catch((err) => {
+            // Ignore play interruption/autoplay restrictions
+          });
+        } else {
+          videoEl.pause();
+        }
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.01,
+      }
+    );
+
+    observer.observe(videoEl);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
 
 
@@ -29,6 +58,7 @@ export default function HeroSection({ t, locale }) {
   return (
     <section className="relative min-h-screen flex items-end snap-start">
       <video
+        ref={videoRef}
         autoPlay
         loop
         muted
