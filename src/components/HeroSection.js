@@ -27,7 +27,7 @@ export default function HeroSection({ t, locale }) {
   const hidden = { opacity: 0, transform: "translateY(28px)" };
 
   return (
-    <section className="relative min-h-screen flex items-end">
+    <section className="relative min-h-screen flex items-end snap-start">
       <video
         autoPlay
         loop

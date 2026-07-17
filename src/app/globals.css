@@ -28,3 +28,8 @@ body {
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
 }
+
+html {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 64px; /* offset for collapsed fixed header */
+}
