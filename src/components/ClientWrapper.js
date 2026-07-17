@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Loader from "@/components/Loader";
-import AnnouncementBar from "@/components/AnnouncementBar";
 import { LoaderContext } from "@/context/LoaderContext";
 
 export default function ClientWrapper({ children, locale, t, initialShowLoader }) {
@@ -20,7 +19,6 @@ export default function ClientWrapper({ children, locale, t, initialShowLoader }
     <LoaderContext.Provider value={ready}>
       {showLoader && !ready && <Loader onComplete={() => setReady(true)} />}
       <Header t={t} locale={locale} visible={ready} />
-      <AnnouncementBar />
       {children}
     </LoaderContext.Provider>
   );
