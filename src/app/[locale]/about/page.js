@@ -25,7 +25,7 @@ export default async function AboutPage({ params }) {
               <h2 className="text-sm font-bold uppercase tracking-widest mb-1.5">
                 {member.name}
               </h2>
-              <p className="text-[10px] text-[#c8ff00] uppercase tracking-widest font-medium">
+              <p className="text-[10px] text-white/50 uppercase tracking-widest font-medium">
                 {member.role}
               </p>
             </div>

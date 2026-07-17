@@ -27,7 +27,7 @@ export default function HeroSection({ t, locale }) {
   const hidden = { opacity: 0, transform: "translateY(28px)" };
 
   return (
-    <section className="relative min-h-screen flex items-center">
+    <section className="relative min-h-screen flex items-end">
       <video
         autoPlay
         loop
@@ -41,7 +41,7 @@ export default function HeroSection({ t, locale }) {
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-      <div className="relative z-10 w-full max-w-7xl px-10 pt-24 pb-16">
+      <div className="relative z-10 w-full max-w-7xl px-10 pt-24 pb-24">
         <div className="flex flex-col items-start justify-center max-w-4xl">
           <h1
             ref={headRef}
@@ -51,18 +51,18 @@ export default function HeroSection({ t, locale }) {
             <span className="block text-4xl sm:text-6xl md:text-7xl xl:text-8xl sm:whitespace-nowrap">
               Visualization <span className="text-white/90 font-bold">services</span>
             </span>
-            <span className="block text-2xl md:text-3xl font-normal text-white/55 tracking-normal leading-snug mt-4">
-              for architects, developers<br />& real estate
+            <span className="block text-sm sm:text-base font-medium text-white/40 tracking-[0.2em] uppercase mt-5">
+              for architects, developers & real estate
             </span>
           </h1>
 
           <div ref={btnsRef} style={hidden} className="flex flex-wrap gap-4">
             <Link
               href={`/${locale}/services`}
-              className="group inline-flex items-center gap-2 font-semibold text-base px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03]"
-              style={{ background: "#ffffff", color: "#000000" }}
-              onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.92)")}
-              onMouseLeave={e => (e.currentTarget.style.background = "#ffffff")}
+              className="black-shimmer group inline-flex items-center gap-2 font-semibold text-base px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03]"
+              style={{ background: "rgba(255, 255, 255, 0.12)", color: "#ffffff", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
+              onMouseEnter={e => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.22)")}
+              onMouseLeave={e => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.12)")}
             >
               {t.hero.cta}
               <svg
@@ -89,9 +89,40 @@ export default function HeroSection({ t, locale }) {
         </div>
       </div>
 
-
-
-
+      <style>{`
+        .black-shimmer {
+          position: relative;
+        }
+        .black-shimmer::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 9999px;
+          padding: 2.5px;
+          background: linear-gradient(
+            90deg,
+            #000000 0%,
+            #000000 30%,
+            #888888 50%,
+            #000000 70%,
+            #000000 100%
+          );
+          background-size: 200% 100%;
+          -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+          mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          animation: blackShimmer 3.2s ease-in-out infinite;
+        }
+        @keyframes blackShimmer {
+          0%   { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
+        }
+      `}</style>
     </section>
   );
 }
