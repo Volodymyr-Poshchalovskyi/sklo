@@ -66,10 +66,8 @@ export default function Footer({ locale }) {
               <div className="flex justify-end pt-4">
                 <button 
                   type="submit" 
-                  className="black-shimmer group inline-flex items-center gap-2 font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer"
-                  style={{ background: "rgba(255, 255, 255, 0.12)", color: "#ffffff", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.22)")}
-                  onMouseLeave={e => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.12)")}
+                  className="footer-submit-btn black-shimmer group inline-flex items-center gap-2 font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer border border-white/10"
+                  style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
                 >
                   Send
                   <svg

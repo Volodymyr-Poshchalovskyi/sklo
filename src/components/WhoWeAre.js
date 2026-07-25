@@ -473,24 +473,85 @@ export default function WhoWeAre({ locale, t }) {
 
       <section
         ref={whoSectionRef}
-        className="w-full min-h-screen bg-[#0d0d0f] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 border-t border-white/10 snap-start flex flex-col justify-center"
+        className="w-full min-h-screen bg-[#0d0d0f] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 border-t border-white/10 snap-start flex flex-col justify-center overflow-hidden"
       >
-        <div className="w-full flex flex-col gap-12 md:gap-16">
-          <div className="flex flex-col lg:flex-row justify-between items-start gap-8">
-            <h2
-              className={`title-3d ${whoInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase shrink-0 lg:w-1/3`}
-            >
-              WHO WE ARE
-            </h2>
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
             
-            <div className="flex flex-col gap-8 text-lg sm:text-xl md:text-2xl text-white/80 leading-relaxed lg:w-2/3 max-w-4xl font-light">
-              <p>
+            {/* Left Column: Title and Abstract CAD/Glass Composition */}
+            <div className="w-full lg:w-[45%] flex flex-col gap-6 items-start">
+              <span className="text-[10px] font-mono tracking-[0.25em] text-[--color-accent] uppercase">About SKLO Studio</span>
+              <h2
+                className={`title-3d ${whoInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase mb-4`}
+              >
+                WHO WE ARE
+              </h2>
+              
+              {/* Architectural CAD Blueprint & Glass Composition */}
+              <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-square max-w-[420px] mx-auto lg:mx-0 mt-4 select-none">
+                {/* Glowing background spot */}
+                <div className="absolute top-1/4 left-1/4 w-48 h-48 rounded-full bg-[--color-accent]/10 dark:bg-[--color-accent]/5 blur-[70px] animate-pulse duration-[8s] pointer-events-none" />
+                
+                {/* Abstract architectural grid (drawing lines) */}
+                <div className="absolute inset-0 opacity-15 dark:opacity-10 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:20px_20px] rounded-3xl border border-white/5" 
+                     style={{ maskImage: "radial-gradient(ellipse at center, black, transparent 70%)" }} />
+
+                {/* Layer 1: Rotating wireframe circle/grid */}
+                <div className="absolute top-[10%] left-[10%] w-[80%] h-[80%] border border-white/10 dark:border-white/5 rounded-full animate-[spin_40s_linear_infinite]" />
+                <div className="absolute top-[15%] left-[15%] w-[70%] h-[70%] border border-dashed border-white/10 dark:border-white/5 rounded-full animate-[spin_25s_linear_infinite_reverse]" />
+
+                {/* Layer 2: Main Glassmorphic Pane */}
+                <div className="absolute top-1/4 left-[10%] w-[68%] h-[52%] bg-white/[0.03] dark:bg-white/[0.01] backdrop-blur-[12px] border border-white/10 dark:border-white/5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col justify-between p-6 transform -rotate-3 transition-transform duration-500 hover:rotate-0 hover:scale-[1.02] group">
+                  {/* Architectural crosshair decor */}
+                  <div className="absolute -top-1.5 -left-1.5 w-3.5 h-3.5 flex items-center justify-center">
+                    <div className="w-full h-[1px] bg-[--color-accent]/40 absolute" />
+                    <div className="h-full w-[1px] bg-[--color-accent]/40 absolute" />
+                  </div>
+                  <div className="absolute -bottom-1.5 -right-1.5 w-3.5 h-3.5 flex items-center justify-center">
+                    <div className="w-full h-[1px] bg-[--color-accent]/40 absolute" />
+                    <div className="h-full w-[1px] bg-[--color-accent]/40 absolute" />
+                  </div>
+
+                  <div className="flex justify-between items-start">
+                    <span className="text-[10px] font-mono tracking-widest text-white/40 uppercase">Est. 2020</span>
+                    <div className="w-2 h-2 rounded-full bg-[--color-accent] animate-ping" />
+                  </div>
+                  
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[11px] font-mono tracking-wider text-[--color-accent]">SKLO STUDIO</span>
+                    <span className="text-xl font-bold tracking-wide text-white uppercase">PRECISION</span>
+                  </div>
+                </div>
+
+                {/* Layer 3: Floating Foreground Glass Card */}
+                <div className="absolute bottom-[12%] right-[8%] w-[52%] h-[38%] bg-white/[0.05] dark:bg-white/[0.02] backdrop-blur-[8px] border border-white/15 dark:border-white/10 rounded-2xl shadow-[0_15px_35px_rgba(0,0,0,0.2)] flex flex-col justify-between p-5 transform rotate-6 transition-transform duration-500 hover:rotate-2 hover:scale-[1.03]">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-white/65" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-white/45" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-white/25" />
+                  </div>
+                  
+                  <div className="flex flex-col">
+                    <span className="text-2xl font-black font-mono text-transparent bg-clip-text bg-gradient-to-r from-text via-text/80 to-[--color-accent] leading-none">3D</span>
+                    <span className="text-[9px] font-mono tracking-widest text-white/40 uppercase mt-1">Visualization</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Right Column: Descriptions inside a premium Glassmorphic block */}
+            <div className="w-full lg:w-[50%] flex flex-col gap-8 text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl bg-white/[0.02] border border-white/5 p-8 sm:p-10 rounded-3xl backdrop-blur-sm relative overflow-hidden group hover:border-[--color-accent]/20 transition-all duration-500 shadow-xl">
+              {/* Subtle background glow on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[--color-accent]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+              
+              <p className="font-light">
                 We create stunning visualizations rooted in our deep understanding of architecture and interior design. Our professional background gives us a unique perspective, allowing us to merge creative vision with technical precision. We believe in a hands-on approach and dedicate ourselves to every project from start to finish. The result is high-quality renderings and animations that showcase a project&apos;s beauty and purpose.
               </p>
-              <p className="text-white/60">
+              <p className="text-white/60 font-light">
                 We help architects, designers, and developers bring their visions to life. From a single image to a complete animation, our goal is to produce work that is not only effective but also inspiring and unforgettable.
               </p>
             </div>
+            
           </div>
         </div>
       </section>
@@ -537,32 +598,26 @@ export default function WhoWeAre({ locale, t }) {
         .no-scrollbar::-webkit-scrollbar {
           display: none;
         }
-        .title-3d {
-          color: #ffffff;
-          display: inline-block;
-          cursor: default;
-          will-change: transform, text-shadow;
-        }
-        .title-3d.animate-pop-3d {
-          animation: pop3D 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes pop3D {
-          0% {
-            transform: translate(0, 0);
-            text-shadow: 0 0 0 transparent;
-          }
-          100% {
-            transform: translate(-5px, -5px);
-            text-shadow: 
-              1px 1px 0px #d4d4d8,
-              2px 2px 0px #d4d4d8,
-              3px 3px 0px #d4d4d8,
-              4px 4px 0px #d4d4d8,
-              5px 5px 0px #d4d4d8,
-              6px 6px 0px #d4d4d8,
-              7px 7px 15px rgba(255, 255, 255, 0.3);
-          }
-        }
+        @keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(12px, -18px) rotate(15deg); }
+}
+@keyframes float-slow-alt {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-15px, 14px) rotate(-12deg); }
+}
+@keyframes float-dot {
+  0%, 100% { transform: translate(0, 0); opacity: 0.4; }
+  50% { transform: translate(-10px, -14px); opacity: 0.9; }
+}
+@keyframes float-dot-alt {
+  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
+  50% { transform: translate(10px, 10px); opacity: 0.7; }
+}
+.animate-float-slow { animation: float-slow 10s ease-in-out infinite; }
+.animate-float-slow-alt { animation: float-slow-alt 12s ease-in-out infinite; }
+.animate-float-dot { animation: float-dot 6s ease-in-out infinite; }
+.animate-float-dot-alt { animation: float-dot-alt 7s ease-in-out infinite; }
       `}</style>
       </section>
     </>

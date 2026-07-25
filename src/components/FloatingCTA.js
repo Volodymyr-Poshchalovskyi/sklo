@@ -13,7 +13,7 @@ export default function FloatingCTA({ locale }) {
   useEffect(() => {
     if (typeof sessionStorage !== "undefined" && sessionStorage.getItem(SESSION_KEY)) return;
 
-    const handleScroll = () => {
+    const handleSkloScroll = () => {
       if (hasScrolledRef.current) return;
 
       const hero = document.querySelector("section");
@@ -23,13 +23,14 @@ export default function FloatingCTA({ locale }) {
 
       if (heroBottom < 0) {
         hasScrolledRef.current = true;
+        window.removeEventListener("sklo-scroll", handleSkloScroll);
         timerRef.current = setTimeout(() => setVisible(true), DELAY_MS);
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("sklo-scroll", handleSkloScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("sklo-scroll", handleSkloScroll);
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, []);

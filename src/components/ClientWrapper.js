@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Header from "@/components/Header";
 import Loader from "@/components/Loader";
 import { LoaderContext } from "@/context/LoaderContext";
@@ -15,46 +15,30 @@ export default function ClientWrapper({ children, locale, t, initialShowLoader }
     }
   }, [initialShowLoader]);
 
+  // Centralized scroll listener — broadcasts a lightweight custom event
+  // so child components (Header, AnnouncementBar) share one scroll read
+  // instead of each attaching their own listener.
   useEffect(() => {
-    let lastScrollTop = window.scrollY || document.documentElement.scrollTop;
-    let lastScrollTime = Date.now();
-    let snapTimeout = null;
+    let ticking = false;
 
-    const handleScrollSnapVelocity = () => {
-      const now = Date.now();
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
-      
-      const dT = now - lastScrollTime;
-      const dY = Math.abs(scrollTop - lastScrollTop);
-      
-      if (dT > 0) {
-        const velocity = dY / dT; // pixels per millisecond
-        
-        // Threshold for fast scrolling (3.5 px/ms corresponds to 3500px/second)
-        if (velocity > 3.5) {
-          if (document.documentElement.style.scrollSnapType !== "none") {
-            document.documentElement.style.scrollSnapType = "none";
-          }
-        }
-      }
-      
-      lastScrollTop = scrollTop;
-      lastScrollTime = now;
-      
-      // Restore scroll snapping after scrolling slows down or stops
-      if (snapTimeout) clearTimeout(snapTimeout);
-      snapTimeout = setTimeout(() => {
-        if (document.documentElement.style.scrollSnapType !== "y proximity") {
-          document.documentElement.style.scrollSnapType = "y proximity";
-        }
-      }, 150);
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        // Broadcast a single, cached scrollY value to all listeners
+        window.dispatchEvent(
+          new CustomEvent("sklo-scroll", { detail: { scrollY } })
+        );
+        ticking = false;
+      });
     };
 
-    window.addEventListener("scroll", handleScrollSnapVelocity, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScrollSnapVelocity);
-      if (snapTimeout) clearTimeout(snapTimeout);
-    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    // Fire once on mount so children get initial state
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (

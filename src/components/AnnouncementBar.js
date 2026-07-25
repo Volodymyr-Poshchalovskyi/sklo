@@ -53,10 +53,10 @@ export default function AnnouncementBar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    const onSkloScroll = (e) => setScrolled(e.detail.scrollY > 20);
+    window.addEventListener("sklo-scroll", onSkloScroll);
+    setScrolled(window.scrollY > 20);
+    return () => window.removeEventListener("sklo-scroll", onSkloScroll);
   }, []);
 
   const top = scrolled ? TOP_SCROLLED : TOP_DEFAULT;

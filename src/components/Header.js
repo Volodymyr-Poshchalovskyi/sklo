@@ -231,16 +231,16 @@ export default function Header({ t, locale, visible }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("light");
   const pathname = usePathname();
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-    const initialTheme = document.documentElement.getAttribute("data-theme") || "dark";
+    const initialTheme = document.documentElement.getAttribute("data-theme") || "light";
     setTheme(initialTheme);
 
     const handleThemeChange = () => {
-      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
       setTheme(currentTheme);
     };
 
@@ -279,14 +279,15 @@ export default function Header({ t, locale, visible }) {
   ];
 
   useEffect(() => {
-    const onScroll = () => {
-      const isScrolled = window.scrollY > 20;
+    const onSkloScroll = (e) => {
+      const isScrolled = e.detail.scrollY > 20;
       setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    window.addEventListener("sklo-scroll", onSkloScroll);
+    // Initial check
+    setScrolled(window.scrollY > 20);
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("sklo-scroll", onSkloScroll);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);

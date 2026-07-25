@@ -263,7 +263,7 @@ export default function GalleryPage() {
             <h1 className="text-2xl md:text-3xl font-bold tracking-widest uppercase mb-4 text-white">
               Gallery
             </h1>
-            <div className="h-[1px] bg-gradient-to-r from-white/20 to-transparent w-full mb-6" />
+            <div className="h-[1px] bg-gradient-to-r from-text/20 to-transparent w-full mb-6" />
           </div>
 
           <div className="flex flex-col gap-4">

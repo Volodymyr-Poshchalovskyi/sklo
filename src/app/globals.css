@@ -21,6 +21,12 @@
 :root {
   --background: #0d0d0f;
   --foreground: #e8e6e1;
+  --color-border-stroke: rgba(255, 255, 255, 0.35);
+  --color-progress-border: rgba(255, 255, 255, 0.15);
+  --color-progress-border-muted: rgba(255, 255, 255, 0.1);
+  --color-title-3d-text: #ffffff;
+  --color-title-3d-shadow: #d4d4d8;
+  --color-title-3d-glow: rgba(255, 255, 255, 0.3);
 }
 
 body {
@@ -47,6 +53,12 @@ html {
   --color-text-muted:  #71717a;
   --color-accent:      #000000;
   --color-accent-hover:#1c1c1e;
+  --color-border-stroke: rgba(18, 18, 20, 0.45);
+  --color-progress-border: rgba(18, 18, 20, 0.08);
+  --color-progress-border-muted: rgba(18, 18, 20, 0.18);
+  --color-title-3d-text: #121214;
+  --color-title-3d-shadow: #cbd5e1;
+  --color-title-3d-glow: rgba(18, 18, 20, 0.15);
 }
 
 :root[data-theme="light"] body,
@@ -206,12 +218,104 @@ html {
 }
 
 /* 3D Titles */
-:root[data-theme="light"] .title-3d {
+.title-3d {
+  color: var(--color-title-3d-text) !important;
+  display: inline-block;
+  cursor: default;
+  will-change: transform, text-shadow;
+}
+
+.title-3d.animate-pop-3d {
+  animation: pop3D 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pop3D {
+  0% {
+    transform: translate(0, 0);
+    text-shadow: 0 0 0 transparent;
+  }
+  100% {
+    transform: translate(-5px, -5px);
+    text-shadow: 
+      1px 1px 0px var(--color-title-3d-shadow),
+      2px 2px 0px var(--color-title-3d-shadow),
+      3px 3px 0px var(--color-title-3d-shadow),
+      4px 4px 0px var(--color-title-3d-shadow),
+      5px 5px 0px var(--color-title-3d-shadow),
+      6px 6px 0px var(--color-title-3d-shadow),
+      7px 7px 15px var(--color-title-3d-glow);
+  }
+}
+
+/* Footer Submit Button Theme Adaptation */
+.footer-submit-btn {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+.footer-submit-btn:hover {
+  background-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+:root[data-theme="light"] .footer-submit-btn {
+  background-color: rgba(18, 18, 20, 0.08) !important;
+  color: #121214 !important;
+  border-color: rgba(18, 18, 20, 0.12) !important;
+}
+:root[data-theme="light"] .footer-submit-btn:hover {
+  background-color: rgba(18, 18, 20, 0.15) !important;
+}
+
+/* Progress Bar Container Theme Adaptation */
+.pipeline-progress-bar {
+  background-color: rgba(20, 20, 24, 0.95) !important;
+}
+:root[data-theme="light"] .pipeline-progress-bar {
+  background-color: rgba(255, 255, 255, 0.97) !important;
+  border-color: rgba(18, 18, 20, 0.06) !important;
+  box-shadow: 0 8px 32px rgba(18, 18, 20, 0.10), 0 1px 3px rgba(18, 18, 20, 0.06) !important;
+}
+
+/* Light theme: pipeline header label — dark, clearly visible */
+:root[data-theme="light"] .pipeline-header {
+  color: #2c2c2e !important;
+}
+:root[data-theme="light"] .pipeline-counter {
   color: #121214 !important;
 }
-:root[data-theme="light"] .title-3d.animate-pop-3d {
-  text-shadow: 
-    1px 1px 0px rgba(0, 0, 0, 0.04),
-    2px 2px 0px rgba(0, 0, 0, 0.04),
-    3px 3px 0px rgba(0, 0, 0, 0.04) !important;
+
+/* Light theme: progress track — subtle, not black */
+:root[data-theme="light"] .pipeline-track {
+  background-color: rgba(18, 18, 20, 0.08) !important;
+}
+
+/* Light theme: progress fill — soft charcoal, not pure black */
+:root[data-theme="light"] .pipeline-fill {
+  background-color: rgba(18, 18, 20, 0.50) !important;
+}
+
+/* Light theme: active step dot — soft charcoal, not black */
+:root[data-theme="light"] .pipeline-dot-active {
+  background-color: rgba(18, 18, 20, 0.72) !important;
+  border-color: rgba(18, 18, 20, 0.72) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 10px rgba(18, 18, 20, 0.18) !important;
+}
+
+/* Light theme: completed step dot — lightly tinted, text stays dark */
+:root[data-theme="light"] .pipeline-dot-completed {
+  background-color: rgba(18, 18, 20, 0.10) !important;
+  border-color: rgba(18, 18, 20, 0.22) !important;
+  color: #121214 !important;
+}
+
+/* Light theme: future step dot — clean white with visible border, dark text */
+:root[data-theme="light"] .pipeline-dot-future {
+  background-color: #ffffff !important;
+  border-color: rgba(18, 18, 20, 0.14) !important;
+  color: #3a3a3c !important;
+}
+
+/* Light theme: ALL step labels — dark, clearly visible, never gray */
+:root[data-theme="light"] .pipeline-label {
+  color: #121214 !important;
 }

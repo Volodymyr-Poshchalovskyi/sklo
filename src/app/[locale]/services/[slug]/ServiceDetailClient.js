@@ -98,81 +98,121 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
   }, [activeMediaIndex, service.gallery.length]);
 
   // Scroll Progress Tracking for Pipeline Section
+  // Uses rAF throttling + ref-based comparison to avoid unnecessary re-renders.
+  const rafIdRef = useRef(null);
+  const prevInViewRef = useRef(false);
+  const prevProgressRef = useRef(0);
+  const prevActiveRef = useRef(0);
+
   useEffect(() => {
+    const pipelineEl = pipelineRef.current;
+    if (!pipelineEl) return;
+
+    const pipelineStepCount = service.pipeline.length;
+
     const handleScroll = () => {
-      const pipelineEl = pipelineRef.current;
-      if (!pipelineEl) return;
+      if (rafIdRef.current) return; // Already scheduled
 
-      const rect = pipelineEl.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
+      rafIdRef.current = requestAnimationFrame(() => {
+        rafIdRef.current = null;
 
-      // Show floating progress bar while pipeline is scrolling inside viewport
-      const inView = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2;
-      setIsPipelineInView(inView);
+        const rect = pipelineEl.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
 
-      if (inView) {
+        // 1. Determine if pipeline is in view
+        const inView = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2;
+
+        if (inView !== prevInViewRef.current) {
+          prevInViewRef.current = inView;
+          setIsPipelineInView(inView);
+        }
+
+        if (!inView) return;
+
+        // 2. Calculate scroll progress
         const firstStep = pipelineEl.querySelector("#pipeline-step-0");
-        const lastStep = pipelineEl.querySelector(`#pipeline-step-${service.pipeline.length - 1}`);
+        const lastStep = pipelineEl.querySelector(`#pipeline-step-${pipelineStepCount - 1}`);
+        let progressPercent = 0;
 
         if (firstStep && lastStep) {
           const firstRect = firstStep.getBoundingClientRect();
           const lastRect = lastStep.getBoundingClientRect();
-
-          // Calculate centers relative to viewport
           const startY = firstRect.top + firstRect.height / 2;
           const endY = lastRect.top + lastRect.height / 2;
           const viewportCenter = windowHeight / 2;
 
           if (startY > viewportCenter) {
-            // We haven't scrolled to the first step's center yet
-            setScrollProgress(0);
+            progressPercent = 0;
           } else if (endY < viewportCenter) {
-            // We have scrolled past the last step's center
-            setScrollProgress(100);
+            progressPercent = 100;
           } else {
-            // Linearly interpolate between first step and last step centers
             const totalDistance = endY - startY;
             const currentDistance = viewportCenter - startY;
-            const progressPercent = (currentDistance / totalDistance) * 100;
-            setScrollProgress(progressPercent);
+            progressPercent = (currentDistance / totalDistance) * 100;
           }
         } else {
-          // Fallback height-based progress if step IDs aren't found
           const startOffset = windowHeight * 0.8;
           const totalHeight = rect.height + startOffset - 100;
           const currentProgress = startOffset - rect.top;
-          const clampedProgress = Math.max(0, Math.min(100, (currentProgress / totalHeight) * 100));
-          setScrollProgress(clampedProgress);
+          progressPercent = Math.max(0, Math.min(100, (currentProgress / totalHeight) * 100));
         }
 
-        // Find active step index (the one closest to viewport center)
+        // Only update if changed by > 0.5% to avoid micro-renders
+        if (Math.abs(progressPercent - prevProgressRef.current) > 0.5) {
+          prevProgressRef.current = progressPercent;
+          setScrollProgress(progressPercent);
+        }
+
+        // 3. Find active step index (closest to viewport center)
         const stepCards = pipelineEl.querySelectorAll(".pipeline-step-card");
         let activeIdx = 0;
         let minDiff = Infinity;
+        const vpCenter = windowHeight / 2;
 
-        stepCards.forEach((card, idx) => {
-          const cardRect = card.getBoundingClientRect();
+        for (let idx = 0; idx < stepCards.length; idx++) {
+          const cardRect = stepCards[idx].getBoundingClientRect();
           const cardCenter = cardRect.top + cardRect.height / 2;
-          const viewportCenter = windowHeight / 2;
-          const diff = Math.abs(cardCenter - viewportCenter);
+          const diff = Math.abs(cardCenter - vpCenter);
           if (diff < minDiff) {
             minDiff = diff;
             activeIdx = idx;
           }
-        });
-        setActiveStepIndex(activeIdx);
-      }
+        }
+
+        if (activeIdx !== prevActiveRef.current) {
+          prevActiveRef.current = activeIdx;
+          setActiveStepIndex(activeIdx);
+        }
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll(); // Run on mount
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+        rafIdRef.current = null;
+      }
+    };
   }, [service.pipeline.length]);
 
   return (
     <main className="w-full min-h-screen bg-[#0d0d0f] text-white flex flex-col pt-16">
+      <style dangerouslySetInnerHTML={{ __html: `
+        .service-hero-btn {
+          background-color: #ffffff !important;
+          color: #000000 !important;
+          border: 1px solid #ffffff !important;
+        }
+        .service-hero-btn:hover {
+          background-color: rgba(255, 255, 255, 0.9) !important;
+          border-color: rgba(255, 255, 255, 0.9) !important;
+        }
+      `}} />
+
       {/* 1. HERO HEADER SECTION */}
-      <section className="relative w-full h-[65vh] md:h-[75vh] flex items-center justify-center overflow-hidden">
+      <section className="hero-section relative w-full h-[65vh] md:h-[75vh] flex items-center justify-center overflow-hidden">
         {/* Background Visual */}
         <div className="absolute inset-0 z-0">
           {service.type === "video" ? (
@@ -221,7 +261,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
           >
             <Link
               href={`/${locale}/contact?service=${service.slug}`}
-              className="group inline-flex items-center gap-3 text-xs md:text-sm font-semibold tracking-widest uppercase bg-white text-black hover:bg-white/90 px-8 py-4.5 rounded-full transition-all duration-300 shadow-lg cursor-pointer"
+              className="service-hero-btn group inline-flex items-center gap-3 text-xs md:text-sm font-semibold tracking-widest uppercase px-8 py-4.5 rounded-full transition-all duration-300 shadow-lg cursor-pointer"
             >
               {locale === "de" ? "Preisanfrage senden" : "Request pricing"}
               <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -242,7 +282,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wider text-white">
               {locale === "de" ? "Wie wir arbeiten" : "Our Pipeline"}
             </h2>
-            <div className="h-[1px] bg-gradient-to-r from-white/10 to-transparent w-full mt-6" />
+            <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
           </div>
 
           {/* Alternating detailed timeline elements */}
@@ -265,8 +305,8 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                   <div className={`w-full md:w-[45%] ${isEven ? "md:order-1" : "md:order-2"}`}>
                     <div className="flex items-center gap-4 mb-5">
                       <span 
-                        className="text-7xl md:text-8xl font-black font-serif text-transparent select-none transition-all duration-500 hover:text-[--color-accent] tracking-tighter"
-                        style={{ WebkitTextStroke: "1px rgba(255, 255, 255, 0.15)" }}
+                        className="text-7xl md:text-8xl font-black font-serif text-text/5 dark:text-transparent select-none transition-all duration-500 hover:text-[--color-accent] tracking-tighter"
+                        style={{ WebkitTextStroke: "1.5px var(--color-border-stroke)" }}
                       >
                         {step.step}
                       </span>
@@ -288,11 +328,6 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                       
                       {/* Interactive overlay gradient */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      
-                      {/* Step Tag */}
-                      <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 text-[9px] font-bold tracking-widest uppercase py-1.5 px-3 rounded-full text-white/80 group-hover:border-[--color-accent] group-hover:text-[--color-accent] transition-all duration-300">
-                        {media.type === "video" ? "VIDEO WORKFLOW" : "RENDER WORKFLOW"}
-                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -312,7 +347,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wider text-white">
               {locale === "de" ? "Projektgalerie" : "Mini Gallery"}
             </h2>
-            <div className="h-[1px] bg-gradient-to-r from-white/10 to-transparent w-full mt-6" />
+            <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
           </div>
 
           {/* Bento Grid layout with custom dimensions */}
@@ -402,7 +437,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wider text-white">
               {locale === "de" ? "Andere Dienstleistungen" : "Other Services"}
             </h2>
-            <div className="h-[1px] bg-gradient-to-r from-white/10 to-transparent w-full mt-6" />
+            <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -416,7 +451,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
               >
                 <Link 
                   href={`/${locale}/services/${other.slug}`}
-                  className="group flex flex-col bg-[#141418]/50 border border-white/10 rounded-3xl overflow-hidden transition-all duration-300 hover:border-[--color-accent] hover:translate-y-[-6px] cursor-pointer"
+                  className="group flex flex-col bg-[--color-surface] border border-[--color-border] rounded-3xl overflow-hidden transition-all duration-300 hover:border-[--color-accent] hover:translate-y-[-6px] cursor-pointer"
                 >
                   <div className="w-full aspect-[16/10] overflow-hidden bg-white/5 relative">
                     {other.type === "video" ? (
@@ -585,20 +620,20 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: 80, x: "-50%" }}
             transition={{ type: "spring", stiffness: 260, damping: 25 }}
-            className="fixed bottom-6 left-1/2 z-40 w-[92%] max-w-2xl bg-[#0d0d0f]/90 border border-white/15 backdrop-blur-xl rounded-2xl py-4 px-6 shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex flex-col gap-2.5 select-none"
+            className="pipeline-progress-bar fixed bottom-6 left-1/2 z-40 w-[92%] max-w-2xl bg-surface/95 border border-[var(--color-progress-border)] backdrop-blur-xl rounded-2xl py-4 px-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex flex-col gap-2.5 select-none text-text"
           >
             {/* Header info */}
-            <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-white/45 px-1">
+            <div className="pipeline-header flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-text-muted px-1">
               <span>{locale === "de" ? "PROZESS" : "PIPELINE"}</span>
-              <span className="text-white font-mono font-bold tracking-wider">
+              <span className="pipeline-counter text-text font-mono font-bold tracking-wider">
                 {String(activeStepIndex + 1).padStart(2, "0")} / {String(service.pipeline.length).padStart(2, "0")}
               </span>
             </div>
 
-            {/* Filled Progress indicator (Pure White / Silver Glow, No Green) */}
-            <div className="relative h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+            {/* Filled Progress indicator (Theme-adaptive) */}
+            <div className="pipeline-track relative h-1.5 w-full bg-text/15 rounded-full overflow-hidden">
               <div 
-                className="absolute left-0 top-0 h-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)] transition-all duration-100 ease-out"
+                className="pipeline-fill absolute left-0 top-0 h-full bg-text transition-all duration-100 ease-out"
                 style={{ width: `${scrollProgress}%` }}
               />
             </div>
@@ -608,6 +643,11 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
               {service.pipeline.map((step, idx) => {
                 const isActive = idx === activeStepIndex;
                 const isCompleted = idx < activeStepIndex;
+                const dotStateClass = isActive 
+                  ? "pipeline-dot-active" 
+                  : isCompleted 
+                    ? "pipeline-dot-completed" 
+                    : "pipeline-dot-future";
                 return (
                   <button
                     key={idx}
@@ -621,18 +661,18 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                     style={{ width: `${100 / service.pipeline.length}%` }}
                   >
                     <div 
-                      className={`w-7 h-7 rounded-full border flex items-center justify-center text-xs font-bold font-mono transition-all duration-300 ${
+                      className={`${dotStateClass} w-7 h-7 rounded-full border flex items-center justify-center text-xs font-bold font-mono transition-all duration-300 ${
                         isActive 
-                          ? "bg-white border-white text-black scale-115 shadow-[0_0_12px_rgba(255,255,255,0.9)]" 
+                          ? "bg-text border-text text-bg scale-115 shadow-[0_4px_12px_rgba(18,18,20,0.12)] dark:shadow-[0_0_12px_rgba(255,255,255,0.15)]" 
                           : isCompleted
-                            ? "bg-white/20 border-white/40 text-white/90"
-                            : "bg-black/50 border-white/10 text-white/30 group-hover:border-white/30"
+                            ? "bg-text/20 border-text/40 text-text"
+                            : "bg-bg border-[var(--color-progress-border-muted)] text-text-muted group-hover:border-text/30"
                       }`}
                     >
                       {step.step}
                     </div>
-                    <span className={`text-[8px] mt-1.5 font-bold uppercase tracking-widest hidden sm:block text-center transition-colors duration-300 max-w-[120px] line-clamp-2 leading-tight ${
-                      isActive ? "text-white font-extrabold" : "text-white/30 group-hover:text-white/60"
+                    <span className={`pipeline-label text-[8px] mt-1.5 font-bold uppercase tracking-widest hidden sm:block text-center transition-colors duration-300 max-w-[120px] line-clamp-2 leading-tight ${
+                      isActive ? "text-text font-extrabold" : "text-text-muted group-hover:text-text/60"
                     }`}>
                       {step.title}
                     </span>

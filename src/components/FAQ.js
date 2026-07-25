@@ -236,34 +236,7 @@ export default function FAQ({ locale = "en" }) {
         </div>
       </div>
 
-      <style>{`
-        .title-3d {
-          color: #ffffff;
-          display: inline-block;
-          cursor: default;
-          will-change: transform, text-shadow;
-        }
-        .title-3d.animate-pop-3d {
-          animation: pop3D 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes pop3D {
-          0% {
-            transform: translate(0, 0);
-            text-shadow: 0 0 0 transparent;
-          }
-          100% {
-            transform: translate(-5px, -5px);
-            text-shadow: 
-              1px 1px 0px #d4d4d8,
-              2px 2px 0px #d4d4d8,
-              3px 3px 0px #d4d4d8,
-              4px 4px 0px #d4d4d8,
-              5px 5px 0px #d4d4d8,
-              6px 6px 0px #d4d4d8,
-              7px 7px 15px rgba(255, 255, 255, 0.3);
-          }
-        }
-      `}</style>
+
     </section>
   );
 }

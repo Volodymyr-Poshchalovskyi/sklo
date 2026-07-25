@@ -97,7 +97,7 @@ export default async function LocaleLayout({ children, params }) {
           dangerouslySetInnerHTML={{
             __html: `
               (function() {
-                var theme = localStorage.getItem('sklo-theme') || 'dark';
+                var theme = localStorage.getItem('sklo-theme') || 'light';
                 document.documentElement.setAttribute('data-theme', theme);
               })();
             `,
