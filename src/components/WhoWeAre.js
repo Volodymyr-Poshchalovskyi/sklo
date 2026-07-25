@@ -22,7 +22,7 @@ function LazyVideo({ src, className }) {
         root: null, // viewport
         rootMargin: "100px", // start loading/playing slightly before it is in view
         threshold: 0.01,
-      }
+      },
     );
 
     observer.observe(videoEl);
@@ -73,12 +73,36 @@ export default function WhoWeAre({ locale, t }) {
   const [isInitialized, setIsInitialized] = useState(false);
 
   const slides = [
-    { id: 1, title: "EXTERIOR VISUALIZATION", image: "/assets/home/3d tour.jpg" },
-    { id: 2, title: "INTERIOR VISUALIZATION", image: "/assets/home/3d tour.jpg" },
-    { id: 3, title: "360° VIRTUAL TOUR | VR", video: "/assets/home/360 services.mp4" },
-    { id: 4, title: "ANIMATION | MOOD FILM", image: "/assets/home/3d tour.jpg" },
-    { id: 5, title: "BIRD-EYE VISUALIZATION", image: "/assets/home/3d tour.jpg" },
-    { id: 6, title: "CINEMAGRAPH | LIVE SHOT", video: "/assets/home/cinemagraph services.mp4" },
+    {
+      id: 1,
+      title: "EXTERIOR VISUALIZATION",
+      image: "/assets/home/3d tour.jpg",
+    },
+    {
+      id: 2,
+      title: "INTERIOR VISUALIZATION",
+      image: "/assets/home/3d tour.jpg",
+    },
+    {
+      id: 3,
+      title: "360° VIRTUAL TOUR | VR",
+      video: "/assets/home/360 services.mp4",
+    },
+    {
+      id: 4,
+      title: "ANIMATION | MOOD FILM",
+      image: "/assets/home/3d tour.jpg",
+    },
+    {
+      id: 5,
+      title: "BIRD-EYE VISUALIZATION",
+      image: "/assets/home/3d tour.jpg",
+    },
+    {
+      id: 6,
+      title: "CINEMAGRAPH | LIVE SHOT",
+      video: "/assets/home/cinemagraph services.mp4",
+    },
     { id: 7, title: "3D FLOORPLAN", image: "/assets/home/3dplan_interior.jpg" },
     { id: 8, title: "360° FLY-AROUND", image: "/assets/home/3d tour.jpg" },
     { id: 9, title: "WEBSITE DEVELOPMENT", image: "/assets/home/3d tour.jpg" },
@@ -87,14 +111,18 @@ export default function WhoWeAre({ locale, t }) {
   // Base list of items including the View All Services card
   const baseItems = [
     ...slides,
-    { id: "view-all", title: t?.whoWeAre?.viewAll ?? "ALL SERVICES", isLink: true }
+    {
+      id: "view-all",
+      title: t?.whoWeAre?.viewAll ?? "ALL SERVICES",
+      isLink: true,
+    },
   ];
 
   // Replicate 3 times to support infinite scroll looping
   const items = [
-    ...baseItems.map(item => ({ ...item, uniqueId: `sec1-${item.id}` })),
-    ...baseItems.map(item => ({ ...item, uniqueId: `sec2-${item.id}` })),
-    ...baseItems.map(item => ({ ...item, uniqueId: `sec3-${item.id}` }))
+    ...baseItems.map((item) => ({ ...item, uniqueId: `sec1-${item.id}` })),
+    ...baseItems.map((item) => ({ ...item, uniqueId: `sec2-${item.id}` })),
+    ...baseItems.map((item) => ({ ...item, uniqueId: `sec3-${item.id}` })),
   ];
 
   const features = [
@@ -103,7 +131,7 @@ export default function WhoWeAre({ locale, t }) {
       desc: "Smooth communication and iterative feedback ensure you're never left guessing. We keep the process transparent from start to finish.",
       icon: (
         <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z"/>
+          <path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z" />
         </svg>
       ),
     },
@@ -112,7 +140,7 @@ export default function WhoWeAre({ locale, t }) {
       desc: "With a deep background in design and architecture, we translate drawings into visuals that remain true to your vision while enhancing presentation impact.",
       icon: (
         <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M19.07 4.93l-1.41 1.41C19.1 7.79 20 9.79 20 12c0 4.42-3.58 8-8 8s-8-3.58-8-8c0-2.21.9-4.21 2.34-5.66L4.93 4.93C3.12 6.74 2 9.24 2 12c0 5.52 4.48 10 10 10s10-4.48 10-10c0-2.76-1.12-5.26-2.93-7.07zM12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"/>
+          <path d="M19.07 4.93l-1.41 1.41C19.1 7.79 20 9.79 20 12c0 4.42-3.58 8-8 8s-8-3.58-8-8c0-2.21.9-4.21 2.34-5.66L4.93 4.93C3.12 6.74 2 9.24 2 12c0 5.52 4.48 10 10 10s10-4.48 10-10c0-2.76-1.12-5.26-2.93-7.07zM12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0 8c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z" />
         </svg>
       ),
     },
@@ -121,7 +149,7 @@ export default function WhoWeAre({ locale, t }) {
       desc: "We know deadlines are always tight. Our workflow is optimized for fast delivery without compromising quality.",
       icon: (
         <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M7 2v11h3v9l7-12h-4l4-8z"/>
+          <path d="M7 2v11h3v9l7-12h-4l4-8z" />
         </svg>
       ),
     },
@@ -130,7 +158,7 @@ export default function WhoWeAre({ locale, t }) {
       desc: "We provide exclusive offers for both new and returning clients.",
       icon: (
         <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z"/>
+          <path d="M21.41 11.58l-9-9C12.05 2.22 11.55 2 11 2H4c-1.1 0-2 .9-2 2v7c0 .55.22 1.05.59 1.42l9 9c.36.36.86.58 1.41.58.55 0 1.05-.22 1.41-.59l7-7c.37-.36.59-.86.59-1.41 0-.55-.23-1.06-.59-1.42zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
         </svg>
       ),
     },
@@ -139,7 +167,7 @@ export default function WhoWeAre({ locale, t }) {
       desc: "We craft visuals with stunning realism, precise detail, and perfect lighting designed to showcase your project at its very best and leave a lasting impression.",
       icon: (
         <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 5H5l3.5-4.5z"/>
+          <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 5H5l3.5-4.5z" />
         </svg>
       ),
     },
@@ -148,7 +176,7 @@ export default function WhoWeAre({ locale, t }) {
       desc: "Our process is smooth and transparent, guiding you from concept to final render with clear stages and timely updates.",
       icon: (
         <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
+          <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z" />
         </svg>
       ),
     },
@@ -164,8 +192,6 @@ export default function WhoWeAre({ locale, t }) {
     }
     return 240; // 220px card + 20px gap
   };
-
-
 
   const isDraggingRef = useRef(false);
   const startXRef = useRef(0);
@@ -231,19 +257,22 @@ export default function WhoWeAre({ locale, t }) {
       el.style.scrollSnapType = "none";
       el.style.scrollBehavior = "auto";
       el.scrollLeft += singleSectionWidth;
-      
+
       if (isDraggingRef.current) {
         scrollLeftStartRef.current += singleSectionWidth;
       }
 
       requestAnimationFrame(() => {
         if (carouselRef.current) {
-          carouselRef.current.style.scrollSnapType = isDraggingRef.current ? "none" : "x mandatory";
-          carouselRef.current.style.scrollBehavior = isDraggingRef.current ? "auto" : "smooth";
+          carouselRef.current.style.scrollSnapType = isDraggingRef.current
+            ? "none"
+            : "x mandatory";
+          carouselRef.current.style.scrollBehavior = isDraggingRef.current
+            ? "auto"
+            : "smooth";
         }
       });
-    }
-    else if (currentScrollLeft > 1.5 * singleSectionWidth) {
+    } else if (currentScrollLeft > 1.5 * singleSectionWidth) {
       el.style.scrollSnapType = "none";
       el.style.scrollBehavior = "auto";
       el.scrollLeft -= singleSectionWidth;
@@ -254,8 +283,12 @@ export default function WhoWeAre({ locale, t }) {
 
       requestAnimationFrame(() => {
         if (carouselRef.current) {
-          carouselRef.current.style.scrollSnapType = isDraggingRef.current ? "none" : "x mandatory";
-          carouselRef.current.style.scrollBehavior = isDraggingRef.current ? "auto" : "smooth";
+          carouselRef.current.style.scrollSnapType = isDraggingRef.current
+            ? "none"
+            : "x mandatory";
+          carouselRef.current.style.scrollBehavior = isDraggingRef.current
+            ? "auto"
+            : "smooth";
         }
       });
     }
@@ -295,7 +328,7 @@ export default function WhoWeAre({ locale, t }) {
       },
       {
         rootMargin: "-64px 0px -92% 0px",
-      }
+      },
     );
 
     observer.observe(el);
@@ -317,7 +350,7 @@ export default function WhoWeAre({ locale, t }) {
       },
       {
         rootMargin: "-64px 0px -92% 0px",
-      }
+      },
     );
 
     observer.observe(el);
@@ -339,7 +372,7 @@ export default function WhoWeAre({ locale, t }) {
       },
       {
         rootMargin: "-64px 0px -92% 0px",
-      }
+      },
     );
 
     observer.observe(el);
@@ -361,10 +394,13 @@ export default function WhoWeAre({ locale, t }) {
             >
               OUR SERVICES
             </h2>
-            
+
             <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed lg:w-2/3">
               <p>
-                We offer a comprehensive suite of 3D rendering, motion design, and virtual visualization packages tailored specifically for modern real estate developments, architectural showcases, and product marketing.
+                We offer a comprehensive suite of 3D rendering, motion design,
+                and virtual visualization packages tailored specifically for
+                modern real estate developments, architectural showcases, and
+                product marketing.
               </p>
             </div>
           </div>
@@ -378,7 +414,13 @@ export default function WhoWeAre({ locale, t }) {
                 className="w-12 sm:w-14 h-12 sm:h-14 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all duration-300 active:scale-95 cursor-pointer"
                 aria-label="Previous slide"
               >
-                <svg className="w-5 sm:w-6 h-5 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <svg
+                  className="w-5 sm:w-6 h-5 sm:h-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                >
                   <path d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
@@ -387,7 +429,13 @@ export default function WhoWeAre({ locale, t }) {
                 className="w-12 sm:w-14 h-12 sm:h-14 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all duration-300 active:scale-95 cursor-pointer"
                 aria-label="Next slide"
               >
-                <svg className="w-5 sm:w-6 h-5 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <svg
+                  className="w-5 sm:w-6 h-5 sm:h-6"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                >
                   <path d="M9 5l7 7-7 7" />
                 </svg>
               </button>
@@ -423,7 +471,14 @@ export default function WhoWeAre({ locale, t }) {
                           {item.title}
                         </span>
                         <div className="mt-4 w-10 h-10 rounded-full border border-white/20 group-hover:border-white/50 flex items-center justify-center text-white/50 group-hover:text-white transition-all duration-300 group-hover:scale-110">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                          >
                             <path d="M5 12h14M12 5l7 7-7 7" />
                           </svg>
                         </div>
@@ -477,81 +532,125 @@ export default function WhoWeAre({ locale, t }) {
       >
         <div className="w-full max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
-            
             {/* Left Column: Title and Abstract CAD/Glass Composition */}
             <div className="w-full lg:w-[45%] flex flex-col gap-6 items-start">
-              <span className="text-[10px] font-mono tracking-[0.25em] text-[--color-accent] uppercase">About SKLO Studio</span>
+              <span className="text-[10px] font-mono tracking-[0.25em] text-[--color-accent] uppercase">
+                About SKLO Studio
+              </span>
               <h2
                 className={`title-3d ${whoInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase mb-4`}
               >
                 WHO WE ARE
               </h2>
-              
-              {/* Architectural CAD Blueprint & Glass Composition */}
-              <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] lg:aspect-square max-w-[420px] mx-auto lg:mx-0 mt-4 select-none">
-                {/* Glowing background spot */}
-                <div className="absolute top-1/4 left-1/4 w-48 h-48 rounded-full bg-[--color-accent]/10 dark:bg-[--color-accent]/5 blur-[70px] animate-pulse duration-[8s] pointer-events-none" />
-                
-                {/* Abstract architectural grid (drawing lines) */}
-                <div className="absolute inset-0 opacity-15 dark:opacity-10 bg-[radial-gradient(rgba(255,255,255,0.15)_1px,transparent_1px)] [background-size:20px_20px] rounded-3xl border border-white/5" 
-                     style={{ maskImage: "radial-gradient(ellipse at center, black, transparent 70%)" }} />
 
-                {/* Layer 1: Rotating wireframe circle/grid */}
-                <div className="absolute top-[10%] left-[10%] w-[80%] h-[80%] border border-white/10 dark:border-white/5 rounded-full animate-[spin_40s_linear_infinite]" />
-                <div className="absolute top-[15%] left-[15%] w-[70%] h-[70%] border border-dashed border-white/10 dark:border-white/5 rounded-full animate-[spin_25s_linear_infinite_reverse]" />
+              {/* Abstract Animated Network */}
+              <div className="relative w-full aspect-square max-w-[420px] mx-auto lg:mx-0 mt-4 select-none overflow-hidden">
+                <div className="absolute top-1/2 left-1/2 w-64 h-64 rounded-full bg-white/5 blur-[90px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
-                {/* Layer 2: Main Glassmorphic Pane */}
-                <div className="absolute top-1/4 left-[10%] w-[68%] h-[52%] bg-white/[0.03] dark:bg-white/[0.01] backdrop-blur-[12px] border border-white/10 dark:border-white/5 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col justify-between p-6 transform -rotate-3 transition-transform duration-500 hover:rotate-0 hover:scale-[1.02] group">
-                  {/* Architectural crosshair decor */}
-                  <div className="absolute -top-1.5 -left-1.5 w-3.5 h-3.5 flex items-center justify-center">
-                    <div className="w-full h-[1px] bg-[--color-accent]/40 absolute" />
-                    <div className="h-full w-[1px] bg-[--color-accent]/40 absolute" />
-                  </div>
-                  <div className="absolute -bottom-1.5 -right-1.5 w-3.5 h-3.5 flex items-center justify-center">
-                    <div className="w-full h-[1px] bg-[--color-accent]/40 absolute" />
-                    <div className="h-full w-[1px] bg-[--color-accent]/40 absolute" />
-                  </div>
+                <svg
+                  viewBox="0 0 400 400"
+                  className="absolute inset-0 w-full h-full network-svg"
+                  fill="none"
+                >
+                  {[
+                    [0, 1],
+                    [1, 2],
+                    [3, 4],
+                    [5, 8],
+                    [0, 3],
+                    [1, 4],
+                    [0, 6],
+                    [2, 3],
+                    [6, 7],
+                    [4, 5],
+                    [1, 7],
+                    [5, 6],
+                    [3, 6],
+                    [0, 8],
+                    [2, 5],
+                    [4, 7],
+                    [7, 8],
+                    [2, 8],
+                  ].map(([a, b], i) => {
+                    const pts = [
+                      [320, 200],
+                      [307.2, 290],
+                      [227.8, 357.6],
+                      [140, 303.9],
+                      [68.4, 247.9],
+                      [49.6, 145.3],
+                      [140, 96.1],
+                      [224.3, 62.1],
+                      [322.6, 97.2],
+                    ];
+                    const [x1, y1] = pts[a];
+                    const [x2, y2] = pts[b];
+                    return (
+                      <line
+                        key={i}
+                        className="net-line"
+                        x1={x1}
+                        y1={y1}
+                        x2={x2}
+                        y2={y2}
+                        stroke="white"
+                        strokeWidth="1"
+                        style={{ animationDelay: `${(i % 9) * 0.15}s` }}
+                      />
+                    );
+                  })}
 
-                  <div className="flex justify-between items-start">
-                    <span className="text-[10px] font-mono tracking-widest text-white/40 uppercase">Est. 2020</span>
-                    <div className="w-2 h-2 rounded-full bg-[--color-accent] animate-ping" />
-                  </div>
-                  
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[11px] font-mono tracking-wider text-[--color-accent]">SKLO STUDIO</span>
-                    <span className="text-xl font-bold tracking-wide text-white uppercase">PRECISION</span>
-                  </div>
-                </div>
+                  {[
+                    [320, 200],
+                    [307.2, 290],
+                    [227.8, 357.6],
+                    [140, 303.9],
+                    [68.4, 247.9],
+                    [49.6, 145.3],
+                    [140, 96.1],
+                    [224.3, 62.1],
+                    [322.6, 97.2],
+                  ].map(([x, y], i) => (
+                    <circle
+                      key={`n${i}`}
+                      className="net-node"
+                      cx={x}
+                      cy={y}
+                      r="4"
+                      fill="white"
+                      style={{ animationDelay: `${i * 0.2}s` }}
+                    />
+                  ))}
+                </svg>
 
-                {/* Layer 3: Floating Foreground Glass Card */}
-                <div className="absolute bottom-[12%] right-[8%] w-[52%] h-[38%] bg-white/[0.05] dark:bg-white/[0.02] backdrop-blur-[8px] border border-white/15 dark:border-white/10 rounded-2xl shadow-[0_15px_35px_rgba(0,0,0,0.2)] flex flex-col justify-between p-5 transform rotate-6 transition-transform duration-500 hover:rotate-2 hover:scale-[1.03]">
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/65" />
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/45" />
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/25" />
-                  </div>
-                  
-                  <div className="flex flex-col">
-                    <span className="text-2xl font-black font-mono text-transparent bg-clip-text bg-gradient-to-r from-text via-text/80 to-[--color-accent] leading-none">3D</span>
-                    <span className="text-[9px] font-mono tracking-widest text-white/40 uppercase mt-1">Visualization</span>
-                  </div>
-                </div>
+                <div className="absolute top-4 left-4 w-3 h-3 border-l border-t border-white/25" />
+                <div className="absolute top-4 right-4 w-3 h-3 border-r border-t border-white/25" />
+                <div className="absolute bottom-4 left-4 w-3 h-3 border-l border-b border-white/25" />
+                <div className="absolute bottom-4 right-4 w-3 h-3 border-r border-b border-white/25" />
               </div>
             </div>
-            
+
             {/* Right Column: Descriptions inside a premium Glassmorphic block */}
             <div className="w-full lg:w-[50%] flex flex-col gap-8 text-base sm:text-lg md:text-xl text-white/80 leading-relaxed max-w-2xl bg-white/[0.02] border border-white/5 p-8 sm:p-10 rounded-3xl backdrop-blur-sm relative overflow-hidden group hover:border-[--color-accent]/20 transition-all duration-500 shadow-xl">
               {/* Subtle background glow on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-[--color-accent]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-              
+
               <p className="font-light">
-                We create stunning visualizations rooted in our deep understanding of architecture and interior design. Our professional background gives us a unique perspective, allowing us to merge creative vision with technical precision. We believe in a hands-on approach and dedicate ourselves to every project from start to finish. The result is high-quality renderings and animations that showcase a project&apos;s beauty and purpose.
+                We create stunning visualizations rooted in our deep
+                understanding of architecture and interior design. Our
+                professional background gives us a unique perspective, allowing
+                us to merge creative vision with technical precision. We believe
+                in a hands-on approach and dedicate ourselves to every project
+                from start to finish. The result is high-quality renderings and
+                animations that showcase a project&apos;s beauty and purpose.
               </p>
               <p className="text-white/60 font-light">
-                We help architects, designers, and developers bring their visions to life. From a single image to a complete animation, our goal is to produce work that is not only effective but also inspiring and unforgettable.
+                We help architects, designers, and developers bring their
+                visions to life. From a single image to a complete animation,
+                our goal is to produce work that is not only effective but also
+                inspiring and unforgettable.
               </p>
             </div>
-            
           </div>
         </div>
       </section>
@@ -567,10 +666,14 @@ export default function WhoWeAre({ locale, t }) {
             >
               OUR VALUES
             </h2>
-            
+
             <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed lg:w-2/3">
               <p>
-                Our core values guide every visual experience we craft. From clear communication and architecture-grade precision to delivering stunning realism and meeting tight deadlines, we are committed to elevating your presentation and turning ideas into breathtaking realities.
+                Our core values guide every visual experience we craft. From
+                clear communication and architecture-grade precision to
+                delivering stunning realism and meeting tight deadlines, we are
+                committed to elevating your presentation and turning ideas into
+                breathtaking realities.
               </p>
             </div>
           </div>
@@ -595,30 +698,38 @@ export default function WhoWeAre({ locale, t }) {
         </div>
 
         <style>{`
-        .no-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        @keyframes float-slow {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(12px, -18px) rotate(15deg); }
-}
-@keyframes float-slow-alt {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(-15px, 14px) rotate(-12deg); }
-}
-@keyframes float-dot {
-  0%, 100% { transform: translate(0, 0); opacity: 0.4; }
-  50% { transform: translate(-10px, -14px); opacity: 0.9; }
-}
-@keyframes float-dot-alt {
-  0%, 100% { transform: translate(0, 0); opacity: 0.3; }
-  50% { transform: translate(10px, 10px); opacity: 0.7; }
-}
-.animate-float-slow { animation: float-slow 10s ease-in-out infinite; }
-.animate-float-slow-alt { animation: float-slow-alt 12s ease-in-out infinite; }
-.animate-float-dot { animation: float-dot 6s ease-in-out infinite; }
-.animate-float-dot-alt { animation: float-dot-alt 7s ease-in-out infinite; }
-      `}</style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .net-line {
+    stroke-dasharray: 280;
+    stroke-dashoffset: 280;
+    opacity: 0;
+    animation: draw-line 6s ease-in-out infinite;
+  }
+
+  .net-node {
+    opacity: 0;
+    transform-origin: center;
+    animation: pulse-node 6s ease-in-out infinite;
+  }
+
+  @keyframes draw-line {
+    0% { stroke-dashoffset: 280; opacity: 0; }
+    15% { opacity: 0.7; }
+    40%, 60% { stroke-dashoffset: 0; opacity: 0.7; }
+    80% { opacity: 0; }
+    100% { stroke-dashoffset: 280; opacity: 0; }
+  }
+
+  @keyframes pulse-node {
+    0%, 100% { opacity: 0; r: 3; }
+    20% { opacity: 1; r: 5; }
+    50% { opacity: 0.8; r: 4; }
+    80% { opacity: 0.3; r: 3; }
+  }
+`}</style>
       </section>
     </>
   );
