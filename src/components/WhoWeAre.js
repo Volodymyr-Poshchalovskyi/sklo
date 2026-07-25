@@ -59,11 +59,13 @@ function LazyVideo({ src, className }) {
 }
 
 export default function WhoWeAre({ locale, t }) {
-  const [inView, setInView] = useState(false);
-  const sectionRef = useRef(null);
+  const [servicesInView, setServicesInView] = useState(false);
+  const servicesSectionRef = useRef(null);
   const carouselRef = useRef(null);
 
-  // Values Section states
+  const [whoInView, setWhoInView] = useState(false);
+  const whoSectionRef = useRef(null);
+
   const [valuesInView, setValuesInView] = useState(false);
   const valuesSectionRef = useRef(null);
 
@@ -281,13 +283,13 @@ export default function WhoWeAre({ locale, t }) {
   }, [isInitialized, baseItems.length]);
 
   useEffect(() => {
-    const el = sectionRef.current;
+    const el = servicesSectionRef.current;
     if (!el) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setInView(true);
+          setServicesInView(true);
           observer.unobserve(el);
         }
       },
@@ -298,7 +300,29 @@ export default function WhoWeAre({ locale, t }) {
 
     observer.observe(el);
     return () => {
-      observer.unobserve(el);
+      if (el) observer.unobserve(el);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = whoSectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setWhoInView(true);
+          observer.unobserve(el);
+        }
+      },
+      {
+        rootMargin: "-64px 0px -92% 0px",
+      }
+    );
+
+    observer.observe(el);
+    return () => {
+      if (el) observer.unobserve(el);
     };
   }, []);
 
@@ -327,23 +351,20 @@ export default function WhoWeAre({ locale, t }) {
   return (
     <>
       <section
-        ref={sectionRef}
+        ref={servicesSectionRef}
         className="w-full min-h-screen bg-[#0d0d0f] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 border-t border-white/10 snap-start flex flex-col justify-center"
       >
         <div className="w-full flex flex-col gap-12 md:gap-16">
           <div className="flex flex-col lg:flex-row justify-between items-start gap-8">
             <h2
-              className={`title-3d ${inView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase shrink-0 lg:w-1/3`}
+              className={`title-3d ${servicesInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase shrink-0 lg:w-1/3`}
             >
-              WHO WE ARE
+              OUR SERVICES
             </h2>
             
             <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed lg:w-2/3">
               <p>
-                We create stunning visualizations rooted in our deep understanding of architecture and interior design. Our professional background gives us a unique perspective, allowing us to merge creative vision with technical precision. We believe in a hands-on approach and dedicate ourselves to every project from start to finish. The result is high-quality renderings and animations that showcase a project&apos;s beauty and purpose.
-              </p>
-              <p>
-                We help architects, designers, and developers bring their visions to life. From a single image to a complete animation, our goal is to produce work that is not only effective but also inspiring and unforgettable.
+                We offer a comprehensive suite of 3D rendering, motion design, and virtual visualization packages tailored specifically for modern real estate developments, architectural showcases, and product marketing.
               </p>
             </div>
           </div>
@@ -433,6 +454,7 @@ export default function WhoWeAre({ locale, t }) {
                         <img
                           src={item.image}
                           alt={item.title}
+                          loading="lazy"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       )}
@@ -444,6 +466,30 @@ export default function WhoWeAre({ locale, t }) {
                   </Link>
                 );
               })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        ref={whoSectionRef}
+        className="w-full min-h-screen bg-[#0d0d0f] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 border-t border-white/10 snap-start flex flex-col justify-center"
+      >
+        <div className="w-full flex flex-col gap-12 md:gap-16">
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-8">
+            <h2
+              className={`title-3d ${whoInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase shrink-0 lg:w-1/3`}
+            >
+              WHO WE ARE
+            </h2>
+            
+            <div className="flex flex-col gap-8 text-lg sm:text-xl md:text-2xl text-white/80 leading-relaxed lg:w-2/3 max-w-4xl font-light">
+              <p>
+                We create stunning visualizations rooted in our deep understanding of architecture and interior design. Our professional background gives us a unique perspective, allowing us to merge creative vision with technical precision. We believe in a hands-on approach and dedicate ourselves to every project from start to finish. The result is high-quality renderings and animations that showcase a project&apos;s beauty and purpose.
+              </p>
+              <p className="text-white/60">
+                We help architects, designers, and developers bring their visions to life. From a single image to a complete animation, our goal is to produce work that is not only effective but also inspiring and unforgettable.
+              </p>
             </div>
           </div>
         </div>

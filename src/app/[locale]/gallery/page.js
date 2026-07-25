@@ -1,63 +1,438 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+
+function GalleryCard({ item, onClick }) {
+  const videoRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (item.type === "video" && videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (item.type === "video" && videoRef.current) {
+      videoRef.current.pause();
+    }
+  };
+
+  return (
+    <div
+      onClick={onClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`relative w-full bg-white/5 overflow-hidden rounded-lg group cursor-pointer border border-white/5 hover:border-white/15 transition-all duration-300 ${item.aspect}`}
+    >
+      {item.type === "video" ? (
+        <video
+          ref={videoRef}
+          src={item.src}
+          preload="metadata"
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+      ) : (
+        <img
+          src={item.src}
+          alt={item.title}
+          loading="lazy"
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+      )}
+      
+      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300" />
+
+      <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-[--color-accent] mb-1 font-semibold">
+          {item.category}
+        </span>
+        <h3 className="text-sm font-bold uppercase tracking-wider text-white">
+          {item.title}
+        </h3>
+        
+        <div className="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
+          {item.type === "video" ? (
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z"/>
+            </svg>
+          ) : (
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M12 5v14M5 12h14"/>
+            </svg>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function GalleryPage() {
-  const [activeFilter, setActiveFilter] = useState("All images");
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [selectedItemIndex, setSelectedItemIndex] = useState(null);
 
-  const filters = ["All images", "Exterior", "Interior"];
+  const categories = ["Exterior", "Interior", "360° Virtual Tour", "Cinemagraph"];
+
+  const categoryDescriptions = {
+    "All": "A curated collection of our high-end 3D visualizations, floorplans, and motion renderings.",
+    "Exterior": "Photorealistic architectural renderings showing buildings, structures, and landscaping in their real-world environments.",
+    "Interior": "Highly detailed internal designs capturing lighting, materials, and atmosphere to showcase living and commercial spaces.",
+    "360° Virtual Tour": "Immersive 360-degree interactive tours and VR experiences that allow clients to explore properties before they are built.",
+    "Cinemagraph": "Static architectural visualizations enhanced with subtle loop animations, drawing instant attention to key design details."
+  };
 
   const items = [
-    { id: 1, category: "Exterior", ratio: "aspect-[4/5]" },
-    { id: 2, category: "Interior", ratio: "aspect-[16/9]" },
-    { id: 3, category: "Exterior", ratio: "aspect-[4/3]" },
-    { id: 4, category: "Exterior", ratio: "aspect-[16/9]" },
-    { id: 5, category: "Interior", ratio: "aspect-[4/5]" },
-    { id: 6, category: "Interior", ratio: "aspect-[3/4]" },
-    { id: 7, category: "Exterior", ratio: "aspect-[1/1]" },
-    { id: 8, category: "Exterior", ratio: "aspect-[3/2]" },
-    { id: 9, category: "Interior", ratio: "aspect-[4/3]" },
+    // Exterior
+    {
+      id: 1,
+      category: "Exterior",
+      src: "/assets/heroImage.jpg",
+      type: "image",
+      title: "Modern Glass Villa",
+      aspect: "aspect-[4/5]"
+    },
+    {
+      id: 2,
+      category: "Exterior",
+      src: "/assets/home/3d tour.jpg",
+      type: "image",
+      title: "Minimalist Residence",
+      aspect: "aspect-[16/9]"
+    },
+    {
+      id: 3,
+      category: "Exterior",
+      src: "/assets/heroImage.jpg",
+      type: "image",
+      title: "Skyscraper At Dusk",
+      aspect: "aspect-[1/1]"
+    },
+    {
+      id: 4,
+      category: "Exterior",
+      src: "/assets/home/3d tour.jpg",
+      type: "image",
+      title: "Nordic Forest Cabin",
+      aspect: "aspect-[3/2]"
+    },
+    
+    // Interior
+    {
+      id: 5,
+      category: "Interior",
+      src: "/assets/home/3d tour.jpg",
+      type: "image",
+      title: "Cozy Living Room",
+      aspect: "aspect-[16/9]"
+    },
+    {
+      id: 6,
+      category: "Interior",
+      src: "/assets/home/3dplan_interior.jpg",
+      type: "image",
+      title: "Luminous Kitchen Plan",
+      aspect: "aspect-[4/5]"
+    },
+    {
+      id: 7,
+      category: "Interior",
+      src: "/assets/heroImage.jpg",
+      type: "image",
+      title: "Concrete Office Lobby",
+      aspect: "aspect-[4/3]"
+    },
+    {
+      id: 8,
+      category: "Interior",
+      src: "/assets/home/3d tour.jpg",
+      type: "image",
+      title: "Minimalist Bathroom",
+      aspect: "aspect-[3/2]"
+    },
+
+    // 360° Virtual Tour
+    {
+      id: 9,
+      category: "360° Virtual Tour",
+      src: "/assets/home/360 services.mp4",
+      type: "video",
+      title: "Luxury Penthouse VR",
+      aspect: "aspect-[4/3]"
+    },
+    {
+      id: 10,
+      category: "360° Virtual Tour",
+      src: "/assets/home/faqsection.mp4",
+      type: "video",
+      title: "Exhibition Pavilion VR",
+      aspect: "aspect-[16/9]"
+    },
+    {
+      id: 11,
+      category: "360° Virtual Tour",
+      src: "/assets/home/360 services.mp4",
+      type: "video",
+      title: "Virtual Office Tour",
+      aspect: "aspect-[1/1]"
+    },
+    {
+      id: 12,
+      category: "360° Virtual Tour",
+      src: "/assets/home/faqsection.mp4",
+      type: "video",
+      title: "Shopping Mall Panorama",
+      aspect: "aspect-[3/4]"
+    },
+
+    // Cinemagraph
+    {
+      id: 13,
+      category: "Cinemagraph",
+      src: "/assets/home/cinemagraph services.mp4",
+      type: "video",
+      title: "Cinemagraph Kitchen",
+      aspect: "aspect-[3/4]"
+    },
+    {
+      id: 14,
+      category: "Cinemagraph",
+      src: "/assets/home/360 services.mp4",
+      type: "video",
+      title: "Living Room Motion Decor",
+      aspect: "aspect-[4/3]"
+    },
+    {
+      id: 15,
+      category: "Cinemagraph",
+      src: "/assets/home/faqsection.mp4",
+      type: "video",
+      title: "Poolside Cinemagraph",
+      aspect: "aspect-[16/9]"
+    },
+    {
+      id: 16,
+      category: "Cinemagraph",
+      src: "/assets/home/cinemagraph services.mp4",
+      type: "video",
+      title: "Atrium Flowing Water",
+      aspect: "aspect-[4/5]"
+    }
   ];
 
   const filteredItems = items.filter(
-    (item) => activeFilter === "All images" || item.category === activeFilter
+    (item) => activeFilter === "All" || item.category === activeFilter
   );
 
+  const handlePrev = (e) => {
+    e.stopPropagation();
+    setSelectedItemIndex((prev) => 
+      prev === 0 ? filteredItems.length - 1 : prev - 1
+    );
+  };
+
+  const handleNext = (e) => {
+    e.stopPropagation();
+    setSelectedItemIndex((prev) => 
+      prev === filteredItems.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const handleClose = () => {
+    setSelectedItemIndex(null);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (selectedItemIndex === null) return;
+      if (e.key === "Escape") handleClose();
+      if (e.key === "ArrowLeft") setSelectedItemIndex((prev) => prev === 0 ? filteredItems.length - 1 : prev - 1);
+      if (e.key === "ArrowRight") setSelectedItemIndex((prev) => prev === filteredItems.length - 1 ? 0 : prev + 1);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedItemIndex, filteredItems.length]);
+
   return (
-    <main className="min-h-screen bg-[#0d0d0f] text-white pt-32 pb-24">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-8">
-        <div className="flex justify-center mb-12">
-          <div className="flex w-full max-w-3xl justify-between border-b border-white/10">
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`pb-4 px-4 text-xs md:text-sm tracking-widest uppercase transition-colors relative ${
-                  activeFilter === filter ? "text-white" : "text-white/50 hover:text-white/80"
-                }`}
-              >
-                {filter}
-                {activeFilter === filter && (
-                  <span className="absolute bottom-[-1px] left-0 w-full h-[1px] bg-white" />
-                )}
-              </button>
-            ))}
+    <div className="min-h-screen flex flex-col md:flex-row-reverse bg-[#0d0d0f] text-white">
+      {/* Right Sidebar (22% width on desktop) */}
+      <aside className="w-full md:w-[22%] h-auto md:h-screen sticky top-0 bg-[#101012] border-b md:border-b-0 md:border-l border-white/10 p-6 md:p-8 pt-24 md:pt-32 flex flex-col justify-between z-20 shrink-0">
+        <div className="flex flex-col gap-6 md:gap-8">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-bold tracking-widest uppercase mb-4 text-white">
+              Gallery
+            </h1>
+            <div className="h-[1px] bg-gradient-to-r from-white/20 to-transparent w-full mb-6" />
+          </div>
+
+          <div className="flex flex-col gap-4">
+            {/* All Button */}
+            <button
+              onClick={() => setActiveFilter("All")}
+              className={`w-full text-left py-2.5 px-4 rounded-lg tracking-widest uppercase text-[10px] font-bold border transition-all duration-300 cursor-pointer ${
+                activeFilter === "All"
+                  ? "bg-white/15 text-white border-white/30"
+                  : "bg-white/5 text-white/40 border-transparent hover:bg-white/10 hover:text-white"
+              }`}
+            >
+              All Projects
+            </button>
+
+            {/* Category Filter list */}
+            <div className="flex flex-col gap-1.5 pl-1">
+              {categories.map((cat) => {
+                const isActive = activeFilter === cat;
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveFilter(cat)}
+                    className="group flex items-center text-left py-2 px-1 text-xs tracking-wider uppercase font-semibold transition-all duration-300 relative cursor-pointer"
+                  >
+                    <span 
+                      className="w-1.5 h-1.5 rounded-full bg-[--color-accent] mr-3 transition-all duration-300"
+                      style={{
+                        opacity: isActive ? 1 : 0,
+                        transform: isActive ? "scale(1)" : "scale(0)",
+                      }}
+                    />
+                    <span
+                      className="transition-all duration-300 group-hover:translate-x-1"
+                      style={{
+                        color: isActive ? "#ffffff" : "rgba(255, 255, 255, 0.4)",
+                        transform: isActive ? "translateX(4px)" : "translateX(0)",
+                      }}
+                    >
+                      {cat}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        <div className="columns-1 md:columns-2 lg:columns-3 gap-2 md:gap-4 space-y-2 md:space-y-4">
-          {filteredItems.map((item) => (
+        {/* Bottom Category Description */}
+        <div className="border-t border-white/10 pt-6 mt-8 md:mt-0">
+          <p className="text-[9px] font-mono uppercase tracking-widest text-white/30 mb-2">Category Info</p>
+          <p className="text-[11px] md:text-xs text-white/50 leading-relaxed min-h-[48px] transition-all duration-300">
+            {categoryDescriptions[activeFilter] || categoryDescriptions["All"]}
+          </p>
+        </div>
+      </aside>
+
+      {/* Left Gallery Masonry Grid (78% width on desktop) */}
+      <main className="w-full md:w-[78%] min-h-screen pt-24 md:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
+        <div 
+          key={activeFilter}
+          className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
+        >
+          {filteredItems.map((item, idx) => (
             <div
               key={item.id}
-              className={`w-full bg-white/5 relative overflow-hidden break-inside-avoid group ${item.ratio}`}
+              style={{
+                animationDelay: `${idx * 45}ms`
+              }}
+              className="animate-fade-in-card opacity-0 break-inside-avoid mb-6"
             >
-              <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 transition-colors duration-500" />
-              <span className="absolute inset-0 flex items-center justify-center text-white/20 text-xs tracking-widest uppercase">
-                Placeholder {item.category}
-              </span>
+              <GalleryCard
+                item={item}
+                onClick={() => setSelectedItemIndex(idx)}
+              />
             </div>
           ))}
         </div>
-      </div>
-    </main>
+
+        <style>{`
+          @keyframes fadeInCard {
+            from {
+              opacity: 0;
+              transform: translateY(20px) scale(0.97);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0) scale(1);
+            }
+          }
+          .animate-fade-in-card {
+            animation: fadeInCard 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          }
+        `}</style>
+      </main>
+
+      {/* Lightbox Modal */}
+      {selectedItemIndex !== null && (
+        <div 
+          onClick={handleClose}
+          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4 md:p-12 transition-opacity duration-300"
+        >
+          {/* Close button */}
+          <button
+            onClick={handleClose}
+            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 cursor-pointer z-50"
+            aria-label="Close lightbox"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+
+          {/* Left Arrow */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-6 w-14 h-14 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 cursor-pointer z-50"
+            aria-label="Previous item"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M15 19l-7-7 7-7"/>
+            </svg>
+          </button>
+
+          {/* Right Arrow */}
+          <button
+            onClick={handleNext}
+            className="absolute right-6 w-14 h-14 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 cursor-pointer z-50"
+            aria-label="Next item"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+
+          {/* Lightbox Content */}
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-5xl max-h-[85vh] flex flex-col items-center justify-center"
+          >
+            {filteredItems[selectedItemIndex]?.type === "video" ? (
+              <video
+                key={filteredItems[selectedItemIndex].id}
+                src={filteredItems[selectedItemIndex].src}
+                controls
+                autoPlay
+                loop
+                className="max-w-full max-h-[70vh] rounded-lg object-contain shadow-2xl"
+              />
+            ) : (
+              <img
+                key={filteredItems[selectedItemIndex].id}
+                src={filteredItems[selectedItemIndex].src}
+                alt={filteredItems[selectedItemIndex].title}
+                className="max-w-full max-h-[70vh] rounded-lg object-contain shadow-2xl"
+              />
+            )}
+            
+            <div className="mt-6 text-center">
+              <span className="text-xs uppercase tracking-widest text-[--color-accent] font-semibold">
+                {filteredItems[selectedItemIndex]?.category}
+              </span>
+              <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-white mt-1">
+                {filteredItems[selectedItemIndex]?.title}
+              </h3>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

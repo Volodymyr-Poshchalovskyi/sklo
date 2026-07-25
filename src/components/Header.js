@@ -257,8 +257,11 @@ export default function Header({ t, locale, visible }) {
   ];
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => {
+      const isScrolled = window.scrollY > 20;
+      setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => {
       window.removeEventListener("scroll", onScroll);
@@ -302,7 +305,7 @@ export default function Header({ t, locale, visible }) {
           "opacity 0.7s ease, transform 0.7s ease, padding 0.5s ease, background 0.5s ease",
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+      <div className="w-full px-6 md:px-16 lg:px-24 flex items-center justify-between">
         <Link href={`/${locale}`} className="group flex items-center gap-3">
           <div className="relative w-12 h-12 overflow-hidden rounded-md transition-all duration-300 group-hover:scale-110 group-hover:rounded-lg">
             <Image src="/LogoHeader.svg" alt="SKLO Logo" fill className="object-cover" priority />
@@ -373,7 +376,7 @@ export default function Header({ t, locale, visible }) {
           pointerEvents: servicesMenuOpen ? "auto" : "none",
         }}
       >
-        <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between gap-12 py-8">
+        <div className="w-full px-6 md:px-16 lg:px-24 h-full flex items-center justify-between gap-12 py-8">
           {/* Left Column: Image/Video Preview */}
           <div className="w-[36%] h-[320px] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-2xl shrink-0">
             {servicesList.map((service, idx) => (

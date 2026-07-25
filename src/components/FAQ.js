@@ -5,6 +5,7 @@ import Link from "next/link";
 export default function FAQ({ locale = "en" }) {
   const [openIndex, setOpenIndex] = useState(0);
   const [inView, setInView] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
 
@@ -37,8 +38,9 @@ export default function FAQ({ locale = "en" }) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          videoEl.play().catch((err) => {
-            // Ignore autoplay restrictions
+          setVideoLoaded(true);
+          requestAnimationFrame(() => {
+            if (videoEl) videoEl.play().catch(() => {});
           });
         } else {
           videoEl.pause();
@@ -46,7 +48,7 @@ export default function FAQ({ locale = "en" }) {
       },
       {
         root: null,
-        rootMargin: "0px",
+        rootMargin: "200px",
         threshold: 0.01,
       }
     );
@@ -178,15 +180,14 @@ export default function FAQ({ locale = "en" }) {
       {/* Background Video */}
       <video
         ref={videoRef}
-        autoPlay
         loop
         muted
         playsInline
+        preload="none"
+        src={videoLoaded ? "/assets/home/faqsection.mp4" : undefined}
         className="absolute inset-0 w-full h-full object-cover z-0"
         style={{ pointerEvents: "none" }}
-      >
-        <source src="/assets/home/faqsection.mp4" type="video/mp4" />
-      </video>
+      />
 
       {/* Dark overlay to ensure readability */}
       <div className="absolute inset-0 bg-[#0d0d0f]/85 z-0" />
