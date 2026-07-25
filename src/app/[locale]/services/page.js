@@ -1,79 +1,96 @@
-export default async function ServicesPage({ params }) {
-  const { locale } = await params;
+"use client";
+import React, { useEffect, useRef } from "react";
+import Link from "next/link";
+import { servicesData } from "@/data/servicesData";
 
-  const services = [
-    {
-      title: "EXTERIOR VISUALIZATION",
-      desc: "Show your project from the best side with photorealistic exterior renderings. Must-have for successful marketing campaigns and investor attraction.",
-    },
-    {
-      title: "INTERIOR VISUALIZATION",
-      desc: "Showcase interiors with atmosphere and detail. Visualizations that help potential clients imagine life inside your project even on the construction stage.",
-    },
-    {
-      title: "ANIMATION | MOOD FILM",
-      desc: "A cinematic story that captures attention and excitement around your project. Experience the mood, the story, the life of your project through the screen.",
-    },
-    {
-      title: "BIRD-EYE VISUALISATION",
-      desc: "Highlight the project’s scale and surroundings. The best way to show context, infrastructure and overall appeal in one rendering.",
-    },
-    {
-      title: "360° VIRTUAL TOUR | VR",
-      desc: "Let your clients step inside before it’s real. Immersive tours that boosts engagement, trust and turns interest into purchase.",
-    },
-    {
-      title: "CINEMAGRAPH | LIVE SHOT",
-      desc: "Add life to static images for eye-catching WOW-effect. Subtle animations that grab attention instantly.",
-    },
-    {
-      title: "PRODUCT VISUALISATION",
-      desc: "High-end visuals for furniture, household appliances, materials or any living and architecture-related things. Perfect for catalogs, marketing and presentations.",
-    },
-    {
-      title: "VIRTUAL STAGING",
-      desc: "Turn empty spaces into dream homes. Cost-effective, realistic staging that boosts sales potential. Perfect for sales without physical staging costs.",
-    },
-    {
-      title: "GRAPHIC DESIGN",
-      desc: "From billboards, construction fences, brochures to logo, schemes and more — everything you need to strengthen brand identity, impress and attract clients.",
-    },
-    {
-      title: "3D FLOORPLANS",
-      desc: "Make layouts easy to understand. A clear visual tool that speeds up decision-making for buyers.",
-    },
-    {
-      title: "MEDIA & WEBSITE PACKAGES",
-      desc: "Eye-catching visuals, videos, mood images that keep your brand strong and memorable. High conversion rate and faster sales guaranteed!",
-    }
-  ];
+function ServiceMedia({ service }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => {
+      if (el) observer.unobserve(el);
+    };
+  }, []);
+
+  if (service.type === "video") {
+    return (
+      <video
+        ref={videoRef}
+        src={service.src}
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+      />
+    );
+  }
 
   return (
-    <main className="min-h-screen pt-32 pb-24 px-6 bg-[#0d0d0f] text-white">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-wide mb-16">
-          Services
-        </h1>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {services.map((service, index) => (
-            <div key={index} id={`service-${index}`} className="flex flex-col group scroll-mt-32">
-              <div className="w-full aspect-[4/5] bg-white/5 relative overflow-hidden mb-6">
-                <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 transition-colors duration-500" />
-                <span className="absolute inset-0 flex items-center justify-center text-white/20 text-xs tracking-widest uppercase">
-                  Placeholder
-                </span>
-              </div>
-              <h2 className="text-lg font-bold uppercase tracking-widest mb-3">
-                {service.title}
-              </h2>
-              <p className="text-sm text-white/70 leading-relaxed">
-                {service.desc}
-              </p>
-            </div>
-          ))}
-        </div>
-      </div>
+    <img
+      src={service.src}
+      alt={service.title}
+      loading="lazy"
+      className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+    />
+  );
+}
+
+export default function ServicesPage({ params }) {
+  const { locale } = React.use(params);
+
+  return (
+    <main className="w-full min-h-screen bg-[#0d0d0f] text-white flex flex-col pt-16">
+      {servicesData.map((service, index) => (
+        <section
+          key={index}
+          id={`service-${index}`}
+          className={`w-full min-h-[90vh] md:h-screen flex flex-col md:flex-row items-center border-b border-white/5 snap-start relative overflow-hidden scroll-mt-16 group ${
+            index % 2 === 1 ? "md:flex-row-reverse" : ""
+          }`}
+        >
+          {/* Text block (50% width on desktop) */}
+          <div className="w-full md:w-1/2 p-8 md:p-16 lg:p-24 flex flex-col justify-center h-full z-10 shrink-0">
+            <span className="text-4xl md:text-6xl font-script italic text-white/20 mb-4 block font-serif">
+              0{index + 1}
+            </span>
+            <h2 className="text-2xl md:text-4xl font-bold uppercase tracking-wider mb-6 text-white leading-tight">
+              {service.title}
+            </h2>
+            <p className="text-base md:text-lg text-white/70 leading-relaxed mb-8 max-w-lg">
+              {service.desc}
+            </p>
+            
+            <Link 
+              href={`/${locale}/services/${service.slug}`}
+              className="group inline-flex items-center gap-2.5 text-xs md:text-sm font-semibold tracking-widest uppercase border border-white/20 hover:border-white/50 bg-white/5 hover:bg-white/10 px-6 py-4 rounded-full transition-all duration-300 w-fit cursor-pointer"
+            >
+              {locale === "de" ? "Mehr erfahren" : "Learn more"}
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                <path d="M5 12h14M12 5l7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
+
+          {/* Media block (50% width on desktop) */}
+          <div className="w-full md:w-1/2 h-[45vh] md:h-full relative overflow-hidden bg-white/5 border-t md:border-t-0 border-white/5 z-0 shrink-0 self-stretch">
+            <ServiceMedia service={service} />
+          </div>
+        </section>
+      ))}
     </main>
   );
 }
