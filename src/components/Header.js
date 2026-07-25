@@ -4,11 +4,13 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
-function NavLink({ href, label, isActive }) {
+function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick }) {
   const lettersRef = useRef([]);
   const timeoutsRef = useRef([]);
 
   const handleMouseEnter = () => {
+    if (onMouseEnter) onMouseEnter();
+
     timeoutsRef.current.forEach(clearTimeout);
     timeoutsRef.current = [];
 
@@ -34,6 +36,8 @@ function NavLink({ href, label, isActive }) {
     <Link
       href={href}
       onMouseEnter={handleMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onClick={onClick}
       className="relative px-5 py-2.5 text-lg font-medium transition-all duration-300 flex items-center rounded-full"
       style={{
         perspective: "600px",
@@ -158,10 +162,91 @@ function LangDropdown({ locale }) {
   );
 }
 
+function MenuPreviewItem({ service, isActive }) {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    if (!service.video) return;
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+
+    if (isActive) {
+      videoEl.play().catch(() => {});
+    } else {
+      videoEl.pause();
+    }
+  }, [isActive, service.video]);
+
+  return (
+    <div
+      className="absolute inset-0 overflow-hidden transition-all duration-700 ease-in-out"
+      style={{
+        opacity: isActive ? 1 : 0,
+        pointerEvents: "none",
+        transform: isActive ? "scale(1)" : "scale(1.08)",
+        transition: "opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)",
+      }}
+    >
+      {service.video ? (
+        <video
+          ref={videoRef}
+          src={service.video}
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        <img
+          src={service.image}
+          alt={service.title}
+          className="w-full h-full object-cover"
+        />
+      )}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
+      <div className="absolute bottom-6 left-6 z-10">
+        <p className="text-[10px] uppercase tracking-widest text-white/40 mb-1.5 font-mono">
+          SKLO Service Preview
+        </p>
+        <div className="overflow-hidden">
+          <h4 className="text-lg font-bold uppercase tracking-wider text-white">
+            <span
+              className="inline-block transition-transform duration-500 ease-out"
+              style={{
+                transform: isActive ? "translateY(0)" : "translateY(100%)",
+                transitionDelay: isActive ? "120ms" : "0ms",
+              }}
+            >
+              {service.title}
+            </span>
+          </h4>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Header({ t, locale, visible }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
+  const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const pathname = usePathname();
+  const timeoutRef = useRef(null);
+
+  const servicesList = [
+    { id: "01", title: "EXTERIOR VISUALIZATION", image: "/assets/home/3d tour.jpg", href: `/${locale}/services#service-0` },
+    { id: "02", title: "INTERIOR VISUALIZATION", image: "/assets/home/3d tour.jpg", href: `/${locale}/services#service-1` },
+    { id: "03", title: "ANIMATION | MOOD FILM", image: "/assets/home/3d tour.jpg", href: `/${locale}/services#service-2` },
+    { id: "04", title: "BIRD-EYE VISUALISATION", image: "/assets/home/3d tour.jpg", href: `/${locale}/services#service-3` },
+    { id: "05", title: "360° VIRTUAL TOUR | VR", video: "/assets/home/360 services.mp4", href: `/${locale}/services#service-4` },
+    { id: "06", title: "CINEMAGRAPH | LIVE SHOT", video: "/assets/home/cinemagraph services.mp4", href: `/${locale}/services#service-5` },
+    { id: "07", title: "PRODUCT VISUALISATION", image: "/assets/home/3d tour.jpg", href: `/${locale}/services#service-6` },
+    { id: "08", title: "VIRTUAL STAGING", image: "/assets/home/3d tour.jpg", href: `/${locale}/services#service-7` },
+    { id: "09", title: "GRAPHIC DESIGN", image: "/assets/home/3d tour.jpg", href: `/${locale}/services#service-8` },
+    { id: "10", title: "3D FLOORPLANS", image: "/assets/home/3dplan_interior.jpg", href: `/${locale}/services#service-9` },
+    { id: "11", title: "MEDIA & WEBSITE PACKAGES", image: "/assets/home/3d tour.jpg", href: `/${locale}/services#service-10` },
+  ];
 
   const navItems = [
     { key: "home",     label: t?.nav?.home     ?? "Home",     href: `/${locale}` },
@@ -175,8 +260,26 @@ export default function Header({ t, locale, visible }) {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
+
+  useEffect(() => {
+    setServicesMenuOpen(false);
+  }, [pathname]);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setServicesMenuOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setServicesMenuOpen(false);
+    }, 150);
+  };
 
   const checkIsActive = (href) => {
     if (href === `/${locale}`) {
@@ -190,9 +293,9 @@ export default function Header({ t, locale, visible }) {
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         padding: scrolled ? "1.05rem 0" : "1.65rem 0",
-        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent",
-        background: scrolled ? "rgba(0,0,0,0.65)" : "transparent",
-        backdropFilter: "blur(16px)",
+        borderBottom: (scrolled && !servicesMenuOpen) ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent",
+        background: (scrolled || servicesMenuOpen) ? "rgba(10,10,12,0.85)" : "transparent",
+        backdropFilter: "blur(24px) saturate(180%)",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-12px)",
         transition:
@@ -207,14 +310,27 @@ export default function Header({ t, locale, visible }) {
         </Link>
 
         <div className="hidden md:flex items-center gap-2.5">
-          {navItems.map(({ key, label, href }) => (
-            <NavLink
-              key={key}
-              href={href}
-              label={label}
-              isActive={checkIsActive(href)}
-            />
-          ))}
+          {navItems.map(({ key, label, href }) => {
+            const isServices = key === "services";
+            const isActive = checkIsActive(href) || (isServices && servicesMenuOpen);
+            return (
+              <NavLink
+                key={key}
+                href={href}
+                label={label}
+                isActive={isActive}
+                onMouseEnter={isServices ? handleMouseEnter : () => {
+                  if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                  setServicesMenuOpen(false);
+                }}
+                onMouseLeave={isServices ? handleMouseLeave : undefined}
+                onClick={() => {
+                  if (timeoutRef.current) clearTimeout(timeoutRef.current);
+                  setServicesMenuOpen(false);
+                }}
+              />
+            );
+          })}
 
           <div className="w-px h-5 bg-white/20 mx-4" />
 
@@ -239,6 +355,115 @@ export default function Header({ t, locale, visible }) {
           <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
           <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
         </button>
+      </div>
+
+      {/* Services Mega Menu Dropdown */}
+      <div
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="hidden md:block absolute left-0 right-0 overflow-hidden"
+        style={{
+          top: "100%",
+          background: "rgba(10,10,12,0.85)",
+          backdropFilter: "blur(24px) saturate(180%)",
+          borderBottom: servicesMenuOpen ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent",
+          height: servicesMenuOpen ? "420px" : "0px",
+          opacity: servicesMenuOpen ? 1 : 0,
+          transition: "height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, border-color 0.3s ease",
+          pointerEvents: servicesMenuOpen ? "auto" : "none",
+        }}
+      >
+        <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between gap-12 py-8">
+          {/* Left Column: Image/Video Preview */}
+          <div className="w-[36%] h-[320px] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-2xl shrink-0">
+            {servicesList.map((service, idx) => (
+              <MenuPreviewItem
+                key={service.id}
+                service={service}
+                isActive={idx === activeServiceIndex}
+              />
+            ))}
+          </div>
+
+          {/* Vertical Divider */}
+          <div className="w-[1px] h-[280px] bg-gradient-to-b from-transparent via-white/10 to-transparent shrink-0" />
+
+          {/* Right Column: Numbered list of services */}
+          <div className="w-[56%] grid grid-cols-2 gap-x-6 gap-y-2.5">
+            {servicesList.map((service, idx) => {
+              const isActive = idx === activeServiceIndex;
+              return (
+                <Link
+                  key={service.id}
+                  href={service.href}
+                  onMouseEnter={() => setActiveServiceIndex(idx)}
+                  onClick={() => setServicesMenuOpen(false)}
+                  className="group flex items-center py-2 px-3 rounded-lg border border-transparent transition-all duration-300 relative overflow-hidden"
+                  style={{
+                    background: isActive ? "rgba(255,255,255,0.03)" : "transparent",
+                    animationName: servicesMenuOpen ? "megaMenuSlideIn" : "none",
+                    animationDuration: "0.5s",
+                    animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                    animationFillMode: "forwards",
+                    animationDelay: `${idx * 25}ms`,
+                    opacity: 0,
+                  }}
+                >
+                  {/* Left accent line indicator */}
+                  <div
+                    className="absolute left-0 top-0 bottom-0 w-[2px] bg-white transition-all duration-300"
+                    style={{
+                      transform: isActive ? "scaleY(1)" : "scaleY(0)",
+                      opacity: isActive ? 1 : 0,
+                    }}
+                  />
+
+                  <span
+                    className="font-mono text-xs tracking-wider mr-2 transition-all duration-300 flex items-center shrink-0"
+                    style={{
+                      color: isActive ? "#ffffff" : "rgba(255,255,255,0.2)",
+                      transform: isActive ? "translateX(4px)" : "translateX(0)",
+                    }}
+                  >
+                    {service.id}
+                    <span
+                      className="inline-block h-[1px] bg-white/30 transition-all duration-500 ease-out"
+                      style={{
+                        width: isActive ? "20px" : "0px",
+                        marginLeft: isActive ? "8px" : "0px",
+                        marginRight: isActive ? "8px" : "0px",
+                        opacity: isActive ? 1 : 0,
+                      }}
+                    />
+                  </span>
+                  
+                  <span
+                    className="text-xs lg:text-sm font-semibold uppercase tracking-wider lg:tracking-widest transition-all duration-300 truncate"
+                    style={{
+                      color: isActive ? "#ffffff" : "rgba(255,255,255,0.45)",
+                      transform: isActive ? "translateX(6px)" : "translateX(0)",
+                    }}
+                  >
+                    {service.title}
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        <style>{`
+          @keyframes megaMenuSlideIn {
+            0% {
+              opacity: 0;
+              transform: translateY(8px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        `}</style>
       </div>
 
       <div

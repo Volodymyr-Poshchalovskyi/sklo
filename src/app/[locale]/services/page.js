@@ -57,7 +57,7 @@ export default async function ServicesPage({ params }) {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
           {services.map((service, index) => (
-            <div key={index} className="flex flex-col group">
+            <div key={index} id={`service-${index}`} className="flex flex-col group scroll-mt-32">
               <div className="w-full aspect-[4/5] bg-white/5 relative overflow-hidden mb-6">
                 <div className="absolute inset-0 bg-white/5 group-hover:bg-white/10 transition-colors duration-500" />
                 <span className="absolute inset-0 flex items-center justify-center text-white/20 text-xs tracking-widest uppercase">

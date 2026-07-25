@@ -161,6 +161,45 @@ export default function WhoWeAre({ locale, t }) {
 
 
 
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftStartRef = useRef(0);
+  const dragDistanceRef = useRef(0);
+
+  const handleMouseDown = (e) => {
+    if (e.button !== 0) return; // Left click only
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX - carouselRef.current.offsetLeft;
+    scrollLeftStartRef.current = carouselRef.current.scrollLeft;
+    dragDistanceRef.current = 0;
+
+    carouselRef.current.style.scrollSnapType = "none";
+    carouselRef.current.style.scrollBehavior = "auto";
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDraggingRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    dragDistanceRef.current = Math.abs(x - startXRef.current);
+    carouselRef.current.scrollLeft = scrollLeftStartRef.current - walk;
+  };
+
+  const handleMouseUpOrLeave = () => {
+    if (!isDraggingRef.current) return;
+    isDraggingRef.current = false;
+    carouselRef.current.style.scrollSnapType = "x mandatory";
+    carouselRef.current.style.scrollBehavior = "smooth";
+  };
+
+  const handleLinkClick = (e) => {
+    if (dragDistanceRef.current > 10) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
   const scrollLeft = () => {
     if (carouselRef.current) {
       const scrollAmount = getCardWidthWithGap();
@@ -175,30 +214,42 @@ export default function WhoWeAre({ locale, t }) {
     }
   };
 
-  // Handle infinite scroll loop transitions
   const handleScroll = () => {
     if (!carouselRef.current) return;
-    const { scrollLeft: currentScrollLeft } = carouselRef.current;
+    const el = carouselRef.current;
+    const { scrollLeft: currentScrollLeft } = el;
     const cardWidth = getCardWidthWithGap();
     const singleSectionWidth = baseItems.length * cardWidth;
 
-    // If scrolled left past 0.5 * singleSectionWidth, jump forward by 1 section
     if (currentScrollLeft < 0.5 * singleSectionWidth) {
-      carouselRef.current.style.scrollBehavior = "auto";
-      carouselRef.current.scrollLeft += singleSectionWidth;
+      el.style.scrollSnapType = "none";
+      el.style.scrollBehavior = "auto";
+      el.scrollLeft += singleSectionWidth;
+      
+      if (isDraggingRef.current) {
+        scrollLeftStartRef.current += singleSectionWidth;
+      }
+
       requestAnimationFrame(() => {
         if (carouselRef.current) {
-          carouselRef.current.style.scrollBehavior = "smooth";
+          carouselRef.current.style.scrollSnapType = isDraggingRef.current ? "none" : "x mandatory";
+          carouselRef.current.style.scrollBehavior = isDraggingRef.current ? "auto" : "smooth";
         }
       });
     }
-    // If scrolled right past 1.5 * singleSectionWidth, jump backward by 1 section
     else if (currentScrollLeft > 1.5 * singleSectionWidth) {
-      carouselRef.current.style.scrollBehavior = "auto";
-      carouselRef.current.scrollLeft -= singleSectionWidth;
+      el.style.scrollSnapType = "none";
+      el.style.scrollBehavior = "auto";
+      el.scrollLeft -= singleSectionWidth;
+
+      if (isDraggingRef.current) {
+        scrollLeftStartRef.current -= singleSectionWidth;
+      }
+
       requestAnimationFrame(() => {
         if (carouselRef.current) {
-          carouselRef.current.style.scrollBehavior = "smooth";
+          carouselRef.current.style.scrollSnapType = isDraggingRef.current ? "none" : "x mandatory";
+          carouselRef.current.style.scrollBehavior = isDraggingRef.current ? "auto" : "smooth";
         }
       });
     }
@@ -299,7 +350,11 @@ export default function WhoWeAre({ locale, t }) {
             <div
               ref={carouselRef}
               onScroll={handleScroll}
-              className="flex gap-5 overflow-x-auto py-2 no-scrollbar select-none snap-x snap-mandatory"
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUpOrLeave}
+              onMouseLeave={handleMouseUpOrLeave}
+              className="flex gap-5 overflow-x-auto py-2 no-scrollbar select-none snap-x snap-mandatory cursor-grab active:cursor-grabbing"
               style={{
                 scrollBehavior: "smooth",
                 scrollbarWidth: "none",
@@ -312,6 +367,7 @@ export default function WhoWeAre({ locale, t }) {
                     <Link
                       key={item.uniqueId}
                       href={`/${locale}/services`}
+                      onClick={handleLinkClick}
                       className="flex-shrink-0 w-[220px] sm:w-[260px] lg:w-[calc((100%-60px)/4)] flex flex-col gap-4 group cursor-pointer snap-start"
                       draggable="false"
                     >
@@ -337,6 +393,7 @@ export default function WhoWeAre({ locale, t }) {
                   <Link
                     key={item.uniqueId}
                     href={`/${locale}/services`}
+                    onClick={handleLinkClick}
                     className="flex-shrink-0 w-[220px] sm:w-[260px] lg:w-[calc((100%-60px)/4)] flex flex-col gap-4 group cursor-pointer snap-start"
                     draggable="false"
                   >
