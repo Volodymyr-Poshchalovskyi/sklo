@@ -63,6 +63,10 @@ export default function WhoWeAre({ locale, t }) {
   const sectionRef = useRef(null);
   const carouselRef = useRef(null);
 
+  // Values Section states
+  const [valuesInView, setValuesInView] = useState(false);
+  const valuesSectionRef = useRef(null);
+
   // Initialization states
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -298,21 +302,43 @@ export default function WhoWeAre({ locale, t }) {
     };
   }, []);
 
+  useEffect(() => {
+    const el = valuesSectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setValuesInView(true);
+          observer.unobserve(el);
+        }
+      },
+      {
+        rootMargin: "-64px 0px -92% 0px",
+      }
+    );
+
+    observer.observe(el);
+    return () => {
+      if (el) observer.unobserve(el);
+    };
+  }, []);
+
   return (
     <>
       <section
         ref={sectionRef}
-        className="w-full bg-[#0d0d0f] text-white pt-10 pb-4 px-6 md:px-16 lg:px-28 xl:px-40 border-t border-white/10 snap-start"
+        className="w-full min-h-screen bg-[#0d0d0f] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 border-t border-white/10 snap-start flex flex-col justify-center"
       >
-        <div className="w-full flex flex-col gap-10">
-          <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
+        <div className="w-full flex flex-col gap-12 md:gap-16">
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-8">
             <h2
               className={`title-3d ${inView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase shrink-0 lg:w-1/3`}
             >
               WHO WE ARE
             </h2>
             
-            <div className="flex flex-col gap-4 text-xs sm:text-sm md:text-base text-white/70 leading-relaxed lg:w-2/3">
+            <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed lg:w-2/3">
               <p>
                 We create stunning visualizations rooted in our deep understanding of architecture and interior design. Our professional background gives us a unique perspective, allowing us to merge creative vision with technical precision. We believe in a hands-on approach and dedicate ourselves to every project from start to finish. The result is high-quality renderings and animations that showcase a project&apos;s beauty and purpose.
               </p>
@@ -423,8 +449,25 @@ export default function WhoWeAre({ locale, t }) {
         </div>
       </section>
 
-      <section className="w-full bg-[#0d0d0f] text-white pt-8 pb-20 px-6 md:px-16 lg:px-28 xl:px-40">
-        <div className="w-full">
+      <section
+        ref={valuesSectionRef}
+        className="w-full min-h-screen bg-[#0d0d0f] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 border-t border-white/10 snap-start flex flex-col justify-center"
+      >
+        <div className="w-full flex flex-col gap-12 md:gap-16">
+          <div className="flex flex-col lg:flex-row justify-between items-start gap-8">
+            <h2
+              className={`title-3d ${valuesInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase shrink-0 lg:w-1/3`}
+            >
+              OUR VALUES
+            </h2>
+            
+            <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed lg:w-2/3">
+              <p>
+                Our core values guide every visual experience we craft. From clear communication and architecture-grade precision to delivering stunning realism and meeting tight deadlines, we are committed to elevating your presentation and turning ideas into breathtaking realities.
+              </p>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
             {features.map((feature, idx) => (
               <div key={idx} className="flex gap-5 items-start">

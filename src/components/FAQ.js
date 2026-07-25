@@ -173,7 +173,7 @@ export default function FAQ({ locale = "en" }) {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full py-32 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden bg-[#0d0d0f] text-white border-t border-white/10"
+      className="relative w-full min-h-screen py-20 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden bg-[#0d0d0f] text-white border-t border-white/10 snap-start flex flex-col justify-center"
     >
       {/* Background Video */}
       <video
@@ -194,7 +194,7 @@ export default function FAQ({ locale = "en" }) {
       {/* Top and Bottom soft fade */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d0f] via-transparent to-[#0d0d0f] z-0" />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24 items-start w-full">
         <h2 
           className={`title-3d ${inView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase shrink-0 lg:w-1/3`}
         >
@@ -211,21 +211,21 @@ export default function FAQ({ locale = "en" }) {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                  className="w-full flex justify-between items-center py-8 text-left focus:outline-none group cursor-pointer"
+                  className="w-full flex justify-between items-center py-10 text-left focus:outline-none group cursor-pointer"
                 >
-                  <span className="text-lg sm:text-xl font-semibold tracking-wide text-white/90 group-hover:text-white transition-colors duration-300">
+                  <span className="text-xl sm:text-2xl font-semibold tracking-wide text-white/90 group-hover:text-white transition-colors duration-300">
                     {faq.question}
                   </span>
-                  <span className="text-2xl sm:text-3xl font-light ml-4 text-white/60 group-hover:text-white transition-colors duration-300">
+                  <span className="text-3xl sm:text-4xl font-light ml-4 text-white/60 group-hover:text-white transition-colors duration-300">
                     {isOpen ? "−" : "+"}
                   </span>
                 </button>
                 <div 
                   className={`transition-all duration-500 ease-in-out ${
-                    isOpen ? "max-h-[1200px] opacity-100 pb-8 pt-2" : "max-h-0 opacity-0 pb-0 pt-0"
+                    isOpen ? "max-h-[1200px] opacity-100 pb-10 pt-2" : "max-h-0 opacity-0 pb-0 pt-0"
                   }`}
                 >
-                  <div className="text-base sm:text-lg text-white/70 leading-relaxed max-w-3xl">
+                  <div className="text-lg sm:text-xl text-white/70 leading-relaxed max-w-3xl">
                     {faq.answer}
                   </div>
                 </div>
