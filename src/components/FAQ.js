@@ -175,7 +175,7 @@ export default function FAQ({ locale = "en" }) {
   return (
     <section 
       ref={sectionRef}
-      className="relative w-full min-h-screen py-20 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden bg-[#0d0d0f] text-white border-t border-white/10 snap-start flex flex-col justify-center"
+      className="faq-section relative w-full min-h-screen py-20 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden bg-[#0d0d0f] text-white border-t border-white/10 snap-start flex flex-col justify-center"
     >
       {/* Background Video */}
       <video

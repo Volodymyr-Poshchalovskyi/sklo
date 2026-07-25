@@ -299,7 +299,7 @@ export default function GalleryPage() {
                     <span
                       className="transition-all duration-300 group-hover:translate-x-1"
                       style={{
-                        color: isActive ? "#ffffff" : "rgba(255, 255, 255, 0.4)",
+                        color: isActive ? "var(--color-text)" : "var(--color-text-muted)",
                         transform: isActive ? "translateX(4px)" : "translateX(0)",
                       }}
                     >

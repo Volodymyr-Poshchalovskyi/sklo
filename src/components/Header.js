@@ -231,8 +231,30 @@ export default function Header({ t, locale, visible }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
+  const [theme, setTheme] = useState("dark");
   const pathname = usePathname();
   const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    const initialTheme = document.documentElement.getAttribute("data-theme") || "dark";
+    setTheme(initialTheme);
+
+    const handleThemeChange = () => {
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      setTheme(currentTheme);
+    };
+
+    window.addEventListener("theme-change", handleThemeChange);
+    return () => window.removeEventListener("theme-change", handleThemeChange);
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    document.documentElement.setAttribute("data-theme", nextTheme);
+    localStorage.setItem("sklo-theme", nextTheme);
+    window.dispatchEvent(new Event("theme-change"));
+  };
 
   const servicesList = [
     { id: "01", title: "EXTERIOR VISUALIZATION", image: "/assets/home/3d tour.jpg", href: `/${locale}/services#service-0` },
@@ -308,7 +330,13 @@ export default function Header({ t, locale, visible }) {
       <div className="w-full px-6 md:px-16 lg:px-24 flex items-center justify-between">
         <Link href={`/${locale}`} className="group flex items-center gap-3">
           <div className="relative w-12 h-12 overflow-hidden rounded-md transition-all duration-300 group-hover:scale-110 group-hover:rounded-lg">
-            <Image src="/LogoHeader.svg" alt="SKLO Logo" fill className="object-cover" priority />
+            <Image 
+              src="/LogoHeader.svg" 
+              alt="SKLO Logo" 
+              fill 
+              className="object-cover logo-image" 
+              priority 
+            />
           </div>
         </Link>
 
@@ -339,6 +367,24 @@ export default function Header({ t, locale, visible }) {
 
           <LangDropdown locale={locale} />
           
+          {/* Theme Switcher Button */}
+          <button 
+            onClick={toggleTheme}
+            className="w-10 h-10 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all duration-300 ml-4 cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
+          </button>
+          
           <Link
             href={`/${locale}/contact`}
             className={`ml-4 text-base font-semibold px-7 py-3 rounded-full bg-white text-black transition-all duration-500 hover:bg-white/80 ${
@@ -349,15 +395,35 @@ export default function Header({ t, locale, visible }) {
           </Link>
         </div>
 
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col gap-2 p-2"
-          aria-label="Toggle menu"
-        >
-          <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-          <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-        </button>
+        <div className="md:hidden flex items-center gap-3">
+          {/* Mobile Theme Switcher */}
+          <button 
+            onClick={toggleTheme}
+            className="w-10 h-10 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all duration-300 cursor-pointer"
+            aria-label="Toggle theme"
+          >
+            {theme === "dark" ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+              </svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
+          </button>
+
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="flex flex-col gap-2 p-2"
+            aria-label="Toggle menu"
+          >
+            <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
+            <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          </button>
+        </div>
       </div>
 
       {/* Services Mega Menu Dropdown */}

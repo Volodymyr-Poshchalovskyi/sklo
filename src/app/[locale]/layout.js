@@ -90,7 +90,20 @@ export default async function LocaleLayout({ children, params }) {
     <html
       lang={locale}
       className={`${inter.variable} ${spaceGrotesk.variable} ${cormorant.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                var theme = localStorage.getItem('sklo-theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', theme);
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen flex flex-col bg-[--color-bg] text-[--color-text]">
         <ClientWrapper locale={locale} t={t} initialShowLoader={initialShowLoader}>
           <div className="flex-1">
