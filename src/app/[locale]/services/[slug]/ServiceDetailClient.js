@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import ServicesCarousel from "@/components/ServicesCarousel";
 
 // Helper component to render step media dynamically
 function StepMedia({ src, type }) {
@@ -75,6 +76,14 @@ const getStepMedia = (service, index) => {
 };
 
 export default function ServiceDetailClient({ service, otherServices, locale }) {
+  const otherServiceItems = otherServices.map((other) => ({
+    id: other.slug,
+    title: other.title,
+    image: other.type === "video" ? undefined : other.src,
+    video: other.type === "video" ? other.src : undefined,
+    href: `/${locale}/services/${other.slug}`,
+  }));
+
   const [activeMediaIndex, setActiveMediaIndex] = useState(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isPipelineInView, setIsPipelineInView] = useState(false);
@@ -440,50 +449,12 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {otherServices.map((other, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: idx * 0.1, ease: "easeOut" }}
-              >
-                <Link 
-                  href={`/${locale}/services/${other.slug}`}
-                  className="group flex flex-col bg-[--color-surface] border border-[--color-border] rounded-3xl overflow-hidden transition-all duration-300 hover:border-[--color-accent] hover:translate-y-[-6px] cursor-pointer"
-                >
-                  <div className="w-full aspect-[16/10] overflow-hidden bg-white/5 relative">
-                    {other.type === "video" ? (
-                      <video
-                        src={other.src}
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
-                        className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
-                      />
-                    ) : (
-                      <img 
-                        src={other.src} 
-                        alt={other.title} 
-                        loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-[1.2s] group-hover:scale-105"
-                      />
-                    )}
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-base font-bold uppercase tracking-widest mb-2 text-white group-hover:text-[--color-accent] transition-colors duration-300">
-                      {other.title}
-                    </h3>
-                    <p className="text-xs text-white/60 leading-relaxed line-clamp-2">
-                      {other.desc}
-                    </p>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
+          <ServicesCarousel
+            items={otherServiceItems}
+            defaultHref={`/${locale}/services`}
+            viewAllHref={`/${locale}/services`}
+            viewAllLabel={locale === "de" ? "ALLE DIENSTLEISTUNGEN" : "ALL SERVICES"}
+          />
         </div>
       </section>
 

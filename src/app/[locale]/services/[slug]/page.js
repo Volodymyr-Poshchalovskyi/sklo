@@ -11,9 +11,7 @@ export default async function ServiceDetailPage({ params }) {
     notFound();
   }
 
-  const otherServices = servicesData
-    .filter((s) => s.slug !== slug)
-    .slice(0, 3);
+  const otherServices = servicesData.filter((s) => s.slug !== slug);
 
   return (
     <ServiceDetailClient

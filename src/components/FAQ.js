@@ -195,14 +195,14 @@ export default function FAQ({ locale = "en" }) {
       {/* Top and Bottom soft fade */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0d0d0f] via-transparent to-[#0d0d0f] z-0" />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row gap-12 lg:gap-24 items-start w-full">
-        <h2 
-          className={`title-3d ${inView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase shrink-0 lg:w-1/3`}
+      <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start w-full">
+        <h2
+          className={`title-3d ${inView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase`}
         >
           FAQS
         </h2>
-        
-        <div className="flex flex-col w-full lg:w-2/3">
+
+        <div className="flex flex-col w-full">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index;
             return (
