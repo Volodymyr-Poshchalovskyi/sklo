@@ -70,9 +70,10 @@ function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick })
   );
 }
 
-function LangDropdown({ locale }) {
+function LangDropdown({ locale, theme }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const isLight = theme === "light";
 
   const langs = [
     { code: "en", label: "English" },
@@ -95,8 +96,8 @@ function LangDropdown({ locale }) {
         onClick={() => setOpen((v) => !v)}
         className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full border transition-all duration-300"
         style={{
-          borderColor: "rgba(255,255,255,0.2)",
-          color: "rgba(255,255,255,0.6)",
+          borderColor: isLight ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)",
+          color: isLight ? "#121214" : "rgba(255,255,255,0.6)",
         }}
       >
         <svg
@@ -125,9 +126,10 @@ function LangDropdown({ locale }) {
           top: "calc(100% + 8px)",
           left: "50%",
           minWidth: "150px",
-          background: "rgba(255, 255, 255, 0.08)",
-          border: "1px solid rgba(255, 255, 255, 0.15)",
+          background: isLight ? "#ffffff" : "rgba(20,20,24,0.98)",
+          border: isLight ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.15)",
           borderRadius: "10px",
+          boxShadow: isLight ? "0 4px 20px rgba(0,0,0,0.1)" : "none",
           backdropFilter: "blur(20px)",
           WebkitBackdropFilter: "blur(20px)",
           overflow: "hidden",
@@ -137,26 +139,35 @@ function LangDropdown({ locale }) {
           transition: "opacity 0.2s ease, transform 0.2s ease",
         }}
       >
-        {langs.map((lang) => (
-          <Link
-            key={lang.code}
-            href={`/${lang.code}`}
-            onClick={() => setOpen(false)}
-            className="flex items-center gap-2.5 px-5 py-3 text-sm transition-colors duration-150 hover:bg-white/10"
-            style={{
-              color: lang.code === locale ? "#ffffff" : "rgba(255,255,255,0.5)",
-              background: lang.code === locale ? "rgba(255,255,255,0.12)" : "transparent",
-            }}
-          >
-            {lang.code === locale && (
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
-              </svg>
-            )}
-            {lang.code !== locale && <span style={{ width: 12, display: "inline-block" }} />}
-            {lang.label}
-          </Link>
-        ))}
+        {langs.map((lang) => {
+          const isActive = lang.code === locale;
+          return (
+            <Link
+              key={lang.code}
+              href={`/${lang.code}`}
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 px-5 py-3 text-sm transition-colors duration-150"
+              style={{
+                color: isActive ? (isLight ? "#121214" : "#ffffff") : (isLight ? "rgba(18,18,20,0.55)" : "rgba(255,255,255,0.5)"),
+                background: isActive ? (isLight ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.12)") : "transparent",
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) e.currentTarget.style.background = isLight ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.08)";
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) e.currentTarget.style.background = "transparent";
+              }}
+            >
+              {isActive && (
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                </svg>
+              )}
+              {!isActive && <span style={{ width: 12, display: "inline-block" }} />}
+              {lang.label}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
@@ -205,14 +216,15 @@ function MenuPreviewItem({ service, isActive }) {
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
       <div className="absolute bottom-6 left-6 z-10">
-        <p className="text-[10px] uppercase tracking-widest text-white/40 mb-1.5 font-mono">
+        <p className="text-[10px] uppercase tracking-widest mb-1.5 font-mono" style={{ color: "rgba(255,255,255,0.4)" }}>
           SKLO Service Preview
         </p>
         <div className="overflow-hidden">
-          <h4 className="text-lg font-bold uppercase tracking-wider text-white">
+          <h4 className="text-lg font-bold uppercase tracking-wider" style={{ color: "#ffffff" }}>
             <span
-              className="inline-block transition-transform duration-500 ease-out"
+              className="service-preview-title inline-block transition-transform duration-500 ease-out"
               style={{
+                color: "#ffffff",
                 transform: isActive ? "translateY(0)" : "translateY(100%)",
                 transitionDelay: isActive ? "120ms" : "0ms",
               }}
@@ -319,13 +331,17 @@ export default function Header({ t, locale, visible }) {
       className="fixed top-0 left-0 right-0 z-50"
       style={{
         padding: scrolled ? "1.05rem 0" : "1.65rem 0",
-        borderBottom: (scrolled && !servicesMenuOpen) ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent",
-        background: (scrolled || servicesMenuOpen) ? "rgba(10,10,12,0.85)" : "transparent",
+        borderBottom: (scrolled && !servicesMenuOpen)
+          ? `1px solid ${theme === "light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)"}`
+          : "1px solid transparent",
+        background: (scrolled || servicesMenuOpen)
+          ? (theme === "light" ? "#ffffff" : "#0a0a0c")
+          : (theme === "light" ? "rgba(255,255,255,0.42)" : "rgba(8,8,10,0.42)"),
         backdropFilter: "blur(24px) saturate(180%)",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-12px)",
         transition:
-          "opacity 0.7s ease, transform 0.7s ease, padding 0.5s ease, background 0.5s ease",
+          "opacity 0.7s ease, transform 0.7s ease, padding 0.5s ease, background 0.3s ease, border-color 0.3s ease",
       }}
     >
       <div className="w-full px-6 md:px-16 lg:px-24 flex items-center justify-between">
@@ -366,7 +382,7 @@ export default function Header({ t, locale, visible }) {
 
           <div className="w-px h-5 bg-white/20 mx-4" />
 
-          <LangDropdown locale={locale} />
+          <LangDropdown locale={locale} theme={theme} />
           
           {/* Theme Switcher Button */}
           <button 
@@ -434,9 +450,10 @@ export default function Header({ t, locale, visible }) {
         className="hidden md:block absolute left-0 right-0 overflow-hidden"
         style={{
           top: "100%",
-          background: "rgba(10,10,12,0.85)",
-          backdropFilter: "blur(24px) saturate(180%)",
-          borderBottom: servicesMenuOpen ? "1px solid rgba(255,255,255,0.08)" : "1px solid transparent",
+          background: theme === "light" ? "#ffffff" : "#0a0a0c",
+          borderBottom: servicesMenuOpen
+            ? `1px solid ${theme === "light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)"}`
+            : "1px solid transparent",
           height: servicesMenuOpen ? "420px" : "0px",
           opacity: servicesMenuOpen ? 1 : 0,
           transition: "height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, border-color 0.3s ease",
@@ -470,7 +487,9 @@ export default function Header({ t, locale, visible }) {
                   onClick={() => setServicesMenuOpen(false)}
                   className="group flex items-center py-2 px-3 rounded-lg border border-transparent transition-all duration-300 relative overflow-hidden"
                   style={{
-                    background: isActive ? "rgba(255,255,255,0.03)" : "transparent",
+                    background: isActive
+                      ? (theme === "light" ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.03)")
+                      : "transparent",
                     animationName: servicesMenuOpen ? "megaMenuSlideIn" : "none",
                     animationDuration: "0.5s",
                     animationTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
@@ -491,7 +510,9 @@ export default function Header({ t, locale, visible }) {
                   <span
                     className="font-mono text-xs tracking-wider mr-2 transition-all duration-300 flex items-center shrink-0"
                     style={{
-                      color: isActive ? "#ffffff" : "rgba(255,255,255,0.2)",
+                      color: isActive
+                        ? (theme === "light" ? "#121214" : "#ffffff")
+                        : (theme === "light" ? "rgba(18,18,20,0.35)" : "rgba(255,255,255,0.2)"),
                       transform: isActive ? "translateX(4px)" : "translateX(0)",
                     }}
                   >
@@ -510,7 +531,9 @@ export default function Header({ t, locale, visible }) {
                   <span
                     className="text-xs lg:text-sm font-semibold uppercase tracking-wider lg:tracking-widest transition-all duration-300 truncate"
                     style={{
-                      color: isActive ? "#ffffff" : "rgba(255,255,255,0.45)",
+                      color: isActive
+                        ? (theme === "light" ? "#121214" : "#ffffff")
+                        : (theme === "light" ? "rgba(18,18,20,0.55)" : "rgba(255,255,255,0.45)"),
                       transform: isActive ? "translateX(6px)" : "translateX(0)",
                     }}
                   >
@@ -557,7 +580,7 @@ export default function Header({ t, locale, visible }) {
             </Link>
           ))}
           <div className="pt-3 border-t border-white/10 flex flex-col gap-5">
-            <LangDropdown locale={locale} />
+            <LangDropdown locale={locale} theme={theme} />
             <Link
               href={`/${locale}/contact`}
               onClick={() => setMenuOpen(false)}

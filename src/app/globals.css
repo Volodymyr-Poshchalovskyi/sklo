@@ -116,6 +116,9 @@ html {
 :root[data-theme="light"] .bg-white\/20 {
   background-color: rgba(0, 0, 0, 0.05) !important;
 }
+:root[data-theme="light"] .bg-white\/30 {
+  background-color: rgba(0, 0, 0, 0.15) !important;
+}
 :root[data-theme="light"] .hover\:bg-white\/10:hover,
 :root[data-theme="light"] .group:hover .group-hover\:bg-white\/10 {
   background-color: rgba(0, 0, 0, 0.08) !important;
@@ -125,14 +128,6 @@ html {
 }
 
 /* Header Light Mode */
-:root[data-theme="light"] header {
-  background: rgba(255, 255, 255, 0.85) !important;
-  border-bottom-color: rgba(0, 0, 0, 0.06) !important;
-}
-:root[data-theme="light"] header div[style*="background"] {
-  background: rgba(255, 255, 255, 0.92) !important;
-  border-bottom-color: rgba(0, 0, 0, 0.06) !important;
-}
 :root[data-theme="light"] .bg-\[\#0a0a0c\]\/98 {
   background-color: rgba(255, 255, 255, 0.98) !important;
 }
@@ -149,27 +144,14 @@ html {
 :root[data-theme="light"] header .w-px.bg-white\/20 {
   background-color: rgba(0, 0, 0, 0.1) !important;
 }
+/* Services preview thumbnail keeps a dark overlay regardless of theme */
+:root[data-theme="light"] header .service-preview-title {
+  color: #ffffff !important;
+}
 
 /* Logo Image Invert */
 :root[data-theme="light"] .logo-image {
   filter: invert(1) !important;
-}
-
-/* Language Dropdown Light Mode */
-:root[data-theme="light"] header button.flex.items-center.gap-2.text-sm.font-medium {
-  border-color: rgba(0, 0, 0, 0.15) !important;
-  color: #121214 !important;
-}
-:root[data-theme="light"] header div.relative div[style*="absolute"] {
-  background-color: #ffffff !important;
-  border-color: rgba(0, 0, 0, 0.08) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
-}
-:root[data-theme="light"] header div.relative div[style*="absolute"] button {
-  color: #121214 !important;
-}
-:root[data-theme="light"] header div.relative div[style*="absolute"] button:hover {
-  background-color: rgba(0, 0, 0, 0.04) !important;
 }
 
 /* Hero Section (Remains dark & cinematic) */

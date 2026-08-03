@@ -1,7 +1,53 @@
 "use client";
-import { useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useContext, useState } from "react";
 import { LoaderContext } from "@/context/LoaderContext";
 import Link from "next/link";
+
+function RotatingWord({ words, interval = 2200 }) {
+  const [index, setIndex] = useState(0);
+  const [phase, setPhase] = useState("in");
+  const outTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setPhase("out");
+      outTimeoutRef.current = setTimeout(() => {
+        setIndex((i) => (i + 1) % words.length);
+        setPhase("in");
+      }, 420);
+    }, interval);
+
+    return () => {
+      clearInterval(id);
+      clearTimeout(outTimeoutRef.current);
+    };
+  }, [words.length, interval]);
+
+  const letters = words[index].split("");
+
+  return (
+    <span className="inline-block" style={{ perspective: "500px" }}>
+      {letters.map((char, i) => (
+        <span
+          key={`${index}-${i}`}
+          className="inline-block"
+          style={{
+            transformStyle: "preserve-3d",
+            transformOrigin: "50% 50%",
+            animationName: phase === "out" ? "letterFlipOut" : "letterFlipIn",
+            animationDuration: phase === "out" ? "0.42s" : "0.5s",
+            animationTimingFunction:
+              phase === "out" ? "cubic-bezier(0.4,0,0.2,1)" : "cubic-bezier(0.16,1,0.3,1)",
+            animationFillMode: "forwards",
+            animationDelay: `${i * 30}ms`,
+          }}
+        >
+          {char === " " ? " " : char}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 export default function HeroSection({ t, locale }) {
   const ready = useContext(LoaderContext);
@@ -81,8 +127,9 @@ export default function HeroSection({ t, locale }) {
             <span className="block text-4xl sm:text-6xl md:text-7xl xl:text-8xl sm:whitespace-nowrap">
               Visualization <span className="text-white/90 font-bold">services</span>
             </span>
-            <span className="block text-sm sm:text-base font-medium text-white/40 tracking-[0.2em] uppercase mt-5">
-              for architects, developers & real estate
+            <span className="flex items-center gap-2 text-lg sm:text-xl md:text-2xl font-medium text-white/40 tracking-[0.2em] uppercase mt-5">
+              for
+              <RotatingWord words={["architects", "developers", "real estate"]} />
             </span>
           </h1>
 
@@ -151,6 +198,14 @@ export default function HeroSection({ t, locale }) {
         @keyframes blackShimmer {
           0%   { background-position: 200% 0; }
           100% { background-position: -200% 0; }
+        }
+        @keyframes letterFlipOut {
+          0%   { transform: rotateX(0deg);  opacity: 1; }
+          100% { transform: rotateX(90deg); opacity: 0; }
+        }
+        @keyframes letterFlipIn {
+          0%   { transform: rotateX(-90deg); opacity: 0; }
+          100% { transform: rotateX(0deg);   opacity: 1; }
         }
       `}</style>
     </section>
