@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import ServicesCarousel from "@/components/ServicesCarousel";
+import { useLenis } from "@/context/LenisContext";
 
 // Helper component to render step media dynamically
 function StepMedia({ src, type }) {
@@ -89,6 +90,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
   const [isPipelineInView, setIsPipelineInView] = useState(false);
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   const pipelineRef = useRef(null);
+  const lenisRef = useLenis();
 
   // Lightbox keyboard navigation
   useEffect(() => {
@@ -282,8 +284,8 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
       </section>
 
       {/* 2. PIPELINE SECTION */}
-      <section ref={pipelineRef} className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-24 overflow-hidden">
-        <div className="w-full max-w-7xl mx-auto">
+      <section ref={pipelineRef} className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        <div className="w-full">
           <div className="mb-20">
             <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
               {locale === "de" ? "Prozess" : "Workflow"}
@@ -347,8 +349,8 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
       </section>
 
       {/* 3. MINI-GALLERY SECTION */}
-      <section className="section-shell section-band hairline-top w-full py-24 px-6 md:px-16 lg:px-24 overflow-hidden">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="section-shell section-band hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        <div className="w-full">
           <div className="mb-16">
             <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
               {locale === "de" ? "Portfolio" : "Visual Showcase"}
@@ -437,8 +439,8 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
       </section>
 
       {/* 4. OTHER SERVICES SECTION */}
-      <section className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-24 overflow-hidden">
-        <div className="w-full max-w-7xl mx-auto">
+      <section className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        <div className="w-full">
           <div className="mb-16">
             <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
               {locale === "de" ? "Entdecken" : "Explore More"}
@@ -624,7 +626,13 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                     key={idx}
                     onClick={() => {
                       const el = document.getElementById(`pipeline-step-${idx}`);
-                      if (el) {
+                      if (!el) return;
+                      if (lenisRef?.current) {
+                        // Lenis owns the scroll loop now — a native smooth
+                        // scrollIntoView fights its rAF-driven scrollTo.
+                        const offset = -(window.innerHeight - el.offsetHeight) / 2;
+                        lenisRef.current.scrollTo(el, { offset });
+                      } else {
                         el.scrollIntoView({ behavior: "smooth", block: "center" });
                       }
                     }}

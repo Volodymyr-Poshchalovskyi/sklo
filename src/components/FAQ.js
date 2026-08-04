@@ -1,37 +1,16 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import Link from "next/link";
+import { LoaderContext } from "@/context/LoaderContext";
+import useRevealOnSettle from "@/hooks/useRevealOnSettle";
 
 export default function FAQ({ locale = "en" }) {
   const [openIndex, setOpenIndex] = useState(0);
-  const [inView, setInView] = useState(false);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.unobserve(el);
-        }
-      },
-      {
-        // A generous threshold instead of a thin trigger band: a snap jump can
-        // skip a narrow rootMargin strip entirely and the reveal never fires.
-        threshold: 0.15,
-      },
-    );
-
-    observer.observe(el);
-    return () => {
-      observer.unobserve(el);
-    };
-  }, []);
+  const ready = useContext(LoaderContext);
+  const inView = useRevealOnSettle(sectionRef, ready);
 
   useEffect(() => {
     const videoEl = videoRef.current;
@@ -177,7 +156,7 @@ export default function FAQ({ locale = "en" }) {
   return (
     <section 
       ref={sectionRef}
-      className="faq-section snap-section section-shell hairline-top relative w-full min-h-[100svh] py-20 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden text-white flex flex-col justify-center"
+      className="faq-section section-shell hairline-top relative w-full py-24 md:py-32 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden text-white flex flex-col justify-center"
     >
       {/* Background Video */}
       <video
@@ -197,7 +176,7 @@ export default function FAQ({ locale = "en" }) {
       <div className="faq-veil absolute inset-0 z-0" />
       <div className="faq-fade absolute inset-0 z-0" />
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-[0.75fr_1.25fr] gap-8 lg:gap-16 items-start w-full">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start w-full">
         {/* The heading column used to hold nothing but the word "FAQS", leaving
             half the section empty. It now carries the supporting copy and a
             direct route out for anyone whose question isn't listed. */}

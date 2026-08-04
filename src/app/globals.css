@@ -61,38 +61,18 @@ body {
 }
 
 html {
-  scroll-snap-type: y proximity;
-  /* Real measured height of the collapsed (scrolled) fixed header. The header
-     is 102px at rest and 83px once scrolled; snapping always happens in the
-     scrolled state, so the collapsed height is the correct offset. */
+  /* Real measured height of the collapsed (scrolled) fixed header. Used as
+     both the anchor-scroll offset below and the sticky-card top offset on
+     the services listing page (see services/page.js). */
   --header-h: 84px;
   scroll-padding-top: var(--header-h);
-  /* NOTE: no `scroll-behavior: smooth` here on purpose — on a snap container it
-     turns every snap adjustment into an animation that wheel events fight,
-     which is what made the snap feel "sticky". Programmatic scrolls that want
-     smoothing pass `behavior: "smooth"` explicitly at the call site. */
-}
-
-/* ---------------------------------------------------------------------------
-   Scroll snap targets.
-   A section may only be a snap target while it actually fits in the scrollport
-   — snapping to a section you cannot see the end of means the browser drags you
-   back every time you try to read it. ClientWrapper measures each
-   `.snap-section` and flips `data-snap="off"` when it outgrows the viewport
-   (e.g. an FAQ accordion opening), so this is re-evaluated live.
---------------------------------------------------------------------------- */
-.snap-section {
-  scroll-snap-align: start;
-  scroll-snap-stop: normal;
-}
-.snap-section[data-snap="off"] {
-  scroll-snap-align: none;
+  /* NOTE: no `scroll-behavior: smooth` here — the whole site scrolls through
+     Lenis (see ClientWrapper.js) instead, and native smooth-scroll fights an
+     already-running rAF scroll loop the same way it used to fight snap. Jumps
+     that want smoothing call `lenis.scrollTo(...)` at the call site. */
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-snap-type: none;
-  }
   *,
   *::before,
   *::after {
@@ -433,20 +413,20 @@ html {
 
 /* Footer Submit Button Theme Adaptation */
 .footer-submit-btn {
-  background-color: rgba(255, 255, 255, 0.12) !important;
+  background-color: #000000 !important;
   color: #ffffff !important;
 }
 .footer-submit-btn:hover {
-  background-color: rgba(255, 255, 255, 0.22) !important;
+  background-color: #1a1a1a !important;
 }
 
 :root[data-theme="light"] .footer-submit-btn {
-  background-color: rgba(18, 18, 20, 0.08) !important;
-  color: #121214 !important;
-  border-color: rgba(18, 18, 20, 0.12) !important;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
 }
 :root[data-theme="light"] .footer-submit-btn:hover {
-  background-color: rgba(18, 18, 20, 0.15) !important;
+  background-color: #1a1a1a !important;
 }
 
 /* Progress Bar Container Theme Adaptation */

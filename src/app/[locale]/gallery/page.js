@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { useLenis } from "@/context/LenisContext";
 
 function GalleryCard({ item, onClick }) {
   const videoRef = useRef(null);
@@ -72,6 +73,8 @@ function GalleryCard({ item, onClick }) {
 export default function GalleryPage() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
+  const lenisRef = useLenis();
+  const isFirstFilterRender = useRef(true);
 
   const categories = ["Exterior", "Interior", "360° Virtual Tour", "Cinemagraph"];
 
@@ -224,6 +227,21 @@ export default function GalleryPage() {
   const filteredItems = items.filter(
     (item) => activeFilter === "All" || item.category === activeFilter
   );
+
+  // Switching filters swaps in a whole new (shorter) grid — if the reader was
+  // scrolled deep into the previous set, they'd land partway down an
+  // unrelated one, so bring them back to the top of the results.
+  useEffect(() => {
+    if (isFirstFilterRender.current) {
+      isFirstFilterRender.current = false;
+      return;
+    }
+    if (lenisRef?.current) {
+      lenisRef.current.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [activeFilter, lenisRef]);
 
   const handlePrev = (e) => {
     e.stopPropagation();

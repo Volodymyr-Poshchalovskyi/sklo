@@ -151,7 +151,7 @@ export default function HeroSection({ t, locale }) {
   const hidden = { opacity: 0, transform: "translateY(28px)" };
 
   return (
-    <section className="hero-section snap-section relative min-h-[100svh] flex items-end">
+    <section className="hero-section relative min-h-[100svh] flex items-end">
       <video
         ref={videoRef}
         autoPlay

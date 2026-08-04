@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -73,7 +74,7 @@ export default function Footer({ locale }) {
               <div className="flex justify-end pt-4">
                 <button 
                   type="submit" 
-                  className="footer-submit-btn black-shimmer group inline-flex items-center gap-2 font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer border border-white/10"
+                  className="footer-submit-btn white-shimmer group inline-flex items-center gap-2 font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer border border-white/15"
                   style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
                 >
                   Send
@@ -92,9 +93,19 @@ export default function Footer({ locale }) {
 
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-24">
         <div className="flex flex-col gap-4 max-w-sm">
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-widest uppercase text-white">
-            SKLO STUDIO
-          </h2>
+          <div className="flex items-center gap-3">
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 shrink-0 overflow-hidden rounded-md">
+              <Image
+                src="/LogoHeader.svg"
+                alt="SKLO Logo"
+                fill
+                className="object-cover logo-image"
+              />
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-widest uppercase text-white">
+              SKLO STUDIO
+            </h2>
+          </div>
           <a 
             href="mailto:info@sklo.studio" 
             className="text-base sm:text-lg text-white/60 hover:text-white transition-colors duration-300 hover:underline w-fit"
@@ -144,10 +155,10 @@ export default function Footer({ locale }) {
       </div>
 
       <style>{`
-        .black-shimmer {
+        .white-shimmer {
           position: relative;
         }
-        .black-shimmer::before {
+        .white-shimmer::before {
           content: '';
           position: absolute;
           inset: 0;
@@ -155,11 +166,11 @@ export default function Footer({ locale }) {
           padding: 2.5px;
           background: linear-gradient(
             90deg,
-            #000000 0%,
-            #000000 30%,
-            #888888 50%,
-            #000000 70%,
-            #000000 100%
+            #ffffff 0%,
+            #ffffff 30%,
+            #666666 50%,
+            #ffffff 70%,
+            #ffffff 100%
           );
           background-size: 200% 100%;
           -webkit-mask:
@@ -170,9 +181,9 @@ export default function Footer({ locale }) {
             linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
           mask-composite: exclude;
-          animation: blackShimmer 3.2s ease-in-out infinite;
+          animation: whiteShimmer 3.2s ease-in-out infinite;
         }
-        @keyframes blackShimmer {
+        @keyframes whiteShimmer {
           0%   { background-position: 200% 0; }
           100% { background-position: -200% 0; }
         }
