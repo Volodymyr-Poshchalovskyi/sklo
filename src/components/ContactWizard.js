@@ -119,7 +119,7 @@ function OptionCard({ label, selected, onClick }) {
       onClick={onClick}
       className={`group relative flex flex-col items-start gap-3 p-6 rounded-2xl border text-left w-full ${
         selected
-          ? "border-[--color-accent] bg-[--color-accent]/[0.06] shadow-[0_10px_30px_rgba(200,255,0,0.06)]"
+          ? "border-accent bg-accent/[0.06] shadow-lg"
           : "border-white/10 bg-white/[0.02] hover:border-white/30"
       }`}
     >
@@ -128,7 +128,7 @@ function OptionCard({ label, selected, onClick }) {
           initial={{ scale: 0, rotateY: -90 }}
           animate={{ scale: 1, rotateY: 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute top-4 right-4 w-6 h-6 rounded-full bg-[--color-accent] text-[--color-bg] flex items-center justify-center"
+          className="absolute top-4 right-4 w-6 h-6 rounded-full bg-accent text-bg flex items-center justify-center"
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
             <path d="M20 6L9 17l-5-5" />
@@ -149,7 +149,7 @@ function Chip({ label, selected, onClick }) {
       intensity={4}
       className={`px-5 py-3 rounded-full border text-xs font-semibold uppercase tracking-widest ${
         selected
-          ? "border-[--color-accent] bg-[--color-accent] text-[--color-bg]"
+          ? "border-accent bg-accent text-bg"
           : "border-white/15 bg-white/[0.02] text-white/70 hover:border-white/40 hover:text-white"
       }`}
     >
@@ -188,7 +188,7 @@ function TextField({ label, required, ...props }) {
     <label className="flex flex-col gap-2">
       <span className="text-xs text-white/60 uppercase tracking-widest font-semibold">
         {label}
-        {required && <span className="text-[--color-accent]"> *</span>}
+        {required && <span className="text-accent"> *</span>}
       </span>
       <input
         required={required}
@@ -367,7 +367,7 @@ function ContactWizardInner({ locale }) {
           initial={{ scale: 0, rotate: -45 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-          className="w-16 h-16 rounded-full bg-[--color-accent] text-[--color-bg] flex items-center justify-center"
+          className="w-16 h-16 rounded-full bg-accent text-bg flex items-center justify-center"
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
             <path d="M20 6L9 17l-5-5" />
@@ -496,7 +496,7 @@ function ContactWizardInner({ locale }) {
                 <div className="flex flex-col gap-5">
                   <Heading3D className="text-xl md:text-2xl font-bold uppercase tracking-wider">
                     {isDe ? "Budgetrahmen" : "Budget Range"}
-                    <span className="text-[--color-accent]"> *</span>
+                    <span className="text-accent"> *</span>
                   </Heading3D>
                   <div className="flex flex-wrap gap-3">
                     {BUDGET_OPTIONS.map((b) => (
@@ -623,7 +623,7 @@ function ContactWizardInner({ locale }) {
 
                 {/* Auto-generated summary of everything requested so far */}
                 <div className="flex flex-col gap-3 p-5 rounded-2xl border border-white/10 bg-white/[0.02] text-xs text-white/60 leading-relaxed">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-[--color-accent]">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-accent">
                     {isDe ? "Angeforderte Leistungen" : "Requested Products"}
                   </span>
                   <span>

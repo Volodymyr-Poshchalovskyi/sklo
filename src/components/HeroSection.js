@@ -3,46 +3,95 @@ import { useEffect, useRef, useContext, useState } from "react";
 import { LoaderContext } from "@/context/LoaderContext";
 import Link from "next/link";
 
-function RotatingWord({ words, interval = 2200 }) {
+// Hoisted so its identity is stable across renders — the rotation effect below
+// depends on it, and an inline array literal would restart the cycle on every
+// parent render.
+const ROTATING_WORDS = ["architects", "developers", "real estate"];
+
+const LETTER_STAGGER = 28; // ms between neighbouring letters
+const FLIP_OUT_MS = 380;
+const FLIP_IN_MS = 460;
+
+// Time until the LAST letter of an n-letter word has finished flipping.
+const flipDuration = (length, base) => (length - 1) * LETTER_STAGGER + base;
+
+function RotatingWord({ words = ROTATING_WORDS, hold = 1800 }) {
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState("in");
-  const outTimeoutRef = useRef(null);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setPhase("out");
-      outTimeoutRef.current = setTimeout(() => {
-        setIndex((i) => (i + 1) % words.length);
-        setPhase("in");
-      }, 420);
-    }, interval);
-
-    return () => {
-      clearInterval(id);
-      clearTimeout(outTimeoutRef.current);
-    };
-  }, [words.length, interval]);
+  const holdTimerRef = useRef(null);
+  const fallbackTimerRef = useRef(null);
 
   const letters = words[index].split("");
+  const isOut = phase === "out";
+  const lastLetter = letters.length - 1;
+
+  const advance = () => {
+    setIndex((i) => (i + 1) % words.length);
+    setPhase("in");
+  };
+
+  // The swap is driven by the LAST letter's animationend rather than a timer.
+  // A timer starts counting when the effect commits, but the CSS animation only
+  // starts on the next style recalc — measured ~30ms later — so a duration-based
+  // timer always fired while the final letters were still mid-flip, and the new
+  // word visibly replaced them instead of following them.
+  const handleLetterEnd = (i) => {
+    if (i !== lastLetter) return;
+    if (isOut) {
+      advance();
+    } else {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = setTimeout(() => setPhase("out"), hold);
+    }
+  };
+
+  // Safety net: if animationend never arrives (backgrounded tab, animations
+  // disabled) the rotation still progresses rather than stalling forever.
+  useEffect(() => {
+    const base = isOut ? FLIP_OUT_MS : FLIP_IN_MS;
+    const settled = flipDuration(letters.length, base);
+    const wait = settled + (isOut ? 0 : hold) + 400;
+
+    fallbackTimerRef.current = setTimeout(() => {
+      if (isOut) {
+        setIndex((i) => (i + 1) % words.length);
+        setPhase("in");
+      } else {
+        setPhase("out");
+      }
+    }, wait);
+
+    return () => clearTimeout(fallbackTimerRef.current);
+  }, [index, phase, letters.length, isOut, hold, words.length]);
+
+  useEffect(() => () => {
+    clearTimeout(holdTimerRef.current);
+    clearTimeout(fallbackTimerRef.current);
+  }, []);
 
   return (
-    <span className="inline-block" style={{ perspective: "500px" }}>
+    // `text-white` is explicit: this sits inside the `text-white/40` "for" line
+    // and would otherwise inherit that 40% opacity.
+    <span className="inline-block text-white" style={{ perspective: "600px" }}>
       {letters.map((char, i) => (
         <span
           key={`${index}-${i}`}
           className="inline-block"
+          onAnimationEnd={() => handleLetterEnd(i)}
           style={{
             transformStyle: "preserve-3d",
             transformOrigin: "50% 50%",
-            animationName: phase === "out" ? "letterFlipOut" : "letterFlipIn",
-            animationDuration: phase === "out" ? "0.42s" : "0.5s",
-            animationTimingFunction:
-              phase === "out" ? "cubic-bezier(0.4,0,0.2,1)" : "cubic-bezier(0.16,1,0.3,1)",
+            backfaceVisibility: "hidden",
+            animationName: isOut ? "letterFlipOut" : "letterFlipIn",
+            animationDuration: `${(isOut ? FLIP_OUT_MS : FLIP_IN_MS) / 1000}s`,
+            animationTimingFunction: isOut
+              ? "cubic-bezier(0.55,0,1,0.45)"
+              : "cubic-bezier(0.16,1,0.3,1)",
             animationFillMode: "forwards",
-            animationDelay: `${i * 30}ms`,
+            animationDelay: `${i * LETTER_STAGGER}ms`,
           }}
         >
-          {char === " " ? " " : char}
+          {char === " " ? "\u00A0" : char}
         </span>
       ))}
     </span>
@@ -102,7 +151,7 @@ export default function HeroSection({ t, locale }) {
   const hidden = { opacity: 0, transform: "translateY(28px)" };
 
   return (
-    <section className="hero-section relative min-h-screen flex items-end snap-start">
+    <section className="hero-section snap-section relative min-h-[100svh] flex items-end">
       <video
         ref={videoRef}
         autoPlay
@@ -129,7 +178,7 @@ export default function HeroSection({ t, locale }) {
             </span>
             <span className="flex items-center gap-2 text-lg sm:text-xl md:text-2xl font-medium text-white/40 tracking-[0.2em] uppercase mt-5">
               for
-              <RotatingWord words={["architects", "developers", "real estate"]} />
+              <RotatingWord />
             </span>
           </h1>
 

@@ -7,20 +7,27 @@ export default function Footer({ locale }) {
   const isContactPage = pathname?.endsWith("/contact");
 
   return (
-    <footer className="w-full bg-[#0d0d0f] text-white pt-24 pb-16 px-6 border-t border-white/10">
+    <footer className="section-shell hairline-top w-full text-white pt-24 pb-16 px-6">
       
       {!isContactPage && (
         <div className="max-w-7xl mx-auto mb-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="flex flex-col gap-6">
+            <span className="eyebrow">Get in touch</span>
             <h2 className="text-4xl md:text-5xl font-bold tracking-wide uppercase leading-tight max-w-sm">
               Looking to start your<br/>next project?
             </h2>
             <p className="text-base text-white/70 leading-relaxed max-w-md">
               Fill out some info and we will be in touch shortly. We can&apos;t wait to hear from you!
             </p>
+            <a
+              href="mailto:info@sklo.studio"
+              className="text-sm text-white/50 hover:text-white transition-colors duration-300 w-fit"
+            >
+              …or just email us at <span className="underline underline-offset-4">info@sklo.studio</span>
+            </a>
           </div>
-          
-          <div className="bg-white/[0.02] border border-white/10 rounded-2xl p-8 md:p-10 backdrop-blur-sm shadow-2xl relative overflow-hidden">
+
+          <div className="tile no-lift p-8 md:p-10 backdrop-blur-sm shadow-2xl relative overflow-hidden">
             {/* Subtle background glow effect */}
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none" />
             

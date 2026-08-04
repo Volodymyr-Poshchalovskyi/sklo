@@ -7,7 +7,7 @@ export default function ContactPage({ params }) {
   const isDe = locale === "de";
 
   return (
-    <main className="min-h-screen pt-40 pb-24 px-6 bg-[#0d0d0f] text-white">
+    <main className="min-h-screen pt-40 pb-24 px-6 text-white">
       <div className="max-w-4xl mx-auto flex flex-col gap-12">
         <div className="flex flex-col gap-6 items-start">
           <h1 className="title-3d text-4xl md:text-5xl font-bold uppercase tracking-wide">

@@ -1,16 +1,30 @@
 @import "tailwindcss";
 
+/* `inline` substitutes the literal value into every utility, which is required
+   for the fonts (they forward another variable) but is wrong for colours: an
+   inlined colour cannot be re-pointed by the light theme, so `text-accent` &c.
+   would stay locked to their dark values. Colours therefore live in a plain
+   `@theme` block below, which emits `var(--color-*)` references instead. */
 @theme inline {
   /* Fonts */
   --font-sans: var(--font-display);
   --font-mono: var(--font-mono-custom);
+}
 
-  /* Brand colors — темна 3D-студія */
-  --color-bg:          #0d0d0f;
-  --color-surface:     #141418;
-  --color-border:      rgba(255,255,255,0.08);
-  --color-text:        #e8e6e1;
-  --color-text-muted:  #6b6a68;
+@theme {
+  /* Brand colors — темна 3D-студія.
+     Neutrals carry a slight cool/blue cast (SKLO = скло/glass) instead of being
+     pure grey, and text is a warm off-white rather than #fff — that mismatch is
+     what keeps a near-black page from reading as a flat slab. */
+  --color-bg:          #0b0c10;   /* page base            */
+  --color-bg-band:     #101218;   /* alternating section  */
+  --color-surface:     #15171f;   /* card                 */
+  --color-surface-2:   #1c1f29;   /* raised card / hover  */
+  --color-border:      rgba(255,255,255,0.07);
+  --color-border-strong: rgba(255,255,255,0.14);
+  --color-text:        #eceae6;   /* warm off-white       */
+  --color-text-2:      #a2a4ad;
+  --color-text-muted:  #6d707b;
   --color-accent:      #c8ff00;      /* неоново-жовтий акцент */
   --color-accent-hover:#b0e000;
 
@@ -19,14 +33,25 @@
 }
 
 :root {
-  --background: #0d0d0f;
-  --foreground: #e8e6e1;
+  --background: #0b0c10;
+  --foreground: #eceae6;
   --color-border-stroke: rgba(255, 255, 255, 0.35);
   --color-progress-border: rgba(255, 255, 255, 0.15);
   --color-progress-border-muted: rgba(255, 255, 255, 0.1);
   --color-title-3d-text: #ffffff;
   --color-title-3d-shadow: #d4d4d8;
   --color-title-3d-glow: rgba(255, 255, 255, 0.3);
+
+  /* Section shells — see .section-shell below */
+  --shell-base: #0b0c10;
+  --shell-band: #101218;
+  --shell-bloom: rgba(150, 175, 255, 0.055); /* cool light bleed from above  */
+  --shell-hairline: rgba(255, 255, 255, 0.14);
+  --card-bg: rgba(255, 255, 255, 0.025);
+  --card-bg-hover: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-hover: rgba(255, 255, 255, 0.2);
+  --grain-opacity: 0.035;
 }
 
 body {
@@ -37,42 +62,99 @@ body {
 
 html {
   scroll-snap-type: y proximity;
-  scroll-padding-top: 64px; /* offset for collapsed fixed header */
-  scroll-behavior: smooth;
+  /* Real measured height of the collapsed (scrolled) fixed header. The header
+     is 102px at rest and 83px once scrolled; snapping always happens in the
+     scrolled state, so the collapsed height is the correct offset. */
+  --header-h: 84px;
+  scroll-padding-top: var(--header-h);
+  /* NOTE: no `scroll-behavior: smooth` here on purpose — on a snap container it
+     turns every snap adjustment into an animation that wheel events fight,
+     which is what made the snap feel "sticky". Programmatic scrolls that want
+     smoothing pass `behavior: "smooth"` explicitly at the call site. */
+}
+
+/* ---------------------------------------------------------------------------
+   Scroll snap targets.
+   A section may only be a snap target while it actually fits in the scrollport
+   — snapping to a section you cannot see the end of means the browser drags you
+   back every time you try to read it. ClientWrapper measures each
+   `.snap-section` and flips `data-snap="off"` when it outgrows the viewport
+   (e.g. an FAQ accordion opening), so this is re-evaluated live.
+--------------------------------------------------------------------------- */
+.snap-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal;
+}
+.snap-section[data-snap="off"] {
+  scroll-snap-align: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-snap-type: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Light Theme Variables & Overrides */
 :root[data-theme="light"] {
-  --background: #f7f7f9;
-  --foreground: #121214;
-  
-  --color-bg:          #f7f7f9;
+  --background: #f6f5f2;
+  --foreground: #15161a;
+
+  --color-bg:          #f6f5f2;   /* warm paper, not cold grey */
+  --color-bg-band:     #edece8;
   --color-surface:     #ffffff;
+  --color-surface-2:   #faf9f7;
   --color-border:      rgba(0,0,0,0.08);
-  --color-text:        #121214;
-  --color-text-muted:  #71717a;
-  --color-accent:      #000000;
-  --color-accent-hover:#1c1c1e;
+  --color-border-strong: rgba(0,0,0,0.16);
+  --color-text:        #15161a;   /* ink, not pure black       */
+  --color-text-2:      #4c4e57;
+  --color-text-muted:  #7c7f89;
+  /* Was #000000 — a pure-black "accent" is not an accent. This is the same
+     lime hue as the dark theme, dropped in lightness until it holds contrast
+     on paper, so `text-accent` stays recognisably brand in both. */
+  --color-accent:      #5f7a00;
+  --color-accent-hover:#4b6100;
   --color-border-stroke: rgba(18, 18, 20, 0.45);
   --color-progress-border: rgba(18, 18, 20, 0.08);
   --color-progress-border-muted: rgba(18, 18, 20, 0.18);
-  --color-title-3d-text: #121214;
-  --color-title-3d-shadow: #cbd5e1;
+  --color-title-3d-text: #15161a;
+  --color-title-3d-shadow: #d3d1cb;
   --color-title-3d-glow: rgba(18, 18, 20, 0.15);
+
+  --shell-base: #f6f5f2;
+  --shell-band: #edece8;
+  --shell-bloom: rgba(90, 110, 160, 0.05);
+  --shell-hairline: rgba(18, 18, 20, 0.12);
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --card-bg-hover: #ffffff;
+  --card-border: rgba(18, 18, 20, 0.09);
+  --card-border-hover: rgba(18, 18, 20, 0.22);
+  --grain-opacity: 0.02;
 }
 
+/* `.section-shell` paints its own theme-aware background (see below), so it is
+   excluded here — otherwise this !important rule would flatten every section
+   back to a single tone, which is exactly what it used to do. */
 :root[data-theme="light"] body,
 :root[data-theme="light"] main,
-:root[data-theme="light"] section:not(.hero-section),
-:root[data-theme="light"] .bg-\[\#0d0d0f\]:not(.hero-section) {
-  background-color: #f7f7f9 !important;
-  color: #121214 !important;
+:root[data-theme="light"] section:not(.hero-section):not(.section-shell),
+:root[data-theme="light"] .bg-\[\#0d0d0f\]:not(.hero-section):not(.section-shell) {
+  background-color: var(--color-bg) !important;
+  color: var(--color-text) !important;
 }
 
 :root[data-theme="light"] aside,
 :root[data-theme="light"] .bg-\[\#101012\],
 :root[data-theme="light"] .bg-\[\#121214\] {
-  background-color: #ffffff !important;
+  background-color: var(--color-surface) !important;
 }
 
 :root[data-theme="light"] .text-white {
@@ -171,14 +253,26 @@ html {
   border-color: transparent !important;
 }
 
-/* FAQ Section Light Mode */
-:root[data-theme="light"] .faq-section {
-  background-color: #ffffff !important;
+/* FAQ Section — the background video sits behind a veil in both themes.
+   Dark keeps a heavy near-opaque veil; light lifts it to a bright wash so the
+   footage still reads as texture instead of being hidden outright. */
+.faq-veil {
+  background-color: color-mix(in srgb, var(--shell-base) 88%, transparent);
 }
-:root[data-theme="light"] .faq-section video,
-:root[data-theme="light"] .faq-section .absolute.inset-0.bg-\[\#0d0d0f\]\/85,
-:root[data-theme="light"] .faq-section .absolute.inset-0.bg-gradient-to-b {
-  display: none !important;
+.faq-fade {
+  background-image: linear-gradient(
+    to bottom,
+    var(--shell-base) 0%,
+    transparent 22%,
+    transparent 78%,
+    var(--shell-base) 100%
+  );
+}
+:root[data-theme="light"] .faq-veil {
+  background-color: color-mix(in srgb, var(--shell-base) 93%, transparent);
+}
+:root[data-theme="light"] .faq-section video {
+  filter: grayscale(1) brightness(1.35) contrast(0.8);
 }
 
 /* Global Form Elements */
@@ -199,6 +293,111 @@ html {
   background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
+/* ---------------------------------------------------------------------------
+   Section shells
+   Every section used to be the same flat `#0d0d0f` divided by a hard hairline,
+   so the page read as one uninterrupted slab. A shell gives a section three
+   cheap layers of depth: a base tone (alternating base/band so consecutive
+   sections separate without a hard edge), a soft bloom bleeding down from the
+   top, and a hairline that fades out toward the edges instead of running the
+   full width. All values are theme tokens, so light mode follows for free.
+--------------------------------------------------------------------------- */
+.section-shell {
+  position: relative;
+  background-color: var(--shell-base);
+  isolation: isolate;
+}
+.section-shell.section-band {
+  background-color: var(--shell-band);
+}
+
+/* Bloom + grain, stacked behind content via a single pseudo-element each. */
+.section-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 62% at 50% -12%, var(--shell-bloom) 0%, transparent 68%);
+}
+
+/* Fading hairline — replaces `border-t border-white/10`, which drew a hard
+   full-bleed rule across the page at every section boundary. */
+.section-shell.hairline-top::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--shell-hairline) 22%,
+    var(--shell-hairline) 78%,
+    transparent 100%
+  );
+}
+
+/* Fine film grain. Pure inline SVG turbulence — no network request, no image
+   asset, and it survives the CSP on any host. Keeps large flat areas from
+   banding on wide gradients. */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Shared card surface for feature/content tiles. */
+.tile {
+  position: relative;
+  border: 1px solid var(--card-border);
+  background-color: var(--card-bg);
+  border-radius: 1rem;
+  transition:
+    background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.tile:hover {
+  background-color: var(--card-bg-hover);
+  border-color: var(--card-border-hover);
+  transform: translateY(-4px);
+}
+/* For tiles that are containers rather than targets (forms, panels) — a large
+   block that lifts under the cursor reads as broken, not responsive. */
+.tile.no-lift:hover {
+  background-color: var(--card-bg);
+  border-color: var(--card-border);
+  transform: none;
+}
+
+/* Eyebrow label above a section heading. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+.eyebrow::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.5;
+}
+
 /* 3D Titles */
 .title-3d {
   color: var(--color-title-3d-text) !important;
@@ -208,24 +407,27 @@ html {
 }
 
 .title-3d.animate-pop-3d {
-  animation: pop3D 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: pop3D 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* The heading settles at translate(0,0) so it ends exactly on its layout box —
+   the old keyframes finished at translate(-5px,-5px), leaving every 3D title
+   permanently nudged up-left of the column it belongs to. Shadow layers were
+   also trimmed 7 → 5: each one is a non-compositable repaint of a display-size
+   heading on every frame. */
 @keyframes pop3D {
   0% {
-    transform: translate(0, 0);
+    transform: translate(5px, 5px);
     text-shadow: 0 0 0 transparent;
   }
   100% {
-    transform: translate(-5px, -5px);
-    text-shadow: 
+    transform: translate(0, 0);
+    text-shadow:
       1px 1px 0px var(--color-title-3d-shadow),
       2px 2px 0px var(--color-title-3d-shadow),
       3px 3px 0px var(--color-title-3d-shadow),
       4px 4px 0px var(--color-title-3d-shadow),
-      5px 5px 0px var(--color-title-3d-shadow),
-      6px 6px 0px var(--color-title-3d-shadow),
-      7px 7px 15px var(--color-title-3d-glow);
+      6px 6px 14px var(--color-title-3d-glow);
   }
 }
 
@@ -249,7 +451,7 @@ html {
 
 /* Progress Bar Container Theme Adaptation */
 .pipeline-progress-bar {
-  background-color: rgba(20, 20, 24, 0.95) !important;
+  background-color: color-mix(in srgb, var(--color-surface) 95%, transparent) !important;
 }
 :root[data-theme="light"] .pipeline-progress-bar {
   background-color: rgba(255, 255, 255, 0.97) !important;

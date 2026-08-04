@@ -68,7 +68,7 @@ export default function Loader({ onComplete }) {
               WebkitBackfaceVisibility: "hidden",
               borderRadius: "18px",
               transform: "rotateY(180deg)",
-              background: "linear-gradient(135deg, #0d0d0f 0%, #1a1a2e 50%, #0d0d0f 100%)",
+              background: "linear-gradient(135deg, #0b0c10 0%, #191c2b 50%, #0b0c10 100%)",
               boxShadow: "0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08)",
               display: "flex",
               alignItems: "center",

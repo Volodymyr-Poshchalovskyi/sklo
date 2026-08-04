@@ -11,7 +11,7 @@ export default async function AboutPage({ params }) {
   ];
 
   return (
-    <main className="min-h-screen pt-40 pb-24 px-6 bg-[#0d0d0f] text-white">
+    <main className="min-h-screen pt-40 pb-24 px-6 text-white">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
           {team.map((member) => (

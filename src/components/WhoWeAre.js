@@ -114,7 +114,9 @@ export default function WhoWeAre({ locale, t }) {
         }
       },
       {
-        rootMargin: "-64px 0px -92% 0px",
+        // A generous threshold instead of a thin trigger band: a snap jump can
+        // skip a narrow rootMargin strip entirely and the reveal never fires.
+        threshold: 0.15,
       },
     );
 
@@ -136,7 +138,9 @@ export default function WhoWeAre({ locale, t }) {
         }
       },
       {
-        rootMargin: "-64px 0px -92% 0px",
+        // A generous threshold instead of a thin trigger band: a snap jump can
+        // skip a narrow rootMargin strip entirely and the reveal never fires.
+        threshold: 0.15,
       },
     );
 
@@ -150,24 +154,16 @@ export default function WhoWeAre({ locale, t }) {
     <>
       <section
         ref={servicesSectionRef}
-        className="w-full min-h-screen bg-[#0d0d0f] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 border-t border-white/10 snap-start flex flex-col justify-center"
+        className="snap-section section-shell hairline-top w-full min-h-[100svh] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 flex flex-col justify-center"
       >
-        <div className="w-full flex flex-col gap-12 md:gap-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div className="w-full flex flex-col gap-10 md:gap-12">
+          <div className="flex flex-col gap-4 pt-10 md:pt-16">
+            <span className="eyebrow">What we do</span>
             <h2
               className={`title-3d ${servicesInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase`}
             >
               OUR SERVICES
             </h2>
-
-            <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed">
-              <p>
-                We offer a comprehensive suite of 3D rendering, motion design,
-                and virtual visualization packages tailored specifically for
-                modern real estate developments, architectural showcases, and
-                product marketing.
-              </p>
-            </div>
           </div>
 
           <ServicesCarousel
@@ -181,27 +177,21 @@ export default function WhoWeAre({ locale, t }) {
 
       <section
         ref={whoSectionRef}
-        className="w-full min-h-screen bg-[#0d0d0f] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 border-t border-white/10 snap-start flex flex-col justify-center"
+        className="snap-section section-shell section-band hairline-top w-full min-h-[100svh] text-white py-16 md:py-24 px-6 md:px-16 lg:px-28 xl:px-40 flex flex-col justify-center"
       >
-        <div className="w-full flex flex-col gap-12 md:gap-16">
+        <div className="w-full flex flex-col gap-10 md:gap-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-            <h2
-              className={`title-3d ${whoInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase`}
-            >
-              WHO WE ARE
-            </h2>
+            <div className="flex flex-col gap-4">
+              <span className="eyebrow">The studio</span>
+              <h2
+                className={`title-3d ${whoInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase`}
+              >
+                OUR VALUES
+              </h2>
+            </div>
 
-            <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg lg:text-xl text-white/80 leading-relaxed">
+            <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg text-white/80 leading-relaxed">
               <p>
-                We create stunning visualizations rooted in our deep
-                understanding of architecture and interior design. Our
-                professional background gives us a unique perspective, allowing
-                us to merge creative vision with technical precision. We believe
-                in a hands-on approach and dedicate ourselves to every project
-                from start to finish. The result is high-quality renderings and
-                animations that showcase a project&apos;s beauty and purpose.
-              </p>
-              <p className="text-white/60">
                 We help architects, designers, and developers bring their
                 visions to life. From a single image to a complete animation,
                 our goal is to produce work that is not only effective but also
@@ -210,25 +200,64 @@ export default function WhoWeAre({ locale, t }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-5">
             {features.map((feature, idx) => (
-              <div key={idx} className="flex gap-5 items-start">
-                <div className="flex-shrink-0 text-white/60 pt-1.5">
-                  {feature.icon}
+              // The reveal lives on this wrapper and the hover lift on the tile
+              // inside it. Both animate `transform`, and a filled-forwards
+              // animation outranks a plain hover rule — on one element the
+              // hover would silently stop working once the reveal finished.
+              <div
+                key={idx}
+                className="flex"
+                style={{
+                  animationName: whoInView ? "featureTileIn" : "none",
+                  animationDuration: "0.7s",
+                  animationTimingFunction: "cubic-bezier(0.16,1,0.3,1)",
+                  animationFillMode: "forwards",
+                  animationDelay: `${idx * 70}ms`,
+                  opacity: whoInView ? 0 : 1,
+                }}
+              >
+              <article className="tile feature-tile group flex flex-col gap-3 p-5 md:p-6 w-full">
+                <div className="flex items-center justify-between">
+                  <span className="feature-icon flex items-center justify-center w-11 h-11 rounded-xl text-white/70 transition-colors duration-300 group-hover:text-white">
+                    {feature.icon}
+                  </span>
+                  <span className="font-mono text-[11px] tracking-[0.2em] text-white/20 transition-colors duration-300 group-hover:text-white/40">
+                    {String(idx + 1).padStart(2, "0")}
+                  </span>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-wider uppercase text-white">
-                    {feature.title}
-                  </h3>
-                  <p className="text-lg sm:text-xl text-white/60 leading-relaxed">
-                    {feature.desc}
-                  </p>
-                </div>
+
+                <h3 className="text-base sm:text-lg font-bold tracking-[0.12em] uppercase text-white leading-snug">
+                  {feature.title}
+                </h3>
+                <p className="text-sm sm:text-[15px] text-white/60 leading-relaxed">
+                  {feature.desc}
+                </p>
+              </article>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      <style>{`
+        @keyframes featureTileIn {
+          0%   { opacity: 0; transform: translateY(18px); }
+          100% { opacity: 1; transform: translateY(0); }
+        }
+        .feature-icon {
+          background-color: var(--card-bg-hover);
+          border: 1px solid var(--card-border);
+        }
+        .feature-tile:hover .feature-icon {
+          border-color: var(--card-border-hover);
+        }
+        /* The tile's own hover lift and the entry animation both drive
+           transform, so the lift is scoped to a child-free rule that only
+           applies once the entry animation has finished filling forwards. */
+        .feature-tile { will-change: transform; }
+      `}</style>
     </>
   );
 }

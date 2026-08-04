@@ -207,7 +207,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
   }, [service.pipeline.length]);
 
   return (
-    <main className="w-full min-h-screen bg-[#0d0d0f] text-white flex flex-col pt-16">
+    <main className="w-full min-h-screen text-white flex flex-col pt-16">
       <style dangerouslySetInnerHTML={{ __html: `
         .service-hero-btn {
           background-color: #ffffff !important;
@@ -241,7 +241,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             />
           )}
           {/* Subtle gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d0f] via-[#0d0d0f]/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
         </div>
 
         {/* Content Box */}
@@ -282,10 +282,10 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
       </section>
 
       {/* 2. PIPELINE SECTION */}
-      <section ref={pipelineRef} className="w-full py-24 px-6 md:px-16 lg:px-24 bg-[#0d0d0f] border-t border-white/5 overflow-hidden">
+      <section ref={pipelineRef} className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-24 overflow-hidden">
         <div className="w-full max-w-7xl mx-auto">
           <div className="mb-20">
-            <span className="text-xs font-semibold tracking-widest uppercase text-[--color-accent] mb-2 block">
+            <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
               {locale === "de" ? "Prozess" : "Workflow"}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wider text-white">
@@ -314,15 +314,15 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                   <div className={`w-full md:w-[45%] ${isEven ? "md:order-1" : "md:order-2"}`}>
                     <div className="flex items-center gap-4 mb-5">
                       <span 
-                        className="text-7xl md:text-8xl font-black font-serif text-text/5 dark:text-transparent select-none transition-all duration-500 hover:text-[--color-accent] tracking-tighter"
+                        className="text-7xl md:text-8xl font-black font-serif text-text/5 dark:text-transparent select-none transition-all duration-500 hover:text-accent tracking-tighter"
                         style={{ WebkitTextStroke: "1.5px var(--color-border-stroke)" }}
                       >
                         {step.step}
                       </span>
-                      <div className="h-[1px] bg-gradient-to-r from-[--color-accent] to-transparent w-16" />
+                      <div className="h-[1px] bg-gradient-to-r from-accent to-transparent w-16" />
                     </div>
 
-                    <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-4 text-white hover:text-[--color-accent] transition-colors duration-300">
+                    <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-4 text-white hover:text-accent transition-colors duration-300">
                       {step.title}
                     </h3>
                     <p className="text-base text-white/70 leading-relaxed font-light">
@@ -332,7 +332,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
 
                   {/* Step Media Frame */}
                   <div className={`w-full md:w-[50%] ${isEven ? "md:order-2" : "md:order-1"}`}>
-                    <div className="group relative aspect-[16/10] w-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 bg-white/5 shadow-2xl transition-all duration-500 hover:border-[--color-accent]/50 hover:shadow-[0_20px_40px_rgba(200,255,0,0.05)] cursor-pointer">
+                    <div className="group relative aspect-[16/10] w-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 bg-white/5 shadow-2xl transition-all duration-500 hover:border-accent/50 hover:shadow-[0_20px_40px_color-mix(in srgb, var(--color-accent) 12%, transparent)] cursor-pointer">
                       <StepMedia src={media.src} type={media.type} />
                       
                       {/* Interactive overlay gradient */}
@@ -347,10 +347,10 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
       </section>
 
       {/* 3. MINI-GALLERY SECTION */}
-      <section className="w-full py-24 px-6 md:px-16 lg:px-24 bg-[#101012] border-t border-white/5 overflow-hidden">
+      <section className="section-shell section-band hairline-top w-full py-24 px-6 md:px-16 lg:px-24 overflow-hidden">
         <div className="w-full max-w-7xl mx-auto">
           <div className="mb-16">
-            <span className="text-xs font-semibold tracking-widest uppercase text-[--color-accent] mb-2 block">
+            <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
               {locale === "de" ? "Portfolio" : "Visual Showcase"}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wider text-white">
@@ -377,7 +377,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                 <motion.div
                   key={idx}
                   onClick={() => setActiveMediaIndex(idx)}
-                  className={`relative group rounded-3xl border border-white/10 bg-white/5 overflow-hidden cursor-pointer shadow-lg hover:border-[--color-accent] hover:shadow-[0_15px_30px_rgba(200,255,0,0.05)] transition-all duration-500 ${bentoClass}`}
+                  className={`relative group rounded-3xl border border-white/10 bg-white/5 overflow-hidden cursor-pointer shadow-lg hover:border-accent hover:shadow-[0_15px_30px_color-mix(in srgb, var(--color-accent) 12%, transparent)] transition-all duration-500 ${bentoClass}`}
                   initial={{ opacity: 0, scale: 0.95 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true, margin: "-50px" }}
@@ -407,7 +407,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                     
                     {/* Media format pill */}
                     <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75">
-                      <span className="text-[9px] font-bold tracking-widest text-[--color-accent] bg-[--color-accent]/10 border border-[--color-accent]/30 px-3 py-1 rounded-full uppercase">
+                      <span className="text-[9px] font-bold tracking-widest text-accent bg-accent/10 border border-accent/30 px-3 py-1 rounded-full uppercase">
                         {media.type === "video" ? "Video" : "Render"}
                       </span>
                     </div>
@@ -437,10 +437,10 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
       </section>
 
       {/* 4. OTHER SERVICES SECTION */}
-      <section className="w-full py-24 px-6 md:px-16 lg:px-24 bg-[#0d0d0f] border-t border-white/5 overflow-hidden">
+      <section className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-24 overflow-hidden">
         <div className="w-full max-w-7xl mx-auto">
           <div className="mb-16">
-            <span className="text-xs font-semibold tracking-widest uppercase text-[--color-accent] mb-2 block">
+            <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
               {locale === "de" ? "Entdecken" : "Explore More"}
             </span>
             <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wider text-white">
@@ -474,7 +474,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                 <span className="text-[10px] font-bold text-white/40 tracking-widest uppercase">
                   {service.title}
                 </span>
-                <span className="text-xs font-bold text-[--color-accent] uppercase tracking-wider font-mono">
+                <span className="text-xs font-bold text-accent uppercase tracking-wider font-mono">
                   {locale === "de" ? "Asset" : "Asset"} {activeMediaIndex + 1} / {service.gallery.length}
                 </span>
               </div>
@@ -482,7 +482,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
               {/* Close button */}
               <button 
                 onClick={() => setActiveMediaIndex(null)}
-                className="w-12 h-12 bg-white/5 border border-white/10 hover:border-[--color-accent] hover:bg-[--color-accent] hover:text-black rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer shadow-lg"
+                className="w-12 h-12 bg-white/5 border border-white/10 hover:border-accent hover:bg-accent hover:text-black rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer shadow-lg"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M18 6L6 18M6 6l12 12" />
@@ -495,7 +495,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
               {/* Prev button */}
               <button 
                 onClick={() => setActiveMediaIndex((prev) => (prev === 0 ? service.gallery.length - 1 : prev - 1))}
-                className="absolute left-0 md:-left-16 w-12 h-12 bg-white/5 border border-white/10 hover:border-[--color-accent] hover:bg-[--color-accent] hover:text-black rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer z-50 shadow-lg"
+                className="absolute left-0 md:-left-16 w-12 h-12 bg-white/5 border border-white/10 hover:border-accent hover:bg-accent hover:text-black rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer z-50 shadow-lg"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M15 19l-7-7 7-7" />
@@ -536,7 +536,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
               {/* Next button */}
               <button 
                 onClick={() => setActiveMediaIndex((prev) => (prev === service.gallery.length - 1 ? 0 : prev + 1))}
-                className="absolute right-0 md:-right-16 w-12 h-12 bg-white/5 border border-white/10 hover:border-[--color-accent] hover:bg-[--color-accent] hover:text-black rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer z-50 shadow-lg"
+                className="absolute right-0 md:-right-16 w-12 h-12 bg-white/5 border border-white/10 hover:border-accent hover:bg-accent hover:text-black rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer z-50 shadow-lg"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M9 5l7 7-7 7" />
@@ -555,7 +555,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                       onClick={() => setActiveMediaIndex(idx)}
                       className={`relative w-16 h-10 md:w-20 md:h-12 rounded-lg overflow-hidden border-2 cursor-pointer transition-all duration-300 hover:scale-105 ${
                         isActive 
-                          ? "border-[--color-accent] shadow-[0_0_10px_rgba(200,255,0,0.5)] scale-105" 
+                          ? "border-accent shadow-[0_0_10px_color-mix(in srgb, var(--color-accent) 55%, transparent)] scale-105" 
                           : "border-white/20 hover:border-white/50 opacity-60 hover:opacity-100"
                       }`}
                     >

@@ -334,14 +334,19 @@ export default function Header({ t, locale, visible }) {
         borderBottom: (scrolled && !servicesMenuOpen)
           ? `1px solid ${theme === "light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)"}`
           : "1px solid transparent",
+        // Tuned to the section ramp: the solid state is a shade deeper than the
+        // page base so the bar reads as sitting above the content, and the
+        // resting state is translucent rather than a different colour — the two
+        // used to be far enough apart that crossing 20px looked like a flash.
         background: (scrolled || servicesMenuOpen)
-          ? (theme === "light" ? "#ffffff" : "#0a0a0c")
-          : (theme === "light" ? "rgba(255,255,255,0.42)" : "rgba(8,8,10,0.42)"),
+          ? (theme === "light" ? "rgba(255,255,255,0.92)" : "rgba(8,9,12,0.92)")
+          : (theme === "light" ? "rgba(255,255,255,0.30)" : "rgba(8,9,12,0.30)"),
         backdropFilter: "blur(24px) saturate(180%)",
+        WebkitBackdropFilter: "blur(24px) saturate(180%)",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-12px)",
         transition:
-          "opacity 0.7s ease, transform 0.7s ease, padding 0.5s ease, background 0.3s ease, border-color 0.3s ease",
+          "opacity 0.7s ease, transform 0.7s ease, padding 0.35s cubic-bezier(0.16,1,0.3,1), background 0.45s ease, border-color 0.45s ease",
       }}
     >
       <div className="w-full px-6 md:px-16 lg:px-24 flex items-center justify-between">

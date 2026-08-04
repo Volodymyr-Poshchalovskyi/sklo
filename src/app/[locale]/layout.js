@@ -104,7 +104,7 @@ export default async function LocaleLayout({ children, params }) {
           }}
         />
       </head>
-      <body className="min-h-screen flex flex-col bg-[--color-bg] text-[--color-text]">
+      <body className="grain min-h-screen flex flex-col bg-bg text-text">
         <ClientWrapper locale={locale} t={t} initialShowLoader={initialShowLoader}>
           <div className="flex-1">
             {children}

@@ -97,8 +97,12 @@ export default function ServicesCarousel({
   const startXRef = useRef(0);
   const scrollLeftStartRef = useRef(0);
   const dragDistanceRef = useRef(0);
+  const scrollEndTimerRef = useRef(null);
 
-  const handleMouseDown = (e) => {
+  // Pointer-based so a trackpad/pen drag behaves like a mouse drag. Touch is
+  // deliberately left to the browser's own momentum scrolling.
+  const handlePointerDown = (e) => {
+    if (e.pointerType === "touch") return;
     if (e.button !== 0) return; // Left click only
     isDraggingRef.current = true;
     startXRef.current = e.pageX - carouselRef.current.offsetLeft;
@@ -106,23 +110,50 @@ export default function ServicesCarousel({
     dragDistanceRef.current = 0;
 
     carouselRef.current.style.scrollSnapType = "none";
-    carouselRef.current.style.scrollBehavior = "auto";
   };
 
-  const handleMouseMove = (e) => {
+  const handlePointerMove = (e) => {
     if (!isDraggingRef.current) return;
     e.preventDefault();
     const x = e.pageX - carouselRef.current.offsetLeft;
-    const walk = (x - startXRef.current) * 1.5;
-    dragDistanceRef.current = Math.abs(x - startXRef.current);
+    const walk = x - startXRef.current;
+    dragDistanceRef.current = Math.abs(walk);
     carouselRef.current.scrollLeft = scrollLeftStartRef.current - walk;
   };
 
-  const handleMouseUpOrLeave = () => {
+  // Animate to the nearest card ourselves on release. Simply restoring
+  // `scroll-snap-type` here does NOT animate: the element is already at rest,
+  // so the browser applies the snap position instantly and the carousel jumps.
+  // We scroll smoothly with snapping still off, then re-arm it once we have
+  // arrived — at which point re-arming is a no-op and cannot jump.
+  const settleTimerRef = useRef(null);
+
+  const settleToNearestCard = () => {
+    const el = carouselRef.current;
+    if (!el) return;
+
+    const cardWidth = getCardWidthWithGap();
+    const target = Math.round(el.scrollLeft / cardWidth) * cardWidth;
+
+    clearTimeout(settleTimerRef.current);
+
+    if (Math.abs(target - el.scrollLeft) < 1) {
+      el.style.scrollSnapType = "x mandatory";
+      return;
+    }
+
+    el.scrollTo({ left: target, behavior: "smooth" });
+    settleTimerRef.current = setTimeout(() => {
+      if (carouselRef.current) {
+        carouselRef.current.style.scrollSnapType = "x mandatory";
+      }
+    }, 500);
+  };
+
+  const handlePointerUpOrLeave = () => {
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
-    carouselRef.current.style.scrollSnapType = "x mandatory";
-    carouselRef.current.style.scrollBehavior = "smooth";
+    settleToNearestCard();
   };
 
   const handleLinkClick = (e) => {
@@ -146,53 +177,64 @@ export default function ServicesCarousel({
     }
   };
 
-  const handleScroll = () => {
-    if (!carouselRef.current) return;
+  // Infinite loop is faked by rendering the list three times and silently
+  // teleporting back to the middle copy. That teleport MUST only happen once
+  // motion has stopped — doing it from inside `onScroll` (as this used to)
+  // mutates scrollLeft while a smooth arrow-scroll or snap is still in flight,
+  // which cancels the animation and shows up as a visible jump.
+  const recenter = () => {
     const el = carouselRef.current;
-    const { scrollLeft: currentScrollLeft } = el;
-    const cardWidth = getCardWidthWithGap();
-    const singleSectionWidth = baseItems.length * cardWidth;
+    if (!el || isDraggingRef.current) return;
 
-    if (currentScrollLeft < 0.5 * singleSectionWidth) {
-      el.style.scrollSnapType = "none";
-      el.style.scrollBehavior = "auto";
-      el.scrollLeft += singleSectionWidth;
+    const singleSectionWidth = baseItems.length * getCardWidthWithGap();
+    const offset = el.scrollLeft - singleSectionWidth;
+    if (Math.abs(offset) < singleSectionWidth * 0.5) return;
 
-      if (isDraggingRef.current) {
-        scrollLeftStartRef.current += singleSectionWidth;
+    const prevSnap = el.style.scrollSnapType;
+    el.style.scrollSnapType = "none";
+    el.scrollLeft = offset > 0
+      ? el.scrollLeft - singleSectionWidth
+      : el.scrollLeft + singleSectionWidth;
+    requestAnimationFrame(() => {
+      if (carouselRef.current) {
+        carouselRef.current.style.scrollSnapType = prevSnap || "x mandatory";
       }
-
-      requestAnimationFrame(() => {
-        if (carouselRef.current) {
-          carouselRef.current.style.scrollSnapType = isDraggingRef.current
-            ? "none"
-            : "x mandatory";
-          carouselRef.current.style.scrollBehavior = isDraggingRef.current
-            ? "auto"
-            : "smooth";
-        }
-      });
-    } else if (currentScrollLeft > 1.5 * singleSectionWidth) {
-      el.style.scrollSnapType = "none";
-      el.style.scrollBehavior = "auto";
-      el.scrollLeft -= singleSectionWidth;
-
-      if (isDraggingRef.current) {
-        scrollLeftStartRef.current -= singleSectionWidth;
-      }
-
-      requestAnimationFrame(() => {
-        if (carouselRef.current) {
-          carouselRef.current.style.scrollSnapType = isDraggingRef.current
-            ? "none"
-            : "x mandatory";
-          carouselRef.current.style.scrollBehavior = isDraggingRef.current
-            ? "auto"
-            : "smooth";
-        }
-      });
-    }
+    });
   };
+
+  // `scrollend` is the precise signal; the timer is the fallback for browsers
+  // that do not fire it yet (Safari).
+  const handleScroll = () => {
+    if (scrollEndTimerRef.current) clearTimeout(scrollEndTimerRef.current);
+    scrollEndTimerRef.current = setTimeout(recenter, 160);
+  };
+
+  // `recenter` is recreated every render, so the listener is registered through
+  // a ref — otherwise this effect would need `recenter` as a dependency and
+  // would tear down and re-attach on every single render.
+  const recenterRef = useRef(recenter);
+  useEffect(() => {
+    recenterRef.current = recenter;
+  });
+
+  useEffect(() => {
+    const el = carouselRef.current;
+    if (!el || !("onscrollend" in window)) return;
+    const onScrollEnd = () => {
+      if (scrollEndTimerRef.current) clearTimeout(scrollEndTimerRef.current);
+      recenterRef.current();
+    };
+    el.addEventListener("scrollend", onScrollEnd);
+    return () => el.removeEventListener("scrollend", onScrollEnd);
+  }, []);
+
+  useEffect(
+    () => () => {
+      clearTimeout(scrollEndTimerRef.current);
+      clearTimeout(settleTimerRef.current);
+    },
+    []
+  );
 
   // Initialize scroll position to the middle section (Section 2) instantly
   useEffect(() => {
@@ -218,52 +260,51 @@ export default function ServicesCarousel({
   return (
     <div className="relative w-full">
       {/* Carousel Navigation Arrows */}
-      <div className="flex justify-end items-center gap-4 mb-6">
-        <button
-          onClick={scrollLeft}
-          className="w-12 sm:w-14 h-12 sm:h-14 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all duration-300 active:scale-95 cursor-pointer"
-          aria-label="Previous slide"
+      <button
+        onClick={scrollLeft}
+        className="hidden sm:flex absolute left-0 sm:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-10 w-12 sm:w-14 h-12 sm:h-14 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 backdrop-blur-sm items-center justify-center text-white transition-all duration-300 active:scale-95 cursor-pointer"
+        aria-label="Previous slide"
+      >
+        <svg
+          className="w-5 sm:w-6 h-5 sm:h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
         >
-          <svg
-            className="w-5 sm:w-6 h-5 sm:h-6"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-          >
-            <path d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button
-          onClick={scrollRight}
-          className="w-12 sm:w-14 h-12 sm:h-14 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all duration-300 active:scale-95 cursor-pointer"
-          aria-label="Next slide"
+          <path d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
+      <button
+        onClick={scrollRight}
+        className="hidden sm:flex absolute right-0 sm:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-10 w-12 sm:w-14 h-12 sm:h-14 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 backdrop-blur-sm items-center justify-center text-white transition-all duration-300 active:scale-95 cursor-pointer"
+        aria-label="Next slide"
+      >
+        <svg
+          className="w-5 sm:w-6 h-5 sm:h-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
         >
-          <svg
-            className="w-5 sm:w-6 h-5 sm:h-6"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-          >
-            <path d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
+          <path d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
 
       {/* Horizontal Carousel */}
       <div
         ref={carouselRef}
         onScroll={handleScroll}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUpOrLeave}
-        onMouseLeave={handleMouseUpOrLeave}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUpOrLeave}
+        onPointerCancel={handlePointerUpOrLeave}
+        onPointerLeave={handlePointerUpOrLeave}
         className="flex gap-5 overflow-x-auto py-2 no-scrollbar select-none snap-x snap-mandatory cursor-grab active:cursor-grabbing"
         style={{
-          scrollBehavior: "smooth",
           scrollbarWidth: "none",
           msOverflowStyle: "none",
+          overscrollBehaviorX: "contain",
         }}
       >
         {loopedItems.map((item) => {

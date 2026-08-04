@@ -53,20 +53,18 @@ export default function ServicesPage({ params }) {
   const { locale } = React.use(params);
 
   return (
-    <main className="w-full min-h-screen bg-[#0d0d0f] text-white flex flex-col pt-16">
+    <main className="w-full min-h-screen text-white flex flex-col pt-16">
       {servicesData.map((service, index) => (
         <section
           key={index}
           id={`service-${index}`}
-          className={`w-full min-h-[90vh] md:h-screen flex flex-col md:flex-row items-center border-b border-white/5 snap-start relative overflow-hidden scroll-mt-16 group ${
-            index % 2 === 1 ? "md:flex-row-reverse" : ""
+          className={`snap-section section-shell hairline-top w-full min-h-[90svh] md:h-[100svh] flex flex-col md:flex-row items-center relative overflow-hidden scroll-mt-[84px] group ${
+            index % 2 === 1 ? "md:flex-row-reverse section-band" : ""
           }`}
         >
           {/* Text block (50% width on desktop) */}
           <div className="w-full md:w-1/2 p-8 md:p-16 lg:p-24 flex flex-col justify-center h-full z-10 shrink-0">
-            <span className="text-4xl md:text-6xl font-script italic text-white/20 mb-4 block font-serif">
-              0{index + 1}
-            </span>
+            <span className="eyebrow mb-5">Service {String(index + 1).padStart(2, "0")}</span>
             <h2 className="text-2xl md:text-4xl font-bold uppercase tracking-wider mb-6 text-white leading-tight">
               {service.title}
             </h2>

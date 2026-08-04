@@ -46,7 +46,7 @@ function GalleryCard({ item, onClick }) {
       <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300" />
 
       <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-        <span className="text-[10px] font-mono uppercase tracking-widest text-[--color-accent] mb-1 font-semibold">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-accent mb-1 font-semibold">
           {item.category}
         </span>
         <h3 className="text-sm font-bold uppercase tracking-wider text-white">
@@ -255,9 +255,9 @@ export default function GalleryPage() {
   }, [selectedItemIndex, filteredItems.length]);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row-reverse bg-[#0d0d0f] text-white">
+    <div className="min-h-screen flex flex-col md:flex-row-reverse text-white">
       {/* Right Sidebar (22% width on desktop) */}
-      <aside className="w-full md:w-[22%] h-auto md:h-screen sticky top-0 bg-[#101012] border-b md:border-b-0 md:border-l border-white/10 p-6 md:p-8 pt-24 md:pt-32 flex flex-col justify-between z-20 shrink-0">
+      <aside className="w-full md:w-[22%] h-auto md:h-screen sticky top-0 bg-surface border-b md:border-b-0 md:border-l border-white/10 p-6 md:p-8 pt-24 md:pt-32 flex flex-col justify-between z-20 shrink-0">
         <div className="flex flex-col gap-6 md:gap-8">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold tracking-widest uppercase mb-4 text-white">
@@ -290,7 +290,7 @@ export default function GalleryPage() {
                     className="group flex items-center text-left py-2 px-1 text-xs tracking-wider uppercase font-semibold transition-all duration-300 relative cursor-pointer"
                   >
                     <span 
-                      className="w-1.5 h-1.5 rounded-full bg-[--color-accent] mr-3 transition-all duration-300"
+                      className="w-1.5 h-1.5 rounded-full bg-accent mr-3 transition-all duration-300"
                       style={{
                         opacity: isActive ? 1 : 0,
                         transform: isActive ? "scale(1)" : "scale(0)",
@@ -423,7 +423,7 @@ export default function GalleryPage() {
             )}
             
             <div className="mt-6 text-center">
-              <span className="text-xs uppercase tracking-widest text-[--color-accent] font-semibold">
+              <span className="text-xs uppercase tracking-widest text-accent font-semibold">
                 {filteredItems[selectedItemIndex]?.category}
               </span>
               <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-white mt-1">
