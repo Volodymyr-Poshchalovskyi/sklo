@@ -8,23 +8,23 @@ export default function Footer({ locale }) {
   const isContactPage = pathname?.endsWith("/contact");
 
   return (
-    <footer className="section-shell hairline-top w-full text-white pt-24 pb-16 px-6">
+    <footer className="section-shell hairline-top w-full text-white pt-24 pb-16 px-6 md:px-16 lg:px-28 xl:px-40">
       
       {!isContactPage && (
-        <div className="max-w-7xl mx-auto mb-24 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="w-full mb-24 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div className="flex flex-col gap-6">
             <span className="eyebrow">Get in touch</span>
-            <h2 className="text-4xl md:text-5xl font-bold tracking-wide uppercase leading-tight max-w-sm">
-              Looking to start your<br/>next project?
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-wide uppercase leading-[1.1] max-w-lg">
+              LOOKING TO START YOUR NEXT PROJECT?
             </h2>
-            <p className="text-base text-white/70 leading-relaxed max-w-md">
+            <p className="text-base sm:text-lg text-white/70 leading-relaxed max-w-md">
               Fill out some info and we will be in touch shortly. We can&apos;t wait to hear from you!
             </p>
             <a
               href="mailto:info@sklo.studio"
-              className="text-sm text-white/50 hover:text-white transition-colors duration-300 w-fit"
+              className="text-sm sm:text-base text-white/50 hover:text-white transition-colors duration-300 w-fit"
             >
-              …or just email us at <span className="underline underline-offset-4">info@sklo.studio</span>
+              …or just email us at <span className="underline underline-offset-4 text-white">info@sklo.studio</span>
             </a>
           </div>
 
@@ -71,10 +71,10 @@ export default function Footer({ locale }) {
                 />
               </div>
               
-              <div className="flex justify-end pt-4">
+              <div className="flex justify-end pt-2">
                 <button 
                   type="submit" 
-                  className="footer-submit-btn white-shimmer group inline-flex items-center gap-2 font-semibold text-sm px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer border border-white/15"
+                  className="footer-submit-btn white-shimmer group inline-flex items-center gap-2 font-semibold text-sm px-8 py-3.5 rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer border border-white/15"
                   style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
                 >
                   Send
@@ -91,8 +91,8 @@ export default function Footer({ locale }) {
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start gap-16 lg:gap-24">
-        <div className="flex flex-col gap-4 max-w-sm">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+        <div className="flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 sm:w-12 sm:h-12 shrink-0 overflow-hidden rounded-md">
               <Image
@@ -102,55 +102,55 @@ export default function Footer({ locale }) {
                 className="object-cover logo-image"
               />
             </div>
-            <h2 className="text-3xl sm:text-4xl font-bold tracking-widest uppercase text-white">
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-widest uppercase text-white">
               SKLO STUDIO
             </h2>
           </div>
           <a 
             href="mailto:info@sklo.studio" 
-            className="text-base sm:text-lg text-white/60 hover:text-white transition-colors duration-300 hover:underline w-fit"
+            className="text-base text-white/60 hover:text-white transition-colors duration-300 hover:underline w-fit"
           >
             info@sklo.studio
           </a>
         </div>
 
-        <div className="grid grid-cols-2 gap-16 lg:gap-32 w-full lg:w-auto">
-          <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-2 gap-12 sm:gap-20 w-full">
+          <div className="flex flex-col gap-3">
             <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">
               Explore
             </span>
-            <Link href={`/${locale}/about`} className="text-lg sm:text-xl font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1.5 inline-block">
+            <Link href={`/${locale}/about`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               About us
             </Link>
-            <Link href={`/${locale}/contact`} className="text-lg sm:text-xl font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1.5 inline-block">
+            <Link href={`/${locale}/contact`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               Contact
             </Link>
-            <Link href={`/${locale}/services`} className="text-lg sm:text-xl font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1.5 inline-block">
+            <Link href={`/${locale}/services`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               Services
             </Link>
-            <Link href={`/${locale}/gallery`} className="text-lg sm:text-xl font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1.5 inline-block">
+            <Link href={`/${locale}/gallery`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               Portfolio
             </Link>
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">
               Follow us
             </span>
-            <a href="#" className="text-lg sm:text-xl font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1.5 inline-block">
+            <a href="#" className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               Behance
             </a>
-            <a href="#" className="text-lg sm:text-xl font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1.5 inline-block">
+            <a href="#" className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               Instagram
             </a>
-            <a href="#" className="text-lg sm:text-xl font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1.5 inline-block">
+            <a href="#" className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               LinkedIn
             </a>
           </div>
         </div>
       </div>
       
-      <div className="max-w-7xl mx-auto mt-24 pt-6 border-t border-white/10 flex justify-between items-center text-xs text-white/50">
+      <div className="w-full mt-20 pt-6 border-t border-white/10 flex justify-between items-center text-xs text-white/50">
         <span>© {new Date().getFullYear()} SKLO Studio.</span>
       </div>
 

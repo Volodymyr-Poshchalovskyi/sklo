@@ -6,6 +6,7 @@ function LazyVideo({ src, className }) {
   const videoRef = useRef(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
   const [hasIntersected, setHasIntersected] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const videoEl = videoRef.current;
@@ -20,7 +21,11 @@ function LazyVideo({ src, className }) {
       },
       {
         root: null, // viewport
-        rootMargin: "100px", // start loading/playing slightly before it is in view
+        // Only start loading once the card is actually visible — a large
+        // margin here meant several autoplay videos could start buffering
+        // at once (competing for the same connections) before the user
+        // ever scrolled to them, so the first frame took seconds to paint.
+        rootMargin: "0px",
         threshold: 0.01,
       },
     );
@@ -46,15 +51,19 @@ function LazyVideo({ src, className }) {
   }, [isIntersecting, hasIntersected]);
 
   return (
-    <video
-      ref={videoRef}
-      src={hasIntersected ? src : undefined}
-      loop
-      muted
-      playsInline
-      className={className}
-      preload={hasIntersected ? "auto" : "none"}
-    />
+    <>
+      <video
+        ref={videoRef}
+        src={hasIntersected ? src : undefined}
+        loop
+        muted
+        playsInline
+        className={className}
+        preload={hasIntersected ? "auto" : "none"}
+        onLoadedData={() => setIsReady(true)}
+      />
+      {!isReady && <div className="absolute inset-0 video-loading-pulse pointer-events-none" />}
+    </>
   );
 }
 
@@ -98,6 +107,8 @@ export default function ServicesCarousel({
   const scrollLeftStartRef = useRef(0);
   const dragDistanceRef = useRef(0);
   const scrollEndTimerRef = useRef(null);
+  const dragRafRef = useRef(null);
+  const pendingWalkRef = useRef(null);
 
   // Pointer-based so a trackpad/pen drag behaves like a mouse drag. Touch is
   // deliberately left to the browser's own momentum scrolling.
@@ -112,13 +123,24 @@ export default function ServicesCarousel({
     carouselRef.current.style.scrollSnapType = "none";
   };
 
+  // Writing scrollLeft straight from the raw pointermove handler forces a
+  // layout on every single event (these can fire far faster than the
+  // display refreshes), which is what made dragging feel choppy. Batch to
+  // one write per animation frame instead.
   const handlePointerMove = (e) => {
     if (!isDraggingRef.current) return;
     e.preventDefault();
     const x = e.pageX - carouselRef.current.offsetLeft;
     const walk = x - startXRef.current;
     dragDistanceRef.current = Math.abs(walk);
-    carouselRef.current.scrollLeft = scrollLeftStartRef.current - walk;
+    pendingWalkRef.current = walk;
+
+    if (dragRafRef.current) return;
+    dragRafRef.current = requestAnimationFrame(() => {
+      dragRafRef.current = null;
+      if (pendingWalkRef.current === null || !carouselRef.current) return;
+      carouselRef.current.scrollLeft = scrollLeftStartRef.current - pendingWalkRef.current;
+    });
   };
 
   // Animate to the nearest card ourselves on release. Simply restoring
@@ -153,6 +175,11 @@ export default function ServicesCarousel({
   const handlePointerUpOrLeave = () => {
     if (!isDraggingRef.current) return;
     isDraggingRef.current = false;
+    if (dragRafRef.current) {
+      cancelAnimationFrame(dragRafRef.current);
+      dragRafRef.current = null;
+    }
+    pendingWalkRef.current = null;
     settleToNearestCard();
   };
 
@@ -232,6 +259,7 @@ export default function ServicesCarousel({
     () => () => {
       clearTimeout(scrollEndTimerRef.current);
       clearTimeout(settleTimerRef.current);
+      if (dragRafRef.current) cancelAnimationFrame(dragRafRef.current);
     },
     []
   );
@@ -377,6 +405,15 @@ export default function ServicesCarousel({
       <style>{`
         .no-scrollbar::-webkit-scrollbar {
           display: none;
+        }
+        .video-loading-pulse {
+          background: linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.09) 37%, rgba(255,255,255,0.03) 63%);
+          background-size: 400% 100%;
+          animation: videoLoadingPulse 1.6s ease-in-out infinite;
+        }
+        @keyframes videoLoadingPulse {
+          0% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
         }
       `}</style>
     </div>

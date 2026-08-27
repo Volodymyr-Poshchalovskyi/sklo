@@ -2,29 +2,9 @@
 import { useState, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { servicesData } from "@/data/servicesData";
 
-const PROJECT_TYPES = [
-  { id: "exterior", label: "Exterior Visualization" },
-  { id: "interior", label: "Interior Visualization" },
-  { id: "animation", label: "Animation / Mood Film" },
-  { id: "tour", label: "360° Virtual Tour" },
-  { id: "product", label: "Product Visualization" },
-  { id: "other", label: "Something Else" },
-];
-
-const SERVICE_TO_TYPE = {
-  "exterior-visualization": "exterior",
-  "interior-visualization": "interior",
-  "animation-mood-film": "animation",
-  "bird-eye-visualization": "exterior",
-  "360-virtual-tour": "tour",
-  "cinemagraph-live-shot": "animation",
-  "product-visualization": "product",
-  "virtual-staging": "interior",
-  "graphic-design": "other",
-  "3d-floorplans": "other",
-  "media-website-packages": "other",
-};
+const SERVICE_OPTIONS = servicesData.map((s) => ({ id: s.slug, label: s.title }));
 
 const BUDGET_OPTIONS = [
   { id: "b1", label: "Up to $1,000" },
@@ -200,7 +180,7 @@ function TextField({ label, required, ...props }) {
 }
 
 const STEPS = [
-  { key: "type", label: "Project" },
+  { key: "type", label: "Services" },
   { key: "scope", label: "Scope" },
   { key: "budget", label: "Budget & Time" },
   { key: "materials", label: "Materials" },
@@ -216,7 +196,10 @@ const stepVariants = {
 function ContactWizardInner({ locale }) {
   const searchParams = useSearchParams();
   const isDe = locale === "de";
-  const preselectedType = SERVICE_TO_TYPE[searchParams.get("service")] || "";
+  const preselectedService = searchParams.get("service");
+  const initialServices = SERVICE_OPTIONS.some((s) => s.id === preselectedService)
+    ? [preselectedService]
+    : [];
 
   const [step, setStep] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -224,17 +207,15 @@ function ContactWizardInner({ locale }) {
   const [submitted, setSubmitted] = useState(false);
 
   const [data, setData] = useState({
-    projectType: preselectedType,
-    aerialViews: 0,
-    groundViews: 0,
-    interiorViews: 0,
-    lengthSec: 0,
+    services: initialServices,
+    quantities: {},
     budget: "",
     timelinePreset: "",
     startDate: "",
     endDate: "",
     materials: [],
     additionalInfo: "",
+    files: [],
     name: "",
     company: "",
     email: "",
@@ -244,12 +225,51 @@ function ContactWizardInner({ locale }) {
 
   const set = (patch) => setData((prev) => ({ ...prev, ...patch }));
 
+  const toggleService = (id) => {
+    setData((prev) => ({
+      ...prev,
+      services: prev.services.includes(id)
+        ? prev.services.filter((s) => s !== id)
+        : [...prev.services, id],
+    }));
+  };
+
+  const setQuantity = (id, value) => {
+    setData((prev) => ({
+      ...prev,
+      quantities: { ...prev.quantities, [id]: value },
+    }));
+  };
+
   const toggleMaterial = (id) => {
     setData((prev) => ({
       ...prev,
       materials: prev.materials.includes(id)
         ? prev.materials.filter((m) => m !== id)
         : [...prev.materials, id],
+    }));
+  };
+
+  const addFiles = (fileList) => {
+    const incoming = Array.from(fileList);
+    setData((prev) => {
+      const existingKeys = new Set(prev.files.map((f) => `${f.name}_${f.size}`));
+      const merged = [...prev.files];
+      for (const f of incoming) {
+        const key = `${f.name}_${f.size}`;
+        if (!existingKeys.has(key)) {
+          existingKeys.add(key);
+          merged.push(f);
+        }
+      }
+      return { ...prev, files: merged };
+    });
+  };
+
+  const removeFile = (index) => {
+    setData((prev) => ({
+      ...prev,
+      files: prev.files.filter((_, i) => i !== index),
     }));
   };
 
@@ -264,7 +284,7 @@ function ContactWizardInner({ locale }) {
   const canProceed = () => {
     switch (STEPS[step].key) {
       case "type":
-        return !!data.projectType;
+        return data.services.length > 0;
       case "budget":
         return !!data.budget && !!data.startDate && !!data.endDate;
       case "details":
@@ -290,11 +310,13 @@ function ContactWizardInner({ locale }) {
     goTo(step - 1);
   };
 
-  const projectTypeLabel =
-    PROJECT_TYPES.find((p) => p.id === data.projectType)?.label || "-";
+  const selectedServices = SERVICE_OPTIONS.filter((s) => data.services.includes(s.id));
   const budgetLabel = BUDGET_OPTIONS.find((b) => b.id === data.budget)?.label || "-";
   const materialsLabels = data.materials.map(
     (id) => MATERIAL_OPTIONS.find((m) => m.id === id)?.label
+  );
+  const serviceLines = selectedServices.map(
+    (s) => `${s.label}: ${data.quantities[s.id] || 0} pcs.`
   );
 
   const buildMailto = () => {
@@ -305,15 +327,15 @@ function ContactWizardInner({ locale }) {
       `Phone: ${data.phone || "-"}`,
       "",
       `Project Name: ${data.projectName}`,
-      `Project Type: ${projectTypeLabel}`,
-      `Aerial view(s): ${data.aerialViews} pcs.`,
-      `Ground view(s): ${data.groundViews} pcs.`,
-      `Interior view(s): ${data.interiorViews} pcs.`,
-      `Animation length: ${data.lengthSec} sec`,
+      "Requested Services:",
+      ...(serviceLines.length ? serviceLines : ["-"]),
       `Budget: ${budgetLabel}`,
       `Preferred Start Date: ${data.startDate || "-"}`,
       `Preferred End Date: ${data.endDate || "-"}`,
       `Materials available: ${materialsLabels.join(", ") || "-"}`,
+      `Attached files (please attach manually): ${
+        data.files.map((f) => f.name).join(", ") || "-"
+      }`,
       "",
       "Additional Information:",
       data.additionalInfo || "-",
@@ -333,17 +355,15 @@ function ContactWizardInner({ locale }) {
 
   const resetForm = () => {
     setData({
-      projectType: "",
-      aerialViews: 0,
-      groundViews: 0,
-      interiorViews: 0,
-      lengthSec: 0,
+      services: [],
+      quantities: {},
       budget: "",
       timelinePreset: "",
       startDate: "",
       endDate: "",
       materials: [],
       additionalInfo: "",
+      files: [],
       name: "",
       company: "",
       email: "",
@@ -441,15 +461,20 @@ function ContactWizardInner({ locale }) {
             {STEPS[step].key === "type" && (
               <div className="flex flex-col gap-6">
                 <Heading3D className="text-xl md:text-2xl font-bold uppercase tracking-wider">
-                  {isDe ? "Welche Art von Projekt?" : "What kind of project is this?"}
+                  {isDe ? "Welche Leistungen brauchen Sie?" : "Which services do you need?"}
                 </Heading3D>
+                <p className="text-xs text-white/50 -mt-3">
+                  {isDe
+                    ? "Sie können mehrere Leistungen auswählen."
+                    : "You can select multiple services."}
+                </p>
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {PROJECT_TYPES.map((type) => (
+                  {SERVICE_OPTIONS.map((service) => (
                     <OptionCard
-                      key={type.id}
-                      label={type.label}
-                      selected={data.projectType === type.id}
-                      onClick={() => set({ projectType: type.id })}
+                      key={service.id}
+                      label={service.label}
+                      selected={data.services.includes(service.id)}
+                      onClick={() => toggleService(service.id)}
                     />
                   ))}
                 </div>
@@ -467,26 +492,14 @@ function ContactWizardInner({ locale }) {
                     : "Optional — a rough estimate is perfectly fine."}
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <QuantityField
-                    label={isDe ? "Luftaufnahme(n)" : "Aerial view(s)"}
-                    value={data.aerialViews}
-                    onChange={(v) => set({ aerialViews: v })}
-                  />
-                  <QuantityField
-                    label={isDe ? "Bodenansicht(en)" : "Ground view(s)"}
-                    value={data.groundViews}
-                    onChange={(v) => set({ groundViews: v })}
-                  />
-                  <QuantityField
-                    label={isDe ? "Innenansicht(en)" : "Interior view(s)"}
-                    value={data.interiorViews}
-                    onChange={(v) => set({ interiorViews: v })}
-                  />
-                  <QuantityField
-                    label={isDe ? "Länge (Sek.)" : "Animation length (sec)"}
-                    value={data.lengthSec}
-                    onChange={(v) => set({ lengthSec: v })}
-                  />
+                  {selectedServices.map((service) => (
+                    <QuantityField
+                      key={service.id}
+                      label={service.label}
+                      value={data.quantities[service.id] || 0}
+                      onChange={(v) => setQuantity(service.id, v)}
+                    />
+                  ))}
                 </div>
               </div>
             )}
@@ -571,6 +584,50 @@ function ContactWizardInner({ locale }) {
                     placeholder={isDe ? "Erzählen Sie uns mehr..." : "Tell us more about the project..."}
                   />
                 </label>
+
+                <div className="flex flex-col gap-3 mt-2">
+                  <span className="text-xs text-white/60 uppercase tracking-widest font-semibold">
+                    {isDe ? "Dateien anhängen (PDF, Bilder)" : "Attach Files (PDF, Images)"}
+                  </span>
+                  <label className="flex items-center justify-center gap-2 px-6 py-5 rounded-2xl border border-dashed border-white/20 hover:border-white/40 transition-colors cursor-pointer text-xs text-white/50 uppercase tracking-widest">
+                    {isDe ? "Dateien auswählen" : "Choose Files"}
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*,.pdf"
+                      className="hidden"
+                      onChange={(e) => {
+                        if (e.target.files?.length) addFiles(e.target.files);
+                        e.target.value = "";
+                      }}
+                    />
+                  </label>
+                  {data.files.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {data.files.map((f, i) => (
+                        <span
+                          key={`${f.name}_${f.size}`}
+                          className="flex items-center gap-2 px-3 py-2 rounded-full border border-white/15 bg-white/[0.02] text-xs text-white/70"
+                        >
+                          {f.name}
+                          <button
+                            type="button"
+                            onClick={() => removeFile(i)}
+                            aria-label={isDe ? "Entfernen" : "Remove"}
+                            className="text-white/40 hover:text-white cursor-pointer"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <p className="text-[11px] text-white/40">
+                    {isDe
+                      ? "Hinweis: Dateien können nicht automatisch per E-Mail-Client mitgesendet werden — bitte fügen Sie sie beim Versand manuell an."
+                      : "Note: files can't be auto-attached by the email client — please attach them manually when sending."}
+                  </p>
+                </div>
               </div>
             )}
 
@@ -627,9 +684,17 @@ function ContactWizardInner({ locale }) {
                     {isDe ? "Angeforderte Leistungen" : "Requested Products"}
                   </span>
                   <span>
-                    {projectTypeLabel} · {budgetLabel} · {data.startDate || "—"} → {data.endDate || "—"}
+                    {selectedServices.map((s) => s.label).join(", ") || "—"} · {budgetLabel} ·{" "}
+                    {data.startDate || "—"} → {data.endDate || "—"}
                   </span>
+                  {serviceLines.length > 0 && <span>{serviceLines.join(" · ")}</span>}
                   {materialsLabels.length > 0 && <span>{materialsLabels.join(", ")}</span>}
+                  {data.files.length > 0 && (
+                    <span>
+                      {isDe ? "Dateien: " : "Files: "}
+                      {data.files.map((f) => f.name).join(", ")}
+                    </span>
+                  )}
                 </div>
               </div>
             )}

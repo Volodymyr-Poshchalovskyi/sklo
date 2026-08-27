@@ -6,29 +6,19 @@ import ServicesCarousel from "@/components/ServicesCarousel";
 import { useLenis } from "@/context/LenisContext";
 
 // Helper component to render step media dynamically
-function StepMedia({ src, type }) {
+function StepMedia({ src, type, isActive }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
     if (type !== "video" || !videoRef.current) return;
     const el = videoRef.current;
 
-    // Observe and auto-play video steps when they enter the screen
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          el.play().catch(() => {});
-        } else {
-          el.pause();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    observer.observe(el);
-    return () => {
-      if (el) observer.unobserve(el);
-    };
-  }, [type, src]);
+    if (isActive) {
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+    }
+  }, [type, isActive]);
 
   if (type === "video") {
     return (
@@ -48,35 +38,44 @@ function StepMedia({ src, type }) {
     <img
       src={src}
       alt="Workflow step visual"
-      loading="lazy"
+      loading="eager"
       className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
     />
   );
 }
 
-// Function to dynamically select high quality media for each step
-const getStepMedia = (service, index) => {
-  const gallery = service.gallery || [];
-  if (index === 0) {
-    // Stage 1: Design / layout. Pick 3D plan representation or default fallback
-    const item = gallery.find(g => g.src.includes("3dplan")) || gallery[2] || { src: "/assets/home/3dplan_interior.jpg" };
-    return { src: item.src, type: item.type || "image" };
-  }
-  if (index === 1) {
-    // Stage 2: Camera angles / lighting. Pick interior visual representation
-    const item = gallery.find(g => g.src.includes("tour")) || gallery[1] || { src: "/assets/home/3d tour.jpg" };
-    return { src: item.src, type: item.type || "image" };
-  }
-  if (index === 2) {
-    // Stage 3: Materials / Atmosphere. Pick high-quality exterior details
-    const item = gallery[3] || { src: "/assets/heroImage.jpg" };
-    return { src: item.src, type: item.type || "image" };
-  }
-  // Stage 4: Final rendering. Show main service visual (image or video loop)
-  return { src: service.src, type: service.type || "image" };
+const pipelineStepVariants = {
+  enter: (dir) => ({ opacity: 0, y: dir > 0 ? 20 : -20 }),
+  center: { opacity: 1, y: 0 },
+  exit: (dir) => ({ opacity: 0, y: dir > 0 ? -20 : 20 }),
 };
 
+// Function to return distinct high quality media for each of the 4 pipeline steps
+const getStepMedia = (service, index) => {
+  if (index === 0) {
+    // Step 1: 3D Floorplan / Blueprint
+    return { src: "/assets/home/3dplan_interior.jpg", type: "image" };
+  }
+  if (index === 1) {
+    // Step 2: Camera Angles & Interior Setup
+    return { src: "/assets/home/3d tour.jpg", type: "image" };
+  }
+  if (index === 2) {
+    // Step 3: Shading & Motion Cinemagraph Loop
+    return { src: "/assets/home/cinemagraph services.mp4", type: "video" };
+  }
+  // Step 4: Final High-End Visualization
+  return { src: service.src || "/assets/heroImage.jpg", type: service.type || "image" };
+};
+
+// Only these two services have a detailed enough workflow to justify the
+// pinned pipeline section — every other service page skips straight from
+// the hero to the mini gallery.
+const PIPELINE_SERVICE_SLUGS = ["exterior-visualization", "interior-visualization"];
+
 export default function ServiceDetailClient({ service, otherServices, locale }) {
+  const hasPipeline = PIPELINE_SERVICE_SLUGS.includes(service.slug);
+
   const otherServiceItems = otherServices.map((other) => ({
     id: other.slug,
     title: other.title,
@@ -86,10 +85,13 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
   }));
 
   const [activeMediaIndex, setActiveMediaIndex] = useState(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isPipelineInView, setIsPipelineInView] = useState(false);
   const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const [stepDirection, setStepDirection] = useState(1);
   const pipelineRef = useRef(null);
+  const progressFillRef = useRef(null);
+  const prevStepRef = useRef(0);
+  const prevInViewRef = useRef(false);
   const lenisRef = useLenis();
 
   // Lightbox keyboard navigation
@@ -108,103 +110,82 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [activeMediaIndex, service.gallery.length]);
 
-  // Scroll Progress Tracking for Pipeline Section
-  // Uses rAF throttling + ref-based comparison to avoid unnecessary re-renders.
-  const rafIdRef = useRef(null);
-  const prevInViewRef = useRef(false);
-  const prevProgressRef = useRef(0);
-  const prevActiveRef = useRef(0);
+  // Helper to scroll smoothly to a specific step in the pinned section
+  const scrollToStep = (idx) => {
+    setStepDirection(idx > prevStepRef.current ? 1 : -1);
+    setActiveStepIndex(idx);
+    prevStepRef.current = idx;
+    const pipelineEl = pipelineRef.current;
+    if (!pipelineEl) return;
 
+    const rect = pipelineEl.getBoundingClientRect();
+    const currentScrollY = window.scrollY;
+    const containerTop = currentScrollY + rect.top;
+    const maxScroll = rect.height - window.innerHeight;
+    const totalSteps = service.pipeline.length;
+    
+    if (maxScroll <= 0) return;
+
+    // Target center of step's slice
+    const targetOffset = containerTop + ((idx + 0.45) / totalSteps) * maxScroll;
+    
+    if (progressFillRef.current) {
+      progressFillRef.current.style.transform = `scaleX(${(idx + 1) / totalSteps})`;
+    }
+    
+    if (lenisRef?.current) {
+      lenisRef.current.scrollTo(targetOffset, { duration: 0.6 });
+    } else {
+      window.scrollTo({ top: targetOffset, behavior: "smooth" });
+    }
+  };
+
+  // Scroll Progress Tracking for Pinned Pipeline Section — piggybacks on the
+  // app-wide `sklo-scroll` broadcast (see ClientWrapper) instead of adding
+  // another raw scroll listener.
   useEffect(() => {
     const pipelineEl = pipelineRef.current;
     if (!pipelineEl) return;
 
-    const pipelineStepCount = service.pipeline.length;
+    const totalSteps = service.pipeline.length;
 
     const handleScroll = () => {
-      if (rafIdRef.current) return; // Already scheduled
+      const rect = pipelineEl.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
 
-      rafIdRef.current = requestAnimationFrame(() => {
-        rafIdRef.current = null;
+      // Check if pipeline is in view (only update React state on boolean change)
+      const inView = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2;
+      if (inView !== prevInViewRef.current) {
+        prevInViewRef.current = inView;
+        setIsPipelineInView(inView);
+      }
 
-        const rect = pipelineEl.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
+      const maxScroll = rect.height - windowHeight;
+      if (maxScroll <= 0) return;
 
-        // 1. Determine if pipeline is in view
-        const inView = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2;
+      // Calculate pinned progress from 0.0 to 1.0
+      const currentScroll = Math.max(0, Math.min(maxScroll, -rect.top));
+      const progress = currentScroll / maxScroll;
 
-        if (inView !== prevInViewRef.current) {
-          prevInViewRef.current = inView;
-          setIsPipelineInView(inView);
-        }
+      // Direct GPU transform update on DOM (0 React re-renders for butter smooth 120fps)
+      if (progressFillRef.current) {
+        progressFillRef.current.style.transform = `scaleX(${progress})`;
+      }
 
-        if (!inView) return;
-
-        // 2. Calculate scroll progress
-        const firstStep = pipelineEl.querySelector("#pipeline-step-0");
-        const lastStep = pipelineEl.querySelector(`#pipeline-step-${pipelineStepCount - 1}`);
-        let progressPercent = 0;
-
-        if (firstStep && lastStep) {
-          const firstRect = firstStep.getBoundingClientRect();
-          const lastRect = lastStep.getBoundingClientRect();
-          const startY = firstRect.top + firstRect.height / 2;
-          const endY = lastRect.top + lastRect.height / 2;
-          const viewportCenter = windowHeight / 2;
-
-          if (startY > viewportCenter) {
-            progressPercent = 0;
-          } else if (endY < viewportCenter) {
-            progressPercent = 100;
-          } else {
-            const totalDistance = endY - startY;
-            const currentDistance = viewportCenter - startY;
-            progressPercent = (currentDistance / totalDistance) * 100;
-          }
-        } else {
-          const startOffset = windowHeight * 0.8;
-          const totalHeight = rect.height + startOffset - 100;
-          const currentProgress = startOffset - rect.top;
-          progressPercent = Math.max(0, Math.min(100, (currentProgress / totalHeight) * 100));
-        }
-
-        // Only update if changed by > 0.5% to avoid micro-renders
-        if (Math.abs(progressPercent - prevProgressRef.current) > 0.5) {
-          prevProgressRef.current = progressPercent;
-          setScrollProgress(progressPercent);
-        }
-
-        // 3. Find active step index (closest to viewport center)
-        const stepCards = pipelineEl.querySelectorAll(".pipeline-step-card");
-        let activeIdx = 0;
-        let minDiff = Infinity;
-        const vpCenter = windowHeight / 2;
-
-        for (let idx = 0; idx < stepCards.length; idx++) {
-          const cardRect = stepCards[idx].getBoundingClientRect();
-          const cardCenter = cardRect.top + cardRect.height / 2;
-          const diff = Math.abs(cardCenter - vpCenter);
-          if (diff < minDiff) {
-            minDiff = diff;
-            activeIdx = idx;
-          }
-        }
-
-        if (activeIdx !== prevActiveRef.current) {
-          prevActiveRef.current = activeIdx;
-          setActiveStepIndex(activeIdx);
-        }
-      });
+      // Map progress to step index and ONLY trigger React re-render when index changes
+      const stepIndex = Math.min(totalSteps - 1, Math.max(0, Math.floor(progress * totalSteps)));
+      if (stepIndex !== prevStepRef.current) {
+        setStepDirection(stepIndex > prevStepRef.current ? 1 : -1);
+        prevStepRef.current = stepIndex;
+        setActiveStepIndex(stepIndex);
+      }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Run on mount
+    window.addEventListener("sklo-scroll", handleScroll, { passive: true });
+    handleScroll();
+
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (rafIdRef.current) {
-        cancelAnimationFrame(rafIdRef.current);
-        rafIdRef.current = null;
-      }
+      window.removeEventListener("sklo-scroll", handleScroll);
     };
   }, [service.pipeline.length]);
 
@@ -283,70 +264,109 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
         </div>
       </section>
 
-      {/* 2. PIPELINE SECTION */}
-      <section ref={pipelineRef} className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
-        <div className="w-full">
-          <div className="mb-20">
-            <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
-              {locale === "de" ? "Prozess" : "Workflow"}
-            </span>
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wider text-white">
-              {locale === "de" ? "Wie wir arbeiten" : "Our Pipeline"}
-            </h2>
-            <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
-          </div>
+      {/* 2. PINNED SCROLL PIPELINE SECTION — exterior/interior visualization only */}
+      {hasPipeline && (
+      <section
+        ref={pipelineRef}
+        className="section-shell hairline-top w-full relative"
+        style={{ height: `${service.pipeline.length * 95}vh` }}
+      >
+        <div className="sticky top-0 h-screen w-full flex flex-col justify-center px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+          {/* Ambient Glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[130px] pointer-events-none" />
 
-          {/* Alternating detailed timeline elements */}
-          <div className="flex flex-col gap-24 md:gap-32 mt-12">
-            {service.pipeline.map((step, idx) => {
-              const media = getStepMedia(service, idx);
-              const isEven = idx % 2 === 0;
+          <div className="relative z-10 w-full flex flex-col gap-6 md:gap-10">
+            {/* Section Header */}
+            <div>
+              <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
+                {locale === "de" ? "Prozess" : "Workflow"}
+              </span>
+              <div className="flex justify-between items-end">
+                <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-wider text-white">
+                  {locale === "de" ? "Wie wir arbeiten" : "Our Pipeline"}
+                </h2>
+                <div className="hidden sm:flex items-center gap-2 font-mono text-sm text-white/50">
+                  <span className="text-accent font-bold text-lg">{String(activeStepIndex + 1).padStart(2, "0")}</span>
+                  <span>/</span>
+                  <span>{String(service.pipeline.length).padStart(2, "0")}</span>
+                </div>
+              </div>
+              <div className="h-[1px] bg-gradient-to-r from-white/15 via-white/5 to-transparent w-full mt-4" />
+            </div>
 
-              return (
-                <motion.div
-                  key={idx}
-                  id={`pipeline-step-${idx}`}
-                  className="pipeline-step-card flex flex-col md:flex-row gap-12 md:gap-20 items-center justify-between scroll-mt-28"
-                  initial={{ opacity: 0, y: 60 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                >
-                  {/* Step Description Content */}
-                  <div className={`w-full md:w-[45%] ${isEven ? "md:order-1" : "md:order-2"}`}>
-                    <div className="flex items-center gap-4 mb-5">
-                      <span 
-                        className="text-7xl md:text-8xl font-black font-serif text-text/5 dark:text-transparent select-none transition-all duration-500 hover:text-accent tracking-tighter"
+            {/* Single Pinned Stage Card: 2 Columns */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center w-full">
+              {/* Left Column: Step Description — clean unmount/mount swap, no overlap */}
+              <div className="flex flex-col justify-center min-h-[240px] relative" style={{ perspective: 800 }}>
+                <AnimatePresence mode="wait" custom={stepDirection}>
+                  <motion.div
+                    key={activeStepIndex}
+                    custom={stepDirection}
+                    variants={pipelineStepVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    className="flex flex-col"
+                  >
+                    <div className="flex items-center gap-4 mb-4">
+                      <span
+                        className="text-6xl sm:text-7xl md:text-8xl font-black font-serif text-transparent select-none tracking-tighter"
                         style={{ WebkitTextStroke: "1.5px var(--color-border-stroke)" }}
                       >
-                        {step.step}
+                        {service.pipeline[activeStepIndex].step}
                       </span>
                       <div className="h-[1px] bg-gradient-to-r from-accent to-transparent w-16" />
                     </div>
 
-                    <h3 className="text-2xl md:text-3xl font-bold uppercase tracking-wider mb-4 text-white hover:text-accent transition-colors duration-300">
-                      {step.title}
+                    <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-wider mb-4 text-white leading-snug">
+                      {service.pipeline[activeStepIndex].title}
                     </h3>
-                    <p className="text-base text-white/70 leading-relaxed font-light">
-                      {step.desc}
+                    <p className="text-base sm:text-lg text-white/70 leading-relaxed font-light max-w-xl">
+                      {service.pipeline[activeStepIndex].desc}
                     </p>
-                  </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
 
-                  {/* Step Media Frame */}
-                  <div className={`w-full md:w-[50%] ${isEven ? "md:order-2" : "md:order-1"}`}>
-                    <div className="group relative aspect-[16/10] w-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 bg-white/5 shadow-2xl transition-all duration-500 hover:border-accent/50 hover:shadow-[0_20px_40px_color-mix(in srgb, var(--color-accent) 12%, transparent)] cursor-pointer">
-                      <StepMedia src={media.src} type={media.type} />
-                      
-                      {/* Interactive overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+              {/* Right Column: Media container with smooth crossfades */}
+              <div className="w-full">
+                <div className="group relative aspect-[16/10] w-full rounded-2xl md:rounded-3xl overflow-hidden border border-white/10 bg-white/5 shadow-2xl transition-all duration-500 hover:border-accent/40 hover:shadow-[0_20px_40px_color-mix(in srgb,var(--color-accent)_12%,transparent)]">
+                  {service.pipeline.map((step, idx) => {
+                    const media = getStepMedia(service, idx);
+                    const isActive = idx === activeStepIndex;
+
+                    return (
+                      <div
+                        key={idx}
+                        className="absolute inset-0"
+                        style={{
+                          opacity: isActive ? 1 : 0,
+                          transform: isActive ? "scale(1)" : "scale(1.05)",
+                          transition: "opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1)",
+                          pointerEvents: isActive ? "auto" : "none",
+                          zIndex: isActive ? 10 : 0,
+                        }}
+                      >
+                        <StepMedia src={media.src} type={media.type} isActive={isActive} />
+                        
+                        {/* Subtle gradient vignette */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
+                        
+                        {/* Step badge overlay */}
+                        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-xs font-mono font-bold text-accent pointer-events-none">
+                          {step.step} / {String(service.pipeline.length).padStart(2, "0")}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
+      )}
 
       {/* 3. MINI-GALLERY SECTION */}
       <section className="section-shell section-band hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
@@ -587,7 +607,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
 
       {/* 6. FIXED BOTTOM PROGRESS BAR */}
       <AnimatePresence>
-        {isPipelineInView && (
+        {hasPipeline && isPipelineInView && (
           <motion.div
             initial={{ opacity: 0, y: 80, x: "-50%" }}
             animate={{ opacity: 1, y: 0, x: "-50%" }}
@@ -603,11 +623,12 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
               </span>
             </div>
 
-            {/* Filled Progress indicator (Theme-adaptive) */}
+            {/* Filled Progress indicator (GPU scaleX for 120fps with 0 re-renders) */}
             <div className="pipeline-track relative h-1.5 w-full bg-text/15 rounded-full overflow-hidden">
               <div 
-                className="pipeline-fill absolute left-0 top-0 h-full bg-text transition-all duration-100 ease-out"
-                style={{ width: `${scrollProgress}%` }}
+                ref={progressFillRef}
+                className="pipeline-fill absolute left-0 top-0 h-full w-full bg-text origin-left will-change-transform"
+                style={{ transform: `scaleX(${activeStepIndex / (service.pipeline.length - 1)})` }}
               />
             </div>
 
@@ -624,18 +645,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                 return (
                   <button
                     key={idx}
-                    onClick={() => {
-                      const el = document.getElementById(`pipeline-step-${idx}`);
-                      if (!el) return;
-                      if (lenisRef?.current) {
-                        // Lenis owns the scroll loop now — a native smooth
-                        // scrollIntoView fights its rAF-driven scrollTo.
-                        const offset = -(window.innerHeight - el.offsetHeight) / 2;
-                        lenisRef.current.scrollTo(el, { offset });
-                      } else {
-                        el.scrollIntoView({ behavior: "smooth", block: "center" });
-                      }
-                    }}
+                    onClick={() => scrollToStep(idx)}
                     className="flex flex-col items-center group cursor-pointer focus:outline-none transition-all duration-300 px-1"
                     style={{ width: `${100 / service.pipeline.length}%` }}
                   >
