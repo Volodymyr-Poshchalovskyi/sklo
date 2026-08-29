@@ -166,7 +166,7 @@ export default function HeroSection({ t, locale }) {
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
-      <div className="relative z-10 w-full max-w-7xl px-10 pt-24 pb-24">
+      <div className="relative z-10 w-full px-6 md:px-16 lg:px-28 xl:px-40 pt-24 pb-24">
         <div className="flex flex-col items-start justify-center max-w-4xl">
           <h1
             ref={headRef}
