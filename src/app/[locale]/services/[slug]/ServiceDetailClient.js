@@ -201,10 +201,23 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
           background-color: rgba(255, 255, 255, 0.9) !important;
           border-color: rgba(255, 255, 255, 0.9) !important;
         }
+        @keyframes serviceHeroScrollCue {
+          0%, 100% { transform: translateY(0); opacity: 0.6; }
+          50%      { transform: translateY(5px); opacity: 1; }
+        }
+        .service-hero-scroll-cue {
+          animation: serviceHeroScrollCue 1.8s ease-in-out infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .service-hero-scroll-cue { animation: none; }
+        }
       `}} />
 
       {/* 1. HERO HEADER SECTION */}
-      <section className="hero-section relative w-full h-[65vh] md:h-[75vh] flex items-center justify-center overflow-hidden">
+      {/* `main` carries pt-16, so subtract it — otherwise a full 100vh hero
+          overflows the first screen by 64px. `svh` rather than `vh` so mobile
+          browser chrome doesn't make it overshoot either. */}
+      <section className="hero-section relative w-full h-[calc(100svh-4rem)] flex items-center justify-center overflow-hidden">
         {/* Background Visual */}
         <div className="absolute inset-0 z-0">
           {service.type === "video" ? (
@@ -262,6 +275,28 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             </Link>
           </motion.div>
         </div>
+
+        {/* Scroll cue — the hero now fills the screen, so this is the only
+            thing telling the reader there is more below it. */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none"
+        >
+          <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-white/60">
+            {locale === "de" ? "Scrollen" : "Scroll"}
+          </span>
+          <svg
+            className="w-4 h-4 text-white/60 service-hero-scroll-cue"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M12 5v14M5 13l7 7 7-7" />
+          </svg>
+        </motion.div>
       </section>
 
       {/* 2. PINNED SCROLL PIPELINE SECTION — exterior/interior visualization only */}
@@ -513,7 +548,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             </div>
 
             {/* Visual Media Viewer */}
-            <div className="relative w-full max-w-5xl flex items-center justify-center h-[65vh] my-4" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full max-w-[min(1800px,92vw)] flex items-center justify-center h-[78vh] my-4" onClick={(e) => e.stopPropagation()}>
               {/* Prev button */}
               <button 
                 onClick={() => setActiveMediaIndex((prev) => (prev === 0 ? service.gallery.length - 1 : prev - 1))}
@@ -542,13 +577,13 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                         controls
                         loop
                         playsInline
-                        className="max-w-full max-h-[65vh] object-contain rounded-2xl shadow-2xl border border-white/5"
+                        className="max-w-full max-h-[78vh] object-contain rounded-2xl shadow-2xl border border-white/5"
                       />
                     ) : (
                       <img 
                         src={service.gallery[activeMediaIndex].src} 
                         alt="Fullscreen gallery item"
-                        className="max-w-full max-h-[65vh] object-contain rounded-2xl shadow-2xl border border-white/5"
+                        className="max-w-full max-h-[78vh] object-contain rounded-2xl shadow-2xl border border-white/5"
                       />
                     )}
                   </motion.div>

@@ -359,6 +359,52 @@ html {
   transform: none;
 }
 
+/* Carousel prev/next buttons. These deliberately avoid the `bg-white/5`
+   `border-white/10` utilities: the light-theme override block rewrites those
+   to near-invisible black tints, and in dark they were faint enough that the
+   controls read as decoration. Explicit tokens in both themes instead, per
+   CLAUDE.md's note on preferring branched colors over more blanket overrides. */
+.carousel-arrow {
+  background-color: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+}
+.carousel-arrow:hover {
+  background-color: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+:root[data-theme="light"] .carousel-arrow {
+  background-color: rgba(18, 18, 20, 0.06) !important;
+  border-color: rgba(18, 18, 20, 0.35) !important;
+  color: #121214 !important;
+}
+:root[data-theme="light"] .carousel-arrow:hover {
+  background-color: rgba(18, 18, 20, 0.12) !important;
+  border-color: rgba(18, 18, 20, 0.65) !important;
+}
+
+/* Caption strip under a service card. Same hover language as the homepage
+   carousel's title button — the block lights up as the image scales — but
+   with explicit tokens, because the light-theme override block leaves
+   `group-hover:border-white/40` untouched and a white border is invisible on
+   a light card. */
+.service-caption {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+.group:hover .service-caption {
+  border-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.07);
+}
+:root[data-theme="light"] .service-caption {
+  border-color: rgba(18, 18, 20, 0.1) !important;
+  background-color: rgba(18, 18, 20, 0.02) !important;
+}
+:root[data-theme="light"] .group:hover .service-caption {
+  border-color: rgba(18, 18, 20, 0.4) !important;
+  background-color: rgba(18, 18, 20, 0.06) !important;
+}
+
 /* Eyebrow label above a section heading. */
 .eyebrow {
   display: inline-flex;

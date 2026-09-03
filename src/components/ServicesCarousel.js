@@ -287,37 +287,41 @@ export default function ServicesCarousel({
 
   return (
     <div className="relative w-full">
-      {/* Carousel Navigation Arrows */}
-      <button
-        onClick={scrollLeft}
-        className="hidden sm:flex absolute left-0 sm:-left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-10 w-12 sm:w-14 h-12 sm:h-14 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 backdrop-blur-sm items-center justify-center text-white transition-all duration-300 active:scale-95 cursor-pointer"
-        aria-label="Previous slide"
-      >
-        <svg
-          className="w-5 sm:w-6 h-5 sm:h-6"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
+      {/* Carousel Navigation Arrows — a control row above the track, not
+          floating over its edges: sitting on top of the cards they were both
+          hard to see and easy to mistake for decoration. */}
+      <div className="flex justify-end items-center gap-4 mb-6">
+        <button
+          onClick={scrollLeft}
+          className="carousel-arrow w-12 sm:w-14 h-12 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
+          aria-label="Previous slide"
         >
-          <path d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-      <button
-        onClick={scrollRight}
-        className="hidden sm:flex absolute right-0 sm:-right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-10 w-12 sm:w-14 h-12 sm:h-14 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 backdrop-blur-sm items-center justify-center text-white transition-all duration-300 active:scale-95 cursor-pointer"
-        aria-label="Next slide"
-      >
-        <svg
-          className="w-5 sm:w-6 h-5 sm:h-6"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
+          <svg
+            className="w-5 sm:w-6 h-5 sm:h-6"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+          >
+            <path d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button
+          onClick={scrollRight}
+          className="carousel-arrow w-12 sm:w-14 h-12 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
+          aria-label="Next slide"
         >
-          <path d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
+          <svg
+            className="w-5 sm:w-6 h-5 sm:h-6"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+          >
+            <path d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
 
       {/* Horizontal Carousel */}
       <div
