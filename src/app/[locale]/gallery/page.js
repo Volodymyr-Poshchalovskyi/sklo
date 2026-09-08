@@ -1,7 +1,8 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { useLenis } from "@/context/LenisContext";
 import { galleryItems } from "@/data/galleryData";
 
@@ -77,6 +78,29 @@ function GalleryCard({ item, onClick }) {
   );
 }
 
+// The active filter lives in the URL as `?filter=<slug>`, so it survives a
+// reload and a filtered view can be linked to or bookmarked. Slugs rather than
+// the display labels keep the query string readable — "Bird's-Eye View" would
+// otherwise encode as `Bird%27s-Eye%20View`. They match the asset folder names.
+const ALL_FILTER = "All";
+const FILTER_PARAM = "filter";
+const CATEGORIES = [
+  { label: "Exterior", slug: "exterior" },
+  { label: "Interior", slug: "interior" },
+  { label: "Bird's-Eye View", slug: "bird-eye" },
+  { label: "Product", slug: "product" },
+  { label: "Virtual Staging", slug: "virtual-staging" },
+  { label: "Animation", slug: "animation" },
+  { label: "Cinemagraph", slug: "cinemagraph" },
+];
+
+// An unknown or missing slug falls back to "All" rather than showing an empty
+// grid, so a hand-edited or stale URL still renders something.
+const labelForSlug = (slug) =>
+  CATEGORIES.find((c) => c.slug === slug)?.label ?? ALL_FILTER;
+const slugForLabel = (label) =>
+  CATEGORIES.find((c) => c.label === label)?.slug ?? null;
+
 // CSS multi-column (`columns-3`) fills the first column top-to-bottom before
 // it starts the second one — with 98 exterior renders that puts items 1–33 in
 // the left column alone. The file order is a curated order (strongest work
@@ -99,13 +123,33 @@ function useColumnCount() {
   return columnCount;
 }
 
-export default function GalleryPage() {
-  const [activeFilter, setActiveFilter] = useState("All");
+function GalleryPageContent() {
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const lenisRef = useLenis();
   const isFirstFilterRender = useRef(true);
 
-  const categories = ["Exterior", "Interior", "Bird's-Eye View", "Product", "Virtual Staging", "Animation", "Cinemagraph"];
+  // Derived from the URL rather than held in local state, so there is only one
+  // source of truth and a reload cannot disagree with what the sidebar shows.
+  const searchParams = useSearchParams();
+  const activeFilter = labelForSlug(searchParams.get(FILTER_PARAM));
+
+  // `history.replaceState` instead of `router.replace`: it updates the URL
+  // without a router navigation (no RSC round-trip, so the grid swaps
+  // instantly), and Next keeps `useSearchParams` in sync with it. `replace`
+  // rather than `push` keeps the Back button pointing at the previous page
+  // instead of stepping back through every filter the reader tried.
+  const setActiveFilter = (label) => {
+    const slug = slugForLabel(label);
+    const next = new URLSearchParams(searchParams.toString());
+    if (slug) next.set(FILTER_PARAM, slug);
+    else next.delete(FILTER_PARAM);
+    const query = next.toString();
+    window.history.replaceState(
+      null,
+      "",
+      query ? `?${query}` : window.location.pathname
+    );
+  };
 
   const categoryDescriptions = {
     "All": "A curated collection of our high-end 3D visualizations, floorplans, and motion renderings.",
@@ -196,9 +240,9 @@ export default function GalleryPage() {
           <div className="flex flex-col gap-4">
             {/* All Button */}
             <button
-              onClick={() => setActiveFilter("All")}
+              onClick={() => setActiveFilter(ALL_FILTER)}
               className={`w-full text-left py-2.5 px-4 rounded-lg tracking-widest uppercase text-[10px] font-bold border transition-all duration-300 cursor-pointer ${
-                activeFilter === "All"
+                activeFilter === ALL_FILTER
                   ? "bg-white/15 text-white border-white/30"
                   : "bg-white/5 text-white/40 border-transparent hover:bg-white/10 hover:text-white"
               }`}
@@ -208,12 +252,12 @@ export default function GalleryPage() {
 
             {/* Category Filter list */}
             <div className="flex flex-col gap-1.5 pl-1">
-              {categories.map((cat) => {
-                const isActive = activeFilter === cat;
+              {CATEGORIES.map(({ label, slug }) => {
+                const isActive = activeFilter === label;
                 return (
                   <button
-                    key={cat}
-                    onClick={() => setActiveFilter(cat)}
+                    key={slug}
+                    onClick={() => setActiveFilter(label)}
                     className="group flex items-center text-left py-2 px-1 text-xs tracking-wider uppercase font-semibold transition-all duration-300 relative cursor-pointer"
                   >
                     <span 
@@ -230,7 +274,7 @@ export default function GalleryPage() {
                         transform: isActive ? "translateX(4px)" : "translateX(0)",
                       }}
                     >
-                      {cat}
+                      {label}
                     </span>
                   </button>
                 );
@@ -362,5 +406,17 @@ export default function GalleryPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// `useSearchParams` forces the client tree up to the nearest Suspense boundary
+// to render on the client if the route is ever prerendered. This route is
+// server-rendered per request today, so the boundary is insurance rather than
+// a requirement — but without it, making the route static would break the build.
+export default function GalleryPage() {
+  return (
+    <Suspense fallback={null}>
+      <GalleryPageContent />
+    </Suspense>
   );
 }
