@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ServicesCarousel from "@/components/ServicesCarousel";
 import Title3D from "@/components/Title3D";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
-import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs } from "@/data/galleryData";
+import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor } from "@/data/galleryData";
 import { useLenis } from "@/context/LenisContext";
 
 // Helper component to render step media dynamically
@@ -89,13 +89,18 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
   const isStagingService = service.slug === "virtual-staging";
   const hasMiniGallery = isStagingService || miniItems.length > 0;
 
-  const otherServiceItems = otherServices.map((other) => ({
-    id: other.slug,
-    title: other.title,
-    image: other.type === "video" ? undefined : other.src,
-    video: other.type === "video" ? other.src : undefined,
-    href: `/${locale}/services/${other.slug}`,
-  }));
+  // Same poster map as the header menu and the homepage carousel, so a service
+  // is advertised with one consistent image everywhere.
+  const otherServiceItems = otherServices.map((other) => {
+    const poster = servicePosterFor(other.slug) || { src: other.src, type: other.type };
+    return {
+      id: other.slug,
+      title: other.title,
+      image: poster.type === "video" ? undefined : poster.src,
+      video: poster.type === "video" ? poster.src : undefined,
+      href: `/${locale}/services/${other.slug}`,
+    };
+  });
 
   const [activeMediaIndex, setActiveMediaIndex] = useState(null);
   const [isPipelineInView, setIsPipelineInView] = useState(false);
@@ -546,8 +551,11 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             className="fixed inset-0 bg-black/95 backdrop-blur-xl z-[100] flex flex-col items-center justify-between py-6 px-4 select-none"
             onClick={() => setActiveMediaIndex(null)}
           >
-            {/* Top Info bar */}
-            <div className="w-full max-w-6xl flex justify-between items-center z-50">
+            {/* Top info bar. Full width, not `max-w-6xl`: capping it dragged
+                the close button inward from the corner — on a wide screen it
+                ended up nearer the middle of the overlay than the edge, which
+                is not where anyone reaches for a close button. */}
+            <div className="w-full flex justify-between items-center gap-4 px-2 md:px-4 z-50">
               <div className="flex flex-col">
                 <span className="text-[10px] font-bold text-white/40 tracking-widest uppercase">
                   {service.title}

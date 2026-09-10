@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { servicePosterFor } from "@/data/galleryData";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
@@ -208,10 +209,15 @@ function MenuPreviewItem({ service, isActive }) {
           className="w-full h-full object-cover"
         />
       ) : (
-        <img
+        // next/image, not a raw <img>: the gallery stills behind these are up
+        // to 2 MB each and all eleven previews mount together, so the menu
+        // would otherwise pull ~10 MB for one 460px-wide box.
+        <Image
           src={service.image}
           alt={service.title}
-          className="w-full h-full object-cover"
+          fill
+          sizes="(max-width: 1024px) 40vw, 460px"
+          className="object-cover"
         />
       )}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
@@ -268,19 +274,29 @@ export default function Header({ t, locale, visible }) {
     window.dispatchEvent(new Event("theme-change"));
   };
 
+  // Media comes from the shared poster map so the menu, the homepage carousel
+  // and the service pages all advertise a service with the same real image.
   const servicesList = [
-    { id: "01", title: "EXTERIOR VISUALIZATION", image: "/assets/home/3d tour.jpg", href: `/${locale}/services/exterior-visualization` },
-    { id: "02", title: "INTERIOR VISUALIZATION", image: "/assets/home/3d tour.jpg", href: `/${locale}/services/interior-visualization` },
-    { id: "03", title: "ANIMATION | MOOD FILM", image: "/assets/home/3d tour.jpg", href: `/${locale}/services/animation-mood-film` },
-    { id: "04", title: "BIRD-EYE VISUALISATION", image: "/assets/home/3d tour.jpg", href: `/${locale}/services/bird-eye-visualization` },
-    { id: "05", title: "360° VIRTUAL TOUR | VR", video: "/assets/home/360 services.mp4", href: `/${locale}/services/360-virtual-tour` },
-    { id: "06", title: "CINEMAGRAPH | LIVE SHOT", video: "/assets/home/cinemagraph services.mp4", href: `/${locale}/services/cinemagraph-live-shot` },
-    { id: "07", title: "PRODUCT VISUALISATION", image: "/assets/home/3d tour.jpg", href: `/${locale}/services/product-visualization` },
-    { id: "08", title: "VIRTUAL STAGING", image: "/assets/home/3d tour.jpg", href: `/${locale}/services/virtual-staging` },
-    { id: "09", title: "GRAPHIC DESIGN", image: "/assets/home/3d tour.jpg", href: `/${locale}/services/graphic-design` },
-    { id: "10", title: "3D FLOORPLANS", image: "/assets/home/3dplan_interior.jpg", href: `/${locale}/services/3d-floorplans` },
-    { id: "11", title: "MEDIA & WEBSITE PACKAGES", image: "/assets/home/3d tour.jpg", href: `/${locale}/services/media-website-packages` },
-  ];
+    { id: "01", slug: "exterior-visualization", title: "EXTERIOR VISUALIZATION" },
+    { id: "02", slug: "interior-visualization", title: "INTERIOR VISUALIZATION" },
+    { id: "03", slug: "animation-mood-film", title: "ANIMATION | MOOD FILM" },
+    { id: "04", slug: "bird-eye-visualization", title: "BIRD-EYE VISUALISATION" },
+    { id: "05", slug: "360-virtual-tour", title: "360° VIRTUAL TOUR | VR" },
+    { id: "06", slug: "cinemagraph-live-shot", title: "CINEMAGRAPH | LIVE SHOT" },
+    { id: "07", slug: "product-visualization", title: "PRODUCT VISUALISATION" },
+    { id: "08", slug: "virtual-staging", title: "VIRTUAL STAGING" },
+    { id: "09", slug: "graphic-design", title: "GRAPHIC DESIGN" },
+    { id: "10", slug: "3d-floorplans", title: "3D FLOORPLANS" },
+    { id: "11", slug: "media-website-packages", title: "MEDIA & WEBSITE PACKAGES" },
+  ].map((entry) => {
+    const poster = servicePosterFor(entry.slug);
+    return {
+      ...entry,
+      href: `/${locale}/services/${entry.slug}`,
+      image: poster?.type === "image" ? poster.src : undefined,
+      video: poster?.type === "video" ? poster.src : undefined,
+    };
+  });
 
   const navItems = [
     { key: "home",     label: t?.nav?.home     ?? "Home",     href: `/${locale}` },

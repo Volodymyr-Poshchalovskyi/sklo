@@ -65,18 +65,10 @@ function GalleryCard({ item, onClick }) {
         <h3 className="text-sm font-bold uppercase tracking-wider">
           {item.title}
         </h3>
-        
-        <div className="absolute top-6 right-6 w-8 h-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
-          {item.type === "video" ? (
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-          ) : (
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M12 5v14M5 12h14"/>
-            </svg>
-          )}
-        </div>
+        {/* No corner badge. It only ever appeared on hover, and by then a video
+            has already started playing — so the play glyph told the reader
+            nothing, and the plus glyph on stills was pure decoration sitting on
+            top of the work. */}
       </div>
     </div>
   );

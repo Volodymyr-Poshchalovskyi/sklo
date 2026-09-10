@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useContext } from "react";
 import ServicesCarousel from "@/components/ServicesCarousel";
+import { servicePosterFor } from "@/data/galleryData";
 import { LoaderContext } from "@/context/LoaderContext";
 import useRevealOnSettle from "@/hooks/useRevealOnSettle";
 
@@ -12,41 +13,28 @@ export default function WhoWeAre({ locale, t }) {
   const servicesInView = useRevealOnSettle(servicesSectionRef, ready);
   const whoInView = useRevealOnSettle(whoSectionRef, ready);
 
+  // Media is resolved from the shared poster map (see galleryData.js) rather
+  // than hardcoded, so these cards show the same real work as the header menu
+  // and the service pages. Six of the nine used to repeat one placeholder.
   const slides = [
-    {
-      id: 1,
-      title: "EXTERIOR VISUALIZATION",
-      image: "/assets/home/3d tour.jpg",
-    },
-    {
-      id: 2,
-      title: "INTERIOR VISUALIZATION",
-      image: "/assets/home/3d tour.jpg",
-    },
-    {
-      id: 3,
-      title: "360° VIRTUAL TOUR | VR",
-      video: "/assets/home/360 services.mp4",
-    },
-    {
-      id: 4,
-      title: "ANIMATION | MOOD FILM",
-      image: "/assets/home/3d tour.jpg",
-    },
-    {
-      id: 5,
-      title: "BIRD-EYE VISUALIZATION",
-      image: "/assets/home/3d tour.jpg",
-    },
-    {
-      id: 6,
-      title: "CINEMAGRAPH | LIVE SHOT",
-      video: "/assets/home/cinemagraph services.mp4",
-    },
-    { id: 7, title: "3D FLOORPLAN", image: "/assets/home/3dplan_interior.jpg" },
-    { id: 8, title: "360° FLY-AROUND", image: "/assets/home/3d tour.jpg" },
-    { id: 9, title: "WEBSITE DEVELOPMENT", image: "/assets/home/3d tour.jpg" },
-  ];
+    { id: 1, slug: "exterior-visualization", title: "EXTERIOR VISUALIZATION" },
+    { id: 2, slug: "interior-visualization", title: "INTERIOR VISUALIZATION" },
+    { id: 3, slug: "360-virtual-tour", title: "360° VIRTUAL TOUR | VR" },
+    { id: 4, slug: "animation-mood-film", title: "ANIMATION | MOOD FILM" },
+    { id: 5, slug: "bird-eye-visualization", title: "BIRD-EYE VISUALIZATION" },
+    { id: 6, slug: "cinemagraph-live-shot", title: "CINEMAGRAPH | LIVE SHOT" },
+    { id: 7, slug: "3d-floorplans", title: "3D FLOORPLAN" },
+    { id: 8, slug: "product-visualization", title: "PRODUCT VISUALISATION" },
+    { id: 9, slug: "virtual-staging", title: "VIRTUAL STAGING" },
+  ].map((slide) => {
+    const poster = servicePosterFor(slide.slug);
+    return {
+      ...slide,
+      href: `/${locale}/services/${slide.slug}`,
+      image: poster?.type === "image" ? poster.src : undefined,
+      video: poster?.type === "video" ? poster.src : undefined,
+    };
+  });
 
   const leftFeatures = [
     {

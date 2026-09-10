@@ -399,3 +399,40 @@ export function miniGalleryFor(serviceSlug, limit = MINI_GALLERY_LIMIT) {
     .filter((item) => item.category === mapping.category)
     .slice(0, limit);
 }
+
+// One poster per service, for the places that advertise a service rather than
+// display it: the header's services mega-menu preview and the "Our Services" /
+// "Other Services" carousels. Before this, eight of the eleven menu entries
+// showed the same `3d tour.jpg` placeholder.
+//
+// Stills come straight from the gallery archive (the leading file of the
+// matching category, i.e. the strongest work). They are rendered through
+// next/image at the call sites, so the 2 MB source is served resized — a raw
+// <img> would have pulled ~10 MB into the mega menu, which mounts all eleven
+// previews at once.
+//
+// Motion services use a real clip only where a light one exists: the two
+// ~380 KB service loops already in the project. The animation and cinemagraph
+// entries use a still extracted from their own first gallery clip instead —
+// those sources are 21 MB and 1.5 MB, far too heavy to autoplay in a menu.
+//
+// APPROXIMATE: `graphic-design` and `media-website-packages` have no shot
+// category in the archive, so they borrow a related still. Swap them once
+// there is real work to point at.
+export const SERVICE_POSTER = {
+  "exterior-visualization": { src: "/assets/gallery/exterior/001.webp", type: "image" },
+  "interior-visualization": { src: "/assets/gallery/interior/001.webp", type: "image" },
+  "animation-mood-film": { src: "/assets/posters/animation.webp", type: "image" },
+  "bird-eye-visualization": { src: "/assets/gallery/bird-eye/001.webp", type: "image" },
+  "360-virtual-tour": { src: "/assets/home/360 services.mp4", type: "video" },
+  "cinemagraph-live-shot": { src: "/assets/home/cinemagraph services.mp4", type: "video" },
+  "product-visualization": { src: "/assets/gallery/product/001.webp", type: "image" },
+  "virtual-staging": { src: "/assets/gallery/virtual-staging/001.webp", type: "image" },
+  "graphic-design": { src: "/assets/gallery/product/002.webp", type: "image" },
+  "3d-floorplans": { src: "/assets/home/3dplan_interior.jpg", type: "image" },
+  "media-website-packages": { src: "/assets/gallery/exterior/002.webp", type: "image" },
+};
+
+export function servicePosterFor(slug) {
+  return SERVICE_POSTER[slug] || null;
+}

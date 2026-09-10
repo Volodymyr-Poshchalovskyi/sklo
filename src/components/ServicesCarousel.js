@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 function LazyVideo({ src, className }) {
   const videoRef = useRef(null);
@@ -389,11 +390,16 @@ export default function ServicesCarousel({
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 ) : (
-                  <img
+                  // next/image so the multi-megabyte gallery stills behind
+                  // these cards are served at card size. The track renders the
+                  // list three times over for the infinite loop, so oversized
+                  // sources would be especially expensive here.
+                  <Image
                     src={item.image}
                     alt={item.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    fill
+                    sizes="(max-width: 640px) 220px, (max-width: 1024px) 260px, 25vw"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 )}
               </div>
