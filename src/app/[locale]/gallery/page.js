@@ -4,7 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useLenis } from "@/context/LenisContext";
-import { galleryItems } from "@/data/galleryData";
+import { galleryItems, allProjectsItems, virtualStagingPairs } from "@/data/galleryData";
+import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import Title3D from "@/components/Title3D";
 
 function GalleryCard({ item, onClick }) {
   const videoRef = useRef(null);
@@ -52,13 +54,15 @@ function GalleryCard({ item, onClick }) {
         />
       )}
       
-      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300" />
+      {/* No resting tint over the work — the portfolio images carry the whole
+          pitch, so they stay at full contrast. Only the hover caption below
+          brings its own gradient, and just far enough to keep text legible. */}
 
-      <div className="absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-        <span className="text-[10px] font-mono uppercase tracking-widest text-accent mb-1 font-semibold">
+      <div className="media-caption absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+        <span className="media-caption-accent text-[10px] font-mono uppercase tracking-widest mb-1 font-semibold">
           {item.category}
         </span>
-        <h3 className="text-sm font-bold uppercase tracking-wider text-white">
+        <h3 className="text-sm font-bold uppercase tracking-wider">
           {item.title}
         </h3>
         
@@ -152,7 +156,7 @@ function GalleryPageContent() {
   };
 
   const categoryDescriptions = {
-    "All": "A curated collection of our high-end 3D visualizations, floorplans, and motion renderings.",
+    "All": "A curated mix of our architectural work — exteriors, interiors, aerials and motion, shown side by side. Product and Virtual Staging have their own sections.",
     "Exterior": "Photorealistic architectural renderings showing buildings, structures, and landscaping in their real-world environments.",
     "Interior": "Highly detailed internal designs capturing lighting, materials, and atmosphere to showcase living and commercial spaces.",
     "Bird's-Eye View": "Aerial and drone-perspective renderings showing a development within its surrounding district and landscape.",
@@ -167,9 +171,17 @@ function GalleryPageContent() {
   // generated and why the file order must be preserved.
   const items = galleryItems;
 
-  const filteredItems = items.filter(
-    (item) => activeFilter === "All" || item.category === activeFilter
-  );
+  // Virtual Staging replaces the tile grid with before/after sliders, so it
+  // feeds off its own paired data and never populates `filteredItems`.
+  const isVirtualStaging = activeFilter === "Virtual Staging";
+
+  // "All" gets the interleaved run (see galleryData.js) so the categories do
+  // not read as consecutive blocks; a single category keeps its own order.
+  const filteredItems = isVirtualStaging
+    ? []
+    : activeFilter === ALL_FILTER
+      ? allProjectsItems
+      : items.filter((item) => item.category === activeFilter);
 
   const columnCount = useColumnCount();
 
@@ -231,9 +243,9 @@ function GalleryPageContent() {
       <aside className="w-full md:w-[18%] h-auto md:h-screen sticky top-0 bg-surface border-b md:border-b-0 md:border-l border-white/10 p-6 md:p-8 pt-24 md:pt-32 flex flex-col justify-between z-20 shrink-0">
         <div className="flex flex-col gap-6 md:gap-8">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold tracking-widest uppercase mb-4 text-white">
+            <Title3D as="h1" className="text-2xl md:text-3xl font-bold tracking-widest uppercase mb-4">
               Gallery
-            </h1>
+            </Title3D>
             <div className="h-[1px] bg-gradient-to-r from-text/20 to-transparent w-full mb-6" />
           </div>
 
@@ -294,6 +306,34 @@ function GalleryPageContent() {
 
       {/* Left Gallery Masonry Grid (78% width on desktop) */}
       <main className="w-full md:w-[82%] min-h-screen pt-24 md:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
+        {isVirtualStaging ? (
+          // Virtual Staging is comparisons, not tiles: two per row at most, so
+          // each pair is wide enough to actually judge the difference.
+          <div key={activeFilter} className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            {virtualStagingPairs.map((pair, idx) => (
+              <div
+                key={pair.id}
+                style={{ animationDelay: `${idx * 60}ms` }}
+                className="animate-fade-in-card opacity-0 flex flex-col gap-3"
+              >
+                <BeforeAfterSlider
+                  before={pair.before}
+                  after={pair.after}
+                  width={pair.width}
+                  height={pair.height}
+                />
+                <div className="flex items-baseline justify-between gap-4">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-white">
+                    {pair.title}
+                  </h3>
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">
+                    Drag to compare
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
         <div key={activeFilter} className="flex items-start gap-6">
           {columnBuckets.map((bucket, colIdx) => (
             <div key={colIdx} className="flex flex-col gap-6 flex-1 min-w-0">
@@ -314,6 +354,7 @@ function GalleryPageContent() {
             </div>
           ))}
         </div>
+        )}
 
         <style>{`
           @keyframes fadeInCard {

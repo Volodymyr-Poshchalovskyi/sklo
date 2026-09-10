@@ -2,6 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Title3D from "@/components/Title3D";
 
 export default function Footer({ locale }) {
   const pathname = usePathname();
@@ -14,9 +15,9 @@ export default function Footer({ locale }) {
         <div className="w-full mb-24 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div className="flex flex-col gap-6">
             <span className="eyebrow">Get in touch</span>
-            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-wide uppercase leading-[1.1] max-w-lg">
+            <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-wide uppercase leading-[1.1] max-w-lg">
               LOOKING TO START YOUR NEXT PROJECT?
-            </h2>
+            </Title3D>
             <p className="text-base sm:text-lg text-white/70 leading-relaxed max-w-md">
               Fill out some info and we will be in touch shortly. We can&apos;t wait to hear from you!
             </p>

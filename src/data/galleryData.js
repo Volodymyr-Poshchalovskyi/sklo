@@ -283,3 +283,119 @@ export const galleryItems = [
   { id: 244, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/011.mp4", type: "video", title: "Cinemagraph", width: 1920, height: 1088 },
   { id: 245, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/012.mp4", type: "video", title: "Cinemagraph", width: 1920, height: 1080 }
 ];
+
+// "All Projects" must not read as one category after another — it used to run
+// all 98 exteriors, then all 77 interiors, so a reader never reached the
+// bird's-eye or animation work at all. Product and Virtual Staging are left
+// out of the mix on purpose: product work is studio-lit on white and Virtual
+// Staging is presented as before/after sliders, so neither sits naturally in
+// a stream of architectural renders. Both stay reachable from their own
+// sidebar filter.
+export const ALL_PROJECTS_EXCLUDED = ["Product", "Virtual Staging"];
+
+// Each category is spread evenly across the whole run rather than chunked, and
+// its internal order (the curated archive order — strongest work first) is
+// preserved: an item's sort key is how far through its own category it sits,
+// so the Nth of 6 animations lands beside the proportionally-equivalent
+// exterior. Replace the body of this with a hand-authored list of `src` strings
+// if an explicit running order is ever decided.
+export const allProjectsItems = (() => {
+  const eligible = galleryItems.filter(
+    (item) => !ALL_PROJECTS_EXCLUDED.includes(item.category)
+  );
+
+  const total = {};
+  for (const item of eligible) {
+    total[item.category] = (total[item.category] || 0) + 1;
+  }
+
+  // Fixed tie-break so the result is identical on server and client.
+  const categoryOrder = [...new Set(eligible.map((item) => item.category))];
+
+  const seen = {};
+  return eligible
+    .map((item) => {
+      const index = seen[item.category] || 0;
+      seen[item.category] = index + 1;
+      return {
+        item,
+        spread: (index + 0.5) / total[item.category],
+        tie: categoryOrder.indexOf(item.category),
+      };
+    })
+    .sort((a, b) => a.spread - b.spread || a.tie - b.tie)
+    .map((entry) => entry.item);
+})();
+
+// Virtual Staging is shown as before/after comparisons rather than as separate
+// tiles: on its own, an empty room reads as a bad photo, and the point of the
+// work is only visible against the staged version of the same shot.
+//
+// The pairs are NOT adjacent in the archive numbering — they were matched by
+// content (identical camera, trees, road markings and window positions):
+//   003 empty living/kitchen  -> 001 furnished
+//   008 empty bedroom         -> 002 furnished
+//   004 brick shell + scaffold-> 005 finished facade
+//   007 structural frame      -> 006 finished facade
+// All eight are 3840x2160, so a single aspect ratio covers every pair.
+export const virtualStagingPairs = [
+  {
+    id: "vs-1",
+    before: "/assets/gallery/virtual-staging/003.webp",
+    after: "/assets/gallery/virtual-staging/001.webp",
+    title: "Living & Kitchen",
+    width: 3840,
+    height: 2160,
+  },
+  {
+    id: "vs-2",
+    before: "/assets/gallery/virtual-staging/008.webp",
+    after: "/assets/gallery/virtual-staging/002.webp",
+    title: "Bedroom",
+    width: 3840,
+    height: 2160,
+  },
+  {
+    id: "vs-3",
+    before: "/assets/gallery/virtual-staging/004.webp",
+    after: "/assets/gallery/virtual-staging/005.webp",
+    title: "Residential Facade",
+    width: 3840,
+    height: 2160,
+  },
+  {
+    id: "vs-4",
+    before: "/assets/gallery/virtual-staging/007.webp",
+    after: "/assets/gallery/virtual-staging/006.webp",
+    title: "Apartment Building",
+    width: 3840,
+    height: 2160,
+  },
+];
+
+// Which gallery category backs each service's mini gallery, and the sidebar
+// filter slug its "see everything" link points at. Four services (360 tour,
+// graphic design, 3D floorplans, media/website packages) have no shot category
+// in the archive yet and are deliberately absent: their detail pages hide the
+// mini gallery rather than pad it with unrelated renders.
+export const SERVICE_GALLERY = {
+  "exterior-visualization": { category: "Exterior", slug: "exterior", cta: "exteriors" },
+  "interior-visualization": { category: "Interior", slug: "interior", cta: "interiors" },
+  "bird-eye-visualization": { category: "Bird's-Eye View", slug: "bird-eye", cta: "aerials" },
+  "product-visualization": { category: "Product", slug: "product", cta: "product shots" },
+  "virtual-staging": { category: "Virtual Staging", slug: "virtual-staging", cta: "staging" },
+  "animation-mood-film": { category: "Animation", slug: "animation", cta: "animations" },
+  "cinemagraph-live-shot": { category: "Cinemagraph", slug: "cinemagraph", cta: "cinemagraphs" },
+};
+
+// The archive order is curated strongest-first, so taking the leading slice is
+// what puts the best work on a service page.
+export const MINI_GALLERY_LIMIT = 12;
+
+export function miniGalleryFor(serviceSlug, limit = MINI_GALLERY_LIMIT) {
+  const mapping = SERVICE_GALLERY[serviceSlug];
+  if (!mapping) return [];
+  return galleryItems
+    .filter((item) => item.category === mapping.category)
+    .slice(0, limit);
+}

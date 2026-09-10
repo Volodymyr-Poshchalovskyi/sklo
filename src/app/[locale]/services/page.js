@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import { servicesData } from "@/data/servicesData";
+import Title3D from "@/components/Title3D";
 
 function ServiceMedia({ service }) {
   const videoRef = useRef(null);
@@ -89,9 +90,9 @@ export default function ServicesPage({ params }) {
           <span className="eyebrow">
             {locale === "de" ? "Unser Angebot" : "What we offer"}
           </span>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
+          <Title3D as="h1" className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
             {locale === "de" ? "Alle Dienstleistungen" : "All Services"}
-          </h1>
+          </Title3D>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-3 md:gap-x-4 gap-y-8 md:gap-y-10">

@@ -84,16 +84,16 @@ export default function PromoBanner({ locale }) {
       <div className="flex items-start gap-3 border border-white/15 bg-surface-2/95 backdrop-blur-xl rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.35)] px-4 py-3.5">
         <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
           <span className="text-accent font-semibold">
-            {locale === "de" ? "30% Rabatt" : "30% off"}
+            {locale === "de" ? "Projekt im Kopf?" : "Got a project in mind?"}
           </span>{" "}
           {locale === "de"
-            ? "für Neukunden auf das erste Projekt —"
-            : "for new clients on their first project —"}{" "}
+            ? "Formular ausfüllen — wir melden uns schnellstmöglich."
+            : "Fill out the form and we'll get back to you as soon as possible."}{" "}
           <Link
             href={`/${locale}/contact`}
             className="underline underline-offset-2 hover:text-white transition-colors duration-300"
           >
-            {locale === "de" ? "kontaktieren" : "get in touch"}
+            {locale === "de" ? "zum Formular" : "start here"}
           </Link>
         </p>
         <button

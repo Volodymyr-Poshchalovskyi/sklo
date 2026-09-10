@@ -359,6 +359,36 @@ html {
   transform: none;
 }
 
+/* Controls and labels that sit directly on top of photography. Their backdrop
+   is the image, not the page, so they must keep the same contrast in both
+   themes — the light-theme block rewrites `.text-white` to near-black, which
+   would have left the before/after captions as dark text on a dark pill.
+   Same reasoning as the `.hero-section` and `.service-preview-title` pins. */
+.media-chip {
+  color: #ffffff !important;
+  background-color: rgba(0, 0, 0, 0.55) !important;
+}
+.media-handle {
+  background-color: #ffffff !important;
+  color: #121214 !important;
+}
+.media-divider {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* Hover captions that sit on a dark gradient over a render. Light theme used to
+   repaint these near-black (`.text-white` override) on top of an 80%-black
+   gradient, and the category label dropped to a dark olive — both effectively
+   invisible. They stay light-on-dark in both themes. */
+.media-caption,
+.media-caption h3,
+.media-caption span {
+  color: #ffffff !important;
+}
+.media-caption .media-caption-accent {
+  color: #c8ff00 !important;
+}
+
 /* Carousel prev/next buttons. These deliberately avoid the `bg-white/5`
    `border-white/10` utilities: the light-theme override block rewrites those
    to near-invisible black tints, and in dark they were faint enough that the

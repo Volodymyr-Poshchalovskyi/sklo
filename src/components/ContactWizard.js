@@ -71,12 +71,11 @@ function TiltCard({ children, className = "", onClick, disabled, intensity = 7 }
   );
 }
 
-function Heading3D({ children, className = "" }) {
-  return (
-    <div style={{ perspective: 700 }}>
-      <h2 className={`wizard-heading ${className}`}>{children}</h2>
-    </div>
-  );
+// Deliberately flat, unlike every other section heading on the site: these sit
+// at text-xl/2xl, and at that size the stacked 3D shadow smears the glyphs
+// rather than reading as depth.
+function StepHeading({ children, className = "" }) {
+  return <h2 className={`text-white ${className}`}>{children}</h2>;
 }
 
 function HitArea({ children, className = "", onClick, disabled, ariaLabel }) {
@@ -134,6 +133,41 @@ function Chip({ label, selected, onClick }) {
       }`}
     >
       {label}
+    </TiltCard>
+  );
+}
+
+// Every choose-something step offers this escape hatch. Plenty of enquiries
+// come from people who do not yet know which deliverable they need or how many
+// — without it they either guess or abandon the form.
+const CONSULT_COPY = {
+  en: "I don't know — I'd like a consultation",
+  de: "Ich weiß es nicht — ich möchte eine Beratung",
+};
+
+function ConsultToggle({ selected, onClick, isDe }) {
+  return (
+    <TiltCard
+      onClick={onClick}
+      intensity={3}
+      className={`w-full flex items-center gap-3 px-5 py-4 rounded-2xl border text-left text-xs font-semibold uppercase tracking-widest ${
+        selected
+          ? "border-accent bg-accent/[0.08] text-white"
+          : "border-dashed border-white/25 bg-transparent text-white/60 hover:border-white/50 hover:text-white"
+      }`}
+    >
+      <span
+        className={`shrink-0 w-5 h-5 rounded-full border flex items-center justify-center ${
+          selected ? "border-accent bg-accent text-bg" : "border-white/30"
+        }`}
+      >
+        {selected && (
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3.5">
+            <path d="M20 6L9 17l-5-5" />
+          </svg>
+        )}
+      </span>
+      {isDe ? CONSULT_COPY.de : CONSULT_COPY.en}
     </TiltCard>
   );
 }
@@ -209,6 +243,7 @@ function ContactWizardInner({ locale }) {
   const [data, setData] = useState({
     services: initialServices,
     quantities: {},
+    consult: { services: false, scope: false, budget: false, materials: false },
     budget: "",
     timelinePreset: "",
     startDate: "",
@@ -238,6 +273,13 @@ function ContactWizardInner({ locale }) {
     setData((prev) => ({
       ...prev,
       quantities: { ...prev.quantities, [id]: value },
+    }));
+  };
+
+  const toggleConsult = (key) => {
+    setData((prev) => ({
+      ...prev,
+      consult: { ...prev.consult, [key]: !prev.consult[key] },
     }));
   };
 
@@ -281,12 +323,23 @@ function ContactWizardInner({ locale }) {
     });
   };
 
+  const totalQuantity = data.services.reduce(
+    (sum, id) => sum + (data.quantities[id] || 0),
+    0
+  );
+
   const canProceed = () => {
     switch (STEPS[step].key) {
       case "type":
-        return data.services.length > 0;
+        return data.services.length > 0 || data.consult.services;
+      case "scope":
+        // Used to wave everyone through, so a request could arrive asking for
+        // five services and zero of each. At least one item is now required —
+        // unless the visitor has said they want to talk it through instead.
+        return totalQuantity > 0 || data.consult.scope || data.consult.services;
       case "budget":
-        return !!data.budget && !!data.startDate && !!data.endDate;
+        // Budget is optional; only the timeline is needed to plan capacity.
+        return !!data.startDate && !!data.endDate;
       case "details":
         return !!data.name && !!data.company && !!data.email && !!data.projectName;
       default:
@@ -311,13 +364,27 @@ function ContactWizardInner({ locale }) {
   };
 
   const selectedServices = SERVICE_OPTIONS.filter((s) => data.services.includes(s.id));
-  const budgetLabel = BUDGET_OPTIONS.find((b) => b.id === data.budget)?.label || "-";
+  const budgetLabel =
+    BUDGET_OPTIONS.find((b) => b.id === data.budget)?.label ||
+    (data.consult.budget ? (isDe ? "Beratung gewünscht" : "To be discussed") : "—");
   const materialsLabels = data.materials.map(
     (id) => MATERIAL_OPTIONS.find((m) => m.id === id)?.label
   );
-  const serviceLines = selectedServices.map(
-    (s) => `${s.label}: ${data.quantities[s.id] || 0} pcs.`
-  );
+  // Which steps the visitor explicitly flagged as "let's talk instead". These
+  // have to travel with the request — otherwise the studio sees a half-empty
+  // form and cannot tell an unanswered question from a deliberate "not sure".
+  const consultAreas = [
+    data.consult.services && (isDe ? "Leistungen" : "services"),
+    data.consult.scope && (isDe ? "Umfang" : "scope"),
+    data.consult.budget && (isDe ? "Budget" : "budget"),
+    data.consult.materials && (isDe ? "Material" : "materials"),
+  ].filter(Boolean);
+
+  // "1x / 2x" reads as a count of deliverables; "pcs." read like stock units.
+  const serviceLines = selectedServices.map((s) => {
+    const qty = data.quantities[s.id] || 0;
+    return `${s.label}: ${qty > 0 ? `${qty}x` : "quantity to be discussed"}`;
+  });
 
   const buildMailto = () => {
     const lines = [
@@ -329,7 +396,10 @@ function ContactWizardInner({ locale }) {
       `Project Name: ${data.projectName}`,
       "Requested Services:",
       ...(serviceLines.length ? serviceLines : ["-"]),
-      `Budget: ${budgetLabel}`,
+      `Budget: ${data.consult.budget ? "consultation requested" : budgetLabel}`,
+      ...(consultAreas.length
+        ? [`Consultation requested for: ${consultAreas.join(", ")}`]
+        : []),
       `Preferred Start Date: ${data.startDate || "-"}`,
       `Preferred End Date: ${data.endDate || "-"}`,
       `Materials available: ${materialsLabels.join(", ") || "-"}`,
@@ -357,6 +427,7 @@ function ContactWizardInner({ locale }) {
     setData({
       services: [],
       quantities: {},
+      consult: { services: false, scope: false, budget: false, materials: false },
       budget: "",
       timelinePreset: "",
       startDate: "",
@@ -460,9 +531,9 @@ function ContactWizardInner({ locale }) {
           >
             {STEPS[step].key === "type" && (
               <div className="flex flex-col gap-6">
-                <Heading3D className="text-xl md:text-2xl font-bold uppercase tracking-wider">
+                <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
                   {isDe ? "Welche Leistungen brauchen Sie?" : "Which services do you need?"}
-                </Heading3D>
+                </StepHeading>
                 <p className="text-xs text-white/50 -mt-3">
                   {isDe
                     ? "Sie können mehrere Leistungen auswählen."
@@ -478,49 +549,76 @@ function ContactWizardInner({ locale }) {
                     />
                   ))}
                 </div>
+                <ConsultToggle
+                  isDe={isDe}
+                  selected={data.consult.services}
+                  onClick={() => toggleConsult("services")}
+                />
               </div>
             )}
 
             {STEPS[step].key === "scope" && (
               <div className="flex flex-col gap-6">
-                <Heading3D className="text-xl md:text-2xl font-bold uppercase tracking-wider">
+                <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
                   {isDe ? "Wie groß ist der Umfang?" : "What's the scope?"}
-                </Heading3D>
+                </StepHeading>
                 <p className="text-xs text-white/50 -mt-3">
                   {isDe
-                    ? "Optional — grobe Schätzung reicht völlig aus."
-                    : "Optional — a rough estimate is perfectly fine."}
+                    ? "Eine grobe Schätzung reicht — mindestens eine Position wird benötigt."
+                    : "A rough estimate is fine — at least one item is needed."}
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {selectedServices.map((service) => (
-                    <QuantityField
-                      key={service.id}
-                      label={service.label}
-                      value={data.quantities[service.id] || 0}
-                      onChange={(v) => setQuantity(service.id, v)}
-                    />
-                  ))}
-                </div>
+                {selectedServices.length > 0 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {selectedServices.map((service) => (
+                      <QuantityField
+                        key={service.id}
+                        label={service.label}
+                        value={data.quantities[service.id] || 0}
+                        onChange={(v) => setQuantity(service.id, v)}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-xs text-white/40">
+                    {isDe
+                      ? "Keine Leistung ausgewählt — wir klären den Umfang im Gespräch."
+                      : "No service selected — we'll work out the scope together."}
+                  </p>
+                )}
+                <ConsultToggle
+                  isDe={isDe}
+                  selected={data.consult.scope}
+                  onClick={() => toggleConsult("scope")}
+                />
               </div>
             )}
 
             {STEPS[step].key === "budget" && (
               <div className="flex flex-col gap-8">
                 <div className="flex flex-col gap-5">
-                  <Heading3D className="text-xl md:text-2xl font-bold uppercase tracking-wider">
+                  <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
                     {isDe ? "Budgetrahmen" : "Budget Range"}
-                    <span className="text-accent"> *</span>
-                  </Heading3D>
+                  </StepHeading>
+                  <p className="text-xs text-white/50 -mt-2">
+                    {isDe ? "Optional." : "Optional."}
+                  </p>
                   <div className="flex flex-wrap gap-3">
                     {BUDGET_OPTIONS.map((b) => (
                       <Chip
                         key={b.id}
                         label={b.label}
                         selected={data.budget === b.id}
-                        onClick={() => set({ budget: b.id })}
+                        onClick={() =>
+                          set({ budget: data.budget === b.id ? "" : b.id })
+                        }
                       />
                     ))}
                   </div>
+                  <ConsultToggle
+                    isDe={isDe}
+                    selected={data.consult.budget}
+                    onClick={() => toggleConsult("budget")}
+                  />
                 </div>
 
                 <div className="flex flex-col gap-5">
@@ -559,9 +657,9 @@ function ContactWizardInner({ locale }) {
 
             {STEPS[step].key === "materials" && (
               <div className="flex flex-col gap-6">
-                <Heading3D className="text-xl md:text-2xl font-bold uppercase tracking-wider">
+                <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
                   {isDe ? "Welches Material haben Sie bereits?" : "What materials do you already have?"}
-                </Heading3D>
+                </StepHeading>
                 <div className="flex flex-wrap gap-3">
                   {MATERIAL_OPTIONS.map((m) => (
                     <Chip
@@ -572,6 +670,11 @@ function ContactWizardInner({ locale }) {
                     />
                   ))}
                 </div>
+                <ConsultToggle
+                  isDe={isDe}
+                  selected={data.consult.materials}
+                  onClick={() => toggleConsult("materials")}
+                />
                 <label className="flex flex-col gap-2 mt-2">
                   <span className="text-xs text-white/60 uppercase tracking-widest font-semibold">
                     {isDe ? "Zusätzliche Informationen" : "Additional Information"}
@@ -622,10 +725,14 @@ function ContactWizardInner({ locale }) {
                       ))}
                     </div>
                   )}
-                  <p className="text-[11px] text-white/40">
+                  {/* The old wording only said files "can't be auto-attached",
+                      which left people guessing. Spell out the mechanism: the
+                      form hands off to the visitor's own mail app, and a web
+                      page cannot put attachments into it. */}
+                  <p className="text-[11px] text-white/50 leading-relaxed">
                     {isDe
-                      ? "Hinweis: Dateien können nicht automatisch per E-Mail-Client mitgesendet werden — bitte fügen Sie sie beim Versand manuell an."
-                      : "Note: files can't be auto-attached by the email client — please attach them manually when sending."}
+                      ? "„Senden“ öffnet Ihr eigenes E-Mail-Programm mit allen Angaben — Dateien kann eine Website dort jedoch nicht anhängen. Bitte ziehen Sie die Dateien vor dem Absenden in diese E-Mail. Die Namen listen wir mit, damit nichts vergessen wird."
+                      : "Pressing Send opens your own email app with everything filled in — a web page can't attach files to it. Please drag the files into that email before you send it. We list their names in the message so nothing gets missed."}
                   </p>
                 </div>
               </div>
@@ -633,9 +740,9 @@ function ContactWizardInner({ locale }) {
 
             {STEPS[step].key === "details" && (
               <div className="flex flex-col gap-8">
-                <Heading3D className="text-xl md:text-2xl font-bold uppercase tracking-wider">
+                <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
                   {isDe ? "Ihre Kontaktdaten" : "Your Details"}
-                </Heading3D>
+                </StepHeading>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <TextField
                     label={isDe ? "Name" : "Name"}
@@ -688,6 +795,13 @@ function ContactWizardInner({ locale }) {
                     {data.startDate || "—"} → {data.endDate || "—"}
                   </span>
                   {serviceLines.length > 0 && <span>{serviceLines.join(" · ")}</span>}
+                  {consultAreas.length > 0 && (
+                    <span className="text-accent">
+                      {isDe
+                        ? `Beratung gewünscht zu: ${consultAreas.join(", ")}`
+                        : `Consultation requested for: ${consultAreas.join(", ")}`}
+                    </span>
+                  )}
                   {materialsLabels.length > 0 && <span>{materialsLabels.join(", ")}</span>}
                   {data.files.length > 0 && (
                     <span>
@@ -734,34 +848,6 @@ function ContactWizardInner({ locale }) {
         )}
       </div>
 
-      <style>{`
-        .wizard-heading {
-          color: var(--color-title-3d-text);
-          display: inline-block;
-          transform-origin: 50% 100%;
-          transform-style: preserve-3d;
-          animation: wizardHeadingIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        @keyframes wizardHeadingIn {
-          0% {
-            transform: rotateX(-70deg);
-            opacity: 0;
-            text-shadow: 0 0 0 transparent;
-          }
-          55% {
-            opacity: 1;
-          }
-          100% {
-            transform: rotateX(0deg);
-            opacity: 1;
-            text-shadow:
-              1px 1px 0px var(--color-title-3d-shadow),
-              2px 2px 0px var(--color-title-3d-shadow),
-              3px 3px 0px var(--color-title-3d-shadow),
-              5px 5px 14px var(--color-title-3d-glow);
-          }
-        }
-      `}</style>
     </div>
   );
 }
