@@ -232,7 +232,7 @@ function GalleryPageContent() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row-reverse text-white">
       {/* Right Sidebar (18% width on desktop) */}
-      <aside className="w-full md:w-[18%] h-auto md:h-screen sticky top-0 bg-surface border-b md:border-b-0 md:border-l border-white/10 p-6 md:p-8 pt-24 md:pt-32 flex flex-col justify-between z-20 shrink-0">
+      <aside className="w-full md:w-[18%] h-auto md:h-screen sticky top-0 bg-surface border-b md:border-b-0 md:border-l border-white/10 p-6 md:p-8 pt-28 md:pt-32 flex flex-col justify-between z-20 shrink-0">
         <div className="flex flex-col gap-6 md:gap-8">
           <div>
             <Title3D as="h1" className="text-2xl md:text-3xl font-bold tracking-widest uppercase mb-4">
@@ -297,7 +297,7 @@ function GalleryPageContent() {
       </aside>
 
       {/* Left Gallery Masonry Grid (78% width on desktop) */}
-      <main className="w-full md:w-[82%] min-h-screen pt-24 md:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
+      <main className="w-full md:w-[82%] min-h-screen pt-28 md:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
         {isVirtualStaging ? (
           // Virtual Staging is comparisons, not tiles: two per row at most, so
           // each pair is wide enough to actually judge the difference.

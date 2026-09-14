@@ -330,10 +330,18 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
       {hasPipeline && (
       <section
         ref={pipelineRef}
-        className="section-shell hairline-top w-full relative"
-        style={{ height: `${service.pipeline.length * 95}vh` }}
+        className="section-shell hairline-top w-full relative lg:h-[var(--pipeline-h)]"
+        // The tall scroll track belongs to the pinned desktop layout only. It
+        // travels as a custom property rather than an inline `height`, because
+        // an inline height wins over any `lg:` class and would have left the
+        // phone with a 380vh container holding nothing pinned.
+        style={{ "--pipeline-h": `${service.pipeline.length * 95}vh` }}
       >
-        <div className="sticky top-0 h-screen w-full flex flex-col justify-center px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        {/* Pinned layout, desktop only. On a 375x667 phone the step text and
+            its media need ~598px while the header and the progress bar leave
+            ~475px, so there is no viewport box to pin into — the phone gets
+            the stacked list below instead. */}
+        <div className="hidden lg:flex sticky top-0 h-screen w-full flex-col justify-center px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
           {/* Ambient Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[130px] pointer-events-none" />
 
@@ -426,6 +434,57 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Stacked layout, phones and tablets. The steps read in order instead
+            of being swapped in place, so nothing depends on scroll position
+            and nothing has to fit inside one viewport. */}
+        <div className="lg:hidden w-full px-6 md:px-16 py-24 flex flex-col gap-12">
+          <div>
+            <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
+              {locale === "de" ? "Prozess" : "Workflow"}
+            </span>
+            <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
+              {locale === "de" ? "Wie wir arbeiten" : "Our Pipeline"}
+            </Title3D>
+            <div className="h-[1px] bg-gradient-to-r from-white/15 via-white/5 to-transparent w-full mt-4" />
+          </div>
+
+          {service.pipeline.map((step, idx) => {
+            const media = getStepMedia(service, idx);
+            return (
+              <article key={idx} className="flex flex-col gap-5">
+                <div className="flex items-center gap-4">
+                  <span
+                    className="text-5xl sm:text-6xl font-black font-serif text-transparent select-none tracking-tighter leading-none"
+                    style={{ WebkitTextStroke: "1.5px var(--color-border-stroke)" }}
+                  >
+                    {step.step}
+                  </span>
+                  <div className="h-[1px] bg-gradient-to-r from-accent to-transparent w-16" />
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-wider text-white leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="text-base text-white/70 leading-relaxed font-light">
+                    {step.desc}
+                  </p>
+                </div>
+
+                <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+                  {/* Every stacked step is on screen at some point, so its
+                      media plays rather than waiting to become "active". */}
+                  <StepMedia src={media.src} type={media.type} isActive />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
+                  <div className="media-chip absolute top-3 right-3 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-xs font-mono font-bold pointer-events-none">
+                    {step.step} / {String(service.pipeline.length).padStart(2, "0")}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
       )}
@@ -692,7 +751,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: 80, x: "-50%" }}
             transition={{ type: "spring", stiffness: 260, damping: 25 }}
-            className="pipeline-progress-bar fixed bottom-6 left-1/2 z-40 w-[92%] max-w-2xl bg-surface/95 border border-[var(--color-progress-border)] backdrop-blur-xl rounded-2xl py-4 px-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex flex-col gap-2.5 select-none text-text"
+            className="pipeline-progress-bar hidden lg:flex fixed bottom-6 left-1/2 z-40 w-[92%] max-w-2xl bg-surface/95 border border-[var(--color-progress-border)] backdrop-blur-xl rounded-2xl py-4 px-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex-col gap-2.5 select-none text-text"
           >
             {/* Header info */}
             <div className="pipeline-header flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-text-muted px-1">

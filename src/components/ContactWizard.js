@@ -557,7 +557,10 @@ function ContactWizardInner({ locale }) {
                     ? "Sie können mehrere Leistungen auswählen."
                     : "You can select multiple services."}
                 </p>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {/* One column on a phone: at 375px two columns leave 131px cells and
+                    the word "VISUALIZATION" alone is wider than that, so the
+                    labels spilled out of their tiles. */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {SERVICE_OPTIONS.map((service) => (
                     <OptionCard
                       key={service.id}
