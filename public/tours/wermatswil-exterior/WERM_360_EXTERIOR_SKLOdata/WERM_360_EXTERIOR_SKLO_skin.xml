@@ -37,9 +37,9 @@
 
 	<ptplugin name="floorPlan" engine="KolorFloorPlan">
 		<settings>
-			<option name="background_color" value="727272" type="string" />
-			<option name="background_lighter_color" value="898989" type="string" />
-			<option name="background_darker_color" value="5f5f5f" type="string" />
+			<option name="background_color" value="ffffff" type="string" />
+			<option name="background_lighter_color" value="f2f2f2" type="string" />
+			<option name="background_darker_color" value="e4e4e4" type="string" />
 			<option name="background_alpha" value="1" type="float" />
 			<option name="text_color" value="000000" type="string" />
 
@@ -292,27 +292,27 @@ floorPlanActivateDefaultSpot();););
 		<option name="close_displayed" value="true" type="bool" />
 		<option name="close_text" value="floorPlandisplay_close_text" type="string" />
 
-		<option name="background_color" value="727272" type="string" />
+		<option name="background_color" value="ffffff" type="string" />
 		<option name="background_alpha" value="1" type="float" />
-		<option name="overlay_displayed" value="false" type="bool" />
+		<option name="overlay_displayed" value="true" type="bool" />
 		<option name="overlay_color" value="000000" type="string" />
-		<option name="overlay_alpha" value="0.50000762951094835" type="float" />
+		<option name="overlay_alpha" value="0.72" type="float" />
 
-		<option name="padding" value="15" type="int" />
-		<option name="topleft_radius" value="0" type="int" />
-		<option name="topright_radius" value="0" type="int" />
-		<option name="bottomleft_radius" value="0" type="int" />
-		<option name="bottomright_radius" value="0" type="int" />
-		<option name="area_border_width" value="0" type="int" />
-		<option name="area_border_color" value="f2f2f2" type="string" />
-		<option name="area_border_alpha" value="1" type="float" />
+		<option name="padding" value="28" type="int" />
+		<option name="topleft_radius" value="18" type="int" />
+		<option name="topright_radius" value="18" type="int" />
+		<option name="bottomleft_radius" value="18" type="int" />
+		<option name="bottomright_radius" value="18" type="int" />
+		<option name="area_border_width" value="1" type="int" />
+		<option name="area_border_color" value="121214" type="string" />
+		<option name="area_border_alpha" value="0.14" type="float" />
 		<option name="area_width" value="1200" type="int" />
 		<option name="area_height" value="800" type="int" />
 		<option name="area_width_unit" value="pixel" type="string" />
 		<option name="area_height_unit" value="pixel" type="string" />
 		<option name="animation" value="true" type="bool" />
 		<option name="animation_duration" value="500" type="int" />
-		<option name="close_on_click" value="false" type="bool" />
+		<option name="close_on_click" value="true" type="bool" />
 		<option name="refresh_content" value="false" type="bool" />
 		<option name="open_callback" value="addKolorFloorPlan('floorPlan', 'floorPlanArea_floorplanDIV');" type="string" />
 		<option name="close_callback" value="invokeKrFunction('closeKolorAreaCallback_floorPlanArea')" type="string" />
