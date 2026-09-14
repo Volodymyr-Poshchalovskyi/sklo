@@ -172,11 +172,19 @@ function ConsultToggle({ selected, onClick, isDe }) {
   );
 }
 
-function QuantityField({ label, value, onChange }) {
+// `needsQuantity` marks a service still sitting at zero. Without it, picking
+// five services and leaving one at zero just greys out Next with no clue which
+// row is the problem.
+function QuantityField({ label, value, onChange, needsQuantity }) {
   return (
-    <div className="flex items-center justify-between gap-4 p-5 rounded-2xl border border-white/10 bg-white/[0.02]">
+    <div
+      className={`flex items-center justify-between gap-4 p-5 rounded-2xl border bg-white/[0.02] transition-colors duration-300 ${
+        needsQuantity ? "border-accent/60" : "border-white/10"
+      }`}
+    >
       <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-white/80">
         {label}
+        {needsQuantity && <span className="text-accent"> *</span>}
       </span>
       <div className="flex items-center gap-3 shrink-0">
         <HitArea onClick={() => onChange(Math.max(0, value - 1))} ariaLabel="Decrease">
@@ -323,9 +331,11 @@ function ContactWizardInner({ locale }) {
     });
   };
 
-  const totalQuantity = data.services.reduce(
-    (sum, id) => sum + (data.quantities[id] || 0),
-    0
+  // Every selected service needs its own count, not just one of them: summing
+  // across services let "3 exteriors, 0 interiors" through, which is a request
+  // the studio cannot quote.
+  const servicesMissingQuantity = data.services.filter(
+    (id) => (data.quantities[id] || 0) < 1
   );
 
   const canProceed = () => {
@@ -334,9 +344,14 @@ function ContactWizardInner({ locale }) {
         return data.services.length > 0 || data.consult.services;
       case "scope":
         // Used to wave everyone through, so a request could arrive asking for
-        // five services and zero of each. At least one item is now required —
-        // unless the visitor has said they want to talk it through instead.
-        return totalQuantity > 0 || data.consult.scope || data.consult.services;
+        // five services and zero of each. Each selected service now needs at
+        // least one item — unless the visitor has said they want to talk it
+        // through instead.
+        return (
+          servicesMissingQuantity.length === 0 ||
+          data.consult.scope ||
+          data.consult.services
+        );
       case "budget":
         // Budget is optional; only the timeline is needed to plan capacity.
         return !!data.startDate && !!data.endDate;
@@ -364,6 +379,9 @@ function ContactWizardInner({ locale }) {
   };
 
   const selectedServices = SERVICE_OPTIONS.filter((s) => data.services.includes(s.id));
+  const missingQuantityLabels = SERVICE_OPTIONS.filter((s) =>
+    servicesMissingQuantity.includes(s.id)
+  ).map((s) => s.label);
   const budgetLabel =
     BUDGET_OPTIONS.find((b) => b.id === data.budget)?.label ||
     (data.consult.budget ? (isDe ? "Beratung gewünscht" : "To be discussed") : "—");
@@ -575,6 +593,10 @@ function ContactWizardInner({ locale }) {
                         label={service.label}
                         value={data.quantities[service.id] || 0}
                         onChange={(v) => setQuantity(service.id, v)}
+                        needsQuantity={
+                          !data.consult.scope &&
+                          servicesMissingQuantity.includes(service.id)
+                        }
                       />
                     ))}
                   </div>
@@ -583,6 +605,13 @@ function ContactWizardInner({ locale }) {
                     {isDe
                       ? "Keine Leistung ausgewählt — wir klären den Umfang im Gespräch."
                       : "No service selected — we'll work out the scope together."}
+                  </p>
+                )}
+                {servicesMissingQuantity.length > 0 && !data.consult.scope && (
+                  <p className="text-xs text-accent">
+                    {isDe
+                      ? `Bitte Anzahl angeben für: ${missingQuantityLabels.join(", ")}`
+                      : `Add a quantity for: ${missingQuantityLabels.join(", ")}`}
                   </p>
                 )}
                 <ConsultToggle
