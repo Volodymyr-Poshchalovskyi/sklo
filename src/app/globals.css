@@ -442,6 +442,19 @@ html {
   border-color: rgba(18, 18, 20, 0.65) !important;
 }
 
+/* Horizontal chip rail. Used where a vertical list of filters would eat the
+   whole first screen of a phone — the row scrolls sideways instead, and the
+   scrollbar is hidden because the chips themselves show there is more to the
+   right. */
+/* `-ms-overflow-style` is deliberately absent: with it in the block the CSS
+   pipeline dropped the whole rule, scrollbar and all. */
+.chip-rail {
+  scrollbar-width: none;
+}
+.chip-rail::-webkit-scrollbar {
+  display: none;
+}
+
 /* Selected tab in the 360 tour switcher. It reuses `.carousel-arrow` for the
    resting state and only inverts the fill, so the two controls stay one
    family; the accent text is what marks it as chosen in both themes. */

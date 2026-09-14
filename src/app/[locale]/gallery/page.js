@@ -123,11 +123,26 @@ function GalleryPageContent() {
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const lenisRef = useLenis();
   const isFirstFilterRender = useRef(true);
+  const chipRailRef = useRef(null);
 
   // Derived from the URL rather than held in local state, so there is only one
   // source of truth and a reload cannot disagree with what the sidebar shows.
   const searchParams = useSearchParams();
   const activeFilter = labelForSlug(searchParams.get(FILTER_PARAM));
+
+  // The chip rail scrolls sideways, so an active filter near its end starts
+  // out of sight — on a reload of `?filter=cinemagraph` nothing on screen said
+  // which filter was on. Scroll the rail itself rather than calling
+  // `scrollIntoView`, which would also drag the page.
+  useEffect(() => {
+    const rail = chipRailRef.current;
+    if (!rail) return;
+    const chip = rail.querySelector('[aria-pressed="true"]');
+    if (!chip) return;
+    const offset =
+      chip.offsetLeft - rail.clientWidth / 2 + chip.offsetWidth / 2;
+    rail.scrollTo({ left: Math.max(0, offset), behavior: "smooth" });
+  }, [activeFilter]);
 
   // `history.replaceState` instead of `router.replace`: it updates the URL
   // without a router navigation (no RSC round-trip, so the grid swaps
@@ -232,16 +247,43 @@ function GalleryPageContent() {
   return (
     <div className="min-h-screen flex flex-col md:flex-row-reverse text-white">
       {/* Right Sidebar (18% width on desktop) */}
-      <aside className="w-full md:w-[18%] h-auto md:h-screen sticky top-0 bg-surface border-b md:border-b-0 md:border-l border-white/10 p-6 md:p-8 pt-28 md:pt-32 flex flex-col justify-between z-20 shrink-0">
-        <div className="flex flex-col gap-6 md:gap-8">
+      {/* Sticky only from `md` up. On a phone this panel is a short bar in the
+          normal flow, not a full-height column pinned to the top. */}
+      <aside className="w-full md:w-[18%] h-auto md:h-screen md:sticky md:top-0 bg-surface border-b md:border-b-0 md:border-l border-white/10 px-6 md:p-8 pt-28 md:pt-32 pb-5 md:pb-8 flex flex-col justify-between z-20 shrink-0">
+        <div className="flex flex-col gap-4 md:gap-8">
           <div>
-            <Title3D as="h1" className="text-2xl md:text-3xl font-bold tracking-widest uppercase mb-4">
+            <Title3D as="h1" className="text-2xl md:text-3xl font-bold tracking-widest uppercase mb-3 md:mb-4">
               Gallery
             </Title3D>
-            <div className="h-[1px] bg-gradient-to-r from-text/20 to-transparent w-full mb-6" />
+            <div className="h-[1px] bg-gradient-to-r from-text/20 to-transparent w-full" />
           </div>
 
-          <div className="flex flex-col gap-4">
+          {/* Phone: one sideways-scrolling rail of chips. The vertical list
+              below is 8 rows tall, which pushed the first photograph to 760px
+              down the page — past the fold on every phone. */}
+          <div ref={chipRailRef} className="md:hidden chip-rail -mx-6 px-6 overflow-x-auto">
+            <div className="flex w-max gap-2">
+              {[{ label: ALL_FILTER }, ...CATEGORIES].map(({ label }) => {
+                const isActive = activeFilter === label;
+                return (
+                  <button
+                    key={label}
+                    onClick={() => setActiveFilter(label)}
+                    aria-pressed={isActive}
+                    className={`shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer ${
+                      isActive
+                        ? "bg-white/15 text-white border-white/30"
+                        : "bg-white/5 text-white/40 border-transparent hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    {label === ALL_FILTER ? "All Projects" : label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="hidden md:flex flex-col gap-4">
             {/* All Button */}
             <button
               onClick={() => setActiveFilter(ALL_FILTER)}
@@ -287,17 +329,19 @@ function GalleryPageContent() {
           </div>
         </div>
 
-        {/* Bottom Category Description */}
-        <div className="border-t border-white/10 pt-6 mt-8 md:mt-0">
-          <p className="text-[9px] font-mono uppercase tracking-widest text-white/30 mb-2">Category Info</p>
-          <p className="text-[11px] md:text-xs text-white/50 leading-relaxed min-h-[48px] transition-all duration-300">
+        {/* Bottom Category Description. The phone keeps the sentence but drops
+            the label and the reserved height — it sits right under the chips
+            instead of anchoring the bottom of a full-height column. */}
+        <div className="mt-4 md:mt-0 md:border-t md:border-white/10 md:pt-6">
+          <p className="hidden md:block text-[9px] font-mono uppercase tracking-widest text-white/30 mb-2">Category Info</p>
+          <p className="text-[11px] md:text-xs text-white/50 leading-relaxed md:min-h-[48px] transition-all duration-300">
             {categoryDescriptions[activeFilter] || categoryDescriptions["All"]}
           </p>
         </div>
       </aside>
 
       {/* Left Gallery Masonry Grid (78% width on desktop) */}
-      <main className="w-full md:w-[82%] min-h-screen pt-28 md:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
+      <main className="w-full md:w-[82%] min-h-screen pt-8 md:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
         {isVirtualStaging ? (
           // Virtual Staging is comparisons, not tiles: two per row at most, so
           // each pair is wide enough to actually judge the difference.
