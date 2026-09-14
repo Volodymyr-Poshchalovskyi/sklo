@@ -4,8 +4,9 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import ServicesCarousel from "@/components/ServicesCarousel";
 import Title3D from "@/components/Title3D";
+import TourEmbed from "@/components/TourEmbed";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
-import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor } from "@/data/galleryData";
+import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor, serviceTourFor } from "@/data/galleryData";
 import { useLenis } from "@/context/LenisContext";
 
 // Helper component to render step media dynamically
@@ -87,7 +88,10 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
   // Virtual Staging only makes sense as before/after comparisons, matching how
   // the big gallery presents it.
   const isStagingService = service.slug === "virtual-staging";
-  const hasMiniGallery = isStagingService || miniItems.length > 0;
+  // A real 360 export stands in for the mini gallery on the services that have
+  // one: the archive has no still category behind them.
+  const tour = serviceTourFor(service.slug);
+  const hasMiniGallery = isStagingService || miniItems.length > 0 || !!tour;
 
   // Same poster map as the header menu and the homepage carousel, so a service
   // is advertised with one consistent image everywhere.
@@ -427,15 +431,21 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
         <div className="w-full">
           <div className="mb-16">
             <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
-              {locale === "de" ? "Portfolio" : "Visual Showcase"}
+              {tour
+                ? locale === "de" ? "Live-Demo" : "Live Demo"
+                : locale === "de" ? "Portfolio" : "Visual Showcase"}
             </span>
             <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
-              {locale === "de" ? "Projektgalerie" : "Selected Work"}
+              {tour
+                ? locale === "de" ? "360°-Tour erkunden" : "Explore the 360° Tour"
+                : locale === "de" ? "Projektgalerie" : "Selected Work"}
             </Title3D>
             <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
           </div>
 
-          {isStagingService ? (
+          {tour ? (
+            <TourEmbed tour={tour} locale={locale} />
+          ) : isStagingService ? (
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
               {virtualStagingPairs.map((pair) => (
                 <div key={pair.id} className="flex flex-col gap-3">

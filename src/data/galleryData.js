@@ -438,3 +438,25 @@ export const SERVICE_POSTER = {
 export function servicePosterFor(slug) {
   return SERVICE_POSTER[slug] || null;
 }
+
+// Real 360° tours exported from Panotour, served as static files out of
+// /public/tours. The export is a self-contained page with its own jQuery, its
+// own reset (`* { margin: 0 }`) and `overflow: hidden` on <body>, so it is
+// embedded in an iframe rather than inlined — inlining it would fight the
+// site's styles and Lenis smooth scrolling. `entry` keeps the generator's own
+// file names because ~6000 tile paths inside the XML are relative to them.
+export const SERVICE_TOUR = {
+  "360-virtual-tour": {
+    id: "wermatswil",
+    title: "Wermatswil Residence",
+    entry: "/tours/wermatswil/WERMATSWIL_360TOUR_for_sklo.html",
+    // Cropped from the tour's own living-room cube face, so the poster is the
+    // scene the visitor actually lands in.
+    poster: "/assets/tours/wermatswil-poster.webp",
+    scenes: 24,
+  },
+};
+
+export function serviceTourFor(slug) {
+  return SERVICE_TOUR[slug] || null;
+}
