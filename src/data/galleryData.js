@@ -440,21 +440,35 @@ export function servicePosterFor(slug) {
 }
 
 // Real 360° tours exported from Panotour, served as static files out of
-// /public/tours. The export is a self-contained page with its own jQuery, its
-// own reset (`* { margin: 0 }`) and `overflow: hidden` on <body>, so it is
-// embedded in an iframe rather than inlined — inlining it would fight the
-// site's styles and Lenis smooth scrolling. `entry` keeps the generator's own
-// file names because ~6000 tile paths inside the XML are relative to them.
+// /public/tours. Each export is a self-contained page with its own jQuery, its
+// own reset (`* { margin: 0 }`) and `overflow: hidden` on <body>, so they are
+// embedded in an iframe rather than inlined — inlining would fight the site's
+// styles and Lenis smooth scrolling. `entry` keeps each generator's own file
+// names because the tile paths inside the tour XML are relative to them.
+//
+// A service maps to a list: the same property can ship more than one tour, and
+// the embed puts them behind a switcher instead of stacking two viewers.
 export const SERVICE_TOUR = {
-  "360-virtual-tour": {
-    id: "wermatswil",
-    title: "Wermatswil Residence",
-    entry: "/tours/wermatswil/WERMATSWIL_360TOUR_for_sklo.html",
-    // Cropped from the tour's own living-room cube face, so the poster is the
-    // scene the visitor actually lands in.
-    poster: "/assets/tours/wermatswil-poster.webp",
-    scenes: 24,
-  },
+  "360-virtual-tour": [
+    {
+      id: "wermatswil-interior",
+      title: "Wermatswil Residence",
+      label: { en: "Interior", de: "Innen" },
+      entry: "/tours/wermatswil/WERMATSWIL_360TOUR_for_sklo.html",
+      // Cropped from each tour's own cube faces, so the poster is a scene the
+      // visitor actually lands in.
+      poster: "/assets/tours/wermatswil-poster.webp",
+      scenes: 24,
+    },
+    {
+      id: "wermatswil-exterior",
+      title: "Wermatswil Residence",
+      label: { en: "Exterior", de: "Aussen" },
+      entry: "/tours/wermatswil-exterior/WERM_360_EXTERIOR_SKLO.html",
+      poster: "/assets/tours/wermatswil-exterior-poster.webp",
+      scenes: 6,
+    },
+  ],
 };
 
 export function serviceTourFor(slug) {
