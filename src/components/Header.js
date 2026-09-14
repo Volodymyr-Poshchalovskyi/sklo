@@ -355,15 +355,36 @@ export default function Header({ t, locale, visible }) {
         // page base so the bar reads as sitting above the content, and the
         // resting state is translucent rather than a different colour — the two
         // used to be far enough apart that crossing 20px looked like a flash.
-        background: (scrolled || servicesMenuOpen)
+        //
+        // At rest the translucent fill is a gradient that fades out at the
+        // bottom rather than a flat wash. A flat one sits over a hero photo as
+        // a dimmed rectangle with a hard edge where it ends — on the service
+        // pages that edge was the most visible thing on the screen.
+        // Longhand throughout: React warns and the animation breaks when the
+        // `background` shorthand and its longhand parts share one style object
+        // across re-renders (see the note in CLAUDE.md).
+        backgroundColor: (scrolled || servicesMenuOpen)
           ? (theme === "light" ? "rgba(255,255,255,0.92)" : "rgba(8,9,12,0.92)")
-          : (theme === "light" ? "rgba(255,255,255,0.30)" : "rgba(8,9,12,0.30)"),
-        backdropFilter: "blur(24px) saturate(180%)",
-        WebkitBackdropFilter: "blur(24px) saturate(180%)",
+          : "transparent",
+        backgroundImage: (scrolled || servicesMenuOpen)
+          ? "none"
+          : (theme === "light"
+              ? "linear-gradient(to bottom, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.55) 55%, rgba(255,255,255,0) 100%)"
+              : "linear-gradient(to bottom, rgba(8,9,12,0.75) 0%, rgba(8,9,12,0.38) 55%, rgba(8,9,12,0) 100%)"),
+        // The gradient has to span the border box. By default a background is
+        // positioned against the padding box and repeats, so the 1px
+        // transparent bottom border was painted with the gradient's opaque
+        // first row — a bright hairline across the top of the hero.
+        backgroundOrigin: "border-box",
+        backgroundRepeat: "no-repeat",
+        // The blur has a hard boundary of its own, so it only joins the solid
+        // state. The gradient carries legibility on its own while resting.
+        backdropFilter: (scrolled || servicesMenuOpen) ? "blur(24px) saturate(180%)" : "none",
+        WebkitBackdropFilter: (scrolled || servicesMenuOpen) ? "blur(24px) saturate(180%)" : "none",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-12px)",
         transition:
-          "opacity 0.7s ease, transform 0.7s ease, padding 0.35s cubic-bezier(0.16,1,0.3,1), background 0.45s ease, border-color 0.45s ease",
+          "opacity 0.7s ease, transform 0.7s ease, padding 0.35s cubic-bezier(0.16,1,0.3,1), background-color 0.45s ease, border-color 0.45s ease",
       }}
     >
       <div className="w-full px-6 md:px-16 lg:px-24 flex items-center justify-between">

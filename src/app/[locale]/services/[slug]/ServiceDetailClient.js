@@ -212,8 +212,13 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
     };
   }, [service.pipeline.length]);
 
+  // No top padding on `main`: the header is translucent, so a hero starting
+  // below it left the bar spanning two different backdrops — page background
+  // over its top half, photo over its bottom half — and that seam read as a
+  // grey smear across the header. The hero runs the full viewport instead and
+  // the bar floats over one continuous image.
   return (
-    <main className="w-full min-h-screen text-white flex flex-col pt-16">
+    <main className="w-full min-h-screen text-white flex flex-col">
       <style dangerouslySetInnerHTML={{ __html: `
         .service-hero-btn {
           background-color: #ffffff !important;
@@ -237,10 +242,9 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
       `}} />
 
       {/* 1. HERO HEADER SECTION */}
-      {/* `main` carries pt-16, so subtract it — otherwise a full 100vh hero
-          overflows the first screen by 64px. `svh` rather than `vh` so mobile
-          browser chrome doesn't make it overshoot either. */}
-      <section className="hero-section relative w-full h-[calc(100svh-4rem)] flex items-center justify-center overflow-hidden">
+      {/* Exactly one viewport, and `svh` rather than `vh` so mobile browser
+          chrome doesn't make it overshoot. */}
+      <section className="hero-section relative w-full h-svh flex items-center justify-center overflow-hidden">
         {/* Background Visual */}
         <div className="absolute inset-0 z-0">
           {service.type === "video" ? (
