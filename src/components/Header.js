@@ -210,7 +210,7 @@ function MenuPreviewItem({ service, isActive }) {
         />
       ) : (
         // next/image, not a raw <img>: the gallery stills behind these are up
-        // to 2 MB each and all eleven previews mount together, so the menu
+        // to 2 MB each and all twelve previews mount together, so the menu
         // would otherwise pull ~10 MB for one 460px-wide box.
         <Image
           src={service.image}
@@ -288,6 +288,7 @@ export default function Header({ t, locale, visible }) {
     { id: "09", slug: "graphic-design", title: "GRAPHIC DESIGN" },
     { id: "10", slug: "3d-floorplans", title: "3D FLOORPLANS" },
     { id: "11", slug: "media-website-packages", title: "MEDIA & WEBSITE PACKAGES" },
+    { id: "12", slug: "web-development", title: "WEB DEVELOPMENT" },
   ].map((entry) => {
     const poster = servicePosterFor(entry.slug);
     return {

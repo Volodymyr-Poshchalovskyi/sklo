@@ -26,6 +26,7 @@ export default function WhoWeAre({ locale, t }) {
     { id: 7, slug: "3d-floorplans", title: "3D FLOORPLAN" },
     { id: 8, slug: "product-visualization", title: "PRODUCT VISUALISATION" },
     { id: 9, slug: "virtual-staging", title: "VIRTUAL STAGING" },
+    { id: 10, slug: "web-development", title: "WEB DEVELOPMENT" },
   ].map((slide) => {
     const poster = servicePosterFor(slide.slug);
     return {

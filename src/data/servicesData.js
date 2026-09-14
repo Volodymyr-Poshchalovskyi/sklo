@@ -218,5 +218,25 @@ export const servicesData = [
       { src: "/assets/home/3d tour.jpg", aspect: "aspect-[1/1]" },
       { src: "/assets/home/cinemagraph services.mp4", type: "video", aspect: "aspect-[3/4]" }
     ]
+  },
+  {
+    id: 11,
+    slug: "web-development",
+    title: "WEB DEVELOPMENT",
+    desc: "The site your visuals live on. Project pages, portfolios and landing pages built around the renders, so the work that sells the project is the first thing a visitor meets.",
+    src: "/assets/home/3d tour.jpg",
+    type: "image",
+    pipeline: [
+      { step: "01", title: "Scope & Structure", desc: "We map what the site has to do — sell a development, present a studio, capture enquiries — and lay out the pages and navigation around that goal." },
+      { step: "02", title: "Design & Layout", desc: "We design the pages around your imagery rather than fitting images into a template, so renders, tours and animations get the space they need." },
+      { step: "03", title: "Build & Integration", desc: "We build it to load fast on phones and desktops, wire up contact forms, and hook in the 360° tours, video loops and galleries." },
+      { step: "04", title: "Launch & Handover", desc: "We deploy, connect your domain and analytics, and hand over a site you can update — or keep maintaining it for you." }
+    ],
+    gallery: [
+      { src: "/assets/home/3d tour.jpg", aspect: "aspect-[16/9]" },
+      { src: "/assets/home/3dplan_interior.jpg", aspect: "aspect-[4/3]" },
+      { src: "/assets/heroImage.jpg", aspect: "aspect-[1/1]" },
+      { src: "/assets/home/360 services.mp4", type: "video", aspect: "aspect-[3/4]" }
+    ]
   }
 ];

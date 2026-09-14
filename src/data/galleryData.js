@@ -416,9 +416,10 @@ export function miniGalleryFor(serviceSlug, limit = MINI_GALLERY_LIMIT) {
 // entries use a still extracted from their own first gallery clip instead —
 // those sources are 21 MB and 1.5 MB, far too heavy to autoplay in a menu.
 //
-// APPROXIMATE: `graphic-design` and `media-website-packages` have no shot
-// category in the archive, so they borrow a related still. Swap them once
-// there is real work to point at.
+// APPROXIMATE: `graphic-design`, `media-website-packages` and `web-development`
+// have no shot category in the archive, so they borrow a related still. Swap
+// them once there is real work to point at — `web-development` in particular
+// wants a screenshot of a delivered site, not a render.
 export const SERVICE_POSTER = {
   "exterior-visualization": { src: "/assets/gallery/exterior/001.webp", type: "image" },
   "interior-visualization": { src: "/assets/gallery/interior/001.webp", type: "image" },
@@ -431,6 +432,7 @@ export const SERVICE_POSTER = {
   "graphic-design": { src: "/assets/gallery/product/002.webp", type: "image" },
   "3d-floorplans": { src: "/assets/home/3dplan_interior.jpg", type: "image" },
   "media-website-packages": { src: "/assets/gallery/exterior/002.webp", type: "image" },
+  "web-development": { src: "/assets/gallery/interior/002.webp", type: "image" },
 };
 
 export function servicePosterFor(slug) {

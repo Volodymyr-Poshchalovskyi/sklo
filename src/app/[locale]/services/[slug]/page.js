@@ -22,20 +22,9 @@ export default async function ServiceDetailPage({ params }) {
   );
 }
 
-// Generate static parameters at build time for static site generation
+// Derived from servicesData rather than a hand-kept copy of the slugs: the
+// duplicate list had already fallen out of sync, so a newly added service was
+// rendered on demand but never prerendered.
 export async function generateStaticParams() {
-  const slugs = [
-    "exterior-visualization",
-    "interior-visualization",
-    "animation-mood-film",
-    "bird-eye-visualization",
-    "360-virtual-tour",
-    "cinemagraph-live-shot",
-    "product-visualization",
-    "virtual-staging",
-    "graphic-design",
-    "3d-floorplans",
-    "media-website-packages"
-  ];
-  return slugs.map((slug) => ({ slug }));
+  return servicesData.map((service) => ({ slug: service.slug }));
 }
