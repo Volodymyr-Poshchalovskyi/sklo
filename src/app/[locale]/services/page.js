@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import Link from "next/link";
 import { servicesData } from "@/data/servicesData";
+import { servicePosterFor } from "@/data/galleryData";
 import Title3D from "@/components/Title3D";
 
 function ServiceMedia({ service }) {
@@ -20,10 +21,15 @@ function ServiceMedia({ service }) {
   };
 
   if (service.type === "video") {
+    // `preload="metadata"` fetches no frame, so a video tile stayed an empty
+    // rectangle until the pointer reached it — one card read as broken. The
+    // poster gives every tile something to show at rest.
+    const poster = servicePosterFor(service.slug);
     return (
       <video
         ref={videoRef}
         src={service.src}
+        poster={poster?.type === "image" ? poster.src : undefined}
         loop
         muted
         playsInline
@@ -61,7 +67,7 @@ function ServiceTile({ service, index, locale }) {
           <ServiceMedia service={service} />
         </div>
 
-        <span className="absolute top-3 left-3 md:top-4 md:left-4 font-mono text-[10px] text-white/60 bg-black/40 backdrop-blur-sm rounded-full px-2 py-0.5">
+        <span className="media-chip absolute top-3 left-3 md:top-4 md:left-4 font-mono text-[10px] backdrop-blur-sm rounded-full px-2 py-0.5">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>

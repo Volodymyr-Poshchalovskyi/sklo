@@ -41,7 +41,7 @@ export default async function AboutPage({ params }) {
                 <span className="absolute inset-0 flex items-center justify-center text-white/20 text-xs tracking-widest uppercase">
                   Placeholder
                 </span>
-                <span className="absolute top-3 left-3 md:top-4 md:left-4 font-mono text-[10px] text-white/60 bg-black/40 backdrop-blur-sm rounded-full px-2 py-0.5">
+                <span className="media-chip absolute top-3 left-3 md:top-4 md:left-4 font-mono text-[10px] backdrop-blur-sm rounded-full px-2 py-0.5">
                   {String(index + 1).padStart(2, "0")}
                 </span>
               </div>

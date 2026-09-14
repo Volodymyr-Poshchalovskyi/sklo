@@ -250,17 +250,21 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
               loop
               muted
               playsInline
-              className="w-full h-full object-cover brightness-[0.4]"
+              className="w-full h-full object-cover service-hero-media"
             />
           ) : (
             <img
               src={service.src}
               alt={service.title}
-              className="w-full h-full object-cover brightness-[0.4]"
+              className="w-full h-full object-cover service-hero-media"
             />
           )}
-          {/* Subtle gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
+          {/* The scrim is a fixed dark gradient rather than one built from the
+              `bg` token: in light theme that token is near-white, so the hero
+              got a white veil over the photo and white text fading into it,
+              which is the opposite of the "stays dark and cinematic" intent
+              the light-theme block states. */}
+          <div className="absolute inset-0 service-hero-scrim" />
         </div>
 
         {/* Content Box */}

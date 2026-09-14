@@ -224,9 +224,38 @@ html {
 :root[data-theme="light"] .hero-section .text-white\/40 {
   color: rgba(255, 255, 255, 0.4) !important;
 }
-:root[data-theme="light"] .hero-section a {
+/* Both of these are scoped away from the service hero's CTA. That button
+   paints itself a solid white pill with black text, and the blanket rules
+   outrank it: the first turned the pill into a grey smudge on the photo, the
+   second painted its label white on that white pill. */
+:root[data-theme="light"] .hero-section a:not(.service-hero-btn) {
   border-color: rgba(255, 255, 255, 0.5) !important;
   background-color: rgba(0, 0, 0, 0.3) !important;
+}
+:root[data-theme="light"] .hero-section .service-hero-btn,
+:root[data-theme="light"] .hero-section .service-hero-btn * {
+  color: #000000 !important;
+}
+
+/* Service detail hero. The photo behind it carries white text in both themes,
+   so its scrim is a fixed dark gradient instead of one mixed from `--color-bg`
+   — that token flips to near-white in light theme and washed the whole hero
+   out. Only the exposure of the photo itself is themed: a frame darkened for a
+   dark page reads as a hole when the page around it is light. */
+.service-hero-media {
+  filter: brightness(0.45);
+}
+:root[data-theme="light"] .service-hero-media {
+  filter: brightness(0.62) !important;
+}
+.service-hero-scrim {
+  background-image: linear-gradient(
+    to top,
+    rgba(10, 10, 12, 0.92) 0%,
+    rgba(10, 10, 12, 0.55) 38%,
+    rgba(10, 10, 12, 0.26) 70%,
+    rgba(10, 10, 12, 0.12) 100%
+  );
 }
 :root[data-theme="light"] .hero-section a.black-shimmer {
   background: rgba(255, 255, 255, 0.12) !important;
