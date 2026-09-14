@@ -497,9 +497,15 @@ export default function Header({ t, locale, visible }) {
           borderBottom: servicesMenuOpen
             ? `1px solid ${theme === "light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)"}`
             : "1px solid transparent",
-          height: servicesMenuOpen ? "420px" : "0px",
+          // The panel keeps its height and is revealed by clip-path instead of
+          // being animated open. Animating `height` relayouts the whole menu on
+          // every frame, and at the closed end it left a 1px box that painted
+          // its own background as a hairline under the header. The panel is
+          // absolutely positioned, so a constant height costs no layout.
+          height: "420px",
+          clipPath: servicesMenuOpen ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
           opacity: servicesMenuOpen ? 1 : 0,
-          transition: "height 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, border-color 0.3s ease",
+          transition: "clip-path 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, border-color 0.3s ease",
           pointerEvents: servicesMenuOpen ? "auto" : "none",
         }}
       >
