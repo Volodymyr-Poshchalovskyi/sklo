@@ -421,16 +421,20 @@ export function miniGalleryFor(serviceSlug, limit = MINI_GALLERY_LIMIT) {
 // them once there is real work to point at — `web-development` in particular
 // wants a screenshot of a delivered site, not a render.
 export const SERVICE_POSTER = {
-  "exterior-visualization": { src: "/assets/gallery/exterior/001.webp", type: "image" },
-  "interior-visualization": { src: "/assets/gallery/interior/001.webp", type: "image" },
-  "animation-mood-film": { src: "/assets/posters/animation.webp", type: "image" },
-  "bird-eye-visualization": { src: "/assets/gallery/bird-eye/001.webp", type: "image" },
-  "360-virtual-tour": { src: "/assets/home/360 services.mp4", type: "video" },
-  "cinemagraph-live-shot": { src: "/assets/home/cinemagraph services.mp4", type: "video" },
-  "product-visualization": { src: "/assets/gallery/product/001.webp", type: "image" },
-  "virtual-staging": { src: "/assets/gallery/virtual-staging/001.webp", type: "image" },
-  "graphic-design": { src: "/assets/gallery/product/002.webp", type: "image" },
-  "3d-floorplans": { src: "/assets/home/3dplan_interior.jpg", type: "image" },
+  // Portrait crops shot for these cards: the header preview and the service
+  // tiles are both 4:5, so a wide hero still would have been cropped to a
+  // sliver. `media-website-packages` and `web-development` have no shot of
+  // their own yet and borrow from the gallery.
+  "exterior-visualization": { src: "/assets/services/exterior-visualization-tile.webp", type: "image" },
+  "interior-visualization": { src: "/assets/services/interior-visualization-tile.webp", type: "image" },
+  "animation-mood-film": { src: "/assets/services/animation-mood-film-tile.webp", type: "image" },
+  "bird-eye-visualization": { src: "/assets/services/bird-eye-visualization-tile.webp", type: "image" },
+  "360-virtual-tour": { src: "/assets/services/360-virtual-tour-tile.webp", type: "image" },
+  "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot-tile.webp", type: "image" },
+  "product-visualization": { src: "/assets/services/product-visualization-tile.webp", type: "image" },
+  "virtual-staging": { src: "/assets/services/virtual-staging-tile.webp", type: "image" },
+  "graphic-design": { src: "/assets/services/graphic-design-tile.webp", type: "image" },
+  "3d-floorplans": { src: "/assets/services/3d-floorplans-tile.webp", type: "image" },
   "media-website-packages": { src: "/assets/gallery/exterior/002.webp", type: "image" },
   "web-development": { src: "/assets/gallery/interior/002.webp", type: "image" },
 };

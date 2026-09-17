@@ -1,16 +1,21 @@
+import Image from "next/image";
 import Title3D from "@/components/Title3D";
 
 export default async function AboutPage({ params }) {
   const { locale } = await params;
   const isDe = locale === "de";
 
+  // Order follows the studio's own sheet. Den is on that sheet as a senior
+  // artist but has no portrait in the set yet, so he is left out rather than
+  // shown as a blank card.
   const team = [
-    { id: 1, name: "MEMBER NAME", role: "FOUNDER / ART DIRECTOR" },
-    { id: 2, name: "MEMBER NAME", role: "FOUNDER / ART DIRECTOR" },
-    { id: 3, name: "MEMBER NAME", role: "LEAD ARTIST" },
-    { id: 4, name: "MEMBER NAME", role: "POSITION" },
-    { id: 5, name: "MEMBER NAME", role: "POSITION" },
-    { id: 6, name: "MEMBER NAME", role: "POSITION" },
+    { id: 1, name: "VIKTOR", role: "FOUNDER / ART DIRECTOR", photo: "/assets/team/viktor.webp" },
+    { id: 2, name: "MAX", role: "FOUNDER / ART DIRECTOR", photo: "/assets/team/max.webp" },
+    { id: 3, name: "KHRYSTIA", role: "LEAD ARTIST", photo: "/assets/team/khrystia.webp" },
+    { id: 4, name: "BOGDAN", role: "SENIOR ARTIST", photo: "/assets/team/bogdan.webp" },
+    { id: 5, name: "SASHA", role: "GRAPHIC DESIGNER", photo: "/assets/team/sasha.webp" },
+    { id: 6, name: "JULIA", role: "TALENT MANAGER", photo: "/assets/team/julia.webp" },
+    { id: 7, name: "YANA", role: "FINANCIAL MANAGER", photo: "/assets/team/yana.webp" },
   ];
 
   return (
@@ -37,10 +42,13 @@ export default async function AboutPage({ params }) {
               style={{ animationDelay: `${index * 60}ms` }}
             >
               <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 group-hover:border-white/40 bg-white/[0.02] transition-colors duration-300">
-                <div className="absolute inset-0 bg-white/5 transition-transform duration-500 ease-out group-hover:scale-105" />
-                <span className="absolute inset-0 flex items-center justify-center text-white/20 text-xs tracking-widest uppercase">
-                  Placeholder
-                </span>
+                <Image
+                  src={member.photo}
+                  alt={member.name}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                />
                 <span className="media-chip absolute top-3 left-3 md:top-4 md:left-4 font-mono text-[10px] backdrop-blur-sm rounded-full px-2 py-0.5">
                   {String(index + 1).padStart(2, "0")}
                 </span>

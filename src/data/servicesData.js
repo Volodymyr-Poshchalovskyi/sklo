@@ -4,7 +4,7 @@ export const servicesData = [
     slug: "exterior-visualization",
     title: "EXTERIOR VISUALIZATION",
     desc: "Show your project from the best side with photorealistic exterior renderings. Must-have for successful marketing campaigns and investor attraction.",
-    src: "/assets/heroImage.jpg",
+    src: "/assets/services/exterior-visualization-wide.webp",
     type: "image",
     pipeline: [
       { step: "01", title: "Briefing & Base Modeling", desc: "We study your architectural drawings, BIM models, and reference photos to construct the precise 3D geometry of the building." },
@@ -24,7 +24,7 @@ export const servicesData = [
     slug: "interior-visualization",
     title: "INTERIOR VISUALIZATION",
     desc: "Showcase interiors with atmosphere and detail. Visualizations that help potential clients imagine life inside your project even on the construction stage.",
-    src: "/assets/home/3d tour.jpg",
+    src: "/assets/services/interior-visualization-wide.webp",
     type: "image",
     pipeline: [
       { step: "01", title: "Concept & Blockout", desc: "Understanding the design intent, furniture layout, moodboards, and placing raw placeholder geometries." },
@@ -44,7 +44,7 @@ export const servicesData = [
     slug: "animation-mood-film",
     title: "ANIMATION | MOOD FILM",
     desc: "A cinematic story that captures attention and excitement around your project. Experience the mood, the story, the life of your project through the screen.",
-    src: "/assets/home/faqsection.mp4",
+    src: "/assets/services/animation-mood-film.webm",
     type: "video",
     pipeline: [
       { step: "01", title: "Storyboard & Styleframe", desc: "We write a shot list, layout key frames, outline the sound design direction and video rhythm." },
@@ -64,7 +64,7 @@ export const servicesData = [
     slug: "bird-eye-visualization",
     title: "BIRD-EYE VISUALISATION",
     desc: "Highlight the project’s scale and surroundings. The best way to show context, infrastructure and overall appeal in one rendering.",
-    src: "/assets/heroImage.jpg",
+    src: "/assets/services/bird-eye-visualization-wide.webp",
     type: "image",
     pipeline: [
       { step: "01", title: "GIS & UAV Briefing", desc: "Processing topographic maps, satellite data, or drone photographs to reconstruct the district topography." },
@@ -84,8 +84,8 @@ export const servicesData = [
     slug: "360-virtual-tour",
     title: "360° VIRTUAL TOUR | VR",
     desc: "Let your clients step inside before it’s real. Immersive tours that boosts engagement, trust and turns interest into purchase.",
-    src: "/assets/home/360 services.mp4",
-    type: "video",
+    src: "/assets/services/360-virtual-tour-wide.webp",
+    type: "image",
     pipeline: [
       { step: "01", title: "Hotspot Layout", desc: "Drafting the transition points (nodes) inside the architectural layout to design the walking path." },
       { step: "02", title: "Equirectangular Render", desc: "Rendering complete spherical 360° images (panoramas) for each designated camera node." },
@@ -104,7 +104,7 @@ export const servicesData = [
     slug: "cinemagraph-live-shot",
     title: "CINEMAGRAPH | LIVE SHOT",
     desc: "Add life to static images for eye-catching WOW-effect. Subtle animations that grab attention instantly.",
-    src: "/assets/home/cinemagraph services.mp4",
+    src: "/assets/services/cinemagraph-live-shot.webm",
     type: "video",
     pipeline: [
       { step: "01", title: "Base Rendering", desc: "Generating a high-resolution base render image of the exterior or interior space." },
@@ -124,7 +124,7 @@ export const servicesData = [
     slug: "product-visualization",
     title: "PRODUCT VISUALISATION",
     desc: "High-end visuals for furniture, household appliances, materials or any living and architecture-related things. Perfect for catalogs, marketing and presentations.",
-    src: "/assets/home/3d tour.jpg",
+    src: "/assets/services/product-visualization-wide.webp",
     type: "image",
     pipeline: [
       { step: "01", title: "CAD Import & Clean", desc: "Importing manufacturing CAD/STEP files and rebuilding clean subdivision surfaces for texturing." },
@@ -144,7 +144,7 @@ export const servicesData = [
     slug: "virtual-staging",
     title: "VIRTUAL STAGING",
     desc: "Turn empty spaces into dream homes. Cost-effective, realistic staging that boosts sales potential. Perfect for sales without physical staging costs.",
-    src: "/assets/home/3d tour.jpg",
+    src: "/assets/services/virtual-staging-wide.webp",
     type: "image",
     pipeline: [
       { step: "01", title: "Photo Match", desc: "Aligning virtual camera perspective and lens settings with the photograph of the empty room." },
@@ -164,7 +164,7 @@ export const servicesData = [
     slug: "graphic-design",
     title: "GRAPHIC DESIGN",
     desc: "From billboards, construction fences, brochures to logo, schemes and more — everything you need to strengthen brand identity, impress and attract clients.",
-    src: "/assets/home/3dplan_interior.jpg",
+    src: "/assets/services/graphic-design-wide.webp",
     type: "image",
     pipeline: [
       { step: "01", title: "Brand Audit & Brief", desc: "Analyzing your target audience, existing guidelines, size constraints, and design goals." },
@@ -184,7 +184,7 @@ export const servicesData = [
     slug: "3d-floorplans",
     title: "3D FLOORPLANS",
     desc: "Make layouts easy to understand. A clear visual tool that speeds up decision-making for buyers.",
-    src: "/assets/home/3dplan_interior.jpg",
+    src: "/assets/services/3d-floorplans-wide.webp",
     type: "image",
     pipeline: [
       { step: "01", title: "CAD Import", desc: "Importing 2D AutoCAD floorplan blueprints and extruding interior/exterior wall geometries." },
