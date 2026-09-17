@@ -439,6 +439,27 @@ export const SERVICE_POSTER = {
   "web-development": { src: "/assets/gallery/interior/002.webp", type: "image" },
 };
 
+// The 21:9 crop, used only by the header's services curtain. Everywhere else a
+// service is shown as a 4:5 card, which is what SERVICE_POSTER above holds.
+export const SERVICE_WIDE = {
+  "exterior-visualization": { src: "/assets/services/exterior-visualization-wide.webp", type: "image" },
+  "interior-visualization": { src: "/assets/services/interior-visualization-wide.webp", type: "image" },
+  "animation-mood-film": { src: "/assets/services/animation-mood-film.webm", type: "video" },
+  "bird-eye-visualization": { src: "/assets/services/bird-eye-visualization-wide.webp", type: "image" },
+  "360-virtual-tour": { src: "/assets/services/360-virtual-tour-wide.webp", type: "image" },
+  "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot.webm", type: "video" },
+  "product-visualization": { src: "/assets/services/product-visualization-wide.webp", type: "image" },
+  "virtual-staging": { src: "/assets/services/virtual-staging-wide.webp", type: "image" },
+  "graphic-design": { src: "/assets/services/graphic-design-wide.webp", type: "image" },
+  "3d-floorplans": { src: "/assets/services/3d-floorplans-wide.webp", type: "image" },
+  "media-website-packages": { src: "/assets/gallery/exterior/002.webp", type: "image" },
+  "web-development": { src: "/assets/gallery/interior/002.webp", type: "image" },
+};
+
+export function serviceWideFor(slug) {
+  return SERVICE_WIDE[slug] || null;
+}
+
 export function servicePosterFor(slug) {
   return SERVICE_POSTER[slug] || null;
 }

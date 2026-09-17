@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { servicePosterFor } from "@/data/galleryData";
+import { serviceWideFor } from "@/data/galleryData";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
@@ -216,7 +216,7 @@ function MenuPreviewItem({ service, isActive }) {
           src={service.image}
           alt={service.title}
           fill
-          sizes="(max-width: 1024px) 40vw, 460px"
+          sizes="(max-width: 1024px) 50vw, 660px"
           className="object-cover"
         />
       )}
@@ -290,7 +290,7 @@ export default function Header({ t, locale, visible }) {
     { id: "11", slug: "media-website-packages", title: "MEDIA & WEBSITE PACKAGES" },
     { id: "12", slug: "web-development", title: "WEB DEVELOPMENT" },
   ].map((entry) => {
-    const poster = servicePosterFor(entry.slug);
+    const poster = serviceWideFor(entry.slug);
     return {
       ...entry,
       href: `/${locale}/services/${entry.slug}`,
@@ -511,7 +511,7 @@ export default function Header({ t, locale, visible }) {
       >
         <div className="w-full px-6 md:px-16 lg:px-24 h-full flex items-center justify-between gap-12 py-8">
           {/* Left Column: Image/Video Preview */}
-          <div className="w-[36%] h-[320px] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-2xl shrink-0">
+          <div className="w-[46%] aspect-[21/9] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-2xl shrink-0">
             {servicesList.map((service, idx) => (
               <MenuPreviewItem
                 key={service.id}
