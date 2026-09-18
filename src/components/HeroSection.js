@@ -185,7 +185,7 @@ export default function HeroSection({ t, locale }) {
           <div ref={btnsRef} style={hidden} className="flex flex-wrap gap-4">
             <Link
               href={`/${locale}/services`}
-              className="black-shimmer group inline-flex items-center gap-2 font-semibold text-base px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03]"
+              className="black-shimmer hero-cta-primary group inline-flex items-center gap-2 font-semibold text-base px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03]"
               style={{ background: "rgba(255, 255, 255, 0.12)", color: "#ffffff", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
               onMouseEnter={e => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.22)")}
               onMouseLeave={e => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.12)")}
@@ -201,7 +201,7 @@ export default function HeroSection({ t, locale }) {
 
             <Link
               href={`/${locale}/contact`}
-              className="group inline-flex items-center gap-2 border border-white/50 bg-black/30 text-white font-medium text-base px-8 py-4 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-black/50 hover:border-white/80 hover:scale-[1.03]"
+              className="hero-cta-secondary group inline-flex items-center gap-2 border border-white/50 bg-black/30 text-white font-medium text-base px-8 py-4 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-black/50 hover:border-white/80 hover:scale-[1.03]"
             >
               {t.hero.contact}
               <svg
