@@ -1,17 +1,9 @@
 "use client";
-import { useRef, useContext } from "react";
 import ServicesCarousel from "@/components/ServicesCarousel";
 import { servicePosterFor } from "@/data/galleryData";
-import { LoaderContext } from "@/context/LoaderContext";
-import useRevealOnSettle from "@/hooks/useRevealOnSettle";
+import Title3D from "@/components/Title3D";
 
 export default function WhoWeAre({ locale, t }) {
-  const servicesSectionRef = useRef(null);
-  const whoSectionRef = useRef(null);
-
-  const ready = useContext(LoaderContext);
-  const servicesInView = useRevealOnSettle(servicesSectionRef, ready);
-  const whoInView = useRevealOnSettle(whoSectionRef, ready);
 
   // Media is resolved from the shared poster map (see galleryData.js) rather
   // than hardcoded, so these cards show the same real work as the header menu
@@ -123,17 +115,14 @@ export default function WhoWeAre({ locale, t }) {
   return (
     <>
       <section
-        ref={servicesSectionRef}
         className="section-shell hairline-top w-full text-white py-24 md:py-32 px-6 md:px-16 lg:px-28 xl:px-40 flex flex-col"
       >
         <div className="w-full flex flex-col gap-10 md:gap-12">
           <div className="flex flex-col gap-4 pt-4 md:pt-6">
             <span className="eyebrow">What we do</span>
-            <h2
-              className={`title-3d ${servicesInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase`}
-            >
+            <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
               OUR SERVICES
-            </h2>
+            </Title3D>
           </div>
 
           <ServicesCarousel
@@ -146,7 +135,6 @@ export default function WhoWeAre({ locale, t }) {
       </section>
 
       <section
-        ref={whoSectionRef}
         className="section-shell section-band hairline-top w-full text-white py-24 md:py-32 px-6 md:px-16 lg:px-28 xl:px-40 flex flex-col"
       >
         <div className="w-full flex flex-col gap-12 md:gap-16">
@@ -154,11 +142,9 @@ export default function WhoWeAre({ locale, t }) {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             <div className="flex flex-col gap-4">
               <span className="eyebrow">The studio</span>
-              <h2
-                className={`title-3d ${whoInView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase`}
-              >
+              <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
                 OUR VALUES
-              </h2>
+              </Title3D>
             </div>
 
             <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg text-white/80 leading-relaxed lg:pt-3">

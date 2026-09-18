@@ -1,16 +1,12 @@
 "use client";
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { LoaderContext } from "@/context/LoaderContext";
-import useRevealOnSettle from "@/hooks/useRevealOnSettle";
+import Title3D from "@/components/Title3D";
 
 export default function FAQ({ locale = "en" }) {
   const [openIndex, setOpenIndex] = useState(0);
   const [videoLoaded, setVideoLoaded] = useState(false);
-  const sectionRef = useRef(null);
   const videoRef = useRef(null);
-  const ready = useContext(LoaderContext);
-  const inView = useRevealOnSettle(sectionRef, ready);
 
   useEffect(() => {
     const videoEl = videoRef.current;
@@ -166,7 +162,6 @@ export default function FAQ({ locale = "en" }) {
 
   return (
     <section 
-      ref={sectionRef}
       className="faq-section section-shell hairline-top relative w-full py-24 md:py-32 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden text-white flex flex-col justify-center"
     >
       {/* Background Video */}
@@ -193,11 +188,9 @@ export default function FAQ({ locale = "en" }) {
             direct route out for anyone whose question isn't listed. */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-32">
           <span className="eyebrow">Good to know</span>
-          <h2
-            className={`title-3d ${inView ? "animate-pop-3d" : ""} text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase`}
-          >
+          <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
             FAQS
-          </h2>
+          </Title3D>
           <p className="text-base sm:text-lg text-white/60 leading-relaxed max-w-md">
             The questions we get asked most — about materials, timelines,
             pricing and how a project actually runs from kickoff to final

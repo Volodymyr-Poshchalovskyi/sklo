@@ -575,6 +575,29 @@ html {
   animation: pop3D 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Once the reveal has played, the heading drops the animation and rebuilds the
+   identical shadow out of two multipliers, which the component then drives
+   from the pointer. At --tx/--ty of 1 this renders exactly the same as the
+   animation's final frame, so the handover is invisible; moving the pointer
+   swings the extrusion around the letters as if the light had moved.
+   `animation: none` is required — an animation's declarations outrank a normal
+   rule, so the settled shadow would otherwise never show. */
+.title-3d.is-settled {
+  animation: none;
+  text-shadow:
+    calc(var(--tx, 1) * 1px) calc(var(--ty, 1) * 1px) 0px var(--color-title-3d-shadow),
+    calc(var(--tx, 1) * 2px) calc(var(--ty, 1) * 2px) 0px var(--color-title-3d-shadow),
+    calc(var(--tx, 1) * 3px) calc(var(--ty, 1) * 3px) 0px var(--color-title-3d-shadow),
+    calc(var(--tx, 1) * 4px) calc(var(--ty, 1) * 4px) 0px var(--color-title-3d-shadow),
+    calc(var(--tx, 1) * 6px) calc(var(--ty, 1) * 6px) 14px var(--color-title-3d-glow);
+  transition: text-shadow 0.18s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .title-3d.is-settled {
+    transition: none;
+  }
+}
+
 /* The heading never moves: the animation is purely the shadow extruding out
    from nothing, so the title always sits exactly on its layout box. Earlier
    versions translated it, and every one of them showed: finishing at
