@@ -61,10 +61,13 @@ body {
 }
 
 html {
-  /* Real measured height of the collapsed (scrolled) fixed header. Used as
-     both the anchor-scroll offset below and the sticky-card top offset on
-     the services listing page (see services/page.js). */
-  --header-h: 84px;
+  /* Clearance under the capsule: its measured bottom edge is 84px (14px of
+     top air + a 70px bar) and this adds a little breathing room. The capsule
+     is one fixed height, so this is exact rather than a compromise between two
+     states. Used as both the anchor-scroll offset below and the sticky-card
+     top offset on the services listing page (see services/page.js). Keep it in
+     step with the padding in Header.js. */
+  --header-h: 90px;
   scroll-padding-top: var(--header-h);
   /* NOTE: no `scroll-behavior: smooth` here — the whole site scrolls through
      Lenis (see ClientWrapper.js) instead, and native smooth-scroll fights an
@@ -200,18 +203,18 @@ html {
 :root[data-theme="light"] .bg-\[\#0a0a0c\]\/98 {
   background-color: rgba(255, 255, 255, 0.98) !important;
 }
-:root[data-theme="light"] header a,
+/* The capsule's own controls set their colours inline from the `theme` prop,
+   and an `!important` blanket beats an inline style — `.header-cta` is the
+   filled button, whose label has to stay the colour of the fill it sits on. */
+:root[data-theme="light"] header a:not(.header-cta),
 :root[data-theme="light"] header button,
-:root[data-theme="light"] header span {
+:root[data-theme="light"] header span:not(.header-cta) {
   color: #121214 !important;
 }
 :root[data-theme="light"] header .text-white\/60,
 :root[data-theme="light"] header .text-white\/50,
 :root[data-theme="light"] header .text-white\/40 {
   color: #71717a !important;
-}
-:root[data-theme="light"] header .w-px.bg-white\/20 {
-  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 /* Services preview thumbnail keeps a dark overlay regardless of theme */
 :root[data-theme="light"] header .service-preview-title {

@@ -307,14 +307,20 @@ export default function Header({ t, locale, visible }) {
     { key: "about",    label: t?.nav?.about    ?? "About",    href: `/${locale}/about`    },
   ];
 
+  // Two thresholds rather than one: the bar compacts at 40px and only expands
+  // again below 12px. A single 20px line is crossed back and forth constantly
+  // on a phone — inertial scrolling and the rubber-band at the top of the page
+  // both oscillate around it — and each crossing re-ran the padding
+  // transition, so the header pulsed between its two heights while the page
+  // was barely moving.
   useEffect(() => {
     const onSkloScroll = (e) => {
-      const isScrolled = e.detail.scrollY > 20;
-      setScrolled((prev) => (prev !== isScrolled ? isScrolled : prev));
+      const y = e.detail.scrollY;
+      setScrolled((prev) => (prev ? y > 12 : y > 40));
     };
     window.addEventListener("sklo-scroll", onSkloScroll);
     // Initial check
-    setScrolled(window.scrollY > 20);
+    setScrolled(window.scrollY > 40);
     return () => {
       window.removeEventListener("sklo-scroll", onSkloScroll);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -343,61 +349,77 @@ export default function Header({ t, locale, visible }) {
     return pathname.startsWith(href);
   };
 
+  // The bar is a floating capsule rather than a full-bleed strip: over a hero
+  // photograph a full-width bar has to fake its own legibility (the old
+  // version washed a gradient over the top of every hero, which read as a
+  // smear on dark footage), while a capsule has real edges, so the photograph
+  // simply continues around it. `skin` is resolved in JS rather than through
+  // another round of `:root[data-theme="light"]` overrides — see CLAUDE.md.
+  const skin = (theme === "light"
+    ? {
+        rest:   { bg: "rgba(255,255,255,0.66)", border: "rgba(18,18,20,0.10)", shadow: "0 10px 30px rgba(22,24,32,0.10)" },
+        active: { bg: "rgba(255,255,255,0.88)", border: "rgba(18,18,20,0.12)", shadow: "0 16px 40px rgba(22,24,32,0.14)" },
+        panel:  "rgba(255,255,255,0.94)",
+      }
+    : {
+        rest:   { bg: "rgba(12,13,17,0.42)", border: "rgba(255,255,255,0.10)", shadow: "0 10px 30px rgba(0,0,0,0.30)" },
+        active: { bg: "rgba(12,13,17,0.74)", border: "rgba(255,255,255,0.14)", shadow: "0 16px 40px rgba(0,0,0,0.45)" },
+        panel:  "rgba(10,10,12,0.94)",
+      });
+  const solid = scrolled || servicesMenuOpen;
+  const surface = solid ? skin.active : skin.rest;
+  const blur = `blur(${solid ? 24 : 18}px) saturate(160%)`;
+  const barColor = theme === "light" ? "#15161a" : "#eceae6";
+
   return (
     <header
       className="fixed top-0 left-0 right-0 z-50"
       style={{
-        padding: scrolled ? "1.05rem 0" : "1.65rem 0",
-        borderBottom: (scrolled && !servicesMenuOpen)
-          ? `1px solid ${theme === "light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)"}`
-          : "1px solid transparent",
-        // Tuned to the section ramp: the solid state is a shade deeper than the
-        // page base so the bar reads as sitting above the content, and the
-        // resting state is translucent rather than a different colour — the two
-        // used to be far enough apart that crossing 20px looked like a flash.
-        //
-        // At rest the translucent fill is a gradient that fades out at the
-        // bottom rather than a flat wash. A flat one sits over a hero photo as
-        // a dimmed rectangle with a hard edge where it ends — on the service
-        // pages that edge was the most visible thing on the screen.
-        // Longhand throughout: React warns and the animation breaks when the
-        // `background` shorthand and its longhand parts share one style object
-        // across re-renders (see the note in CLAUDE.md).
-        backgroundColor: (scrolled || servicesMenuOpen)
-          ? (theme === "light" ? "rgba(255,255,255,0.92)" : "rgba(8,9,12,0.92)")
-          : "transparent",
-        backgroundImage: (scrolled || servicesMenuOpen)
-          ? "none"
-          : (theme === "light"
-              ? "linear-gradient(to bottom, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.55) 55%, rgba(255,255,255,0) 100%)"
-              : "linear-gradient(to bottom, rgba(8,9,12,0.75) 0%, rgba(8,9,12,0.38) 55%, rgba(8,9,12,0) 100%)"),
-        // The gradient has to span the border box. By default a background is
-        // positioned against the padding box and repeats, so the 1px
-        // transparent bottom border was painted with the gradient's opaque
-        // first row — a bright hairline across the top of the hero.
-        backgroundOrigin: "border-box",
-        backgroundRepeat: "no-repeat",
-        // The blur has a hard boundary of its own, so it only joins the solid
-        // state. The gradient carries legibility on its own while resting.
-        backdropFilter: (scrolled || servicesMenuOpen) ? "blur(24px) saturate(180%)" : "none",
-        WebkitBackdropFilter: (scrolled || servicesMenuOpen) ? "blur(24px) saturate(180%)" : "none",
+        // One height, always. The capsule answers scroll by getting denser —
+        // more opaque, more blur, a stronger shadow — not by resizing, so
+        // nothing under it ever has to reflow.
+        padding: "14px 20px",
+        // Only the capsule itself takes pointer events; the air around it
+        // belongs to the page, so a hero button under the gap stays clickable.
+        pointerEvents: "none",
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(-12px)",
-        transition:
-          "opacity 0.7s ease, transform 0.7s ease, padding 0.35s cubic-bezier(0.16,1,0.3,1), background-color 0.45s ease, border-color 0.45s ease",
+        transition: "opacity 0.7s ease, transform 0.7s ease",
       }}
     >
-      <div className="w-full px-6 md:px-16 lg:px-24 flex items-center justify-between">
-        <Link href={`/${locale}`} className="group flex items-center gap-3">
-          <div className="relative w-12 h-12 overflow-hidden rounded-md transition-all duration-300 group-hover:scale-110 group-hover:rounded-lg">
-            <Image 
-              src="/LogoHeader.svg" 
-              alt="SKLO Logo" 
-              fill 
-              className="object-cover logo-image" 
-              priority 
+      <div
+        className="relative mx-auto w-full max-w-[1280px]"
+        style={{ pointerEvents: "auto" }}
+      >
+      <div
+        className="flex items-center justify-between rounded-[20px]"
+        style={{
+          padding: "10px 12px 10px 18px",
+          backgroundColor: surface.bg,
+          border: `1px solid ${surface.border}`,
+          boxShadow: surface.shadow,
+          backdropFilter: blur,
+          WebkitBackdropFilter: blur,
+          transition:
+            "background-color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease",
+        }}
+      >
+        <Link href={`/${locale}`} className="group flex items-center gap-2.5">
+          <div className="relative w-9 h-9 shrink-0 overflow-hidden rounded-md transition-transform duration-300 group-hover:scale-105">
+            <Image
+              src="/LogoHeader.svg"
+              alt="SKLO Logo"
+              fill
+              className="object-contain logo-image"
+              priority
             />
           </div>
+          <span
+            className="text-[15px] font-bold uppercase tracking-[0.22em] leading-none"
+            style={{ color: theme === "light" ? "#15161a" : "#eceae6" }}
+          >
+            SKLO
+          </span>
         </Link>
 
         <div className="hidden md:flex items-center gap-2.5">
@@ -423,14 +445,22 @@ export default function Header({ t, locale, visible }) {
             );
           })}
 
-          <div className="w-px h-5 bg-white/20 mx-4" />
+          {/* A vertical rule used to sit here. Inside a capsule the edge already
+              separates the navigation from the controls, so it was one mark
+              doing nothing. */}
+          <div className="w-3" />
 
           <LangDropdown locale={locale} theme={theme} />
-          
+
           {/* Theme Switcher Button */}
-          <button 
+          <button
             onClick={toggleTheme}
-            className="w-10 h-10 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all duration-300 ml-4 cursor-pointer"
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 ml-2 cursor-pointer"
+            style={{
+              border: `1px solid ${surface.border}`,
+              color: theme === "light" ? "#15161a" : "#eceae6",
+              backgroundColor: theme === "light" ? "rgba(18,18,20,0.03)" : "rgba(255,255,255,0.05)",
+            }}
             aria-label="Toggle theme"
           >
             {theme === "dark" ? (
@@ -445,21 +475,35 @@ export default function Header({ t, locale, visible }) {
             )}
           </button>
           
+          {/* Always here. It used to fade and slide in past 20px of scroll,
+              which meant the control cluster changed width mid-scroll and
+              pushed the navigation sideways — and the collapsed state had to
+              zero out its own width and padding to avoid leaving a hole, so
+              the button arrived in two stages. A primary action that is only
+              offered after you scroll is also the wrong trade. */}
           <Link
             href={`/${locale}/contact`}
-            className={`ml-4 text-base font-semibold px-7 py-3 rounded-full bg-white text-black transition-all duration-500 hover:bg-white/80 ${
-              scrolled ? "opacity-100 translate-x-0" : "opacity-0 translate-x-4 pointer-events-none"
-            }`}
+            className="header-cta ml-2.5 text-sm font-semibold px-5 py-2.5 rounded-full transition-opacity duration-300 hover:opacity-85"
+            style={{
+              backgroundColor: theme === "light" ? "#15161a" : "#eceae6",
+              color: theme === "light" ? "#f6f5f2" : "#0b0c10",
+              whiteSpace: "nowrap",
+            }}
           >
             Contact us
           </Link>
         </div>
 
-        <div className="md:hidden flex items-center gap-3">
+        <div className="md:hidden flex items-center gap-2">
           {/* Mobile Theme Switcher */}
-          <button 
+          <button
             onClick={toggleTheme}
-            className="w-10 h-10 rounded-full border border-white/10 hover:border-white/30 bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all duration-300 cursor-pointer"
+            className="w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer"
+            style={{
+              border: `1px solid ${surface.border}`,
+              color: theme === "light" ? "#15161a" : "#eceae6",
+              backgroundColor: theme === "light" ? "rgba(18,18,20,0.03)" : "rgba(255,255,255,0.05)",
+            }}
             aria-label="Toggle theme"
           >
             {theme === "dark" ? (
@@ -479,9 +523,9 @@ export default function Header({ t, locale, visible }) {
             className="flex flex-col gap-2 p-2"
             aria-label="Toggle menu"
           >
-            <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block w-6 h-px bg-white transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span className={`block w-6 h-px transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} style={{ backgroundColor: barColor }} />
+            <span className={`block w-6 h-px transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} style={{ backgroundColor: barColor }} />
+            <span className={`block w-6 h-px transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-2" : ""}`} style={{ backgroundColor: barColor }} />
           </button>
         </div>
       </div>
@@ -490,13 +534,16 @@ export default function Header({ t, locale, visible }) {
       <div
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="hidden md:block absolute left-0 right-0 overflow-hidden"
+        className="hidden md:block absolute left-0 right-0 overflow-hidden rounded-[20px]"
         style={{
-          top: "100%",
-          background: theme === "light" ? "#ffffff" : "#0a0a0c",
-          borderBottom: servicesMenuOpen
-            ? `1px solid ${theme === "light" ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)"}`
-            : "1px solid transparent",
+          // Hangs 10px under the capsule instead of growing out of a bar that
+          // spans the window, so the menu reads as the same object opening.
+          top: "calc(100% + 10px)",
+          background: skin.panel,
+          backdropFilter: blur,
+          WebkitBackdropFilter: blur,
+          border: `1px solid ${servicesMenuOpen ? surface.border : "transparent"}`,
+          boxShadow: servicesMenuOpen ? surface.shadow : "none",
           // The panel keeps its height and is revealed by clip-path instead of
           // being animated open. Animating `height` relayouts the whole menu on
           // every frame, and at the closed end it left a 1px box that painted
@@ -505,11 +552,11 @@ export default function Header({ t, locale, visible }) {
           height: "420px",
           clipPath: servicesMenuOpen ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
           opacity: servicesMenuOpen ? 1 : 0,
-          transition: "clip-path 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, border-color 0.3s ease",
+          transition: "clip-path 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
           pointerEvents: servicesMenuOpen ? "auto" : "none",
         }}
       >
-        <div className="w-full px-6 md:px-16 lg:px-24 h-full flex items-center justify-between gap-12 py-8">
+        <div className="w-full px-8 lg:px-10 h-full flex items-center justify-between gap-10 py-8">
           {/* Left Column: Image/Video Preview */}
           <div className="w-[46%] aspect-[21/9] relative rounded-lg overflow-hidden bg-white/5 border border-white/10 shadow-2xl shrink-0">
             {servicesList.map((service, idx) => (
@@ -522,7 +569,12 @@ export default function Header({ t, locale, visible }) {
           </div>
 
           {/* Vertical Divider */}
-          <div className="w-[1px] h-[280px] bg-gradient-to-b from-transparent via-white/10 to-transparent shrink-0" />
+          <div
+            className="w-[1px] h-[280px] shrink-0"
+            style={{
+              backgroundImage: `linear-gradient(to bottom, transparent, ${surface.border}, transparent)`,
+            }}
+          />
 
           {/* Right Column: Numbered list of services */}
           <div className="w-[56%] grid grid-cols-2 gap-x-6 gap-y-2.5">
@@ -609,11 +661,19 @@ export default function Header({ t, locale, visible }) {
       </div>
 
       <div
-        className={`md:hidden transition-all duration-300 overflow-hidden ${
-          menuOpen ? "max-h-[28rem] border-t border-white/10" : "max-h-0"
+        className={`md:hidden absolute left-0 right-0 overflow-hidden rounded-[20px] transition-all duration-300 ${
+          menuOpen ? "max-h-[28rem]" : "max-h-0"
         }`}
+        style={{
+          top: "calc(100% + 10px)",
+          background: skin.panel,
+          backdropFilter: blur,
+          WebkitBackdropFilter: blur,
+          border: `1px solid ${menuOpen ? surface.border : "transparent"}`,
+          boxShadow: menuOpen ? surface.shadow : "none",
+        }}
       >
-        <div className="px-6 py-5 flex flex-col gap-4 bg-black/80 backdrop-blur-xl">
+        <div className="px-6 py-5 flex flex-col gap-4">
           {navItems.map(({ key, label, href }) => (
             <Link
               key={key}
@@ -621,24 +681,31 @@ export default function Header({ t, locale, visible }) {
               onClick={() => setMenuOpen(false)}
               className="text-base py-1.5 transition-colors"
               style={{
-                color: checkIsActive(href) ? "#ffffff" : "rgba(255,255,255,0.7)",
+                color: checkIsActive(href)
+                  ? barColor
+                  : (theme === "light" ? "rgba(18,18,20,0.62)" : "rgba(236,234,230,0.7)"),
                 fontWeight: checkIsActive(href) ? "600" : "400",
               }}
             >
               {label}
             </Link>
           ))}
-          <div className="pt-3 border-t border-white/10 flex flex-col gap-5">
+          <div className="pt-3 flex flex-col gap-5" style={{ borderTop: `1px solid ${surface.border}` }}>
             <LangDropdown locale={locale} theme={theme} />
             <Link
               href={`/${locale}/contact`}
               onClick={() => setMenuOpen(false)}
-              className="text-center text-base font-semibold px-5 py-3 rounded-full bg-white text-black"
+              className="header-cta text-center text-base font-semibold px-5 py-3 rounded-full"
+              style={{
+                backgroundColor: theme === "light" ? "#15161a" : "#eceae6",
+                color: theme === "light" ? "#f6f5f2" : "#0b0c10",
+              }}
             >
               Contact us
             </Link>
           </div>
         </div>
+      </div>
       </div>
     </header>
   );
