@@ -422,7 +422,11 @@ export default function Header({ t, locale, visible }) {
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-2.5">
+        {/* The full navigation waits for `lg`. At the md breakpoint the links,
+            the language pill, the theme toggle and the button together are
+            wider than a 768px capsule, so the cluster pushed ~36px past the
+            viewport and the whole page scrolled sideways. */}
+        <div className="hidden lg:flex items-center gap-2.5">
           {navItems.map(({ key, label, href }) => {
             const isServices = key === "services";
             const isActive = checkIsActive(href) || (isServices && servicesMenuOpen);
@@ -494,7 +498,7 @@ export default function Header({ t, locale, visible }) {
           </Link>
         </div>
 
-        <div className="md:hidden flex items-center gap-2">
+        <div className="lg:hidden flex items-center gap-2">
           {/* Mobile Theme Switcher */}
           <button
             onClick={toggleTheme}
@@ -534,7 +538,7 @@ export default function Header({ t, locale, visible }) {
       <div
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="hidden md:block absolute left-0 right-0 overflow-hidden rounded-[20px]"
+        className="hidden lg:block absolute left-0 right-0 overflow-hidden rounded-[20px]"
         style={{
           // Hangs 10px under the capsule instead of growing out of a bar that
           // spans the window, so the menu reads as the same object opening.
@@ -661,7 +665,7 @@ export default function Header({ t, locale, visible }) {
       </div>
 
       <div
-        className={`md:hidden absolute left-0 right-0 overflow-hidden rounded-[20px] transition-all duration-300 ${
+        className={`lg:hidden absolute left-0 right-0 overflow-hidden rounded-[20px] transition-all duration-300 ${
           menuOpen ? "max-h-[28rem]" : "max-h-0"
         }`}
         style={{

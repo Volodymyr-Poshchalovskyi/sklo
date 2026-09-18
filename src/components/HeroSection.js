@@ -173,7 +173,10 @@ export default function HeroSection({ t, locale }) {
             style={hidden}
             className="font-bold leading-[1.05] tracking-tight text-white mb-10"
           >
-            <span className="block text-4xl sm:text-6xl md:text-7xl xl:text-8xl sm:whitespace-nowrap">
+            {/* `whitespace-nowrap` waits for `lg`: at the md size the headline
+                is 72px, which is 804px of unbreakable text in a 768px window —
+                the whole page scrolled sideways on a tablet. */}
+            <span className="block text-4xl sm:text-6xl md:text-7xl xl:text-8xl lg:whitespace-nowrap">
               Visualization <span className="text-white/90 font-bold">services</span>
             </span>
             <span className="flex items-center gap-2 text-lg sm:text-xl md:text-2xl font-medium text-white/40 tracking-[0.2em] uppercase mt-5">
