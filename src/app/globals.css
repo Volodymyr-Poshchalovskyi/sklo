@@ -520,25 +520,37 @@ html {
   color: var(--color-title-3d-text) !important;
   display: inline-block;
   cursor: default;
-  will-change: transform, text-shadow;
+  will-change: text-shadow;
 }
 
 .title-3d.animate-pop-3d {
   animation: pop3D 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* The heading settles at translate(0,0) so it ends exactly on its layout box —
-   the old keyframes finished at translate(-5px,-5px), leaving every 3D title
-   permanently nudged up-left of the column it belongs to. Shadow layers were
-   also trimmed 7 → 5: each one is a non-compositable repaint of a display-size
+/* The heading never moves: the animation is purely the shadow extruding out
+   from nothing, so the title always sits exactly on its layout box. Earlier
+   versions translated it, and every one of them showed: finishing at
+   translate(-5px,-5px) left each title permanently nudged up-left of its
+   column, and starting at translate(5px,5px) jerked it 5px down-right on the
+   frame the reveal class landed, since the resting heading has no transform.
+
+   For the same reason the 0% shadow is five zero-offset layers rather than the
+   shorter `0 0 0 transparent`: zero-offset, zero-blur shadows sit behind the
+   glyphs and are invisible, so 0% renders identically to the un-animated
+   heading, and a layer-for-layer match lets the browser interpolate the
+   extrusion instead of cross-fading two different lists. Layer count is 5, not
+   the original 7 — each one is a non-compositable repaint of a display-size
    heading on every frame. */
 @keyframes pop3D {
   0% {
-    transform: translate(5px, 5px);
-    text-shadow: 0 0 0 transparent;
+    text-shadow:
+      0 0 0 var(--color-title-3d-shadow),
+      0 0 0 var(--color-title-3d-shadow),
+      0 0 0 var(--color-title-3d-shadow),
+      0 0 0 var(--color-title-3d-shadow),
+      0 0 0 var(--color-title-3d-glow);
   }
   100% {
-    transform: translate(0, 0);
     text-shadow:
       1px 1px 0px var(--color-title-3d-shadow),
       2px 2px 0px var(--color-title-3d-shadow),
