@@ -8,28 +8,35 @@ import Title3D from "@/components/Title3D";
 function ServiceMedia({ service }) {
   const videoRef = useRef(null);
 
+  // These tiles are 4:5, so they take the portrait crop from the poster map,
+  // not `service.src` — that one is the 21:9 frame shot for the header curtain
+  // and the service's own page, and squeezing it in here cropped it to a
+  // sliver of itself.
+  const card = servicePosterFor(service.slug);
+  const cardSrc = card?.src ?? service.src;
+  const cardIsVideo = card ? card.type === "video" : service.type === "video";
+
   const handleMouseEnter = () => {
-    if (service.type === "video" && videoRef.current) {
+    if (cardIsVideo && videoRef.current) {
       videoRef.current.play().catch(() => {});
     }
   };
 
   const handleMouseLeave = () => {
-    if (service.type === "video" && videoRef.current) {
+    if (cardIsVideo && videoRef.current) {
       videoRef.current.pause();
     }
   };
 
-  if (service.type === "video") {
+  if (cardIsVideo) {
     // `preload="metadata"` fetches no frame, so a video tile stayed an empty
     // rectangle until the pointer reached it — one card read as broken. The
     // poster gives every tile something to show at rest.
-    const poster = servicePosterFor(service.slug);
     return (
       <video
         ref={videoRef}
-        src={service.src}
-        poster={poster?.type === "image" ? poster.src : undefined}
+        src={cardSrc}
+        poster={card?.type === "image" ? card.src : undefined}
         loop
         muted
         playsInline
@@ -43,7 +50,7 @@ function ServiceMedia({ service }) {
 
   return (
     <img
-      src={service.src}
+      src={cardSrc}
       alt={service.title}
       loading="lazy"
       className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"

@@ -416,18 +416,17 @@ export function miniGalleryFor(serviceSlug, limit = MINI_GALLERY_LIMIT) {
 // entries use a still extracted from their own first gallery clip instead —
 // those sources are 21 MB and 1.5 MB, far too heavy to autoplay in a menu.
 //
-// APPROXIMATE: `graphic-design`, `media-website-packages` and `web-development`
-// have no shot category in the archive, so they borrow a related still. Swap
-// them once there is real work to point at — `web-development` in particular
+// APPROXIMATE: `web-development` has no shot category in the archive, so it
+// borrows a related still. Swap it once there is real work to point at — it
 // wants a screenshot of a delivered site, not a render.
 export const SERVICE_POSTER = {
   // Portrait crops shot for these cards: the header preview and the service
   // tiles are both 4:5, so a wide hero still would have been cropped to a
-  // sliver. `media-website-packages` and `web-development` have no shot of
-  // their own yet and borrow from the gallery.
+  // sliver. `web-development` has no shot of its own yet and borrows from the
+  // gallery; `animation-mood-film` is waiting on a clip this toolchain can read.
   "exterior-visualization": { src: "/assets/services/exterior-visualization-tile.webp", type: "image" },
   "interior-visualization": { src: "/assets/services/interior-visualization-tile.webp", type: "image" },
-  "animation-mood-film": { src: "/assets/services/animation-mood-film-tile.webp", type: "image" },
+  "animation-mood-film": { src: "/assets/home/faqsection.mp4", type: "video" },
   "bird-eye-visualization": { src: "/assets/services/bird-eye-visualization-tile.webp", type: "image" },
   "360-virtual-tour": { src: "/assets/services/360-virtual-tour-tile.webp", type: "image" },
   "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot-tile.webp", type: "image" },
@@ -435,7 +434,7 @@ export const SERVICE_POSTER = {
   "virtual-staging": { src: "/assets/services/virtual-staging-tile.webp", type: "image" },
   "graphic-design": { src: "/assets/services/graphic-design-tile.webp", type: "image" },
   "3d-floorplans": { src: "/assets/services/3d-floorplans-tile.webp", type: "image" },
-  "media-website-packages": { src: "/assets/gallery/exterior/002.webp", type: "image" },
+  "fly-around-navigator": { src: "/assets/services/fly-around-navigator-tile.webp", type: "image" },
   "web-development": { src: "/assets/gallery/interior/002.webp", type: "image" },
 };
 
@@ -444,7 +443,7 @@ export const SERVICE_POSTER = {
 export const SERVICE_WIDE = {
   "exterior-visualization": { src: "/assets/services/exterior-visualization-wide.webp", type: "image" },
   "interior-visualization": { src: "/assets/services/interior-visualization-wide.webp", type: "image" },
-  "animation-mood-film": { src: "/assets/services/animation-mood-film.webm", type: "video" },
+  "animation-mood-film": { src: "/assets/home/faqsection.mp4", type: "video" },
   "bird-eye-visualization": { src: "/assets/services/bird-eye-visualization-wide.webp", type: "image" },
   "360-virtual-tour": { src: "/assets/services/360-virtual-tour-wide.webp", type: "image" },
   "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot.webm", type: "video" },
@@ -452,7 +451,7 @@ export const SERVICE_WIDE = {
   "virtual-staging": { src: "/assets/services/virtual-staging-wide.webp", type: "image" },
   "graphic-design": { src: "/assets/services/graphic-design-wide.webp", type: "image" },
   "3d-floorplans": { src: "/assets/services/3d-floorplans-wide.webp", type: "image" },
-  "media-website-packages": { src: "/assets/gallery/exterior/002.webp", type: "image" },
+  "fly-around-navigator": { src: "/assets/services/fly-around-navigator.webm", type: "video" },
   "web-development": { src: "/assets/gallery/interior/002.webp", type: "image" },
 };
 

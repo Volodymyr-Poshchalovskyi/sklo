@@ -44,7 +44,7 @@ export const servicesData = [
     slug: "animation-mood-film",
     title: "ANIMATION | MOOD FILM",
     desc: "A cinematic story that captures attention and excitement around your project. Experience the mood, the story, the life of your project through the screen.",
-    src: "/assets/services/animation-mood-film.webm",
+    src: "/assets/home/faqsection.mp4",
     type: "video",
     pipeline: [
       { step: "01", title: "Storyboard & Styleframe", desc: "We write a shot list, layout key frames, outline the sound design direction and video rhythm." },
@@ -201,22 +201,22 @@ export const servicesData = [
   },
   {
     id: 10,
-    slug: "media-website-packages",
-    title: "MEDIA & WEBSITE PACKAGES",
-    desc: "Eye-catching visuals, videos, mood images that keep your brand strong and memorable. High conversion rate and faster sales guaranteed!",
-    src: "/assets/home/360 services.mp4",
+    slug: "fly-around-navigator",
+    title: "360° FLY-AROUND | NAVIGATOR",
+    desc: "An orbit of the whole building that a buyer can steer. Stop anywhere, open an apartment and read its floor, size and layout — the view and the plan in one place.",
+    src: "/assets/services/fly-around-navigator.webm",
     type: "video",
     pipeline: [
-      { step: "01", title: "Target & Channel Strategy", desc: "Deciding on media asset list sizes (Instagram Reels, website banners, desktop galleries)." },
-      { step: "02", title: "Content Batching", desc: "Rendering multiple video loops, image crops, text overlays, and animation modules simultaneously." },
-      { step: "03", title: "Design System Match", desc: "Ensuring typography styles, color grading schemes, and logos align with marketing targets." },
-      { step: "04", title: "Interactive Deploy", desc: "Packaging media files, or deploying light high-performance promotional target pages online." }
+      { step: "01", title: "Orbit & Coverage", desc: "Setting the camera path around the building, its height, and the stops the buyer can land on." },
+      { step: "02", title: "Rendering the Ring", desc: "Rendering the full orbit as one continuous sequence, so every angle matches in light and season." },
+      { step: "03", title: "Unit Mapping", desc: "Tying each apartment to its position on every frame, with floor, area and room count behind it." },
+      { step: "04", title: "Interactive Build", desc: "Assembling the navigator so it scrubs smoothly, and handing it over ready to embed." }
     ],
     gallery: [
-      { src: "/assets/home/360 services.mp4", type: "video", aspect: "aspect-[16/9]" },
-      { src: "/assets/home/faqsection.mp4", type: "video", aspect: "aspect-[4/3]" },
-      { src: "/assets/home/3d tour.jpg", aspect: "aspect-[1/1]" },
-      { src: "/assets/home/cinemagraph services.mp4", type: "video", aspect: "aspect-[3/4]" }
+      { src: "/assets/services/fly-around-navigator.webm", type: "video", aspect: "aspect-[16/9]" },
+      { src: "/assets/services/fly-around-navigator-wide.webp", aspect: "aspect-[21/9]" },
+      { src: "/assets/services/fly-around-navigator-tile.webp", aspect: "aspect-[4/5]" },
+      { src: "/assets/home/3d tour.jpg", aspect: "aspect-[1/1]" }
     ]
   },
   {

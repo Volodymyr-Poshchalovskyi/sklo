@@ -287,7 +287,7 @@ export default function Header({ t, locale, visible }) {
     { id: "08", slug: "virtual-staging", title: "VIRTUAL STAGING" },
     { id: "09", slug: "graphic-design", title: "GRAPHIC DESIGN" },
     { id: "10", slug: "3d-floorplans", title: "3D FLOORPLANS" },
-    { id: "11", slug: "media-website-packages", title: "MEDIA & WEBSITE PACKAGES" },
+    { id: "11", slug: "fly-around-navigator", title: "360° FLY-AROUND | NAVIGATOR" },
     { id: "12", slug: "web-development", title: "WEB DEVELOPMENT" },
   ].map((entry) => {
     const poster = serviceWideFor(entry.slug);
