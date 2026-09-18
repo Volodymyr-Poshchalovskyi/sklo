@@ -665,16 +665,25 @@ export default function Header({ t, locale, visible }) {
       </div>
 
       <div
-        className={`lg:hidden absolute left-0 right-0 overflow-hidden rounded-[20px] transition-all duration-300 ${
-          menuOpen ? "max-h-[28rem]" : "max-h-0"
-        }`}
+        className="lg:hidden absolute left-0 right-0 overflow-hidden rounded-[20px]"
         style={{
           top: "calc(100% + 10px)",
-          background: skin.panel,
-          backdropFilter: blur,
-          WebkitBackdropFilter: blur,
+          // Opaque, not the 94% panel tone the mega menu uses: without a blur
+          // behind it the page showed faintly through the menu. And the blur
+          // is gone on purpose — it hid nothing the opacity does not, but it
+          // made the phone blur a full-width region on every frame of the
+          // opening animation.
+          background: theme === "light" ? "#ffffff" : "#0a0a0c",
           border: `1px solid ${menuOpen ? surface.border : "transparent"}`,
           boxShadow: menuOpen ? surface.shadow : "none",
+          // Revealed by clip-path rather than by animating max-height: the
+          // panel keeps its natural height, so opening it lays out once
+          // instead of relaying out the whole list on every frame.
+          clipPath: menuOpen ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
+          opacity: menuOpen ? 1 : 0,
+          pointerEvents: menuOpen ? "auto" : "none",
+          transition:
+            "clip-path 0.32s cubic-bezier(0.16,1,0.3,1), opacity 0.22s ease, border-color 0.3s ease, box-shadow 0.3s ease",
         }}
       >
         <div className="px-6 py-5 flex flex-col gap-4">
