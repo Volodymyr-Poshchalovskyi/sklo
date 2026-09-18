@@ -177,25 +177,32 @@ export default function WhoWeAre({ locale, t }) {
 // plain-spoken part of the page, and a staggered fade on six short paragraphs
 // only delayed reading them.
 function ValueRow({ pair, isLast }) {
-  // Everything here steps down on a phone and returns to its full size from
-  // `sm` up. Six values at desktop scale ran to about 1.6 screens on a 390px
-  // viewport, which made the plainest section on the page the longest one.
+  // Two columns at every width — a phone column is about 160px wide, so type,
+  // icons and gaps all step down below `sm` and return to full size above it.
+  // The icon also leaves the title's line there: side by side it would take a
+  // third of the column and push every second title onto three lines.
   const divider = isLast ? "" : "border-b border-white/10 pb-5 md:pb-8";
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 lg:gap-16 items-start">
+    // No `items-start`: letting the two cells stretch to the row's height puts
+    // their bottom borders on one line. Left and right descriptions are rarely
+    // the same length, so aligned to their own content the dividers stepped.
+    <div className="grid grid-cols-2 gap-x-5 gap-y-5 md:gap-8 lg:gap-16">
       {[pair.left, pair.right].map((item) => (
         <div key={item.title} className={`flex flex-col ${divider}`}>
           <article className="flex flex-col gap-1.5 sm:gap-2.5">
-            <div className="flex items-center gap-2.5 sm:gap-3">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
               <span className="w-4 h-4 sm:w-5 sm:h-5 text-white/70 shrink-0">
                 {item.icon}
               </span>
-              <h3 className="text-[13px] sm:text-lg font-bold tracking-[0.08em] sm:tracking-[0.12em] uppercase text-white leading-snug">
+              {/* Two lines' worth of room on a phone: half the titles wrap and
+                  half do not, and without it the descriptions in a row started
+                  at two different heights. */}
+              <h3 className="min-h-[1.9rem] sm:min-h-0 text-[11px] sm:text-lg font-bold tracking-[0.06em] sm:tracking-[0.12em] uppercase text-white leading-[1.3] sm:leading-snug">
                 {item.title}
               </h3>
             </div>
-            <p className="text-[13px] sm:text-[15px] text-white/60 leading-[1.55] sm:leading-relaxed">
+            <p className="text-[11.5px] sm:text-[15px] text-white/60 leading-[1.5] sm:leading-relaxed">
               {item.desc}
             </p>
           </article>
