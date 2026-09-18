@@ -178,67 +178,25 @@ export default function WhoWeAre({ locale, t }) {
                 key={pair.left.title}
                 pair={pair}
                 isLast={idx === featurePairs.length - 1}
-                ready={ready}
               />
             ))}
           </div>
         </div>
       </section>
-
-      <style>{`
-        /* The hidden state is the resting state here, so a value only ever
-           fades in — it is never painted solid first and then re-animated,
-           which is what the old inline \`opacity: whoInView ? 0 : 1\` did: the
-           row sat fully visible until the reveal fired, then blinked back to
-           zero to play its entrance. */
-        .value-reveal {
-          opacity: 0;
-        }
-        .value-reveal.is-in {
-          animation: featureTileIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          animation-delay: var(--reveal-delay, 0ms);
-        }
-        /* Without this the reduced-motion path would leave the whole values
-           block permanently invisible, since the reveal is what restores it. */
-        @media (prefers-reduced-motion: reduce) {
-          .value-reveal {
-            opacity: 1;
-          }
-          .value-reveal.is-in {
-            animation: none;
-          }
-        }
-        @keyframes featureTileIn {
-          0%   { opacity: 0; transform: translateY(18px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
     </>
   );
 }
 
-// One row of two values, watching its own position instead of the section's.
-// The values block runs well past a viewport height, so a section-level
-// trigger played the last rows out while they were still far below the fold —
-// by the time you scrolled to them they were simply already there.
-function ValueRow({ pair, isLast, ready }) {
-  const ref = useRef(null);
-  // `ready` is null wherever there is no loader above this in the tree; without
-  // the fallback the reveal never fires and the row stays at opacity 0.
-  const inView = useRevealOnSettle(ref, ready ?? true, { threshold: 0.35 });
+// One row of two values. The values carry no entrance animation: they are the
+// plain-spoken part of the page, and a staggered fade on six short paragraphs
+// only delayed reading them.
+function ValueRow({ pair, isLast }) {
   const divider = isLast ? "" : "border-b border-white/10 pb-8";
 
   return (
-    <div
-      ref={ref}
-      className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start"
-    >
-      {[pair.left, pair.right].map((item, i) => (
-        <div
-          key={item.title}
-          className={`value-reveal ${inView ? "is-in" : ""} flex flex-col ${divider}`}
-          style={{ "--reveal-delay": `${i * 90}ms` }}
-        >
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+      {[pair.left, pair.right].map((item) => (
+        <div key={item.title} className={`flex flex-col ${divider}`}>
           <article className="flex flex-col gap-2.5">
             <div className="flex items-center gap-3">
               <span className="w-5 h-5 text-white/70 shrink-0">{item.icon}</span>
