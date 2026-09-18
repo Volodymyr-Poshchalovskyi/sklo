@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import ServicesCarousel from "@/components/ServicesCarousel";
 import Title3D from "@/components/Title3D";
@@ -44,6 +45,42 @@ function StepMedia({ src, type, isActive }) {
       alt="Workflow step visual"
       loading="eager"
       className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+    />
+  );
+}
+
+// A mini-gallery video tile that only holds a decoder while it is near the
+// viewport. `preload="metadata"` is a hint, not a limit — Chrome pulled all
+// twelve cinemagraphs to readyState 4 on the cinemagraph page, so the section
+// carried a dozen live video pipelines at once and scrolling through it
+// stuttered. Mounting the source through an observer bounds that to what the
+// reader can actually see.
+function MiniGalleryVideo({ src, className }) {
+  const ref = useRef(null);
+  const [near, setNear] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setNear(entry.isIntersecting),
+      { rootMargin: "400px" }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={near ? src : undefined}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
+      onMouseLeave={(e) => e.currentTarget.pause()}
+      className={className}
     />
   );
 }
@@ -548,22 +585,22 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                   className="relative group mb-6 break-inside-avoid rounded-2xl border border-white/10 hover:border-white/30 bg-white/5 overflow-hidden cursor-pointer transition-colors duration-300"
                 >
                   {media.type === "video" ? (
-                    <video
+                    <MiniGalleryVideo
                       src={media.src}
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      onMouseEnter={(e) => e.currentTarget.play().catch(() => {})}
-                      onMouseLeave={(e) => e.currentTarget.pause()}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
-                    <img
+                    /* Through `next/image`, like the main gallery: these are
+                       3840px archive originals shown in a ~510px column, and a
+                       plain <img> made the browser decode all twelve at full
+                       size — about 450 MB of bitmap for 16 MB of download,
+                       which is what froze this section on scroll. */
+                    <Image
                       src={media.src}
                       alt={media.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   )}
 
