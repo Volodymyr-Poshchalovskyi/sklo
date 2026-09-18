@@ -2,10 +2,11 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useParams } from "next/navigation";
 import { useLenis } from "@/context/LenisContext";
-import { galleryItems, allProjectsItems, virtualStagingPairs } from "@/data/galleryData";
+import { galleryItems, allProjectsItems, virtualStagingPairs, serviceTourFor } from "@/data/galleryData";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import TourEmbed from "@/components/TourEmbed";
 import Title3D from "@/components/Title3D";
 
 function GalleryCard({ item, onClick }) {
@@ -86,6 +87,9 @@ const CATEGORIES = [
   { label: "Bird's-Eye View", slug: "bird-eye" },
   { label: "Product", slug: "product" },
   { label: "Virtual Staging", slug: "virtual-staging" },
+  // Sits next to Virtual Staging because the two are the same kind of tab: a
+  // filter that swaps the tile grid for its own viewer rather than narrowing it.
+  { label: "360° Tours", slug: "360-tours" },
   { label: "Animation", slug: "animation" },
   { label: "Cinemagraph", slug: "cinemagraph" },
 ];
@@ -129,6 +133,9 @@ function GalleryPageContent() {
   // source of truth and a reload cannot disagree with what the sidebar shows.
   const searchParams = useSearchParams();
   const activeFilter = labelForSlug(searchParams.get(FILTER_PARAM));
+  // The tour switcher labels its own buttons per language; this page takes no
+  // `t`, so the locale comes off the route segment.
+  const locale = useParams()?.locale === "de" ? "de" : "en";
 
   // The chip rail scrolls sideways, so an active filter near its end starts
   // out of sight — on a reload of `?filter=cinemagraph` nothing on screen said
@@ -163,12 +170,13 @@ function GalleryPageContent() {
   };
 
   const categoryDescriptions = {
-    "All": "A curated mix of our architectural work — exteriors, interiors, aerials and motion, shown side by side. Product and Virtual Staging have their own sections.",
+    "All": "A curated mix of our architectural work — exteriors, interiors, aerials and motion, shown side by side. Product, Virtual Staging and 360° Tours have their own sections.",
     "Exterior": "Photorealistic architectural renderings showing buildings, structures, and landscaping in their real-world environments.",
     "Interior": "Highly detailed internal designs capturing lighting, materials, and atmosphere to showcase living and commercial spaces.",
     "Bird's-Eye View": "Aerial and drone-perspective renderings showing a development within its surrounding district and landscape.",
     "Product": "Studio-quality 3D renderings of furniture and product pieces, lit and staged for catalogs and marketing.",
     "Virtual Staging": "Real interior photographs digitally furnished and dressed to show a space's full potential.",
+    "360° Tours": "Walkable 360° tours of a finished project — drag to look around, use the floorplan to move between scenes.",
     "Animation": "Cinematic architectural films and motion showcases bringing a project to life through camera movement and mood.",
     "Cinemagraph": "Static architectural visualizations enhanced with subtle loop animations, drawing instant attention to key design details."
   };
@@ -182,9 +190,17 @@ function GalleryPageContent() {
   // feeds off its own paired data and never populates `filteredItems`.
   const isVirtualStaging = activeFilter === "Virtual Staging";
 
+  // 360° Tours does the same with the Panotour embeds. They are interactive
+  // pages, not files with intrinsic dimensions, so they cannot be tiles in the
+  // masonry grid or frames in the lightbox — hence their own branch. The list
+  // is the same one the 360° service page shows, so there is one source of
+  // truth for which tours exist.
+  const isTours = activeFilter === "360° Tours";
+  const tours = serviceTourFor("360-virtual-tour") ?? [];
+
   // "All" gets the interleaved run (see galleryData.js) so the categories do
   // not read as consecutive blocks; a single category keeps its own order.
-  const filteredItems = isVirtualStaging
+  const filteredItems = isVirtualStaging || isTours
     ? []
     : activeFilter === ALL_FILTER
       ? allProjectsItems
@@ -342,7 +358,14 @@ function GalleryPageContent() {
 
       {/* Left Gallery Masonry Grid (78% width on desktop) */}
       <main className="w-full md:w-[82%] min-h-screen pt-8 md:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
-        {isVirtualStaging ? (
+        {isTours ? (
+          // One viewer with the interior/exterior switcher on top, not two
+          // stacked frames — each export is its own krpano instance and loads
+          // a few megabytes of engine and tiles once started.
+          <div key={activeFilter} className="animate-fade-in-card opacity-0 flex flex-col gap-6 max-w-[1100px]">
+            <TourEmbed tours={tours} locale={locale} />
+          </div>
+        ) : isVirtualStaging ? (
           // Virtual Staging is comparisons, not tiles: two per row at most, so
           // each pair is wide enough to actually judge the difference.
           <div key={activeFilter} className="grid grid-cols-1 xl:grid-cols-2 gap-8">
