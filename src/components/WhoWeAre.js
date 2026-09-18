@@ -20,13 +20,13 @@ export default function WhoWeAre({ locale, t }) {
     { id: 1, slug: "exterior-visualization", title: "EXTERIOR VISUALIZATION" },
     { id: 2, slug: "interior-visualization", title: "INTERIOR VISUALIZATION" },
     { id: 3, slug: "360-virtual-tour", title: "360° VIRTUAL TOUR | VR" },
-    { id: 4, slug: "animation-mood-film", title: "ANIMATION | MOOD FILM" },
-    { id: 5, slug: "bird-eye-visualization", title: "BIRD-EYE VISUALIZATION" },
-    { id: 6, slug: "cinemagraph-live-shot", title: "CINEMAGRAPH | LIVE SHOT" },
-    { id: 7, slug: "3d-floorplans", title: "3D FLOORPLAN" },
-    { id: 8, slug: "product-visualization", title: "PRODUCT VISUALISATION" },
-    { id: 9, slug: "virtual-staging", title: "VIRTUAL STAGING" },
-    { id: 10, slug: "web-development", title: "WEB DEVELOPMENT" },
+    { id: 4, slug: "web-development", title: "WEB DEVELOPMENT" },
+    { id: 5, slug: "animation-mood-film", title: "ANIMATION | MOOD FILM" },
+    { id: 6, slug: "bird-eye-visualization", title: "BIRD-EYE VISUALIZATION" },
+    { id: 7, slug: "cinemagraph-live-shot", title: "CINEMAGRAPH | LIVE SHOT" },
+    { id: 8, slug: "3d-floorplans", title: "3D FLOORPLAN" },
+    { id: 9, slug: "product-visualization", title: "PRODUCT VISUALISATION" },
+    { id: 10, slug: "virtual-staging", title: "VIRTUAL STAGING" },
   ].map((slide) => {
     const poster = servicePosterFor(slide.slug);
     return {
