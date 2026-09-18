@@ -20,9 +20,6 @@ export default function FAQ({ locale = "en" }) {
       ([entry]) => {
         if (entry.isIntersecting) {
           setVideoLoaded(true);
-          requestAnimationFrame(() => {
-            if (videoEl) videoEl.play().catch(() => {});
-          });
         } else {
           videoEl.pause();
         }
@@ -39,6 +36,20 @@ export default function FAQ({ locale = "en" }) {
       observer.disconnect();
     };
   }, []);
+
+  // Playback has to start from its own effect, after React has committed the
+  // `src`. The observer used to call play() inside a requestAnimationFrame
+  // right after flipping `videoLoaded`, which ran before that commit: the
+  // element still had no source, the play() promise rejected into the empty
+  // catch, and since the observer never fires "entering" a second time the
+  // background stayed on a black frame forever (readyState 0, networkState
+  // NETWORK_NO_SOURCE). `preload="none"` means nothing loads until this runs.
+  useEffect(() => {
+    if (!videoLoaded) return;
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+    videoEl.play().catch(() => {});
+  }, [videoLoaded]);
 
   const faqs = [
     {
