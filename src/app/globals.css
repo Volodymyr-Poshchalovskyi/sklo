@@ -105,12 +105,19 @@ html {
   --color-border-stroke: rgba(18, 18, 20, 0.45);
   --color-progress-border: rgba(18, 18, 20, 0.08);
   --color-progress-border-muted: rgba(18, 18, 20, 0.18);
+  /* #d3d1cb sat ~2% off the paper behind it, so the headings that carry the
+     whole 3D treatment in dark theme read as flat type in light. This is a
+     mid-tone with the same warm cast, far enough down to show the extrusion
+     the animation exists to draw. */
   --color-title-3d-text: #15161a;
-  --color-title-3d-shadow: #d3d1cb;
-  --color-title-3d-glow: rgba(18, 18, 20, 0.15);
+  --color-title-3d-shadow: #b3b0a6;
+  --color-title-3d-glow: rgba(18, 18, 20, 0.22);
 
   --shell-base: #f6f5f2;
-  --shell-band: #edece8;
+  /* A 3% step between base and band is below what the eye reads as two
+     different surfaces, so light theme lost the sectional rhythm dark theme
+     has. Only the band moves — the page base stays the paper it was. */
+  --shell-band: #e6e3da;
   --shell-bloom: rgba(90, 110, 160, 0.05);
   --shell-hairline: rgba(18, 18, 20, 0.12);
   --card-bg: rgba(255, 255, 255, 0.75);
@@ -277,11 +284,17 @@ html {
     var(--shell-base) 100%
   );
 }
+/* Light used to sit a 93%-opaque wash of paper over the clip, which erased it:
+   dark theme kept a section with footage in it and light theme did not, which
+   is most of why light read as the emptier of the two. 72% still lands the
+   darkest graded pixel around #c1 behind the answers, so ink text keeps ~10:1.
+   The grade is gentler to match — the old brightness(1.35) was compensating
+   for a veil that had already washed the image out. */
 :root[data-theme="light"] .faq-veil {
-  background-color: color-mix(in srgb, var(--shell-base) 93%, transparent);
+  background-color: color-mix(in srgb, var(--shell-base) 72%, transparent);
 }
 :root[data-theme="light"] .faq-section video {
-  filter: grayscale(1) brightness(1.35) contrast(0.8);
+  filter: grayscale(1) brightness(1.12) contrast(0.92);
 }
 
 /* Global Form Elements */
