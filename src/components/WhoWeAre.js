@@ -135,9 +135,9 @@ export default function WhoWeAre({ locale, t }) {
       </section>
 
       <section
-        className="section-shell section-band hairline-top w-full text-white py-24 md:py-32 px-6 md:px-16 lg:px-28 xl:px-40 flex flex-col"
+        className="section-shell section-band hairline-top w-full text-white py-16 md:py-32 px-6 md:px-16 lg:px-28 xl:px-40 flex flex-col"
       >
-        <div className="w-full flex flex-col gap-12 md:gap-16">
+        <div className="w-full flex flex-col gap-8 md:gap-16">
           {/* Top Row: Heading on Left, Paragraph on Right */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             <div className="flex flex-col gap-4">
@@ -158,7 +158,7 @@ export default function WhoWeAre({ locale, t }) {
           </div>
 
           {/* Bottom Rows: 3 pairs of values side-by-side with aligned dividers */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-5 md:gap-8">
             {featurePairs.map((pair, idx) => (
               <ValueRow
                 key={pair.left.title}
@@ -177,20 +177,25 @@ export default function WhoWeAre({ locale, t }) {
 // plain-spoken part of the page, and a staggered fade on six short paragraphs
 // only delayed reading them.
 function ValueRow({ pair, isLast }) {
-  const divider = isLast ? "" : "border-b border-white/10 pb-8";
+  // Everything here steps down on a phone and returns to its full size from
+  // `sm` up. Six values at desktop scale ran to about 1.6 screens on a 390px
+  // viewport, which made the plainest section on the page the longest one.
+  const divider = isLast ? "" : "border-b border-white/10 pb-5 md:pb-8";
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 md:gap-8 lg:gap-16 items-start">
       {[pair.left, pair.right].map((item) => (
         <div key={item.title} className={`flex flex-col ${divider}`}>
-          <article className="flex flex-col gap-2.5">
-            <div className="flex items-center gap-3">
-              <span className="w-5 h-5 text-white/70 shrink-0">{item.icon}</span>
-              <h3 className="text-base sm:text-lg font-bold tracking-[0.12em] uppercase text-white leading-snug">
+          <article className="flex flex-col gap-1.5 sm:gap-2.5">
+            <div className="flex items-center gap-2.5 sm:gap-3">
+              <span className="w-4 h-4 sm:w-5 sm:h-5 text-white/70 shrink-0">
+                {item.icon}
+              </span>
+              <h3 className="text-[13px] sm:text-lg font-bold tracking-[0.08em] sm:tracking-[0.12em] uppercase text-white leading-snug">
                 {item.title}
               </h3>
             </div>
-            <p className="text-sm sm:text-[15px] text-white/60 leading-relaxed">
+            <p className="text-[13px] sm:text-[15px] text-white/60 leading-[1.55] sm:leading-relaxed">
               {item.desc}
             </p>
           </article>
