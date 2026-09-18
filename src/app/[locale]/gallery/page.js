@@ -436,7 +436,11 @@ function GalleryPageContent() {
       {selectedItemIndex !== null && (
         <div 
           onClick={handleClose}
-          className="overlay-chrome fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center px-4 py-6 md:px-24 md:py-10 transition-opacity duration-300"
+          /* No backdrop blur: the sheet is already 95% black, so the blur was
+             invisible — but the compositor still had to blur the whole
+             gallery behind it on every frame, which is what made paging
+             through images stutter. */
+          className="overlay-chrome fixed inset-0 z-[100] bg-black/95 flex items-center justify-center px-4 py-6 md:px-24 md:py-10 transition-opacity duration-300"
         >
           {/* Close button */}
           <button
@@ -486,11 +490,20 @@ function GalleryPageContent() {
                 className="max-w-full max-h-[80vh] rounded-lg object-contain shadow-2xl"
               />
             ) : (
-              <img
+              /* Through `next/image`: the archive masters are 3840px, and a
+                 raw <img> made every arrow press download a megabyte or two
+                 and decode ~39 MB of bitmap before the next frame could be
+                 painted — which is what made the viewer stutter. At `92vw`
+                 Next hands back a variant sized to the screen instead. */
+              <Image
                 key={filteredItems[selectedItemIndex].id}
                 src={filteredItems[selectedItemIndex].src}
                 alt={filteredItems[selectedItemIndex].title}
-                className="max-w-full max-h-[80vh] rounded-lg object-contain shadow-2xl"
+                width={filteredItems[selectedItemIndex].width}
+                height={filteredItems[selectedItemIndex].height}
+                sizes="92vw"
+                priority
+                className="max-w-full max-h-[80vh] w-auto h-auto rounded-lg object-contain shadow-2xl"
               />
             )}
             

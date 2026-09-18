@@ -663,7 +663,9 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="overlay-chrome fixed inset-0 bg-black/95 backdrop-blur-xl z-[100] flex flex-col items-center justify-between py-6 px-4 select-none"
+            /* See the gallery lightbox: blurring the page behind a 95% black
+               sheet costs a full-screen composite per frame and shows nothing. */
+            className="overlay-chrome fixed inset-0 bg-black/95 z-[100] flex flex-col items-center justify-between py-6 px-4 select-none"
             onClick={() => setActiveMediaIndex(null)}
           >
             {/* Top info bar. Full width, not `max-w-6xl`: capping it dragged
@@ -724,10 +726,14 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                         className="max-w-full max-h-[78vh] object-contain rounded-2xl shadow-2xl border border-white/5"
                       />
                     ) : (
-                      <img 
-                        src={miniItems[activeMediaIndex].src} 
+                      <Image
+                        src={miniItems[activeMediaIndex].src}
                         alt="Fullscreen gallery item"
-                        className="max-w-full max-h-[78vh] object-contain rounded-2xl shadow-2xl border border-white/5"
+                        width={miniItems[activeMediaIndex].width}
+                        height={miniItems[activeMediaIndex].height}
+                        sizes="92vw"
+                        priority
+                        className="max-w-full max-h-[78vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border border-white/5"
                       />
                     )}
                   </motion.div>
@@ -770,7 +776,17 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                           </div>
                         </div>
                       ) : (
-                        <img src={media.src} alt="" className="w-full h-full object-cover" />
+                        /* Twelve thumbnails at 80x48 were each the full 3840px
+                           master. That is the whole archive decoded twice over
+                           while the viewer is open, on top of the image being
+                           viewed. */
+                        <Image
+                          src={media.src}
+                          alt=""
+                          fill
+                          sizes="96px"
+                          className="object-cover"
+                        />
                       )}
                     </button>
                   );
