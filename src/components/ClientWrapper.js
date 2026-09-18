@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Lenis from "lenis";
 import Header from "@/components/Header";
 import Loader from "@/components/Loader";
+import RouteCurtain from "@/components/RouteCurtain";
 import { LoaderContext } from "@/context/LoaderContext";
 import { LenisContext } from "@/context/LenisContext";
 
@@ -76,6 +77,7 @@ export default function ClientWrapper({ children, locale, t, initialShowLoader }
       <LoaderContext.Provider value={ready}>
         {showLoader && !ready && <Loader onComplete={() => setReady(true)} />}
         <Header t={t} locale={locale} visible={ready} />
+        <RouteCurtain />
         {children}
       </LoaderContext.Provider>
     </LenisContext.Provider>

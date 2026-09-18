@@ -563,6 +563,44 @@ html {
   opacity: 0.5;
 }
 
+/* Route curtain — see RouteCurtain.js. It sits above the header so a page
+   change reads as one movement rather than a bar that stays while the page
+   under it swaps. Below the lightbox, which is only ever open within a page. */
+.route-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  pointer-events: none;
+  background-color: var(--shell-base);
+  opacity: 0;
+  /* Parked out of the way until a navigation puts it back. */
+  clip-path: inset(0 0 100% 0);
+}
+.route-curtain.is-lifting {
+  animation: routeCurtainLift 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes routeCurtainLift {
+  0% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  /* Holds solid for a beat so the new page has a frame to settle, then peels
+     from the bottom up — the same direction the reader is about to scroll. */
+  22% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 100% 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-curtain.is-lifting {
+    animation: none;
+  }
+}
+
 /* 3D Titles */
 .title-3d {
   color: var(--color-title-3d-text) !important;
