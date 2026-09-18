@@ -436,7 +436,7 @@ function GalleryPageContent() {
       {selectedItemIndex !== null && (
         <div 
           onClick={handleClose}
-          className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center px-4 py-6 md:px-24 md:py-10 transition-opacity duration-300"
+          className="overlay-chrome fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center px-4 py-6 md:px-24 md:py-10 transition-opacity duration-300"
         >
           {/* Close button */}
           <button

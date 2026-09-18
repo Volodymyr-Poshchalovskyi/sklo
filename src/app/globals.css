@@ -332,6 +332,43 @@ html {
   filter: grayscale(1) brightness(1.12) contrast(0.92);
 }
 
+/* A lightbox is a dark room in both themes — it covers the page with
+   `bg-black/95` whatever the theme is. The blanket light-theme rules for
+   `.text-white`, `.bg-white/N` and `.border-white/N` repainted its controls in
+   ink on that black, so in light theme the close button was invisible. Inside
+   an overlay those utilities keep their dark-theme values. */
+:root[data-theme="light"] .overlay-chrome,
+:root[data-theme="light"] .overlay-chrome .text-white,
+:root[data-theme="light"] .overlay-chrome button,
+:root[data-theme="light"] .overlay-chrome svg {
+  color: #ffffff !important;
+}
+:root[data-theme="light"] .overlay-chrome .text-white\/60,
+:root[data-theme="light"] .overlay-chrome .text-white\/50,
+:root[data-theme="light"] .overlay-chrome .text-white\/40 {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+/* The light accent is a deep olive tuned for paper; on the overlay it reads as
+   a smudge, so the counter keeps the dark theme's lime. */
+:root[data-theme="light"] .overlay-chrome .text-accent {
+  color: #c8ff00 !important;
+}
+:root[data-theme="light"] .overlay-chrome .bg-white\/5 {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+:root[data-theme="light"] .overlay-chrome .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+:root[data-theme="light"] .overlay-chrome .border-white\/5 {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+:root[data-theme="light"] .overlay-chrome .border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+:root[data-theme="light"] .overlay-chrome .border-white\/20 {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
 /* Global Form Elements */
 :root[data-theme="light"] input,
 :root[data-theme="light"] textarea,

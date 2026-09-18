@@ -663,7 +663,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/95 backdrop-blur-xl z-[100] flex flex-col items-center justify-between py-6 px-4 select-none"
+            className="overlay-chrome fixed inset-0 bg-black/95 backdrop-blur-xl z-[100] flex flex-col items-center justify-between py-6 px-4 select-none"
             onClick={() => setActiveMediaIndex(null)}
           >
             {/* Top info bar. Full width, not `max-w-6xl`: capping it dragged
