@@ -415,13 +415,16 @@ export default function Header({ t, locale, visible }) {
       }}
     >
       <div
-        className="relative mx-auto w-full max-w-[1280px]"
+        className="relative mx-auto w-full max-w-[1600px]"
         style={{ pointerEvents: "auto" }}
       >
       <div
         className="flex items-center justify-between rounded-[20px]"
         style={{
-          padding: "10px 12px 10px 18px",
+          // Even and tight: the mark and the controls are both pill-shaped, so
+          // they can sit close to the capsule's edge without crowding it, and
+          // the bar reads as one object rather than a strip with a wide mat.
+          padding: "10px",
           backgroundColor: surface.bg,
           border: `1px solid ${surface.border}`,
           boxShadow: surface.shadow,
@@ -431,22 +434,16 @@ export default function Header({ t, locale, visible }) {
             "background-color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease",
         }}
       >
-        <Link href={`/${locale}`} className="group flex items-center gap-2.5">
+        <Link href={`/${locale}`} className="group flex items-center shrink-0">
           <div className="relative w-9 h-9 shrink-0 overflow-hidden rounded-md transition-transform duration-300 group-hover:scale-105">
             <Image
               src="/LogoHeader.svg"
-              alt="SKLO Logo"
+              alt="SKLO"
               fill
               className="object-contain logo-image"
               priority
             />
           </div>
-          <span
-            className="text-[15px] font-bold uppercase tracking-[0.22em] leading-none"
-            style={{ color: theme === "light" ? "#15161a" : "#eceae6" }}
-          >
-            SKLO
-          </span>
         </Link>
 
         {/* The full navigation waits for `lg`. At the md breakpoint the links,
