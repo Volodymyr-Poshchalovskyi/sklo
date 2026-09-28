@@ -126,7 +126,12 @@ function useColumnCount() {
 function GalleryPageContent() {
   const [selectedItemIndex, setSelectedItemIndex] = useState(null);
   const lenisRef = useLenis();
-  const isFirstFilterRender = useRef(true);
+  // Set when the reader picks a filter, read by the effect that returns them
+  // to the top of the results. Deriving that from `activeFilter` changing was
+  // not the same thing: the filter is read from the URL, and a language switch
+  // re-runs that read, so changing language scrolled a reader back to the top
+  // of a gallery they had not touched.
+  const filterWasClicked = useRef(false);
   const chipRailRef = useRef(null);
 
   // Derived from the URL rather than held in local state, so there is only one
@@ -157,6 +162,7 @@ function GalleryPageContent() {
   // rather than `push` keeps the Back button pointing at the previous page
   // instead of stepping back through every filter the reader tried.
   const setActiveFilter = (label) => {
+    filterWasClicked.current = true;
     const slug = slugForLabel(label);
     const next = new URLSearchParams(searchParams.toString());
     if (slug) next.set(FILTER_PARAM, slug);
@@ -220,16 +226,18 @@ function GalleryPageContent() {
   // scrolled deep into the previous set, they'd land partway down an
   // unrelated one, so bring them back to the top of the results.
   useEffect(() => {
-    if (isFirstFilterRender.current) {
-      isFirstFilterRender.current = false;
-      return;
-    }
+    if (!filterWasClicked.current) return;
+    filterWasClicked.current = false;
     if (lenisRef?.current) {
       lenisRef.current.scrollTo(0);
     } else {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [activeFilter, lenisRef]);
+    // `lenisRef` is deliberately not a dependency: it is a ref container, so
+    // its contents never make this effect stale, but its identity changes
+    // whenever ClientWrapper remounts.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeFilter]);
 
   const handlePrev = (e) => {
     e.stopPropagation();

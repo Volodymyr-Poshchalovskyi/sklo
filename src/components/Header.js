@@ -3,7 +3,7 @@ import Link from "next/link";
 import { serviceWideFor } from "@/data/galleryData";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick }) {
   const lettersRef = useRef([]);
@@ -75,6 +75,33 @@ function LangDropdown({ locale, theme }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const isLight = theme === "light";
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Switching language used to send the reader to the locale root, so picking
+  // Deutsch halfway down the gallery landed them at the top of the German home
+  // page. The same page in the other language is the same path with its first
+  // segment swapped.
+  const pathInLocale = (code) => `/${code}${pathname.replace(/^\/[a-z]{2}(?=\/|$)/, "")}`;
+
+  const goTo = (event, code) => {
+    // The href stays real so middle-click and "open in new tab" still work;
+    // this only takes over the plain click, to keep the query string (the
+    // gallery's filter lives there) and the scroll position.
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    event.preventDefault();
+    setOpen(false);
+    // Changing the locale segment remounts the whole tree: for a frame the
+    // document is empty, the browser clamps the scroll to the top, and
+    // `scroll: false` has nothing left to preserve. Hand the position to
+    // ClientWrapper, which puts it back once the new page has height again.
+    try {
+      sessionStorage.setItem("sklo-locale-scroll", String(Math.round(window.scrollY)));
+    } catch {
+      // storage blocked: the switch still works, it just lands at the top
+    }
+    router.push(pathInLocale(code) + window.location.search, { scroll: false });
+  };
 
   const langs = [
     { code: "en", label: "English" },
@@ -145,8 +172,8 @@ function LangDropdown({ locale, theme }) {
           return (
             <Link
               key={lang.code}
-              href={`/${lang.code}`}
-              onClick={() => setOpen(false)}
+              href={pathInLocale(lang.code)}
+              onClick={(event) => goTo(event, lang.code)}
               className="flex items-center gap-2.5 px-5 py-3 text-sm transition-colors duration-150"
               style={{
                 color: isActive ? (isLight ? "#121214" : "#ffffff") : (isLight ? "rgba(18,18,20,0.55)" : "rgba(255,255,255,0.5)"),
