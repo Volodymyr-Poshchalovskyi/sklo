@@ -416,10 +416,8 @@ export function miniGalleryFor(serviceSlug, limit = MINI_GALLERY_LIMIT) {
 // entries use a still extracted from their own first gallery clip instead —
 // those sources are 21 MB and 1.5 MB, far too heavy to autoplay in a menu.
 export const SERVICE_POSTER = {
-  // Portrait crops shot for these cards: the header preview and the service
-  // tiles are both 4:5, so a wide hero still would have been cropped to a
-  // sliver. `web-development` has no shot of its own yet and borrows from the
-  // gallery; `animation-mood-film` is waiting on a clip this toolchain can read.
+  // Portrait crops for these cards: the header preview and the service tiles
+  // are both 4:5, so a wide hero frame would have been cropped to a sliver.
   "exterior-visualization": { src: "/assets/services/exterior-visualization-tile.webp", type: "image" },
   "interior-visualization": { src: "/assets/services/interior-visualization-tile.webp", type: "image" },
   "animation-mood-film": { src: "/assets/home/faqsection.mp4", type: "video" },
@@ -431,7 +429,7 @@ export const SERVICE_POSTER = {
   "graphic-design": { src: "/assets/services/graphic-design-tile.webp", type: "image" },
   "3d-floorplans": { src: "/assets/services/3d-floorplans-tile.webp", type: "image" },
   "fly-around-navigator": { src: "/assets/services/fly-around-navigator-tile.webp", type: "image" },
-  "web-development": { src: "/assets/gallery/interior/002.webp", type: "image" },
+  "web-development": { src: "/assets/services/web-development-tile.webp", type: "image" },
 };
 
 // The 21:9 crop, used only by the header's services curtain. Everywhere else a
@@ -448,7 +446,7 @@ export const SERVICE_WIDE = {
   "graphic-design": { src: "/assets/services/graphic-design-wide.webp", type: "image" },
   "3d-floorplans": { src: "/assets/services/3d-floorplans-wide.webp", type: "image" },
   "fly-around-navigator": { src: "/assets/services/fly-around-navigator.webm", type: "video" },
-  "web-development": { src: "/assets/gallery/interior/002.webp", type: "image" },
+  "web-development": { src: "/assets/services/web-development-wide.webp", type: "image" },
 };
 
 export function serviceWideFor(slug) {

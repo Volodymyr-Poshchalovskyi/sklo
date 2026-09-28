@@ -224,7 +224,7 @@ export const servicesData = [
     slug: "web-development",
     title: "WEB DEVELOPMENT",
     desc: "The site your visuals live on. Project pages, portfolios and landing pages built around the renders, so the work that sells the project is the first thing a visitor meets.",
-    src: "/assets/home/3d tour.jpg",
+    src: "/assets/services/web-development-wide.webp",
     type: "image",
     pipeline: [
       { step: "01", title: "Scope & Structure", desc: "We map what the site has to do — sell a development, present a studio, capture enquiries — and lay out the pages and navigation around that goal." },

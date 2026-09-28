@@ -91,8 +91,30 @@ const pipelineStepVariants = {
   exit: (dir) => ({ opacity: 0, y: dir > 0 ? -20 : 20 }),
 };
 
+// The two services with a pipeline now have their own photography for each of
+// its four steps — briefing, greyscale, first preview, final render — shot on
+// the same project, so the section reads as one job moving through the studio
+// instead of four unrelated pictures.
+const PIPELINE_STEP_MEDIA = {
+  "exterior-visualization": [
+    "/assets/services/pipeline/exterior/01-briefing.webp",
+    "/assets/services/pipeline/exterior/02-greyscale.webp",
+    "/assets/services/pipeline/exterior/03-preview.webp",
+    "/assets/services/pipeline/exterior/04-final.webp",
+  ],
+  "interior-visualization": [
+    "/assets/services/pipeline/interior/01-briefing.webp",
+    "/assets/services/pipeline/interior/02-greyscale.webp",
+    "/assets/services/pipeline/interior/03-preview.webp",
+    "/assets/services/pipeline/interior/04-final.webp",
+  ],
+};
+
 // Function to return distinct high quality media for each of the 4 pipeline steps
 const getStepMedia = (service, index) => {
+  const shot = PIPELINE_STEP_MEDIA[service.slug]?.[index];
+  if (shot) return { src: shot, type: "image" };
+
   if (index === 0) {
     // Step 1: 3D Floorplan / Blueprint
     return { src: "/assets/home/3dplan_interior.jpg", type: "image" };
