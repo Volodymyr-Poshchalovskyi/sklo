@@ -483,13 +483,11 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                       >
                         <StepMedia src={media.src} type={media.type} isActive={isActive} />
                         
-                        {/* Subtle gradient vignette */}
+                        {/* Subtle gradient vignette. No step badge over the
+                            picture: the same "02 / 04" already sits above the
+                            section and again beside the stage's own numeral,
+                            so a third copy on the image was just noise. */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
-                        
-                        {/* Step badge overlay */}
-                        <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-xs font-mono font-bold text-accent pointer-events-none">
-                          {step.step} / {String(service.pipeline.length).padStart(2, "0")}
-                        </div>
                       </div>
                     );
                   })}
@@ -540,10 +538,9 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                   {/* Every stacked step is on screen at some point, so its
                       media plays rather than waiting to become "active". */}
                   <StepMedia src={media.src} type={media.type} isActive />
+                  {/* Same reasoning as the pinned version above: the stage's
+                      number is already the large numeral beside the heading. */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
-                  <div className="media-chip absolute top-3 right-3 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-xs font-mono font-bold pointer-events-none">
-                    {step.step} / {String(service.pipeline.length).padStart(2, "0")}
-                  </div>
                 </div>
               </article>
             );
