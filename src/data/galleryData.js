@@ -412,23 +412,27 @@ export function miniGalleryFor(serviceSlug, limit = MINI_GALLERY_LIMIT) {
 // previews at once.
 //
 // Motion services use a real clip only where a light one exists: the two
-// ~380 KB service loops already in the project. The animation and cinemagraph
-// entries use a still extracted from their own first gallery clip instead —
-// those sources are 21 MB and 1.5 MB, far too heavy to autoplay in a menu.
+// ~380 KB service loops already in the project. Animation, cinemagraph and
+// fly-around now carry their own 4:5 crops of the film each service leads
+// with — re-encoded down to 0.3-1.1 MB, which is light enough to autoplay in
+// a card, unlike the 21 MB gallery masters they were cut from.
 export const SERVICE_POSTER = {
   // Portrait crops for these cards: the header preview and the service tiles
   // are both 4:5, so a wide hero frame would have been cropped to a sliver.
   "exterior-visualization": { src: "/assets/services/exterior-visualization-tile.webp", type: "image" },
   "interior-visualization": { src: "/assets/services/interior-visualization-tile.webp", type: "image" },
-  "animation-mood-film": { src: "/assets/home/faqsection.mp4", type: "video" },
+  // A service whose hero is a film is advertised with that film rather than a
+  // still of it — cropped to the card's 4:5 so the card carries the shot, not
+  // a letterboxed strip of it.
+  "animation-mood-film": { src: "/assets/services/animation-mood-film-tile.webm", type: "video" },
   "bird-eye-visualization": { src: "/assets/services/bird-eye-visualization-tile.webp", type: "image" },
   "360-virtual-tour": { src: "/assets/services/360-virtual-tour-tile.webp", type: "image" },
-  "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot-tile.webp", type: "image" },
+  "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot-tile.webm", type: "video" },
   "product-visualization": { src: "/assets/services/product-visualization-tile.webp", type: "image" },
   "virtual-staging": { src: "/assets/services/virtual-staging-tile.webp", type: "image" },
   "graphic-design": { src: "/assets/services/graphic-design-tile.webp", type: "image" },
   "3d-floorplans": { src: "/assets/services/3d-floorplans-tile.webp", type: "image" },
-  "fly-around-navigator": { src: "/assets/services/fly-around-navigator-tile.webp", type: "image" },
+  "fly-around-navigator": { src: "/assets/services/fly-around-navigator-tile.webm", type: "video" },
   "web-development": { src: "/assets/services/web-development-tile.webp", type: "image" },
 };
 

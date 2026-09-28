@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { servicesData } from "@/data/servicesData";
 import { servicePosterFor } from "@/data/galleryData";
@@ -7,6 +7,7 @@ import Title3D from "@/components/Title3D";
 
 function ServiceMedia({ service }) {
   const videoRef = useRef(null);
+  const [inView, setInView] = useState(false);
 
   // These tiles are 4:5, so they take the portrait crop from the poster map,
   // not `service.src` — that one is the 21:9 frame shot for the header curtain
@@ -15,6 +16,33 @@ function ServiceMedia({ service }) {
   const card = servicePosterFor(service.slug);
   const cardSrc = card?.src ?? service.src;
   const cardIsVideo = card ? card.type === "video" : service.type === "video";
+
+  // A card whose service is a film shows the film, not a frame of it — the
+  // same behaviour the homepage carousel already has. Playback follows the
+  // viewport rather than the pointer, so the tiles are alive on a phone too,
+  // and only the visible ones hold a decoder.
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: "0px", threshold: 0.01 }
+    );
+    observer.observe(videoEl);
+    return () => observer.disconnect();
+  }, [cardIsVideo]);
+
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+    // Reduced motion and a metered connection both mean: leave it on its
+    // first frame until the reader asks for it by hovering.
+    const stillness =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      navigator.connection?.saveData === true;
+    if (inView && !stillness) videoEl.play().catch(() => {});
+    else videoEl.pause();
+  }, [inView]);
 
   const handleMouseEnter = () => {
     if (cardIsVideo && videoRef.current) {
