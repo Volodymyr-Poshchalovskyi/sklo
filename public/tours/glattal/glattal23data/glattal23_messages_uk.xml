@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<krpano>
+
+<!-- ************************ -->
+<!--         Messages         -->
+<!-- ************************ -->
+
+  <data name="uk_project_title"><![CDATA[Glattal 2]]></data>
+
+
+
+  <data name="uk_pano22_title"><![CDATA[ap1_9]]></data>
+
+
+  <data name="uk_pano10_title"><![CDATA[ap1_1]]></data>
+
+
+  <data name="uk_pano11_title"><![CDATA[ap1_10]]></data>
+
+
+  <data name="uk_pano12_title"><![CDATA[ap1_11]]></data>
+
+
+  <data name="uk_pano13_title"><![CDATA[ap1_12]]></data>
+
+
+  <data name="uk_pano14_title"><![CDATA[ap1_13]]></data>
+
+
+  <data name="uk_pano15_title"><![CDATA[ap1_2]]></data>
+
+
+  <data name="uk_pano16_title"><![CDATA[ap1_3]]></data>
+
+
+  <data name="uk_pano17_title"><![CDATA[ap1_4]]></data>
+
+
+  <data name="uk_pano18_title"><![CDATA[ap1_5]]></data>
+
+
+  <data name="uk_pano19_title"><![CDATA[ap1_6]]></data>
+
+
+  <data name="uk_pano20_title"><![CDATA[ap1_7]]></data>
+
+
+  <data name="uk_pano21_title"><![CDATA[ap1_8]]></data>
+
+
+  <data name="uk_pano36_title"><![CDATA[ap2_1]]></data>
+
+
+  <data name="uk_pano37_title"><![CDATA[ap2_10]]></data>
+
+
+  <data name="uk_pano38_title"><![CDATA[ap2_11]]></data>
+
+
+  <data name="uk_pano39_title"><![CDATA[ap2_2]]></data>
+
+
+  <data name="uk_pano40_title"><![CDATA[ap2_3]]></data>
+
+
+  <data name="uk_pano41_title"><![CDATA[ap2_4]]></data>
+
+
+  <data name="uk_pano42_title"><![CDATA[ap2_5]]></data>
+
+
+  <data name="uk_pano43_title"><![CDATA[ap2_6]]></data>
+
+
+  <data name="uk_pano44_title"><![CDATA[ap2_7]]></data>
+
+
+  <data name="uk_pano45_title"><![CDATA[ap2_8]]></data>
+
+
+  <data name="uk_pano46_title"><![CDATA[ap2_9]]></data>
+
+
+
+
+	<data name="uk_project_floor_title"><![CDATA[Glattal 2]]></data>
+	<data name="uk_spotmap264_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap265_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap266_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap267_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap268_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap269_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap270_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap271_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap272_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap273_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap274_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap275_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap276_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap277_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap278_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap279_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap280_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap281_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap282_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap283_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap284_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap285_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap286_tooltip"><![CDATA[]]></data>
+	<data name="uk_spotmap287_tooltip"><![CDATA[]]></data>
+
+
+  <data name="uk_buttontooltip"><![CDATA[Apartment 1]]></data>
+  <data name="uk_button1tooltip"><![CDATA[Apartment 2]]></data>
+  <data name="uk_button4tooltip"><![CDATA[]]></data>
+  <data name="uk_floorPlanmenu_label"><![CDATA[Select a floor plan]]></data>
+  <data name="uk_floorPlandisplay_close_text"><![CDATA[Close]]></data>
+  <data name="uk_button6tooltip"><![CDATA[]]></data>
+
+
+  <data name="uk_vr_setup_hmd0"><![CDATA[SELECT YOUR HMD]]></data>
+  <data name="uk_vr_setup_advanced"><![CDATA[ADVANCED SETTINGS]]></data>
+  <data name="uk_vr_setup_title"><![CDATA[WEB VR SETTINGS]]></data>
+  <data name="uk_vr_setup_dvn1"><![CDATA[Device:]]></data>
+  <data name="uk_vr_setup_siz1"><![CDATA[Screen size:]]></data>
+  <data name="uk_vr_setup_ipd1"><![CDATA[IPD:]]></data>
+  <data name="uk_vr_setup_hmd1"><![CDATA[HMD:]]></data>
+  <data name="uk_vr_setup_hmd3"><![CDATA[Customize]]></data>
+  <data name="uk_vr_setup_cal"><![CDATA[Calibrate gyroscope]]></data>
+  <data name="uk_vr_setup_sav"><![CDATA[SAVE]]></data>
+  <data name="uk_vr_setup_rst"><![CDATA[RESET]]></data>
+  <data name="uk_vr_setup_simple"><![CDATA[SIMPLE]]></data>
+  <data name="uk_vr_setup_cls"><![CDATA[CLOSE]]></data>
+  <data name="uk_vr_setup_m31"><![CDATA[HMD SETTINGS]]></data>
+  <data name="uk_vr_setup_fov1"><![CDATA[FOV:]]></data>
+  <data name="uk_vr_setup_dst1"><![CDATA[Distortion:]]></data>
+  <data name="uk_vr_setup_d2tx"><![CDATA[Distortion 2:]]></data>
+  <data name="uk_vr_setup_vig1"><![CDATA[Vignette:]]></data>
+  <data name="uk_vr_setup_cac1"><![CDATA[Chromatic aberration:]]></data>
+  <data name="uk_vr_setup_olp1"><![CDATA[Overlap:]]></data>
+  <data name="uk_vr_setup_m35"><![CDATA[RETURN]]></data>
+  <data name="uk_vr_setup_cb1"><![CDATA[GYROSCOPE]]></data>
+  <data name="uk_vr_setup_cb2"><![CDATA[Place the device on a flat and[br]stable surface and tab CALIBRATE[br]to correct a gyroscope drifting.]]></data>
+  <data name="uk_vr_setup_cb3"><![CDATA[CALIBRATE]]></data>
+  <data name="uk_vr_setup_cb4"><![CDATA[RESET]]></data>
+  <data name="uk_vr_setup_cb5"><![CDATA[RETURN]]></data>
+  <data name="uk_vr_setup_cb6"><![CDATA[Calibrating...]]></data>
+  <data name="uk_vr_setup_cb7"><![CDATA[Successful calibration]]></data>
+  <data name="uk_vr_setup_cb8"><![CDATA[Calibration failed]]></data>
+  <data name="uk_vr_setup_unavailable"><![CDATA[VR mode[br]is unavailable on your device]]></data>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</krpano>

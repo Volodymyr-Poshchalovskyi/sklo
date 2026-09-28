@@ -415,10 +415,6 @@ export function miniGalleryFor(serviceSlug, limit = MINI_GALLERY_LIMIT) {
 // ~380 KB service loops already in the project. The animation and cinemagraph
 // entries use a still extracted from their own first gallery clip instead —
 // those sources are 21 MB and 1.5 MB, far too heavy to autoplay in a menu.
-//
-// APPROXIMATE: `web-development` has no shot category in the archive, so it
-// borrows a related still. Swap it once there is real work to point at — it
-// wants a screenshot of a delivered site, not a render.
 export const SERVICE_POSTER = {
   // Portrait crops shot for these cards: the header preview and the service
   // tiles are both 4:5, so a wide hero still would have been cropped to a
@@ -476,7 +472,7 @@ export const SERVICE_TOUR = {
   "360-virtual-tour": [
     {
       id: "wermatswil-interior",
-      title: "Wermatswil Residence",
+      title: "Wermatswil",
       label: { en: "Interior", de: "Innen" },
       entry: "/tours/wermatswil/WERMATSWIL_360TOUR_for_sklo.html",
       // Cropped from each tour's own cube faces, so the poster is a scene the
@@ -486,11 +482,38 @@ export const SERVICE_TOUR = {
     },
     {
       id: "wermatswil-exterior",
-      title: "Wermatswil Residence",
+      title: "Wermatswil",
       label: { en: "Exterior", de: "Aussen" },
       entry: "/tours/wermatswil-exterior/WERM_360_EXTERIOR_SKLO.html",
       poster: "/assets/tours/wermatswil-exterior-poster.webp",
       scenes: 6,
+    },
+    {
+      id: "oetlisberg",
+      title: "Oetlisberg",
+      label: { en: "Interior", de: "Innen" },
+      entry: "/tours/oetlisberg/oetlisberg_FOR_SKLO.html",
+      poster: "/assets/tours/oetlisberg-poster.webp",
+      scenes: 10,
+    },
+    {
+      id: "waidhof",
+      title: "Waidhof",
+      label: { en: "Interior", de: "Innen" },
+      entry: "/tours/waidhof/waidhof_for_sklo.html",
+      poster: "/assets/tours/waidhof-poster.webp",
+      scenes: 21,
+    },
+    {
+      id: "glattal",
+      title: "Glattal",
+      label: { en: "Interior", de: "Innen" },
+      // This export arrived without its entry page; it was rebuilt from the
+      // Oetlisberg one, which is the same Panotour version — the wrapper is
+      // boilerplate apart from the data folder and the XML base name.
+      entry: "/tours/glattal/glattal23.html",
+      poster: "/assets/tours/glattal-poster.webp",
+      scenes: 24,
     },
   ],
 };

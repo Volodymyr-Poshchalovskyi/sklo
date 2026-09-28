@@ -31,6 +31,19 @@ export default function TourEmbed({ tours, locale = "en", className = "" }) {
 
   const de = locale === "de";
   const tour = list[Math.min(activeIndex, list.length - 1)];
+  // The list used to be one property shown twice, so the buttons could just
+  // say Interior and Exterior. It now spans several properties, and a button
+  // that only says "Interior" no longer identifies anything — so each one
+  // leads with the property and keeps the part only where that property has
+  // more than one tour.
+  const titleCounts = list.reduce((acc, item) => {
+    acc[item.title] = (acc[item.title] ?? 0) + 1;
+    return acc;
+  }, {});
+  const switcherLabel = (item) => {
+    const part = de ? item.label.de : item.label.en;
+    return titleCounts[item.title] > 1 ? `${item.title} · ${part}` : item.title;
+  };
 
   const openFullscreen = () => {
     const el = frameRef.current;
@@ -61,7 +74,7 @@ export default function TourEmbed({ tours, locale = "en", className = "" }) {
                   isActive ? "tour-tab-active" : ""
                 }`}
               >
-                {de ? item.label.de : item.label.en}
+                {switcherLabel(item)}
               </button>
             );
           })}
@@ -124,7 +137,7 @@ export default function TourEmbed({ tours, locale = "en", className = "" }) {
               <span className="flex flex-col gap-1.5">
                 <span className="text-lg md:text-xl font-bold uppercase tracking-[0.14em]">
                   {tour.title}
-                  {list.length > 1 && (
+                  {titleCounts[tour.title] > 1 && (
                     <> · {de ? tour.label.de : tour.label.en}</>
                   )}
                 </span>
