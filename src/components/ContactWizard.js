@@ -470,7 +470,7 @@ function ContactWizardInner({ locale }) {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full bg-white/[0.02] border border-white/10 rounded-3xl p-10 md:p-16 flex flex-col items-center text-center gap-6"
+        className="contact-wizard w-full bg-white/[0.02] border border-white/10 rounded-3xl p-10 md:p-16 flex flex-col items-center text-center gap-6"
       >
         <motion.div
           initial={{ scale: 0, rotate: -45 }}
@@ -502,7 +502,7 @@ function ContactWizardInner({ locale }) {
   }
 
   return (
-    <div className="w-full bg-white/[0.02] border border-white/10 rounded-3xl p-6 sm:p-8 md:p-12">
+    <div className="contact-wizard w-full bg-white/[0.02] border border-white/10 rounded-3xl p-6 sm:p-8 md:p-12">
       {/* Progress Stepper */}
       <div className="flex items-center w-full mb-10">
         {STEPS.map((s, idx) => {

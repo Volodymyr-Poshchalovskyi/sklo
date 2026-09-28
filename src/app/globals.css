@@ -168,13 +168,17 @@ html {
   color: #ffffff !important;
 }
 
+/* Every white-tinted border in the dark design lands here in light theme. At
+   0.08 on near-white paper it was about a 3% step, which read as no line at
+   all — form fields, cards and dividers all looked unframed. 0.14 is still
+   quiet but actually draws. */
 :root[data-theme="light"] .border-white\/5,
 :root[data-theme="light"] .border-white\/10,
 :root[data-theme="light"] .border-white\/15,
 :root[data-theme="light"] .border-white\/20,
 :root[data-theme="light"] .border-white\/30,
 :root[data-theme="light"] .border-white\/50 {
-  border-color: rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(18, 18, 20, 0.14) !important;
 }
 
 :root[data-theme="light"] .bg-white {
@@ -369,12 +373,52 @@ html {
   border-color: rgba(255, 255, 255, 0.2) !important;
 }
 
+/* Contact wizard in light theme. The blanket rule above flattens every
+   white-tinted border to rgba(0,0,0,0.08), which on this near-white card is
+   about a 3% step — the option tiles, the panel and the stepper's connecting
+   lines all but disappeared, and the done/active/idle steps became
+   indistinguishable. Inside the wizard each tint keeps its own weight, scaled
+   to ink. */
+:root[data-theme="light"] .contact-wizard,
+:root[data-theme="light"] .contact-wizard .border-white\/10 {
+  border-color: rgba(18, 18, 20, 0.16) !important;
+}
+:root[data-theme="light"] .contact-wizard .border-white\/15 {
+  border-color: rgba(18, 18, 20, 0.2) !important;
+}
+:root[data-theme="light"] .contact-wizard .border-white\/20 {
+  border-color: rgba(18, 18, 20, 0.24) !important;
+}
+:root[data-theme="light"] .contact-wizard .border-white\/25 {
+  border-color: rgba(18, 18, 20, 0.3) !important;
+}
+:root[data-theme="light"] .contact-wizard .hover\:border-white\/30:hover {
+  border-color: rgba(18, 18, 20, 0.38) !important;
+}
+:root[data-theme="light"] .contact-wizard .border-white\/40 {
+  border-color: rgba(18, 18, 20, 0.45) !important;
+}
+:root[data-theme="light"] .contact-wizard .hover\:border-white\/40:hover,
+:root[data-theme="light"] .contact-wizard .hover\:border-white\/50:hover {
+  border-color: rgba(18, 18, 20, 0.55) !important;
+}
+/* The stepper's rails are backgrounds, not borders. */
+:root[data-theme="light"] .contact-wizard .bg-white\/10 {
+  background-color: rgba(18, 18, 20, 0.16) !important;
+}
+:root[data-theme="light"] .contact-wizard .bg-white\/20 {
+  background-color: rgba(18, 18, 20, 0.12) !important;
+}
+:root[data-theme="light"] .contact-wizard .bg-white\/40 {
+  background-color: rgba(18, 18, 20, 0.45) !important;
+}
+
 /* Global Form Elements */
 :root[data-theme="light"] input,
 :root[data-theme="light"] textarea,
 :root[data-theme="light"] select {
   background-color: rgba(0, 0, 0, 0.03) !important;
-  border-color: rgba(0, 0, 0, 0.1) !important;
+  border-color: rgba(18, 18, 20, 0.18) !important;
   color: #121214 !important;
 }
 :root[data-theme="light"] input::placeholder,
