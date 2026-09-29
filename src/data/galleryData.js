@@ -441,7 +441,7 @@ export const SERVICE_POSTER = {
 export const SERVICE_WIDE = {
   "exterior-visualization": { src: "/assets/services/exterior-visualization-wide.webp", type: "image" },
   "interior-visualization": { src: "/assets/services/interior-visualization-wide.webp", type: "image" },
-  "animation-mood-film": { src: "/assets/home/faqsection.mp4", type: "video" },
+  "animation-mood-film": { src: "/assets/services/animation-mood-film-wide.mp4", type: "video" },
   "bird-eye-visualization": { src: "/assets/services/bird-eye-visualization-wide.webp", type: "image" },
   "360-virtual-tour": { src: "/assets/services/360-virtual-tour-wide.webp", type: "image" },
   "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot.webm", type: "video" },

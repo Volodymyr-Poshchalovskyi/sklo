@@ -171,7 +171,7 @@ export default function FAQ({ locale = "en" }) {
         muted
         playsInline
         preload="none"
-        src={videoLoaded ? "/assets/home/faqsection.mp4" : undefined}
+        src={videoLoaded ? "/assets/services/animation-mood-film-wide.mp4" : undefined}
         className="absolute inset-0 w-full h-full object-cover z-0"
         style={{ pointerEvents: "none" }}
       />

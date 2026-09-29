@@ -44,7 +44,7 @@ export const servicesData = [
     slug: "animation-mood-film",
     title: "ANIMATION | MOOD FILM",
     desc: "A cinematic story that captures attention and excitement around your project. Experience the mood, the story, the life of your project through the screen.",
-    src: "/assets/home/faqsection.mp4",
+    src: "/assets/services/animation-mood-film-wide.mp4",
     type: "video",
     pipeline: [
       { step: "01", title: "Storyboard & Styleframe", desc: "We write a shot list, layout key frames, outline the sound design direction and video rhythm." },
