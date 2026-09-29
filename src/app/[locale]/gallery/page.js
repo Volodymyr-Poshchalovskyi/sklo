@@ -6,14 +6,41 @@ import { useSearchParams, useParams } from "next/navigation";
 import { useLenis } from "@/context/LenisContext";
 import { galleryItems, allProjectsItems, virtualStagingPairs, serviceTourFor } from "@/data/galleryData";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import LightboxVideo from "@/components/LightboxVideo";
 import TourEmbed from "@/components/TourEmbed";
 import Title3D from "@/components/Title3D";
 
 function GalleryCard({ item, onClick }) {
   const videoRef = useRef(null);
 
+  // A film that fades up from black showed a black tile at rest and started
+  // its hover preview on nothing. `item.start` moves the resting frame — and
+  // the start of every hover — past the fade.
+  const seekToStart = () => {
+    const el = videoRef.current;
+    if (!el || !item.start) return;
+    if (el.currentTime < item.start) el.currentTime = item.start;
+  };
+
+  // Seeking needs the metadata, and the `onLoadedMetadata` prop alone misses
+  // it: the element comes from the server markup, so the browser has often
+  // read the metadata before React ever attaches a handler. This catches both
+  // orders — already loaded, or still to come.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el || !item.start) return;
+    if (el.readyState >= 1) {
+      seekToStart();
+      return;
+    }
+    el.addEventListener("loadedmetadata", seekToStart, { once: true });
+    return () => el.removeEventListener("loadedmetadata", seekToStart);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item.start, item.src]);
+
   const handleMouseEnter = () => {
     if (item.type === "video" && videoRef.current) {
+      seekToStart();
       videoRef.current.play().catch(() => {});
     }
   };
@@ -21,6 +48,7 @@ function GalleryCard({ item, onClick }) {
   const handleMouseLeave = () => {
     if (item.type === "video" && videoRef.current) {
       videoRef.current.pause();
+      seekToStart();
     }
   };
 
@@ -40,6 +68,7 @@ function GalleryCard({ item, onClick }) {
           ref={videoRef}
           src={item.src}
           preload="metadata"
+          onLoadedMetadata={seekToStart}
           loop
           muted
           playsInline
@@ -489,12 +518,10 @@ function GalleryPageContent() {
             className="relative w-full max-w-[min(1800px,92vw)] max-h-[92vh] flex flex-col items-center justify-center"
           >
             {filteredItems[selectedItemIndex]?.type === "video" ? (
-              <video
+              <LightboxVideo
                 key={filteredItems[selectedItemIndex].id}
                 src={filteredItems[selectedItemIndex].src}
-                controls
-                autoPlay
-                loop
+                start={filteredItems[selectedItemIndex].start}
                 className="max-w-full max-h-[80vh] rounded-lg object-contain shadow-2xl"
               />
             ) : (

@@ -5,13 +5,13 @@
 // that folder is the intended display order — the strongest, most "sellable"
 // visuals first, weaker work in the middle, strong work again at the end — so
 // it is preserved exactly here, and the grid must render it in this order.
-// Animation/cinemagraph mp4s were re-encoded from the originals, downscaled
-// to max 1920px wide with audio stripped (playback is always muted). Most
-// went through the system ffmpeg (libopenh264, since that build has no
-// libx264); two portrait animation sources (3000x4500 / 2000x3000) that
-// build's decoder couldn't read went through VLC's bundled flatpak ffmpeg
-// instead (`flatpak run --command=ffmpeg org.videolan.VLC`), which does
-// have libx264/a real H.264 decoder.
+// Animation/cinemagraph mp4s are re-encoded from the originals with x264
+// (preset slow, CRF 25 for the films and 27 for the loops), scaled so neither
+// side passes 1920. They KEEP their soundtrack now — every animation master
+// and seven of the twelve cinemagraphs carry one, and the films were sold as
+// films with sound. The grid and the hover previews stay muted; the lightbox
+// autoplays muted and hands the viewer the controls, because a browser will
+// not autoplay audio nobody asked for.
 //
 // `width`/`height` are the media's REAL intrinsic pixel dimensions, read off
 // the files themselves — the grid derives each tile's aspect ratio from them
@@ -262,12 +262,16 @@ export const galleryItems = [
   { id: 227, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/008.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160 },
 
   // Animation
-  { id: 228, category: "Animation", src: "/assets/gallery/animation/001.mp4", type: "video", title: "Animation", width: 1920, height: 1080 },
+  // `start` skips a film's fade-in. These two open on black — held for about a
+  // second — so at rest the tile was a dark rectangle and the lightbox opened
+  // on nothing. Playback begins from this second instead; nothing is cut from
+  // the file, so the rest of the film is still there to scrub back to.
+  { id: 228, category: "Animation", src: "/assets/gallery/animation/001.mp4", type: "video", title: "Animation", width: 1920, height: 1080, start: 1.2 },
   { id: 229, category: "Animation", src: "/assets/gallery/animation/002.mp4", type: "video", title: "Animation", width: 1920, height: 1080 },
-  { id: 230, category: "Animation", src: "/assets/gallery/animation/003.mp4", type: "video", title: "Animation", width: 1664, height: 1244 },
+  { id: 230, category: "Animation", src: "/assets/gallery/animation/003.mp4", type: "video", title: "Animation", width: 1664, height: 1244, start: 1.4 },
   { id: 231, category: "Animation", src: "/assets/gallery/animation/004.mp4", type: "video", title: "Animation", width: 1920, height: 1080 },
-  { id: 232, category: "Animation", src: "/assets/gallery/animation/005.mp4", type: "video", title: "Animation", width: 1920, height: 2880 },
-  { id: 233, category: "Animation", src: "/assets/gallery/animation/006.mp4", type: "video", title: "Animation", width: 1920, height: 2880 },
+  { id: 232, category: "Animation", src: "/assets/gallery/animation/005.mp4", type: "video", title: "Animation", width: 1280, height: 1920 },
+  { id: 233, category: "Animation", src: "/assets/gallery/animation/006.mp4", type: "video", title: "Animation", width: 1280, height: 1920 },
 
   // Cinemagraph
   { id: 234, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/001.mp4", type: "video", title: "Cinemagraph", width: 1248, height: 1664 },

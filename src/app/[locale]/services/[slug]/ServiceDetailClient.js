@@ -7,6 +7,7 @@ import ServicesCarousel from "@/components/ServicesCarousel";
 import Title3D from "@/components/Title3D";
 import TourEmbed from "@/components/TourEmbed";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
+import LightboxVideo from "@/components/LightboxVideo";
 import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor, serviceTourFor } from "@/data/galleryData";
 import { useLenis } from "@/context/LenisContext";
 
@@ -736,12 +737,9 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                     className="max-w-full max-h-full flex items-center justify-center"
                   >
                     {miniItems[activeMediaIndex].type === "video" ? (
-                      <video 
+                      <LightboxVideo
                         src={miniItems[activeMediaIndex].src}
-                        autoPlay
-                        controls
-                        loop
-                        playsInline
+                        start={miniItems[activeMediaIndex].start}
                         className="max-w-full max-h-[78vh] object-contain rounded-2xl shadow-2xl border border-white/5"
                       />
                     ) : (
