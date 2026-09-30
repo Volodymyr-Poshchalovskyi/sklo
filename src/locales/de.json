@@ -1,16 +1,286 @@
 {
   "nav": {
+    "home": "Home",
     "services": "Leistungen",
-    "about": "Über uns",
-    "contact": "Kontakt"
+    "gallery": "Galerie",
+    "contact": "Kontakt",
+    "about": "Team"
+  },
+  "header": {
+    "cta": "Anfragen",
+    "preview": "SKLO Leistungsvorschau",
+    "toggleTheme": "Design wechseln",
+    "toggleMenu": "Menü umschalten",
+    "skipToContent": "Zum Inhalt springen"
   },
   "hero": {
     "title": "Wir gestalten 3D-Erlebnisse",
     "subtitle": "Ein Studio für 3D-Visualisierung, Motion & Produktrendering.",
+    "headlineLead": "Visualisierungen",
+    "headlineAccent": "",
+    "for": "für",
+    "words": [
+      "Architekten",
+      "Entwickler",
+      "Immobilien"
+    ],
     "cta": "Leistungen",
     "contact": "Kontakt aufnehmen"
   },
-  "whoWeAre": {
-    "viewAll": "Alle Leistungen"
+  "home": {
+    "services": {
+      "eyebrow": "Was wir machen",
+      "title": "UNSERE LEISTUNGEN",
+      "viewAll": "Alle Leistungen"
+    },
+    "values": {
+      "eyebrow": "Das Studio",
+      "title": "UNSERE WERTE",
+      "intro": "Wir helfen Architekten, Designern und Entwicklern, ihre Visionen sichtbar zu machen. Vom einzelnen Bild bis zum vollständigen Film ist es unser Ziel, Arbeiten zu schaffen, die nicht nur wirken, sondern auch inspirieren und in Erinnerung bleiben.",
+      "items": {
+        "communication": {
+          "title": "KLARE KOMMUNIKATION",
+          "desc": "Enge Abstimmung und laufendes Feedback: Sie wissen jederzeit, woran wir arbeiten. Der Prozess bleibt von Anfang bis Ende transparent."
+        },
+        "discounts": {
+          "title": "RABATTE UND BONI",
+          "desc": "Wir bieten exklusive Konditionen für Neu- und Bestandskunden."
+        },
+        "workflow": {
+          "title": "REIBUNGSLOSER ABLAUF",
+          "desc": "Unser Ablauf ist klar und nachvollziehbar und führt Sie mit definierten Etappen und pünktlichen Updates vom Konzept bis zum finalen Rendering."
+        },
+        "precision": {
+          "title": "PRÄZISION IM DESIGN",
+          "desc": "Mit fundiertem Hintergrund in Design und Architektur übersetzen wir Ihre Pläne in Bilder, die Ihrem Entwurf treu bleiben und ihn zugleich stärker wirken lassen."
+        },
+        "quality": {
+          "title": "HERAUSRAGENDE BILDQUALITÄT",
+          "desc": "Wir gestalten Visualisierungen mit überzeugendem Realismus, präzisen Details und perfekter Lichtführung — damit Ihr Projekt im besten Licht steht und in Erinnerung bleibt."
+        },
+        "speed": {
+          "title": "TEMPO & VERLÄSSLICHKEIT",
+          "desc": "Termine sind immer knapp, das wissen wir. Unser Ablauf ist auf schnelle Lieferung ausgelegt — ohne Abstriche bei der Qualität."
+        }
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Gut zu wissen",
+    "title": "FAQ",
+    "intro": "Die Fragen, die uns am häufigsten gestellt werden — zu Unterlagen, Terminen, Preisen und dazu, wie ein Projekt vom Start bis zum finalen Rendering tatsächlich abläuft.",
+    "askCopy": "Noch etwas offen? Erzählen Sie uns von Ihrem Projekt — wir melden uns mit konkreten Angaben.",
+    "askCta": "Direkt nachfragen",
+    "items": {
+      "start": {
+        "q": "Was brauchen wir für den Projektstart?",
+        "p1": "Wir starten mit Ihrem 3D-Modell oder Ihren Plänen und einem Briefing zu Stimmung, Materialien und Zielen des Projekts. Über unser strukturiertes Onboarding bereitet unser Team Ihr Modell auf und übersetzt alle Vorgaben in hochwertige Visualisierungen.",
+        "linkText": "Hier klicken",
+        "linkTail": "für die vollständige Liste der benötigten Unterlagen."
+      },
+      "workflow": {
+        "q": "Wie läuft ein Projekt ab?",
+        "intro": "Jedes Projekt durchläuft die folgenden Etappen:",
+        "steps": [
+          {
+            "title": "Briefing",
+            "desc": "Sie stellen alle nötigen Unterlagen bereit. In dieser Phase erstellen wir auch eine Kostenschätzung und einen Terminplan."
+          },
+          {
+            "title": "Modellierung & Optimierung",
+            "desc": "Wir erstellen oder überarbeiten das 3D-Modell auf Basis aller Pläne und Referenzen — präzise und effizient für die weitere Visualisierung."
+          },
+          {
+            "title": "Kameras & Atmosphäre",
+            "desc": "Wir liefern Graustufen-Renderings, um die besten Kamerawinkel und die Gesamtatmosphäre abzustimmen und freizugeben."
+          },
+          {
+            "title": "Farbige Previews",
+            "desc": "Sie erhalten vollständig texturierte und farbige Renderings mit den gewählten Ansichten und der abgestimmten Atmosphäre. Wir sammeln Ihr Feedback und bereiten die Bilder für das finale Rendering vor."
+          },
+          {
+            "title": "Finale Bilder",
+            "desc": "Sie erhalten die finalen Visualisierungen in hoher Auflösung — bereit für Präsentationen, Marketing und Publikationen."
+          }
+        ]
+      },
+      "duration": {
+        "q": "Wie lange dauert ein Projekt?",
+        "paragraphs": [
+          "Der Zeitplan ist immer individuell und hängt von Komplexität, Zielen, Umfang, Qualität der Unterlagen, Reaktionszeiten und vielen weiteren Faktoren ab.",
+          "Kleinere Projekte dauern in der Regel rund 7 Arbeitstage, erste Entwürfe liefern wir meist schon in den ersten Tagen nach dem Start.",
+          "Uns ist bewusst, dass Termine oft knapp sind. Wir organisieren unser Team so, dass wir schnellstmöglich liefern — bei durchgehend transparenter Kommunikation und täglichen Updates.",
+          "Vor dem Start erhält jeder Kunde einen vorläufigen Terminplan mit allen wichtigen Etappen, an den wir uns während der gesamten Zusammenarbeit konsequent halten."
+        ]
+      },
+      "pricing": {
+        "q": "Wie setzt sich der Preis zusammen?",
+        "paragraphs": [
+          "Unsere Preise richten sich nach Projektart (Aussen- oder Innenvisualisierung, Animation, 360°-Tour usw.), Zielsetzung, Umfang und Terminen. Wir kalkulieren flexibel und erstellen vor Projektbeginn für jedes Vorhaben ein individuelles Angebot.",
+          "Zusätzlich haben wir ein klares Partnerschafts-Rabattprogramm für Neu- und Bestandskunden — ausgelegt auf eine langfristige, beidseitig lohnende Zusammenarbeit."
+        ]
+      },
+      "partnership": {
+        "q": "Gibt es Partnerprogramme?",
+        "p1": "Ja, wir haben ein laufendes System aus Rabatten, Angeboten und Boni für Neu- und Bestandskunden.",
+        "p2": {
+          "before": "Jeder Neukunde erhält ",
+          "strong": "30 % Rabatt",
+          "after": " — so lernen Sie unsere Leistungen und unseren Ablauf kennen, ohne beim ersten Projekt zu viel zu investieren."
+        },
+        "p3": {
+          "before": "Für die weitere Zusammenarbeit haben wir ein einfaches, transparentes Empfehlungsprogramm: Wenn Sie uns an Kollegen, Freunde oder Partner weiterempfehlen und daraus ein Projekt entsteht, erhalten Sie beide ",
+          "strong": "15 % Rabatt",
+          "after": " auf das nächste Projekt. Es gibt keine Obergrenze — Sie können das Partnerprogramm so oft nutzen, wie Sie möchten."
+        },
+        "p4": "Zusätzlich erhält jeder Kunde nach Projektabschluss exklusive Gratis-Boni — Material, mit dem Sie Ihr Projekt noch wirkungsvoller präsentieren."
+      }
+    }
+  },
+  "footer": {
+    "eyebrow": "Kontakt",
+    "heading": "BEREIT FÜR IHR NÄCHSTES PROJEKT?",
+    "copy": "Ein paar Angaben genügen — wir melden uns kurzfristig bei Ihnen. Wir freuen uns auf Ihr Projekt!",
+    "emailLead": "…oder schreiben Sie uns einfach an",
+    "form": {
+      "nameLabel": "Name",
+      "firstName": "Vorname (Pflichtfeld)",
+      "lastName": "Nachname (Pflichtfeld)",
+      "emailLabel": "E-Mail-Adresse",
+      "email": "E-Mail (Pflichtfeld)",
+      "messageLabel": "Ihre Nachricht",
+      "message": "Nachricht (Pflichtfeld)",
+      "submit": "Senden"
+    },
+    "explore": "Entdecken",
+    "links": {
+      "about": "Team",
+      "contact": "Kontakt",
+      "services": "Leistungen",
+      "portfolio": "Galerie"
+    },
+    "follow": "Folgen Sie uns"
+  },
+  "about": {
+    "eyebrow": "Das Studio",
+    "title": "Unser Team",
+    "roles": {
+      "founder": "GRÜNDER / ART DIRECTOR",
+      "leadArtist": "LEAD ARTIST",
+      "seniorArtist": "SENIOR ARTIST",
+      "graphicDesigner": "GRAFIKDESIGN",
+      "talentManager": "TALENT MANAGER",
+      "financialManager": "FINANZEN"
+    }
+  },
+  "contact": {
+    "title": "KONTAKT",
+    "intro": "Beantworten Sie ein paar kurze Fragen zu Ihrem Projekt — wir melden uns mit einem individuellen Angebot bei Ihnen."
+  },
+  "services": {
+    "eyebrow": "Unser Angebot",
+    "title": "Alle Leistungen",
+    "detail": {
+      "requestPricing": "Preisanfrage senden",
+      "scroll": "Scrollen",
+      "workflowEyebrow": "Prozess",
+      "workflowTitle": "Wie wir arbeiten",
+      "pipeline": "PROZESS",
+      "showcaseEyebrow": "Portfolio",
+      "showcaseTitle": "Projektgalerie",
+      "toursEyebrow": "Live-Demo",
+      "toursTitle": "360°-Touren erkunden",
+      "exploreEyebrow": "Entdecken",
+      "exploreTitle": "Weitere Leistungen",
+      "viewAll": "ALLE LEISTUNGEN",
+      "lightboxHint": "Pfeiltasten zur Navigation | ESC zum Schliessen",
+      "stepAlt": "Visual zum Arbeitsschritt",
+      "lightboxAlt": "Galeriebild im Vollbild"
+    }
+  },
+  "gallery": {
+    "title": "Galerie",
+    "all": "Alle Projekte",
+    "categoryInfo": "Kategorie",
+    "dragToCompare": "Zum Vergleichen ziehen",
+    "before": "Vorher",
+    "after": "Nachher",
+    "comparison": "Vergleich",
+    "closeLightbox": "Lightbox schliessen",
+    "prevItem": "Vorheriges Bild",
+    "nextItem": "Nächstes Bild",
+    "prevSlide": "Vorherige Folie",
+    "nextSlide": "Nächste Folie",
+    "categories": {
+      "All": {
+        "label": "Alle Projekte",
+        "desc": "Ein kuratierter Querschnitt unserer Architekturarbeiten — Aussen, Innen, Vogelperspektive und Bewegtbild nebeneinander. Produkt, Virtual Staging und 360°-Touren haben eigene Bereiche."
+      },
+      "Exterior": {
+        "label": "Aussen",
+        "desc": "Fotorealistische Architekturvisualisierungen, die Gebäude, Bauwerke und Aussenräume in ihrer realen Umgebung zeigen."
+      },
+      "Interior": {
+        "label": "Innen",
+        "desc": "Detailreiche Innenvisualisierungen, die Licht, Materialien und Atmosphäre einfangen und Wohn- wie Geschäftsräume erlebbar machen."
+      },
+      "Bird's-Eye View": {
+        "label": "Vogel­perspektive",
+        "desc": "Luft- und Drohnenperspektiven, die ein Projekt im Kontext seines Quartiers und der umgebenden Landschaft zeigen."
+      },
+      "Product": {
+        "label": "Produkt",
+        "desc": "Produktvisualisierungen in Studioqualität von Möbeln und Objekten — ausgeleuchtet und inszeniert für Kataloge und Marketing."
+      },
+      "Virtual Staging": {
+        "label": "Virtual Staging",
+        "desc": "Reale Innenaufnahmen, digital möbliert und eingerichtet, um das volle Potenzial eines Raums zu zeigen."
+      },
+      "360° Tours": {
+        "label": "360°-Touren",
+        "desc": "Begehbare 360°-Rundgänge durch ein fertiges Projekt — zum Umsehen ziehen, über den Grundriss die Szene wechseln."
+      },
+      "Animation": {
+        "label": "Animation",
+        "desc": "Architekturfilme und Motion-Showcases, die ein Projekt über Kamerafahrt und Stimmung zum Leben erwecken."
+      },
+      "Cinemagraph": {
+        "label": "Cinemagraph",
+        "desc": "Statische Visualisierungen mit feinen Loop-Animationen, die den Blick sofort auf zentrale Details lenken."
+      }
+    },
+    "shownOf": "{shown} von {total} sichtbar",
+    "loadMore": "Mehr laden",
+    "backToTop": "Nach oben"
+  },
+  "wizard": {
+    "steps": {
+      "type": "Leistungen",
+      "scope": "Umfang",
+      "budget": "Budget & Zeit",
+      "materials": "Unterlagen",
+      "details": "Kontakt"
+    },
+    "budget": {
+      "b1": "Bis CHF 1'000",
+      "b2": "CHF 1'000 – 5'000",
+      "b3": "CHF 5'000 – 15'000",
+      "b4": "CHF 15'000+"
+    },
+    "timeline": {
+      "asap": "Schnellstmöglich",
+      "2weeks": "1–2 Wochen",
+      "1month": "Innerhalb eines Monats",
+      "flexible": "Flexibel"
+    },
+    "materials": {
+      "model": "3D-Modell / CAD-Dateien",
+      "drawings": "Architekturpläne",
+      "photos": "Referenzfotos",
+      "scratch": "Noch nichts vorhanden"
+    },
+    "quantityTbd": "Anzahl noch offen",
+    "decrease": "Verringern",
+    "increase": "Erhöhen"
   }
 }

@@ -5,10 +5,28 @@ import Image from "next/image";
 export default function Loader({ onComplete }) {
   const [phase, setPhase] = useState("visible");
 
+  // 2.8s of animation before a 0.7s fade meant every first-time visitor —
+  // the ones arriving from a search result — spent three and a half seconds
+  // looking at a black screen before the pitch. Shorter, and skippable:
+  // a click, a key or a scroll means "I am here, get on with it".
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase("fadeout"), 2800);
-    const t2 = setTimeout(() => onComplete(), 3500);
-    return () => { clearTimeout(t1); clearTimeout(t2); };
+    let released = false;
+    const release = () => {
+      if (released) return;
+      released = true;
+      setPhase("fadeout");
+      setTimeout(onComplete, 500);
+    };
+    const t1 = setTimeout(release, 1600);
+    window.addEventListener("pointerdown", release);
+    window.addEventListener("keydown", release);
+    window.addEventListener("wheel", release, { passive: true });
+    return () => {
+      clearTimeout(t1);
+      window.removeEventListener("pointerdown", release);
+      window.removeEventListener("keydown", release);
+      window.removeEventListener("wheel", release);
+    };
   }, [onComplete]);
 
   return (
@@ -17,7 +35,7 @@ export default function Loader({ onComplete }) {
       style={{
         opacity: phase === "fadeout" ? 0 : 1,
         pointerEvents: phase === "fadeout" ? "none" : "auto",
-        transition: "opacity 0.7s ease",
+        transition: "opacity 0.5s ease",
       }}
     >
       {/* 3D flip сцена */}

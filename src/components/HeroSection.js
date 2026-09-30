@@ -3,9 +3,10 @@ import { useEffect, useRef, useContext, useState } from "react";
 import { LoaderContext } from "@/context/LoaderContext";
 import Link from "next/link";
 
-// Hoisted so its identity is stable across renders — the rotation effect below
-// depends on it, and an inline array literal would restart the cycle on every
-// parent render.
+// Fallback for the rotating line. The live list comes from `t.hero.words`,
+// which is a module-level JSON import and therefore just as stable across
+// renders — an inline array literal would restart the cycle on every parent
+// render.
 const ROTATING_WORDS = ["architects", "developers", "real estate"];
 
 const LETTER_STAGGER = 28; // ms between neighbouring letters
@@ -18,6 +19,17 @@ const flipDuration = (length, base) => (length - 1) * LETTER_STAGGER + base;
 function RotatingWord({ words = ROTATING_WORDS, hold = 1800 }) {
   const [index, setIndex] = useState(0);
   const [phase, setPhase] = useState("in");
+  // The global CSS rule only shortens each letter flip; the rotation itself is
+  // a JS loop, so it kept swapping the headline word forever for a reader who
+  // asked for less motion.
+  const [still, setStill] = useState(false);
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setStill(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
   const holdTimerRef = useRef(null);
   const fallbackTimerRef = useRef(null);
 
@@ -36,6 +48,7 @@ function RotatingWord({ words = ROTATING_WORDS, hold = 1800 }) {
   // timer always fired while the final letters were still mid-flip, and the new
   // word visibly replaced them instead of following them.
   const handleLetterEnd = (i) => {
+    if (still) return;
     if (i !== lastLetter) return;
     if (isOut) {
       advance();
@@ -108,6 +121,13 @@ export default function HeroSection({ t, locale }) {
     const videoEl = videoRef.current;
     if (!videoEl) return;
 
+    // 7.8 MB of film is a poor greeting for someone on a metered connection,
+    // and motion nobody asked for is a poor one for anybody.
+    const stillness =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      navigator.connection?.saveData === true;
+    if (stillness) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -152,12 +172,15 @@ export default function HeroSection({ t, locale }) {
 
   return (
     <section className="hero-section relative min-h-[100svh] flex items-end">
+      {/* Autoplay is decided in an effect, not by the attribute: a reader who
+          asked for reduced motion, or whose browser reports a metered
+          connection, gets the first frame and nothing else. */}
       <video
         ref={videoRef}
-        autoPlay
         loop
         muted
         playsInline
+        preload="metadata"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ pointerEvents: "none" }}
       >
@@ -177,11 +200,20 @@ export default function HeroSection({ t, locale }) {
                 is 72px, which is 804px of unbreakable text in a 768px window —
                 the whole page scrolled sideways on a tablet. */}
             <span className="block text-4xl sm:text-6xl md:text-7xl xl:text-8xl lg:whitespace-nowrap">
-              Visualization <span className="text-white/90 font-bold">services</span>
+              {t?.hero?.headlineLead ?? "Visualization"}
+              {/* The second, lighter word is optional: German says the whole
+                  thing in one noun, and an empty span would leave a stray
+                  space in the middle of the headline. */}
+              {t?.hero?.headlineAccent ? (
+                <>
+                  {" "}
+                  <span className="text-white/90 font-bold">{t.hero.headlineAccent}</span>
+                </>
+              ) : null}
             </span>
             <span className="flex items-center gap-2 text-lg sm:text-xl md:text-2xl font-medium text-white/40 tracking-[0.2em] uppercase mt-5">
-              for
-              <RotatingWord />
+              {t?.hero?.for ?? "for"}
+              <RotatingWord words={t?.hero?.words?.length ? t.hero.words : ROTATING_WORDS} />
             </span>
           </h1>
 

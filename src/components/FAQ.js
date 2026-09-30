@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Title3D from "@/components/Title3D";
 
-export default function FAQ({ locale = "en" }) {
+export default function FAQ({ locale = "en", t }) {
   const [openIndex, setOpenIndex] = useState(0);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef(null);
@@ -44,117 +44,82 @@ export default function FAQ({ locale = "en" }) {
     if (!videoLoaded) return;
     const videoEl = videoRef.current;
     if (!videoEl) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (navigator.connection?.saveData === true) return;
     videoEl.play().catch(() => {});
   }, [videoLoaded]);
 
+  // Every word of the questions and answers lives in the locale files; only
+  // the shape of each answer (the ordered list, the inline link, the
+  // highlighted discounts) is expressed here.
+  const faq = t?.faq ?? {};
+  const items = faq.items ?? {};
+  const paragraphs = (list) => (
+    <div className="flex flex-col gap-4">
+      {(list ?? []).map((text, i) => (
+        <p key={i}>{text}</p>
+      ))}
+    </div>
+  );
+
   const faqs = [
     {
-      question: "What do we need to start a project?",
+      question: items.start?.q,
       answer: (
         <div>
-          <p>
-            We begin with your 3D-model or drawings and a brief describing the mood, materials, and goals of your project. Using our structured onboarding system, our team refines your model and translates all inputs into high-end visuals.
-          </p>
+          <p>{items.start?.p1}</p>
           <p className="mt-4">
-            <Link 
-              href={`/${locale}/contact`} 
+            <Link
+              href={`/${locale}/contact`}
               className="underline font-bold text-white hover:text-white/80 transition-colors duration-300"
             >
-              Click here
+              {items.start?.linkText}
             </Link>{" "}
-            to get the full list of needed materials.
+            {items.start?.linkTail}
           </p>
         </div>
       ),
     },
     {
-      question: "What’s the project workflow?",
+      question: items.workflow?.q,
       answer: (
         <div className="flex flex-col gap-4">
-          <p>Each project goes through the following key stages:</p>
+          <p>{items.workflow?.intro}</p>
           <ol className="list-decimal pl-5 flex flex-col gap-4 mt-2">
-            <li>
-              <strong className="text-white">1. Discovery Stage</strong>
-              <p className="mt-1 text-white/70">
-                The client provides all necessary input materials. At this stage, we also prepare a cost estimate and a project timeline.
-              </p>
-            </li>
-            <li>
-              <strong className="text-white">2. Modeling & Optimization</strong>
-              <p className="mt-1 text-white/70">
-                We create or refine the 3D model based on all provided drawings and references, ensuring accuracy and efficiency for the visualization process.
-              </p>
-            </li>
-            <li>
-              <strong className="text-white">3. Cameras & Atmosphere Setup</strong>
-              <p className="mt-1 text-white/70">
-                We produce greyscale renderings to define and approve the best camera angles and overall atmosphere for your project.
-              </p>
-            </li>
-            <li>
-              <strong className="text-white">4. Color Previews</strong>
-              <p className="mt-1 text-white/70">
-                The client receives fully textured and colored renders with the selected views and atmosphere. We collect all feedback at this stage and prepare the images for final rendering.
-              </p>
-            </li>
-            <li>
-              <strong className="text-white">5. Final High-End Images</strong>
-              <p className="mt-1 text-white/70">
-                The client receives high-resolution final visualizations ready for presentations, marketing, and publications.
-              </p>
-            </li>
+            {(items.workflow?.steps ?? []).map((step) => (
+              <li key={step.title}>
+                <strong className="text-white">{step.title}</strong>
+                <p className="mt-1 text-white/70">{step.desc}</p>
+              </li>
+            ))}
           </ol>
         </div>
       ),
     },
     {
-      question: "How long does a project take?",
-      answer: (
-        <div className="flex flex-col gap-4">
-          <p>
-            The project timeline is always individual and depends on its complexity, goals, scale, input quality, response speed, and many other factors.
-          </p>
-          <p>
-            Smaller projects usually take around 7 working days, although the first drafts are typically delivered within the first few days after kickoff.
-          </p>
-          <p>
-            We understand that deadlines are often tight, so we organize our team efficiently to deliver as quickly as possible while keeping the entire process transparent and well-communicated with daily updates.
-          </p>
-          <p>
-            Before starting, every client receives a preliminary schedule outlining all key stages and we strictly follow it throughout the collaboration.
-          </p>
-        </div>
-      ),
+      question: items.duration?.q,
+      answer: paragraphs(items.duration?.paragraphs),
     },
     {
-      question: "How is pricing calculated?",
-      answer: (
-        <div className="flex flex-col gap-4">
-          <p>
-            Our pricing depends on the project type (exterior or interior visualizations, animations, 360° tours, etc.), its goals, scale, and deadlines. We offer flexible pricing and prepare a custom offer for each project before we begin.
-          </p>
-          <p>
-            In addition, we have a clear partnership discount program for both new and returning clients designed to create long-term, mutually beneficial collaboration.
-          </p>
-        </div>
-      ),
+      question: items.pricing?.q,
+      answer: paragraphs(items.pricing?.paragraphs),
     },
     {
-      question: "Any partnership programs?",
+      question: items.partnership?.q,
       answer: (
         <div className="flex flex-col gap-4">
+          <p>{items.partnership?.p1}</p>
           <p>
-            Yes, we have an ongoing system of discounts, offers, and bonuses for both new and returning clients.
+            {items.partnership?.p2?.before}
+            <strong className="text-white">{items.partnership?.p2?.strong}</strong>
+            {items.partnership?.p2?.after}
           </p>
           <p>
-            Every new client receives a <strong className="text-white">30% discount</strong> — this allows you to explore our services and workflow without spending too much on your first project.
+            {items.partnership?.p3?.before}
+            <strong className="text-white">{items.partnership?.p3?.strong}</strong>
+            {items.partnership?.p3?.after}
           </p>
-          <p>
-            For future collaborations, we offer a simple and transparent referral program: if you recommend our services to colleagues, friends or partners and it leads to a new project, both of you receive a <strong className="text-white">15% discount</strong> on your next one. There are no limits and you can benefit from our partner program as often as you like.
-          </p>
-          <p>
-            Additionally, every client receives exclusive free bonuses after project completion — materials that help you present your project even more effectively.
-          </p>
+          <p>{items.partnership?.p4}</p>
         </div>
       ),
     },
@@ -187,26 +152,23 @@ export default function FAQ({ locale = "en" }) {
             half the section empty. It now carries the supporting copy and a
             direct route out for anyone whose question isn't listed. */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-32">
-          <span className="eyebrow">Good to know</span>
+          <span className="eyebrow">{faq.eyebrow}</span>
           <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
-            FAQS
+            {faq.title}
           </Title3D>
           <p className="text-base sm:text-lg text-white/60 leading-relaxed max-w-md">
-            The questions we get asked most — about materials, timelines,
-            pricing and how a project actually runs from kickoff to final
-            renders.
+            {faq.intro}
           </p>
 
           <div className="tile no-lift flex flex-col gap-4 p-6 mt-2 max-w-md">
             <p className="text-sm text-white/70 leading-relaxed">
-              Still not sure about something? Tell us about the project and
-              we&apos;ll come back with specifics.
+              {faq.askCopy}
             </p>
             <Link
               href={`/${locale}/contact`}
               className="group inline-flex items-center gap-2 w-fit text-xs font-semibold tracking-widest uppercase border border-white/20 hover:border-white/50 bg-white/5 hover:bg-white/10 px-5 py-3 rounded-full transition-all duration-300"
             >
-              Ask us directly
+              {faq.askCta}
               <svg
                 className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
                 fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
@@ -227,7 +189,10 @@ export default function FAQ({ locale = "en" }) {
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                  className="w-full flex justify-between items-center gap-4 py-7 text-left focus:outline-none group cursor-pointer"
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${index}`}
+                  id={`faq-question-${index}`}
+                  className="w-full flex justify-between items-center gap-4 py-7 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent group cursor-pointer"
                 >
                   <span className="text-lg sm:text-xl font-semibold tracking-wide text-white/90 group-hover:text-white transition-colors duration-300">
                     {faq.question}
@@ -260,6 +225,9 @@ export default function FAQ({ locale = "en" }) {
                     travelled (a fixed max-height spends most of its duration
                     animating empty space). */}
                 <div
+                  id={`faq-answer-${index}`}
+                  role="region"
+                  aria-labelledby={`faq-question-${index}`}
                   className="faq-answer grid"
                   style={{
                     gridTemplateRows: isOpen ? "1fr" : "0fr",

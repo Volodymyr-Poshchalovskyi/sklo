@@ -38,8 +38,11 @@
   --color-border-stroke: rgba(255, 255, 255, 0.35);
   --color-progress-border: rgba(255, 255, 255, 0.15);
   --color-progress-border-muted: rgba(255, 255, 255, 0.1);
+  --color-eyebrow:     #8d909b;
   --color-title-3d-text: #ffffff;
-  --color-title-3d-shadow: #d4d4d8;
+  /* The extrusion used to be #d4d4d8 — 1.36:1 from the white face, so the
+     letters read as a doubled blur rather than a solid with a shadow. */
+  --color-title-3d-shadow: #6f7078;
   --color-title-3d-glow: rgba(255, 255, 255, 0.3);
 
   /* Section shells — see .section-shell below */
@@ -112,6 +115,7 @@ html {
      whole 3D treatment in dark theme read as flat type in light. This is a
      mid-tone with the same warm cast, far enough down to show the extrusion
      the animation exists to draw. */
+  --color-eyebrow:     #5b5e68;
   --color-title-3d-text: #15161a;
   --color-title-3d-shadow: #b3b0a6;
   --color-title-3d-glow: rgba(18, 18, 20, 0.22);
@@ -212,7 +216,7 @@ html {
    filled button, whose label has to stay the colour of the fill it sits on. */
 :root[data-theme="light"] header a:not(.header-cta),
 :root[data-theme="light"] header button,
-:root[data-theme="light"] header span:not(.header-cta) {
+:root[data-theme="light"] header span:not(.header-cta):not(.service-preview-title) {
   color: #121214 !important;
 }
 :root[data-theme="light"] header .text-white\/60,
@@ -371,6 +375,27 @@ html {
 }
 :root[data-theme="light"] .overlay-chrome .border-white\/20 {
   border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Below 560px of viewport height — a phone held sideways — one screen is not
+   a goal worth having: the header and the title leave the wizard about 90px,
+   and squeezing five fields into that is worse than a page that scrolls. The
+   height lock is released so the card takes its natural height instead. */
+@media (max-height: 560px) {
+  .contact-screen {
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+
+/* The contact page is sized to one screen. Below 760px of viewport height the
+   intro line is the first thing to go: it is the only purely decorative row in
+   the column, and dropping it buys the wizard the ~52px that keeps the last
+   step (five fields plus the summary) inside the card on a short laptop. */
+@media (max-height: 760px) {
+  .contact-intro {
+    display: none;
+  }
 }
 
 /* Contact wizard in light theme. The blanket rule above flattens every
@@ -634,7 +659,11 @@ html {
   font-size: 0.6875rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
+  /* `--color-text-muted` is tuned for long body text at larger sizes; on an
+     11px tracked-out label it landed between 3.1:1 and 4.0:1 depending on the
+     section tone. These read the words "WHAT WE DO", "THE STUDIO", "GOOD TO
+     KNOW" — they are not decoration. */
+  color: var(--color-eyebrow);
 }
 .eyebrow::before {
   content: "";
@@ -679,6 +708,15 @@ html {
 @media (prefers-reduced-motion: reduce) {
   .route-curtain.is-lifting {
     animation: none;
+  }
+}
+
+/* Gallery tiles on a touch device. There is no hover there, so the caption
+   that names the work — and tells a visitor the tile can be opened at all —
+   would never appear. */
+@media (hover: none) {
+  .gallery-tile .media-caption {
+    opacity: 1;
   }
 }
 

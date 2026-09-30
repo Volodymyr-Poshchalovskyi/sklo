@@ -342,12 +342,14 @@ export const allProjectsItems = (() => {
 //   004 brick shell + scaffold-> 005 finished facade
 //   007 structural frame      -> 006 finished facade
 // All eight are 3840x2160, so a single aspect ratio covers every pair.
+// `titleDe` is the German sibling, same convention as servicesData.js.
 export const virtualStagingPairs = [
   {
     id: "vs-1",
     before: "/assets/gallery/virtual-staging/003.webp",
     after: "/assets/gallery/virtual-staging/001.webp",
     title: "Living & Kitchen",
+    titleDe: "Wohnen & Küche",
     width: 3840,
     height: 2160,
   },
@@ -356,6 +358,7 @@ export const virtualStagingPairs = [
     before: "/assets/gallery/virtual-staging/008.webp",
     after: "/assets/gallery/virtual-staging/002.webp",
     title: "Bedroom",
+    titleDe: "Schlafzimmer",
     width: 3840,
     height: 2160,
   },
@@ -364,6 +367,7 @@ export const virtualStagingPairs = [
     before: "/assets/gallery/virtual-staging/004.webp",
     after: "/assets/gallery/virtual-staging/005.webp",
     title: "Residential Facade",
+    titleDe: "Wohnhaus-Fassade",
     width: 3840,
     height: 2160,
   },
@@ -372,6 +376,7 @@ export const virtualStagingPairs = [
     before: "/assets/gallery/virtual-staging/007.webp",
     after: "/assets/gallery/virtual-staging/006.webp",
     title: "Apartment Building",
+    titleDe: "Mehrfamilienhaus",
     width: 3840,
     height: 2160,
   },

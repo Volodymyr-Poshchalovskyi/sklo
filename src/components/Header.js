@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
 import { serviceWideFor } from "@/data/galleryData";
+import { serviceTitleFor } from "@/data/servicesData";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick }) {
+function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick, onFocus, onKeyDown, ariaExpanded }) {
   const lettersRef = useRef([]);
   const timeoutsRef = useRef([]);
 
@@ -38,7 +39,14 @@ function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick })
       href={href}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={onMouseLeave}
+      onFocus={onFocus}
+      onKeyDown={onKeyDown}
       onClick={onClick}
+      // The label is split into one span per letter for the flip animation, so
+      // without this a screen reader announces "H o m e". The spans are
+      // decoration; the accessible name comes from the label.
+      aria-label={label}
+      aria-expanded={ariaExpanded}
       className="relative px-5 py-2.5 text-lg font-medium transition-all duration-300 flex items-center rounded-full"
       style={{
         perspective: "600px",
@@ -49,6 +57,7 @@ function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick })
       {label.split("").map((char, i) => (
         <span
           key={i}
+          aria-hidden="true"
           ref={(el) => (lettersRef.current[i] = el)}
           style={{
             display: "inline-block",
@@ -71,7 +80,7 @@ function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick })
   );
 }
 
-function LangDropdown({ locale, theme }) {
+function LangDropdown({ locale, theme, inline = false, onPick }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
   const isLight = theme === "light";
@@ -91,6 +100,7 @@ function LangDropdown({ locale, theme }) {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
     event.preventDefault();
     setOpen(false);
+    onPick?.();
     // Changing the locale segment remounts the whole tree: for a frame the
     // document is empty, the browser clamps the scroll to the top, and
     // `scroll: false` has nothing left to preserve. Hand the position to
@@ -117,6 +127,40 @@ function LangDropdown({ locale, theme }) {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  if (inline) {
+    return (
+      <div className="flex gap-2" role="group" aria-label={current.label}>
+        {langs.map((lang) => {
+          const isActive = lang.code === locale;
+          return (
+            <Link
+              key={lang.code}
+              href={pathInLocale(lang.code)}
+              // A plain click is handled below, but middle-click and "copy link
+              // address" read the href as rendered — and the gallery's filter
+              // lives in the query string.
+              onPointerDown={(event) => {
+                event.currentTarget.href = pathInLocale(lang.code) + window.location.search;
+              }}
+              onClick={(event) => goTo(event, lang.code)}
+              aria-current={isActive ? "true" : undefined}
+              className="flex-1 text-center text-sm font-semibold px-4 py-3 rounded-full border transition-colors duration-300"
+              style={{
+                borderColor: isLight ? "rgba(18,18,20,0.16)" : "rgba(255,255,255,0.2)",
+                backgroundColor: isActive
+                  ? (isLight ? "rgba(18,18,20,0.06)" : "rgba(255,255,255,0.1)")
+                  : "transparent",
+                color: isLight ? "#15161a" : "#eceae6",
+              }}
+            >
+              {lang.label}
+            </Link>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <div ref={ref} className="relative">
@@ -164,7 +208,10 @@ function LangDropdown({ locale, theme }) {
           opacity: open ? 1 : 0,
           transform: open ? "translate(-50%, 0) scale(1)" : "translate(-50%, -6px) scale(0.97)",
           pointerEvents: open ? "auto" : "none",
-          transition: "opacity 0.2s ease, transform 0.2s ease",
+          // Closed, this popup kept its two links in the tab order and in the
+          // accessibility tree; transparent is not hidden.
+          visibility: open ? "visible" : "hidden",
+          transition: `opacity 0.2s ease, transform 0.2s ease, visibility 0s linear ${open ? "0s" : "0.2s"}`,
         }}
       >
         {langs.map((lang) => {
@@ -173,6 +220,12 @@ function LangDropdown({ locale, theme }) {
             <Link
               key={lang.code}
               href={pathInLocale(lang.code)}
+              // A plain click is handled below, but middle-click and "copy link
+              // address" read the href as rendered — and the gallery's filter
+              // lives in the query string.
+              onPointerDown={(event) => {
+                event.currentTarget.href = pathInLocale(lang.code) + window.location.search;
+              }}
               onClick={(event) => goTo(event, lang.code)}
               className="flex items-center gap-2.5 px-5 py-3 text-sm transition-colors duration-150"
               style={{
@@ -201,7 +254,7 @@ function LangDropdown({ locale, theme }) {
   );
 }
 
-function MenuPreviewItem({ service, isActive }) {
+function MenuPreviewItem({ service, isActive, previewLabel }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -250,10 +303,12 @@ function MenuPreviewItem({ service, isActive }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
       <div className="absolute bottom-6 left-6 z-10">
         <p className="text-[10px] uppercase tracking-widest mb-1.5 font-mono" style={{ color: "rgba(255,255,255,0.4)" }}>
-          SKLO Service Preview
+          {previewLabel}
         </p>
         <div className="overflow-hidden">
-          <h4 className="text-lg font-bold uppercase tracking-wider" style={{ color: "#ffffff" }}>
+          {/* A <span>, not a heading: twelve of these preceded the page's own
+              <h1> in every screen reader's heading list. */}
+          <span className="block text-lg font-bold uppercase tracking-wider" style={{ color: "#ffffff" }}>
             <span
               className="service-preview-title inline-block transition-transform duration-500 ease-out"
               style={{
@@ -264,7 +319,7 @@ function MenuPreviewItem({ service, isActive }) {
             >
               {service.title}
             </span>
-          </h4>
+          </span>
         </div>
       </div>
     </div>
@@ -320,6 +375,7 @@ export default function Header({ t, locale, visible }) {
     const poster = serviceWideFor(entry.slug);
     return {
       ...entry,
+      title: serviceTitleFor(entry.slug, locale, entry.title),
       href: `/${locale}/services/${entry.slug}`,
       image: poster?.type === "image" ? poster.src : undefined,
       video: poster?.type === "video" ? poster.src : undefined,
@@ -333,6 +389,24 @@ export default function Header({ t, locale, visible }) {
     { key: "contact",  label: t?.nav?.contact  ?? "Contact",  href: `/${locale}/contact`  },
     { key: "about",    label: t?.nav?.about    ?? "About",    href: `/${locale}/about`    },
   ];
+
+  // An open drawer is a mode: Escape and a tap outside must leave it, the page
+  // behind it must not scroll, and a tap must not fall through to whatever is
+  // underneath — a tap on the gallery used to open the lightbox *under* the
+  // open menu.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+    const { overflow } = document.body.style;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = overflow;
+    };
+  }, [menuOpen]);
 
   // Two thresholds rather than one: the bar compacts at 40px and only expands
   // again below 12px. A single 20px line is crossed back and forth constantly
@@ -399,6 +473,20 @@ export default function Header({ t, locale, visible }) {
   const barColor = theme === "light" ? "#15161a" : "#eceae6";
 
   return (
+    <>
+      {/* Absorbs the tap that closes the drawer. A sibling of the header, not
+          a child: the header is transformed while it fades in, and a
+          transformed ancestor makes `position: fixed` resolve against that
+          ancestor — inside, this covered the 86px capsule instead of the
+          screen, and every tap below it still reached the page. */}
+      {menuOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-40"
+          onClick={() => setMenuOpen(false)}
+          aria-hidden="true"
+        />
+      )}
+
     <header
       className="fixed top-0 left-0 right-0 z-50"
       style={{
@@ -450,7 +538,12 @@ export default function Header({ t, locale, visible }) {
             the language pill, the theme toggle and the button together are
             wider than a 768px capsule, so the cluster pushed ~36px past the
             viewport and the whole page scrolled sideways. */}
-        <div className="hidden lg:flex items-center gap-2.5">
+        {/* Links from `md`, the rest from `lg`. At 768 the whole cluster —
+            links plus language pill plus toggle plus button — was 55px wider
+            than the capsule, so it all used to wait for `lg` and a tablet got
+            a bar holding nothing but a logo and a hamburger. The links alone
+            fit with room to spare. */}
+        <div className="hidden md:flex items-center gap-2.5">
           {navItems.map(({ key, label, href }) => {
             const isServices = key === "services";
             const isActive = checkIsActive(href) || (isServices && servicesMenuOpen);
@@ -460,11 +553,20 @@ export default function Header({ t, locale, visible }) {
                 href={href}
                 label={label}
                 isActive={isActive}
+                ariaExpanded={isServices ? servicesMenuOpen : undefined}
                 onMouseEnter={isServices ? handleMouseEnter : () => {
                   if (timeoutRef.current) clearTimeout(timeoutRef.current);
                   setServicesMenuOpen(false);
                 }}
                 onMouseLeave={isServices ? handleMouseLeave : undefined}
+                // Focus opens the curtain the way hover does, and Escape shuts
+                // it: the menu used to be hover-only, so its twelve links were
+                // in the tab order but the panel holding them could never be
+                // opened from the keyboard.
+                onFocus={isServices ? handleMouseEnter : () => setServicesMenuOpen(false)}
+                onKeyDown={(event) => {
+                  if (event.key === "Escape") setServicesMenuOpen(false);
+                }}
                 onClick={() => {
                   if (timeoutRef.current) clearTimeout(timeoutRef.current);
                   setServicesMenuOpen(false);
@@ -478,7 +580,9 @@ export default function Header({ t, locale, visible }) {
               doing nothing. */}
           <div className="w-3" />
 
-          <LangDropdown locale={locale} theme={theme} />
+          <div className="hidden lg:block">
+            <LangDropdown locale={locale} theme={theme} />
+          </div>
 
           {/* Theme Switcher Button */}
           <button
@@ -489,7 +593,7 @@ export default function Header({ t, locale, visible }) {
               color: theme === "light" ? "#15161a" : "#eceae6",
               backgroundColor: theme === "light" ? "rgba(18,18,20,0.03)" : "rgba(255,255,255,0.05)",
             }}
-            aria-label="Toggle theme"
+            aria-label={t?.header?.toggleTheme ?? "Toggle theme"}
           >
             {theme === "dark" ? (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -511,18 +615,18 @@ export default function Header({ t, locale, visible }) {
               offered after you scroll is also the wrong trade. */}
           <Link
             href={`/${locale}/contact`}
-            className="header-cta ml-2.5 text-sm font-semibold px-5 py-2.5 rounded-full transition-opacity duration-300 hover:opacity-85"
+            className="header-cta hidden lg:inline-flex ml-2.5 text-sm font-semibold px-5 py-2.5 rounded-full transition-opacity duration-300 hover:opacity-85"
             style={{
               backgroundColor: theme === "light" ? "#15161a" : "#eceae6",
               color: theme === "light" ? "#f6f5f2" : "#0b0c10",
               whiteSpace: "nowrap",
             }}
           >
-            Contact us
+            {t?.header?.cta ?? "Contact us"}
           </Link>
         </div>
 
-        <div className="lg:hidden flex items-center gap-2">
+        <div className="md:hidden flex items-center gap-2">
           {/* Mobile Theme Switcher */}
           <button
             onClick={toggleTheme}
@@ -532,7 +636,7 @@ export default function Header({ t, locale, visible }) {
               color: theme === "light" ? "#15161a" : "#eceae6",
               backgroundColor: theme === "light" ? "rgba(18,18,20,0.03)" : "rgba(255,255,255,0.05)",
             }}
-            aria-label="Toggle theme"
+            aria-label={t?.header?.toggleTheme ?? "Toggle theme"}
           >
             {theme === "dark" ? (
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -548,8 +652,9 @@ export default function Header({ t, locale, visible }) {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-expanded={menuOpen}
             className="flex flex-col gap-2 p-2"
-            aria-label="Toggle menu"
+            aria-label={t?.header?.toggleMenu ?? "Toggle menu"}
           >
             <span className={`block w-6 h-px transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-2" : ""}`} style={{ backgroundColor: barColor }} />
             <span className={`block w-6 h-px transition-all duration-300 ${menuOpen ? "opacity-0" : ""}`} style={{ backgroundColor: barColor }} />
@@ -580,7 +685,14 @@ export default function Header({ t, locale, visible }) {
           height: "420px",
           clipPath: servicesMenuOpen ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
           opacity: servicesMenuOpen ? 1 : 0,
-          transition: "clip-path 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
+          // Clipped and transparent is still focusable: closed, this panel put
+          // twelve invisible links in the tab order and offered a screen
+          // reader a menu that was not open. `visibility` takes them out and
+          // still animates, because it is not interpolated.
+          visibility: servicesMenuOpen ? "visible" : "hidden",
+          // `visibility` is not interpolated, so it is switched at the far end
+          // of the close so the panel stays visible while it clips away.
+          transition: `clip-path 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, visibility 0s linear ${servicesMenuOpen ? "0s" : "0.35s"}`,
           pointerEvents: servicesMenuOpen ? "auto" : "none",
         }}
       >
@@ -592,6 +704,7 @@ export default function Header({ t, locale, visible }) {
                 key={service.id}
                 service={service}
                 isActive={idx === activeServiceIndex}
+                previewLabel={t?.header?.preview ?? "SKLO Service Preview"}
               />
             ))}
           </div>
@@ -689,7 +802,7 @@ export default function Header({ t, locale, visible }) {
       </div>
 
       <div
-        className="lg:hidden absolute left-0 right-0 overflow-hidden rounded-[20px]"
+        className="md:hidden absolute left-0 right-0 overflow-hidden rounded-[20px]"
         style={{
           top: "calc(100% + 10px)",
           // Opaque, not the 94% panel tone the mega menu uses: without a blur
@@ -705,9 +818,9 @@ export default function Header({ t, locale, visible }) {
           // instead of relaying out the whole list on every frame.
           clipPath: menuOpen ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
           opacity: menuOpen ? 1 : 0,
+          visibility: menuOpen ? "visible" : "hidden",
           pointerEvents: menuOpen ? "auto" : "none",
-          transition:
-            "clip-path 0.32s cubic-bezier(0.16,1,0.3,1), opacity 0.22s ease, border-color 0.3s ease, box-shadow 0.3s ease",
+          transition: `clip-path 0.32s cubic-bezier(0.16,1,0.3,1), opacity 0.22s ease, border-color 0.3s ease, box-shadow 0.3s ease, visibility 0s linear ${menuOpen ? "0s" : "0.32s"}`,
         }}
       >
         <div className="px-6 py-5 flex flex-col gap-4">
@@ -728,7 +841,15 @@ export default function Header({ t, locale, visible }) {
             </Link>
           ))}
           <div className="pt-3 flex flex-col gap-5" style={{ borderTop: `1px solid ${surface.border}` }}>
-            <LangDropdown locale={locale} theme={theme} />
+            {/* Two buttons, not the dropdown the capsule uses: the panel is
+                `overflow: hidden`, so the popup was cut off 6px short and sat
+                on top of the button below it. */}
+            <LangDropdown
+              locale={locale}
+              theme={theme}
+              inline
+              onPick={() => setMenuOpen(false)}
+            />
             <Link
               href={`/${locale}/contact`}
               onClick={() => setMenuOpen(false)}
@@ -738,12 +859,13 @@ export default function Header({ t, locale, visible }) {
                 color: theme === "light" ? "#f6f5f2" : "#0b0c10",
               }}
             >
-              Contact us
+              {t?.header?.cta ?? "Contact us"}
             </Link>
           </div>
         </div>
       </div>
       </div>
     </header>
+    </>
   );
 }

@@ -4,7 +4,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Title3D from "@/components/Title3D";
 
-export default function Footer({ locale }) {
+export default function Footer({ locale, t }) {
+  const f = t?.footer ?? {};
+  const form = f.form ?? {};
+  const links = f.links ?? {};
   const pathname = usePathname();
   const isContactPage = pathname?.endsWith("/contact");
 
@@ -14,18 +17,18 @@ export default function Footer({ locale }) {
       {!isContactPage && (
         <div className="w-full mb-24 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div className="flex flex-col gap-6">
-            <span className="eyebrow">Get in touch</span>
+            <span className="eyebrow">{f.eyebrow}</span>
             <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-wide uppercase leading-[1.1] max-w-lg">
-              LOOKING TO START YOUR NEXT PROJECT?
+              {f.heading}
             </Title3D>
             <p className="text-base sm:text-lg text-white/70 leading-relaxed max-w-md">
-              Fill out some info and we will be in touch shortly. We can&apos;t wait to hear from you!
+              {f.copy}
             </p>
             <a
               href="mailto:info@sklo.studio"
               className="text-sm sm:text-base text-white/50 hover:text-white transition-colors duration-300 w-fit"
             >
-              …or just email us at <span className="underline underline-offset-4 text-white">info@sklo.studio</span>
+              {f.emailLead} <span className="underline underline-offset-4 text-white">info@sklo.studio</span>
             </a>
           </div>
 
@@ -35,40 +38,40 @@ export default function Footer({ locale }) {
             
             <form className="flex flex-col gap-6 w-full relative z-10">
               <div className="flex flex-col gap-2">
-                <span className="text-xs font-semibold tracking-widest uppercase text-white/50">Name</span>
+                <span className="text-xs font-semibold tracking-widest uppercase text-white/50">{form.nameLabel}</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input 
                     type="text" 
-                    placeholder="First Name (required)" 
+                    placeholder={form.firstName} 
                     required 
-                    className="w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none transition-all duration-300" 
+                    className="w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-4 py-3 text-sm text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-300" 
                   />
                   <input 
                     type="text" 
-                    placeholder="Last Name (required)" 
+                    placeholder={form.lastName} 
                     required 
-                    className="w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none transition-all duration-300" 
+                    className="w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-4 py-3 text-sm text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-300" 
                   />
                 </div>
               </div>
               
               <div className="flex flex-col gap-2">
-                <span className="text-xs font-semibold tracking-widest uppercase text-white/50">Email Address</span>
+                <span className="text-xs font-semibold tracking-widest uppercase text-white/50">{form.emailLabel}</span>
                 <input 
                   type="email" 
-                  placeholder="Email (required)" 
+                  placeholder={form.email} 
                   required 
-                  className="w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none transition-all duration-300" 
+                  className="w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-4 py-3 text-sm text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-300" 
                 />
               </div>
               
               <div className="flex flex-col gap-2">
-                <span className="text-xs font-semibold tracking-widest uppercase text-white/50">Your Message</span>
+                <span className="text-xs font-semibold tracking-widest uppercase text-white/50">{form.messageLabel}</span>
                 <textarea 
-                  placeholder="Message (required)" 
+                  placeholder={form.message} 
                   rows={4} 
                   required 
-                  className="w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-4 py-3 text-sm text-white placeholder-white/40 focus:outline-none transition-all duration-300 resize-none" 
+                  className="w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-4 py-3 text-sm text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-300 resize-none" 
                 />
               </div>
               
@@ -78,7 +81,7 @@ export default function Footer({ locale }) {
                   className="footer-submit-btn white-shimmer group inline-flex items-center gap-2 font-semibold text-sm px-8 py-3.5 rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer border border-white/15"
                   style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
                 >
-                  Send
+                  {form.submit}
                   <svg
                     className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
                     fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
@@ -117,26 +120,26 @@ export default function Footer({ locale }) {
 
         <div className="grid grid-cols-2 gap-12 sm:gap-20 w-full">
           <div className="flex flex-col gap-3">
-            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">
-              Explore
+            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mb-2">
+              {f.explore}
             </span>
             <Link href={`/${locale}/about`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              About us
+              {links.about}
             </Link>
             <Link href={`/${locale}/contact`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              Contact
+              {links.contact}
             </Link>
             <Link href={`/${locale}/services`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              Services
+              {links.services}
             </Link>
             <Link href={`/${locale}/gallery`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              Portfolio
+              {links.portfolio}
             </Link>
           </div>
 
           <div className="flex flex-col gap-3">
-            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/40 mb-2">
-              Follow us
+            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mb-2">
+              {f.follow}
             </span>
             <a href="#" className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               Behance

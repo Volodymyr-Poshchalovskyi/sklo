@@ -18,6 +18,7 @@ export default function BeforeAfterSlider({
   height,
   beforeLabel = "Before",
   afterLabel = "After",
+  comparisonLabel = "comparison",
   className = "",
 }) {
   const frameRef = useRef(null);
@@ -140,7 +141,7 @@ export default function BeforeAfterSlider({
       <button
         type="button"
         role="slider"
-        aria-label={`${beforeLabel} / ${afterLabel} comparison`}
+        aria-label={`${beforeLabel} / ${afterLabel} ${comparisonLabel}`}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(position)}

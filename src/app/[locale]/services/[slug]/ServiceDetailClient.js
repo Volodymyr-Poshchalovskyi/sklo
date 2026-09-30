@@ -12,7 +12,7 @@ import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor,
 import { useLenis } from "@/context/LenisContext";
 
 // Helper component to render step media dynamically
-function StepMedia({ src, type, isActive }) {
+function StepMedia({ src, type, isActive, alt }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function StepMedia({ src, type, isActive }) {
   return (
     <img
       src={src}
-      alt="Workflow step visual"
+      alt={alt}
       loading="eager"
       className="w-full h-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
     />
@@ -137,7 +137,9 @@ const getStepMedia = (service, index) => {
 // the hero to the mini gallery.
 const PIPELINE_SERVICE_SLUGS = ["exterior-visualization", "interior-visualization"];
 
-export default function ServiceDetailClient({ service, otherServices, locale }) {
+export default function ServiceDetailClient({ service, otherServices, locale, t }) {
+  const d = t?.services?.detail ?? {};
+  const g = t?.gallery ?? {};
   const hasPipeline = PIPELINE_SERVICE_SLUGS.includes(service.slug);
 
   // The mini gallery is fed from the real gallery archive rather than from the
@@ -359,7 +361,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
               href={`/${locale}/contact?service=${service.slug}`}
               className="service-hero-btn group inline-flex items-center gap-3 text-xs md:text-sm font-semibold tracking-widest uppercase px-8 py-4.5 rounded-full transition-all duration-300 shadow-lg cursor-pointer"
             >
-              {locale === "de" ? "Preisanfrage senden" : "Request pricing"}
+              {d.requestPricing}
               <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
@@ -376,7 +378,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
           className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 pointer-events-none"
         >
           <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-white/60">
-            {locale === "de" ? "Scrollen" : "Scroll"}
+            {d.scroll}
           </span>
           <svg
             className="w-4 h-4 text-white/60 service-hero-scroll-cue"
@@ -413,11 +415,11 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             {/* Section Header */}
             <div>
               <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
-                {locale === "de" ? "Prozess" : "Workflow"}
+                {d.workflowEyebrow}
               </span>
               <div className="flex justify-between items-end">
                 <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
-                  {locale === "de" ? "Wie wir arbeiten" : "Our Pipeline"}
+                  {d.workflowTitle}
                 </Title3D>
                 <div className="hidden sm:flex items-center gap-2 font-mono text-sm text-white/50">
                   <span className="text-accent font-bold text-lg">{String(activeStepIndex + 1).padStart(2, "0")}</span>
@@ -482,7 +484,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                           zIndex: isActive ? 10 : 0,
                         }}
                       >
-                        <StepMedia src={media.src} type={media.type} isActive={isActive} />
+                        <StepMedia src={media.src} type={media.type} isActive={isActive} alt={d.stepAlt} />
                         
                         {/* Subtle gradient vignette. No step badge over the
                             picture: the same "02 / 04" already sits above the
@@ -504,10 +506,10 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
         <div className="lg:hidden w-full px-6 md:px-16 py-24 flex flex-col gap-12">
           <div>
             <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
-              {locale === "de" ? "Prozess" : "Workflow"}
+              {d.workflowEyebrow}
             </span>
             <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
-              {locale === "de" ? "Wie wir arbeiten" : "Our Pipeline"}
+              {d.workflowTitle}
             </Title3D>
             <div className="h-[1px] bg-gradient-to-r from-white/15 via-white/5 to-transparent w-full mt-4" />
           </div>
@@ -538,7 +540,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                 <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden border border-white/10 bg-white/5">
                   {/* Every stacked step is on screen at some point, so its
                       media plays rather than waiting to become "active". */}
-                  <StepMedia src={media.src} type={media.type} isActive />
+                  <StepMedia src={media.src} type={media.type} isActive alt={d.stepAlt} />
                   {/* Same reasoning as the pinned version above: the stage's
                       number is already the large numeral beside the heading. */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 pointer-events-none" />
@@ -556,14 +558,10 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
         <div className="w-full">
           <div className="mb-16">
             <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
-              {tours
-                ? locale === "de" ? "Live-Demo" : "Live Demo"
-                : locale === "de" ? "Portfolio" : "Visual Showcase"}
+              {tours ? d.toursEyebrow : d.showcaseEyebrow}
             </span>
             <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
-              {tours
-                ? locale === "de" ? "360°-Touren erkunden" : "Explore the 360° Tours"
-                : locale === "de" ? "Projektgalerie" : "Selected Work"}
+              {tours ? d.toursTitle : d.showcaseTitle}
             </Title3D>
             <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
           </div>
@@ -579,13 +577,16 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                     after={pair.after}
                     width={pair.width}
                     height={pair.height}
+                    beforeLabel={g.before}
+                    afterLabel={g.after}
+                    comparisonLabel={g.comparison}
                   />
                   <div className="flex items-baseline justify-between gap-4">
                     <h3 className="text-sm font-bold uppercase tracking-wider text-white">
-                      {pair.title}
+                      {locale === "de" && pair.titleDe ? pair.titleDe : pair.title}
                     </h3>
                     <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">
-                      {locale === "de" ? "Ziehen zum Vergleichen" : "Drag to compare"}
+                      {g.dragToCompare}
                     </span>
                   </div>
                 </div>
@@ -617,7 +618,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                        which is what froze this section on scroll. */
                     <Image
                       src={media.src}
-                      alt={media.title}
+                      alt={g.categories?.[media.category]?.label ?? media.title}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -659,10 +660,10 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
         <div className="w-full">
           <div className="mb-16">
             <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
-              {locale === "de" ? "Entdecken" : "Explore More"}
+              {d.exploreEyebrow}
             </span>
             <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
-              {locale === "de" ? "Andere Dienstleistungen" : "Other Services"}
+              {d.exploreTitle}
             </Title3D>
             <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
           </div>
@@ -671,7 +672,9 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
             items={otherServiceItems}
             defaultHref={`/${locale}/services`}
             viewAllHref={`/${locale}/services`}
-            viewAllLabel={locale === "de" ? "ALLE DIENSTLEISTUNGEN" : "ALL SERVICES"}
+            viewAllLabel={d.viewAll}
+            prevLabel={g.prevSlide}
+            nextLabel={g.nextSlide}
           />
         </div>
       </section>
@@ -698,7 +701,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                   {service.title}
                 </span>
                 <span className="text-xs font-bold text-accent uppercase tracking-wider font-mono">
-                  {locale === "de" ? "Asset" : "Asset"} {activeMediaIndex + 1} / {miniItems.length}
+                  Asset {activeMediaIndex + 1} / {miniItems.length}
                 </span>
               </div>
 
@@ -745,7 +748,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                     ) : (
                       <Image
                         src={miniItems[activeMediaIndex].src}
-                        alt="Fullscreen gallery item"
+                        alt={d.lightboxAlt}
                         width={miniItems[activeMediaIndex].width}
                         height={miniItems[activeMediaIndex].height}
                         sizes="92vw"
@@ -810,7 +813,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                 })}
               </div>
               <span className="text-[9px] font-semibold text-white/30 uppercase tracking-widest hidden md:block">
-                {locale === "de" ? "Pfeiltasten zur Navigation | ESC zum Schließen" : "Arrow keys to navigate | ESC to close"}
+                {d.lightboxHint}
               </span>
             </div>
           </motion.div>
@@ -829,7 +832,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
           >
             {/* Header info */}
             <div className="pipeline-header flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-text-muted px-1">
-              <span>{locale === "de" ? "PROZESS" : "PIPELINE"}</span>
+              <span>{d.pipeline}</span>
               <span className="pipeline-counter text-text font-mono font-bold tracking-wider">
                 {String(activeStepIndex + 1).padStart(2, "0")} / {String(service.pipeline.length).padStart(2, "0")}
               </span>
@@ -858,7 +861,7 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                   <button
                     key={idx}
                     onClick={() => scrollToStep(idx)}
-                    className="flex flex-col items-center group cursor-pointer focus:outline-none transition-all duration-300 px-1"
+                    className="flex flex-col items-center group cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent transition-all duration-300 px-1"
                     style={{ width: `${100 / service.pipeline.length}%` }}
                   >
                     <div 
@@ -872,8 +875,10 @@ export default function ServiceDetailClient({ service, otherServices, locale }) 
                     >
                       {step.step}
                     </div>
-                    <span className={`pipeline-label text-[8px] mt-1.5 font-bold uppercase tracking-widest hidden sm:block text-center transition-colors duration-300 max-w-[120px] line-clamp-2 leading-tight ${
-                      isActive ? "text-text font-extrabold" : "text-text-muted group-hover:text-text/60"
+                    <span className={`pipeline-label text-[11px] mt-1.5 font-bold uppercase tracking-widest hidden sm:block text-center transition-colors duration-300 max-w-[120px] line-clamp-2 leading-tight ${
+                      // `text-text-muted` on the bar's own surface measured
+                      // 3.6:1; `text-2` is the same family two steps up.
+                      isActive ? "text-text font-extrabold" : "text-text-2 group-hover:text-text/70"
                     }`}>
                       {step.title}
                     </span>

@@ -1,16 +1,286 @@
 {
   "nav": {
+    "home": "Home",
     "services": "Services",
-    "about": "About",
-    "contact": "Contact"
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "about": "About"
+  },
+  "header": {
+    "cta": "Contact us",
+    "preview": "SKLO Service Preview",
+    "toggleTheme": "Toggle theme",
+    "toggleMenu": "Toggle menu",
+    "skipToContent": "Skip to content"
   },
   "hero": {
     "title": "We craft 3D experiences",
     "subtitle": "A studio specializing in 3D visualization, motion & product rendering.",
+    "headlineLead": "Visualization",
+    "headlineAccent": "services",
+    "for": "for",
+    "words": [
+      "architects",
+      "developers",
+      "real estate"
+    ],
     "cta": "Services",
     "contact": "Contact Us"
   },
-  "whoWeAre": {
-    "viewAll": "View All Services"
+  "home": {
+    "services": {
+      "eyebrow": "What we do",
+      "title": "OUR SERVICES",
+      "viewAll": "View All Services"
+    },
+    "values": {
+      "eyebrow": "The studio",
+      "title": "OUR VALUES",
+      "intro": "We help architects, designers, and developers bring their visions to life. From a single image to a complete animation, our goal is to produce work that is not only effective but also inspiring and unforgettable.",
+      "items": {
+        "communication": {
+          "title": "CLEAR COMMUNICATION",
+          "desc": "Smooth communication and iterative feedback ensure you're never left guessing. We keep the process transparent from start to finish."
+        },
+        "discounts": {
+          "title": "DISCOUNTS AND BONUSES",
+          "desc": "We provide exclusive offers for both new and returning clients."
+        },
+        "workflow": {
+          "title": "SEAMLESS WORKFLOW",
+          "desc": "Our process is smooth and transparent, guiding you from concept to final render with clear stages and timely updates."
+        },
+        "precision": {
+          "title": "DESIGN PRECISION",
+          "desc": "With a deep background in design and architecture, we translate drawings into visuals that remain true to your vision while enhancing presentation impact."
+        },
+        "quality": {
+          "title": "EXCEPTIONAL IMAGE QUALITY",
+          "desc": "We craft visuals with stunning realism, precise detail, and perfect lighting designed to showcase your project at its very best and leave a lasting impression."
+        },
+        "speed": {
+          "title": "SPEED & RELIABILITY",
+          "desc": "We know deadlines are always tight. Our workflow is optimized for fast delivery without compromising quality."
+        }
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Good to know",
+    "title": "FAQS",
+    "intro": "The questions we get asked most — about materials, timelines, pricing and how a project actually runs from kickoff to final renders.",
+    "askCopy": "Still not sure about something? Tell us about the project and we'll come back with specifics.",
+    "askCta": "Ask us directly",
+    "items": {
+      "start": {
+        "q": "What do we need to start a project?",
+        "p1": "We begin with your 3D-model or drawings and a brief describing the mood, materials, and goals of your project. Using our structured onboarding system, our team refines your model and translates all inputs into high-end visuals.",
+        "linkText": "Click here",
+        "linkTail": "to get the full list of needed materials."
+      },
+      "workflow": {
+        "q": "What’s the project workflow?",
+        "intro": "Each project goes through the following key stages:",
+        "steps": [
+          {
+            "title": "Discovery Stage",
+            "desc": "The client provides all necessary input materials. At this stage, we also prepare a cost estimate and a project timeline."
+          },
+          {
+            "title": "Modeling & Optimization",
+            "desc": "We create or refine the 3D model based on all provided drawings and references, ensuring accuracy and efficiency for the visualization process."
+          },
+          {
+            "title": "Cameras & Atmosphere Setup",
+            "desc": "We produce greyscale renderings to define and approve the best camera angles and overall atmosphere for your project."
+          },
+          {
+            "title": "Color Previews",
+            "desc": "The client receives fully textured and colored renders with the selected views and atmosphere. We collect all feedback at this stage and prepare the images for final rendering."
+          },
+          {
+            "title": "Final High-End Images",
+            "desc": "The client receives high-resolution final visualizations ready for presentations, marketing, and publications."
+          }
+        ]
+      },
+      "duration": {
+        "q": "How long does a project take?",
+        "paragraphs": [
+          "The project timeline is always individual and depends on its complexity, goals, scale, input quality, response speed, and many other factors.",
+          "Smaller projects usually take around 7 working days, although the first drafts are typically delivered within the first few days after kickoff.",
+          "We understand that deadlines are often tight, so we organize our team efficiently to deliver as quickly as possible while keeping the entire process transparent and well-communicated with daily updates.",
+          "Before starting, every client receives a preliminary schedule outlining all key stages and we strictly follow it throughout the collaboration."
+        ]
+      },
+      "pricing": {
+        "q": "How is pricing calculated?",
+        "paragraphs": [
+          "Our pricing depends on the project type (exterior or interior visualizations, animations, 360° tours, etc.), its goals, scale, and deadlines. We offer flexible pricing and prepare a custom offer for each project before we begin.",
+          "In addition, we have a clear partnership discount program for both new and returning clients designed to create long-term, mutually beneficial collaboration."
+        ]
+      },
+      "partnership": {
+        "q": "Any partnership programs?",
+        "p1": "Yes, we have an ongoing system of discounts, offers, and bonuses for both new and returning clients.",
+        "p2": {
+          "before": "Every new client receives a ",
+          "strong": "30% discount",
+          "after": " — this allows you to explore our services and workflow without spending too much on your first project."
+        },
+        "p3": {
+          "before": "For future collaborations, we offer a simple and transparent referral program: if you recommend our services to colleagues, friends or partners and it leads to a new project, both of you receive a ",
+          "strong": "15% discount",
+          "after": " on your next one. There are no limits and you can benefit from our partner program as often as you like."
+        },
+        "p4": "Additionally, every client receives exclusive free bonuses after project completion — materials that help you present your project even more effectively."
+      }
+    }
+  },
+  "footer": {
+    "eyebrow": "Get in touch",
+    "heading": "LOOKING TO START YOUR NEXT PROJECT?",
+    "copy": "Fill out some info and we will be in touch shortly. We can't wait to hear from you!",
+    "emailLead": "…or just email us at",
+    "form": {
+      "nameLabel": "Name",
+      "firstName": "First Name (required)",
+      "lastName": "Last Name (required)",
+      "emailLabel": "Email Address",
+      "email": "Email (required)",
+      "messageLabel": "Your Message",
+      "message": "Message (required)",
+      "submit": "Send"
+    },
+    "explore": "Explore",
+    "links": {
+      "about": "About us",
+      "contact": "Contact",
+      "services": "Services",
+      "portfolio": "Gallery"
+    },
+    "follow": "Follow us"
+  },
+  "about": {
+    "eyebrow": "The studio",
+    "title": "Our Team",
+    "roles": {
+      "founder": "FOUNDER / ART DIRECTOR",
+      "leadArtist": "LEAD ARTIST",
+      "seniorArtist": "SENIOR ARTIST",
+      "graphicDesigner": "GRAPHIC DESIGNER",
+      "talentManager": "TALENT MANAGER",
+      "financialManager": "FINANCIAL MANAGER"
+    }
+  },
+  "contact": {
+    "title": "CONTACT US",
+    "intro": "Answer a few quick questions about your project and we'll get back to you with a tailored quote."
+  },
+  "services": {
+    "eyebrow": "What we offer",
+    "title": "All Services",
+    "detail": {
+      "requestPricing": "Request pricing",
+      "scroll": "Scroll",
+      "workflowEyebrow": "Workflow",
+      "workflowTitle": "Our Pipeline",
+      "pipeline": "PIPELINE",
+      "showcaseEyebrow": "Visual Showcase",
+      "showcaseTitle": "Selected Work",
+      "toursEyebrow": "Live Demo",
+      "toursTitle": "Explore the 360° Tours",
+      "exploreEyebrow": "Explore More",
+      "exploreTitle": "Other Services",
+      "viewAll": "ALL SERVICES",
+      "lightboxHint": "Arrow keys to navigate | ESC to close",
+      "stepAlt": "Workflow step visual",
+      "lightboxAlt": "Fullscreen gallery item"
+    }
+  },
+  "gallery": {
+    "title": "Gallery",
+    "all": "All Projects",
+    "categoryInfo": "Category Info",
+    "dragToCompare": "Drag to compare",
+    "before": "Before",
+    "after": "After",
+    "comparison": "comparison",
+    "closeLightbox": "Close lightbox",
+    "prevItem": "Previous item",
+    "nextItem": "Next item",
+    "prevSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "categories": {
+      "All": {
+        "label": "All Projects",
+        "desc": "A curated mix of our architectural work — exteriors, interiors, aerials and motion, shown side by side. Product, Virtual Staging and 360° Tours have their own sections."
+      },
+      "Exterior": {
+        "label": "Exterior",
+        "desc": "Photorealistic architectural renderings showing buildings, structures, and landscaping in their real-world environments."
+      },
+      "Interior": {
+        "label": "Interior",
+        "desc": "Highly detailed internal designs capturing lighting, materials, and atmosphere to showcase living and commercial spaces."
+      },
+      "Bird's-Eye View": {
+        "label": "Bird's-Eye View",
+        "desc": "Aerial and drone-perspective renderings showing a development within its surrounding district and landscape."
+      },
+      "Product": {
+        "label": "Product",
+        "desc": "Studio-quality 3D renderings of furniture and product pieces, lit and staged for catalogs and marketing."
+      },
+      "Virtual Staging": {
+        "label": "Virtual Staging",
+        "desc": "Real interior photographs digitally furnished and dressed to show a space's full potential."
+      },
+      "360° Tours": {
+        "label": "360° Tours",
+        "desc": "Walkable 360° tours of a finished project — drag to look around, use the floorplan to move between scenes."
+      },
+      "Animation": {
+        "label": "Animation",
+        "desc": "Cinematic architectural films and motion showcases bringing a project to life through camera movement and mood."
+      },
+      "Cinemagraph": {
+        "label": "Cinemagraph",
+        "desc": "Static architectural visualizations enhanced with subtle loop animations, drawing instant attention to key design details."
+      }
+    },
+    "shownOf": "Showing {shown} of {total}",
+    "loadMore": "Load more",
+    "backToTop": "Back to top"
+  },
+  "wizard": {
+    "steps": {
+      "type": "Services",
+      "scope": "Scope",
+      "budget": "Budget & Time",
+      "materials": "Materials",
+      "details": "Details"
+    },
+    "budget": {
+      "b1": "Up to CHF 1'000",
+      "b2": "CHF 1'000 – 5'000",
+      "b3": "CHF 5'000 – 15'000",
+      "b4": "CHF 15'000+"
+    },
+    "timeline": {
+      "asap": "ASAP",
+      "2weeks": "1–2 Weeks",
+      "1month": "Within a Month",
+      "flexible": "Flexible"
+    },
+    "materials": {
+      "model": "3D Model / CAD Files",
+      "drawings": "Architectural Drawings",
+      "photos": "Reference Photos",
+      "scratch": "Starting From Scratch"
+    },
+    "quantityTbd": "quantity to be discussed",
+    "decrease": "Decrease",
+    "increase": "Increase"
   }
 }

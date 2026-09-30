@@ -1,6 +1,7 @@
 "use client";
 import ServicesCarousel from "@/components/ServicesCarousel";
 import { servicePosterFor } from "@/data/galleryData";
+import { serviceTitleFor } from "@/data/servicesData";
 import Title3D from "@/components/Title3D";
 
 export default function WhoWeAre({ locale, t }) {
@@ -23,40 +24,43 @@ export default function WhoWeAre({ locale, t }) {
     const poster = servicePosterFor(slide.slug);
     return {
       ...slide,
+      title: serviceTitleFor(slide.slug, locale, slide.title),
       href: `/${locale}/services/${slide.slug}`,
       image: poster?.type === "image" ? poster.src : undefined,
       video: poster?.type === "video" ? poster.src : undefined,
     };
   });
 
+  // Copy lives in the locale files; only the icons are component-local.
+  const values = t?.home?.values ?? {};
+  const valueItems = values.items ?? {};
+  const value = (key, icon) => ({
+    key,
+    title: valueItems[key]?.title ?? "",
+    desc: valueItems[key]?.desc ?? "",
+    icon,
+  });
+
   const leftFeatures = [
-    {
-      title: "CLEAR COMMUNICATION",
-      desc: "Smooth communication and iterative feedback ensure you're never left guessing. We keep the process transparent from start to finish.",
-      icon: (
+    value(
+      "communication",
         <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <path d="M5 8h18a3 3 0 013 3v7a3 3 0 01-3 3H14l-6 5v-5H5a3 3 0 01-3-3v-7a3 3 0 013-3z" />
           <circle cx="9.5" cy="14.5" r="0.9" fill="currentColor" stroke="none" />
           <circle cx="14.5" cy="14.5" r="0.9" fill="currentColor" stroke="none" />
           <circle cx="19.5" cy="14.5" r="0.9" fill="currentColor" stroke="none" />
         </svg>
-      ),
-    },
-    {
-      title: "DISCOUNTS AND BONUSES",
-      desc: "We provide exclusive offers for both new and returning clients.",
-      icon: (
+    ),
+    value(
+      "discounts",
         <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <circle cx="10" cy="10" r="3.2" />
           <circle cx="22" cy="22" r="3.2" />
           <path d="M23 9L9 23" />
         </svg>
-      ),
-    },
-    {
-      title: "SEAMLESS WORKFLOW",
-      desc: "Our process is smooth and transparent, guiding you from concept to final render with clear stages and timely updates.",
-      icon: (
+    ),
+    value(
+      "workflow",
         <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <path d="M5 9l2 2 4-4" />
           <path d="M15 9h12" />
@@ -65,45 +69,35 @@ export default function WhoWeAre({ locale, t }) {
           <path d="M5 23l2 2 4-4" />
           <path d="M15 23h12" />
         </svg>
-      ),
-    },
+    ),
   ];
 
   const rightFeatures = [
-    {
-      title: "DESIGN PRECISION",
-      desc: "With a deep background in design and architecture, we translate drawings into visuals that remain true to your vision while enhancing presentation impact.",
-      icon: (
+    value(
+      "precision",
         <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <circle cx="16" cy="16" r="10.5" />
           <circle cx="16" cy="16" r="6" />
           <circle cx="16" cy="16" r="1.4" fill="currentColor" stroke="none" />
         </svg>
-      ),
-    },
-    {
-      title: "EXCEPTIONAL IMAGE QUALITY",
-      desc: "We craft visuals with stunning realism, precise detail, and perfect lighting designed to showcase your project at its very best and leave a lasting impression.",
-      icon: (
+    ),
+    value(
+      "quality",
         <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <rect x="4" y="6" width="24" height="20" rx="2.5" />
           <circle cx="11" cy="13" r="2.3" />
           <path d="M4 22l7-7 4.5 4.5L21 14l7 8" />
         </svg>
-      ),
-    },
-    {
-      title: "SPEED & RELIABILITY",
-      desc: "We know deadlines are always tight. Our workflow is optimized for fast delivery without compromising quality.",
-      icon: (
+    ),
+    value(
+      "speed",
         <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <circle cx="16" cy="18" r="10" />
           <path d="M16 18l4-5" />
           <path d="M12 3h8" />
           <path d="M16 3v3" />
         </svg>
-      ),
-    },
+    ),
   ];
 
   const featurePairs = [
@@ -119,17 +113,19 @@ export default function WhoWeAre({ locale, t }) {
       >
         <div className="w-full flex flex-col gap-10 md:gap-12">
           <div className="flex flex-col gap-4 pt-4 md:pt-6">
-            <span className="eyebrow">What we do</span>
+            <span className="eyebrow">{t?.home?.services?.eyebrow}</span>
             <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
-              OUR SERVICES
+              {t?.home?.services?.title}
             </Title3D>
           </div>
 
           <ServicesCarousel
             items={slides}
+            prevLabel={t?.gallery?.prevSlide}
+            nextLabel={t?.gallery?.nextSlide}
             defaultHref={`/${locale}/services`}
             viewAllHref={`/${locale}/services`}
-            viewAllLabel={t?.whoWeAre?.viewAll ?? "ALL SERVICES"}
+            viewAllLabel={t?.home?.services?.viewAll ?? "ALL SERVICES"}
           />
         </div>
       </section>
@@ -141,19 +137,14 @@ export default function WhoWeAre({ locale, t }) {
           {/* Top Row: Heading on Left, Paragraph on Right */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             <div className="flex flex-col gap-4">
-              <span className="eyebrow">The studio</span>
+              <span className="eyebrow">{values.eyebrow}</span>
               <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
-                OUR VALUES
+                {values.title}
               </Title3D>
             </div>
 
             <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg text-white/80 leading-relaxed lg:pt-3">
-              <p>
-                We help architects, designers, and developers bring their
-                visions to life. From a single image to a complete animation,
-                our goal is to produce work that is not only effective but also
-                inspiring and unforgettable.
-              </p>
+              <p>{values.intro}</p>
             </div>
           </div>
 
@@ -161,7 +152,7 @@ export default function WhoWeAre({ locale, t }) {
           <div className="flex flex-col gap-5 md:gap-8">
             {featurePairs.map((pair, idx) => (
               <ValueRow
-                key={pair.left.title}
+                key={pair.left.key}
                 pair={pair}
                 isLast={idx === featurePairs.length - 1}
               />
@@ -189,7 +180,7 @@ function ValueRow({ pair, isLast }) {
     // the same length, so aligned to their own content the dividers stepped.
     <div className="grid grid-cols-2 gap-x-5 gap-y-5 md:gap-8 lg:gap-16">
       {[pair.left, pair.right].map((item) => (
-        <div key={item.title} className={`flex flex-col ${divider}`}>
+        <div key={item.key} className={`flex flex-col ${divider}`}>
           <article className="flex flex-col gap-1.5 sm:gap-2.5">
             <div className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3">
               <span className="w-4 h-4 sm:w-5 sm:h-5 text-white/70 shrink-0">

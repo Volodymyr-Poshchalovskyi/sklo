@@ -2,30 +2,24 @@
 import { useState, useRef, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { servicesData } from "@/data/servicesData";
+import { localizedServices, stripSoftHyphens } from "@/data/servicesData";
+import en from "@/locales/en.json";
+import de from "@/locales/de.json";
 
-const SERVICE_OPTIONS = servicesData.map((s) => ({ id: s.slug, label: s.title }));
+const translations = { en, de };
 
-const BUDGET_OPTIONS = [
-  { id: "b1", label: "Up to $1,000" },
-  { id: "b2", label: "$1,000 – $5,000" },
-  { id: "b3", label: "$5,000 – $15,000" },
-  { id: "b4", label: "$15,000+" },
-];
-
+// Only the ids and the date offsets are structural; every label is looked up
+// in the locale file, so the service list has to be built per render rather
+// than once at module scope.
+const SERVICE_IDS = localizedServices("en").map((s) => s.slug);
+const BUDGET_IDS = ["b1", "b2", "b3", "b4"];
 const TIMELINE_PRESETS = [
-  { id: "asap", label: "ASAP", startOffset: 0, endOffset: 7 },
-  { id: "2weeks", label: "1–2 Weeks", startOffset: 3, endOffset: 14 },
-  { id: "1month", label: "Within a Month", startOffset: 14, endOffset: 42 },
-  { id: "flexible", label: "Flexible", startOffset: 30, endOffset: 90 },
+  { id: "asap", startOffset: 0, endOffset: 7 },
+  { id: "2weeks", startOffset: 3, endOffset: 14 },
+  { id: "1month", startOffset: 14, endOffset: 42 },
+  { id: "flexible", startOffset: 30, endOffset: 90 },
 ];
-
-const MATERIAL_OPTIONS = [
-  { id: "model", label: "3D Model / CAD Files" },
-  { id: "drawings", label: "Architectural Drawings" },
-  { id: "photos", label: "Reference Photos" },
-  { id: "scratch", label: "Starting From Scratch" },
-];
+const MATERIAL_IDS = ["model", "drawings", "photos", "scratch"];
 
 function toDateInputValue(daysFromNow) {
   const d = new Date();
@@ -33,7 +27,10 @@ function toDateInputValue(daysFromNow) {
   return d.toISOString().slice(0, 10);
 }
 
-function TiltCard({ children, className = "", onClick, disabled, intensity = 7 }) {
+// `style` is forwarded, not dropped: the option tiles, chips and the
+// consultation toggle size themselves in svh through it, and while it was
+// being swallowed here every one of them rendered with no padding at all.
+function TiltCard({ children, className = "", style, onClick, disabled, intensity = 7 }) {
   const ref = useRef(null);
 
   const handleMouseMove = (e) => {
@@ -63,7 +60,7 @@ function TiltCard({ children, className = "", onClick, disabled, intensity = 7 }
       onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ transformStyle: "preserve-3d", willChange: "transform" }}
+      style={{ transformStyle: "preserve-3d", willChange: "transform", ...style }}
       className={`cursor-pointer transition-[border-color,background-color,box-shadow] duration-200 ease-out disabled:cursor-default ${className}`}
     >
       {children}
@@ -75,7 +72,14 @@ function TiltCard({ children, className = "", onClick, disabled, intensity = 7 }
 // at text-xl/2xl, and at that size the stacked 3D shadow smears the glyphs
 // rather than reading as depth.
 function StepHeading({ children, className = "" }) {
-  return <h2 className={`text-white ${className}`}>{children}</h2>;
+  return (
+    <h2
+      className={`text-white leading-tight ${className}`}
+      style={{ fontSize: "clamp(0.875rem, min(2.6svh, 3.38vw), 1.5rem)" }}
+    >
+      {children}
+    </h2>
+  );
 }
 
 function HitArea({ children, className = "", onClick, disabled, ariaLabel }) {
@@ -92,11 +96,18 @@ function HitArea({ children, className = "", onClick, disabled, ariaLabel }) {
   );
 }
 
+// Every dimension here is a share of the viewport height. Twelve of these have
+// to sit in whatever the card has left after the stepper and the buttons, on a
+// 650px laptop as well as a 900px desktop.
 function OptionCard({ label, selected, onClick }) {
   return (
     <TiltCard
       onClick={onClick}
-      className={`group relative flex flex-col items-start gap-3 p-6 rounded-2xl border text-left w-full ${
+      style={{
+        padding: "clamp(0.4rem, min(1.5svh, 1.95vw), 1.25rem)",
+        minHeight: "clamp(2.25rem, min(5svh, 6.5vw), 4rem)",
+      }}
+      className={`group relative flex items-center rounded-2xl border text-left w-full ${
         selected
           ? "border-accent bg-accent/[0.06] shadow-lg"
           : "border-white/10 bg-white/[0.02] hover:border-white/30"
@@ -107,14 +118,17 @@ function OptionCard({ label, selected, onClick }) {
           initial={{ scale: 0, rotateY: -90 }}
           animate={{ scale: 1, rotateY: 0 }}
           transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute top-4 right-4 w-6 h-6 rounded-full bg-accent text-bg flex items-center justify-center"
+          className="absolute top-1.5 right-1.5 w-5 h-5 rounded-full bg-accent text-bg flex items-center justify-center"
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
             <path d="M20 6L9 17l-5-5" />
           </svg>
         </motion.div>
       )}
-      <span className="text-sm font-bold uppercase tracking-wider text-white pr-8">
+      <span
+        className="font-bold uppercase tracking-wider text-white pr-5 leading-tight"
+        style={{ fontSize: "clamp(0.5rem, min(1.6svh, 2.08vw), 0.875rem)" }}
+      >
         {label}
       </span>
     </TiltCard>
@@ -126,7 +140,11 @@ function Chip({ label, selected, onClick }) {
     <TiltCard
       onClick={onClick}
       intensity={4}
-      className={`px-5 py-3 rounded-full border text-xs font-semibold uppercase tracking-widest ${
+      style={{
+        padding: "clamp(0.35rem, min(1.4svh, 1.82vw), 0.75rem) clamp(0.7rem, 2vw, 1.25rem)",
+        fontSize: "clamp(0.5625rem, min(1.4svh, 1.82vw), 0.75rem)",
+      }}
+      className={`rounded-full border font-semibold uppercase tracking-widest ${
         selected
           ? "border-accent bg-accent text-bg"
           : "border-white/15 bg-white/[0.02] text-white/70 hover:border-white/40 hover:text-white"
@@ -142,7 +160,7 @@ function Chip({ label, selected, onClick }) {
 // — without it they either guess or abandon the form.
 const CONSULT_COPY = {
   en: "I don't know — I'd like a consultation",
-  de: "Ich weiß es nicht — ich möchte eine Beratung",
+  de: "Ich weiss es nicht — ich möchte eine Beratung",
 };
 
 function ConsultToggle({ selected, onClick, isDe }) {
@@ -150,7 +168,11 @@ function ConsultToggle({ selected, onClick, isDe }) {
     <TiltCard
       onClick={onClick}
       intensity={3}
-      className={`w-full flex items-center gap-3 px-5 py-4 rounded-2xl border text-left text-xs font-semibold uppercase tracking-widest ${
+      style={{
+        padding: "clamp(0.4rem, min(1.8svh, 2.34vw), 1rem) clamp(0.75rem, 2vw, 1.25rem)",
+        fontSize: "clamp(0.5625rem, min(1.4svh, 1.82vw), 0.75rem)",
+      }}
+      className={`w-full shrink-0 flex items-center gap-2 rounded-2xl border text-left font-semibold uppercase tracking-widest ${
         selected
           ? "border-accent bg-accent/[0.08] text-white"
           : "border-dashed border-white/25 bg-transparent text-white/60 hover:border-white/50 hover:text-white"
@@ -175,28 +197,32 @@ function ConsultToggle({ selected, onClick, isDe }) {
 // `needsQuantity` marks a service still sitting at zero. Without it, picking
 // five services and leaving one at zero just greys out Next with no clue which
 // row is the problem.
-function QuantityField({ label, value, onChange, needsQuantity }) {
+function QuantityField({ label, value, onChange, needsQuantity, decreaseLabel, increaseLabel }) {
   return (
     <div
-      className={`flex items-center justify-between gap-4 p-5 rounded-2xl border bg-white/[0.02] transition-colors duration-300 ${
+      style={{ padding: "clamp(0.4rem, min(2svh, 2.6vw), 1.25rem)" }}
+      className={`flex flex-wrap items-center justify-between gap-2 rounded-2xl border bg-white/[0.02] transition-colors duration-300 ${
         needsQuantity ? "border-accent/60" : "border-white/10"
       }`}
     >
-      <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-white/80">
+      <span
+        style={{ fontSize: "clamp(0.625rem, min(1.6svh, 2.08vw), 0.875rem)" }}
+        className="font-semibold uppercase tracking-wider text-white/80 leading-tight"
+      >
         {label}
         {needsQuantity && <span className="text-accent"> *</span>}
       </span>
-      <div className="flex items-center gap-3 shrink-0">
-        <HitArea onClick={() => onChange(Math.max(0, value - 1))} ariaLabel="Decrease">
-          <span className="w-8 h-8 rounded-full border border-white/15 group-hover:border-white/40 flex items-center justify-center text-white transition-colors">
+      <div className="flex items-center gap-2 shrink-0 ml-auto">
+        <HitArea onClick={() => onChange(Math.max(0, value - 1))} ariaLabel={decreaseLabel}>
+          <span className="w-7 h-7 rounded-full border border-white/15 group-hover:border-white/40 flex items-center justify-center text-white transition-colors">
             −
           </span>
         </HitArea>
-        <span className="w-8 text-center text-base font-bold text-white font-mono">
+        <span className="w-6 text-center text-sm font-bold text-white font-mono">
           {value}
         </span>
-        <HitArea onClick={() => onChange(value + 1)} ariaLabel="Increase">
-          <span className="w-8 h-8 rounded-full border border-white/15 group-hover:border-white/40 flex items-center justify-center text-white transition-colors">
+        <HitArea onClick={() => onChange(value + 1)} ariaLabel={increaseLabel}>
+          <span className="w-7 h-7 rounded-full border border-white/15 group-hover:border-white/40 flex items-center justify-center text-white transition-colors">
             +
           </span>
         </HitArea>
@@ -207,27 +233,42 @@ function QuantityField({ label, value, onChange, needsQuantity }) {
 
 function TextField({ label, required, ...props }) {
   return (
-    <label className="flex flex-col gap-2">
-      <span className="text-xs text-white/60 uppercase tracking-widest font-semibold">
+    <label className="flex flex-col" style={{ gap: "clamp(0.0625rem, min(0.7svh, 0.91vw), 0.5rem)" }}>
+      <span
+        style={{ fontSize: "clamp(0.5625rem, min(1.4svh, 1.82vw), 0.75rem)" }}
+        className="text-white/60 uppercase tracking-widest font-semibold leading-tight"
+      >
         {label}
         {required && <span className="text-accent"> *</span>}
       </span>
       <input
         required={required}
-        className="bg-transparent border-b border-white/30 py-2.5 text-sm text-white placeholder-white/40 focus:outline-none focus:border-white transition-colors"
+        style={{
+          paddingTop: "clamp(0.1875rem, min(0.95svh, 1.23vw), 0.625rem)",
+          paddingBottom: "clamp(0.1875rem, min(0.95svh, 1.23vw), 0.625rem)",
+          fontSize: "clamp(0.75rem, min(1.6svh, 2.08vw), 0.875rem)",
+        }}
+        className="bg-transparent border-b border-white/30 text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent focus:border-white transition-colors"
         {...props}
       />
     </label>
   );
 }
 
-const STEPS = [
-  { key: "type", label: "Services" },
-  { key: "scope", label: "Scope" },
-  { key: "budget", label: "Budget & Time" },
-  { key: "materials", label: "Materials" },
-  { key: "details", label: "Details" },
-];
+// The summary used to print the raw value of a date input ("2026-10-05"),
+// which is a storage format, not a date anyone reads.
+function formatDate(value, locale) {
+  if (!value) return "—";
+  const date = new Date(`${value}T00:00:00`);
+  if (Number.isNaN(date.getTime())) return value;
+  return date.toLocaleDateString(locale === "de" ? "de-CH" : "en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+const STEPS = ["type", "scope", "budget", "materials", "details"];
 
 const stepVariants = {
   enter: (dir) => ({ opacity: 0, x: dir > 0 ? 48 : -48, rotateY: dir > 0 ? -6 : 6 }),
@@ -238,8 +279,16 @@ const stepVariants = {
 function ContactWizardInner({ locale }) {
   const searchParams = useSearchParams();
   const isDe = locale === "de";
+  const t = translations[locale] ?? translations.en;
+  const w = t.wizard;
+  const SERVICE_OPTIONS = localizedServices(locale).map((s) => ({
+    id: s.slug,
+    label: s.title,
+  }));
+  const BUDGET_OPTIONS = BUDGET_IDS.map((id) => ({ id, label: w.budget[id] }));
+  const MATERIAL_OPTIONS = MATERIAL_IDS.map((id) => ({ id, label: w.materials[id] }));
   const preselectedService = searchParams.get("service");
-  const initialServices = SERVICE_OPTIONS.some((s) => s.id === preselectedService)
+  const initialServices = SERVICE_IDS.includes(preselectedService)
     ? [preselectedService]
     : [];
 
@@ -338,8 +387,13 @@ function ContactWizardInner({ locale }) {
     (id) => (data.quantities[id] || 0) < 1
   );
 
+  // Not a full RFC check — enough to catch "a", a missing @ and a missing dot,
+  // which is what actually arrives. A malformed address means the reply
+  // bounces and the enquiry is simply gone.
+  const isEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test((value || "").trim());
+
   const canProceed = () => {
-    switch (STEPS[step].key) {
+    switch (STEPS[step]) {
       case "type":
         return data.services.length > 0 || data.consult.services;
       case "scope":
@@ -353,10 +407,18 @@ function ContactWizardInner({ locale }) {
           data.consult.services
         );
       case "budget":
-        // Budget is optional; only the timeline is needed to plan capacity.
-        return !!data.startDate && !!data.endDate;
+        // Budget is optional and the timeline presets carry the intent, so a
+        // start date is enough. Requiring an end date too stopped people at a
+        // step whose own label says "optional", with nothing on screen saying
+        // what was missing.
+        return !!data.startDate;
       case "details":
-        return !!data.name && !!data.company && !!data.email && !!data.projectName;
+        return (
+          !!data.name &&
+          !!data.company &&
+          isEmail(data.email) &&
+          !!data.projectName
+        );
       default:
         return true;
     }
@@ -401,7 +463,7 @@ function ContactWizardInner({ locale }) {
   // "1x / 2x" reads as a count of deliverables; "pcs." read like stock units.
   const serviceLines = selectedServices.map((s) => {
     const qty = data.quantities[s.id] || 0;
-    return `${s.label}: ${qty > 0 ? `${qty}x` : "quantity to be discussed"}`;
+    return `${stripSoftHyphens(s.label)}: ${qty > 0 ? `${qty}x` : w.quantityTbd}`;
   });
 
   const buildMailto = () => {
@@ -502,16 +564,24 @@ function ContactWizardInner({ locale }) {
   }
 
   return (
-    <div className="contact-wizard w-full bg-white/[0.02] border border-white/10 rounded-3xl p-6 sm:p-8 md:p-12">
+    /* A column that fills whatever height the page gives it: the stepper and
+       the navigation hold their size, the step body takes the rest. */
+    <div
+      className="contact-wizard w-full flex flex-col flex-1 min-h-0 bg-white/[0.02] border border-white/10 rounded-3xl"
+      style={{ padding: "clamp(0.6rem, min(3svh, 3.3vw), 2.5rem)" }}
+    >
       {/* Progress Stepper */}
-      <div className="flex items-center w-full mb-10">
-        {STEPS.map((s, idx) => {
+      <div
+        className="flex items-center w-full shrink-0"
+        style={{ marginBottom: "clamp(0.5rem, min(2.3svh, 3vw), 2rem)" }}
+      >
+        {STEPS.map((key, idx) => {
           const isActive = idx === step;
           const isDone = idx < step;
           const clickable = idx <= maxReached;
           return (
-            <div key={s.key} className="flex items-center flex-1 last:flex-none">
-              <HitArea disabled={!clickable} onClick={() => goTo(idx)} ariaLabel={s.label}>
+            <div key={key} className="flex items-center flex-1 last:flex-none">
+              <HitArea disabled={!clickable} onClick={() => goTo(idx)} ariaLabel={w.steps[key]}>
                 <span
                   className={`w-9 h-9 shrink-0 rounded-full border flex items-center justify-center text-xs font-bold font-mono transition-all duration-300 ${
                     isActive
@@ -536,10 +606,18 @@ function ContactWizardInner({ locale }) {
         })}
       </div>
 
-      <div style={{ perspective: 1000 }} className="min-h-[360px]">
+      {/* The step's type, padding and gaps are sized in `svh`, so a realistic
+          selection fits without scrolling on any screen. The scrollbar stays
+          as a last resort for the extremes (all twelve services at once on a
+          short phone): clipping those with `overflow: hidden` would leave
+          fields the visitor cannot reach at all. `overflow-x` is pinned
+          because setting only `overflow-y` makes x compute to `auto`, and the
+          horizontal step transition would flash a bar on every move. */}
+      <div style={{ perspective: 1000 }} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={step}
+            className="h-full"
             custom={direction}
             variants={stepVariants}
             initial="enter"
@@ -547,20 +625,24 @@ function ContactWizardInner({ locale }) {
             exit="exit"
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            {STEPS[step].key === "type" && (
-              <div className="flex flex-col gap-6">
-                <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
+            {STEPS[step] === "type" && (
+              <div className="flex flex-col h-full" style={{ gap: "clamp(0.4rem, min(1.8svh, 2.34vw), 1.5rem)" }}>
+                <StepHeading className="font-bold uppercase tracking-wider">
                   {isDe ? "Welche Leistungen brauchen Sie?" : "Which services do you need?"}
                 </StepHeading>
-                <p className="text-xs text-white/50 -mt-3">
+                <p className="text-xs text-white/50 -mt-2">
                   {isDe
                     ? "Sie können mehrere Leistungen auswählen."
                     : "You can select multiple services."}
                 </p>
-                {/* One column on a phone: at 375px two columns leave 131px cells and
-                    the word "VISUALIZATION" alone is wider than that, so the
-                    labels spilled out of their tiles. */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {/* Three columns at every width. One column meant twelve rows
+                    and two meant six, neither of which a phone fits; the
+                    labels wrap to two or three short lines instead, which the
+                    tile's own min-height already allows. */}
+                <div
+                  className="grid grid-cols-3"
+                  style={{ gap: "clamp(0.375rem, min(1.2svh, 1.56vw), 1rem)" }}
+                >
                   {SERVICE_OPTIONS.map((service) => (
                     <OptionCard
                       key={service.id}
@@ -578,10 +660,10 @@ function ContactWizardInner({ locale }) {
               </div>
             )}
 
-            {STEPS[step].key === "scope" && (
-              <div className="flex flex-col gap-6">
-                <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
-                  {isDe ? "Wie groß ist der Umfang?" : "What's the scope?"}
+            {STEPS[step] === "scope" && (
+              <div className="flex flex-col" style={{ gap: "clamp(0.5rem, min(2.2svh, 2.86vw), 1.5rem)" }}>
+                <StepHeading className="font-bold uppercase tracking-wider">
+                  {isDe ? "Wie gross ist der Umfang?" : "What's the scope?"}
                 </StepHeading>
                 <p className="text-xs text-white/50 -mt-3">
                   {isDe
@@ -589,13 +671,18 @@ function ContactWizardInner({ locale }) {
                     : "A rough estimate is fine — at least one item is needed."}
                 </p>
                 {selectedServices.length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div
+                    className="grid grid-cols-2 md:grid-cols-3"
+                    style={{ gap: "clamp(0.375rem, min(1.6svh, 2.08vw), 1rem)" }}
+                  >
                     {selectedServices.map((service) => (
                       <QuantityField
                         key={service.id}
                         label={service.label}
                         value={data.quantities[service.id] || 0}
                         onChange={(v) => setQuantity(service.id, v)}
+                        decreaseLabel={w.decrease}
+                        increaseLabel={w.increase}
                         needsQuantity={
                           !data.consult.scope &&
                           servicesMissingQuantity.includes(service.id)
@@ -625,16 +712,15 @@ function ContactWizardInner({ locale }) {
               </div>
             )}
 
-            {STEPS[step].key === "budget" && (
-              <div className="flex flex-col gap-8">
-                <div className="flex flex-col gap-5">
-                  <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
-                    {isDe ? "Budgetrahmen" : "Budget Range"}
+            {STEPS[step] === "budget" && (
+              <div className="flex flex-col" style={{ gap: "clamp(0.4rem, min(2.4svh, 3.12vw), 2rem)" }}>
+                <div className="flex flex-col" style={{ gap: "clamp(0.25rem, min(1.4svh, 1.82vw), 1.25rem)" }}>
+                  {/* "Optional" used to be its own line under the heading; as a
+                      suffix it costs no row at all. */}
+                  <StepHeading className="font-bold uppercase tracking-wider">
+                    {isDe ? "Budgetrahmen (optional)" : "Budget Range (optional)"}
                   </StepHeading>
-                  <p className="text-xs text-white/50 -mt-2">
-                    {isDe ? "Optional." : "Optional."}
-                  </p>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap" style={{ gap: "clamp(0.25rem, min(0.8svh, 1.04vw), 0.75rem)" }}>
                     {BUDGET_OPTIONS.map((b) => (
                       <Chip
                         key={b.id}
@@ -653,21 +739,27 @@ function ContactWizardInner({ locale }) {
                   />
                 </div>
 
-                <div className="flex flex-col gap-5">
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-white/80">
+                <div className="flex flex-col" style={{ gap: "clamp(0.25rem, min(1.4svh, 1.82vw), 1.25rem)" }}>
+                  <h3
+                    style={{ fontSize: "clamp(0.6875rem, min(1.8svh, 2.34vw), 0.875rem)" }}
+                    className="font-bold uppercase tracking-wider text-white/80 leading-tight"
+                  >
                     {isDe ? "Zeitplan" : "Timeline"}
                   </h3>
-                  <div className="flex flex-wrap gap-3">
+                  <div className="flex flex-wrap" style={{ gap: "clamp(0.25rem, min(0.8svh, 1.04vw), 0.75rem)" }}>
                     {TIMELINE_PRESETS.map((p) => (
                       <Chip
                         key={p.id}
-                        label={p.label}
+                        label={w.timeline[p.id]}
                         selected={data.timelinePreset === p.id}
                         onClick={() => applyTimelinePreset(p)}
                       />
                     ))}
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-2">
+                  <div
+                    className="grid grid-cols-2"
+                    style={{ gap: "clamp(0.4rem, min(1.5svh, 1.95vw), 1.5rem)" }}
+                  >
                     <TextField
                       label={isDe ? "Startdatum" : "Preferred Start Date"}
                       required
@@ -677,22 +769,28 @@ function ContactWizardInner({ locale }) {
                     />
                     <TextField
                       label={isDe ? "Enddatum" : "Preferred End Date"}
-                      required
                       type="date"
                       value={data.endDate}
                       onChange={(e) => set({ endDate: e.target.value, timelinePreset: "" })}
                     />
                   </div>
+                  {!data.startDate && (
+                    <p className="text-xs text-accent">
+                      {isDe
+                        ? "Bitte ein Startdatum wählen — oder einen der Zeitrahmen oben."
+                        : "Pick a start date — or one of the timeframes above."}
+                    </p>
+                  )}
                 </div>
               </div>
             )}
 
-            {STEPS[step].key === "materials" && (
-              <div className="flex flex-col gap-6">
-                <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
+            {STEPS[step] === "materials" && (
+              <div className="flex flex-col" style={{ gap: "clamp(0.25rem, min(1.3svh, 1.69vw), 1.5rem)" }}>
+                <StepHeading className="font-bold uppercase tracking-wider">
                   {isDe ? "Welches Material haben Sie bereits?" : "What materials do you already have?"}
                 </StepHeading>
-                <div className="flex flex-wrap gap-3">
+                <div className="flex flex-wrap" style={{ gap: "clamp(0.25rem, min(0.8svh, 1.04vw), 0.75rem)" }}>
                   {MATERIAL_OPTIONS.map((m) => (
                     <Chip
                       key={m.id}
@@ -707,25 +805,31 @@ function ContactWizardInner({ locale }) {
                   selected={data.consult.materials}
                   onClick={() => toggleConsult("materials")}
                 />
-                <label className="flex flex-col gap-2 mt-2">
+                <label className="flex flex-col" style={{ gap: "clamp(0.125rem, min(0.6svh, 0.78vw), 0.5rem)" }}>
                   <span className="text-xs text-white/60 uppercase tracking-widest font-semibold">
                     {isDe ? "Zusätzliche Informationen" : "Additional Information"}
                   </span>
+                  {/* The rows attribute is a floor, not a height: the box is
+                      sized in svh so a short screen gets two lines and a tall
+                      one gets four, without the step ever overflowing. */}
                   <textarea
-                    rows={4}
+                    rows={2}
                     value={data.additionalInfo}
                     onChange={(e) => set({ additionalInfo: e.target.value })}
-                    className="bg-transparent border-b border-white/30 py-2.5 text-sm text-white placeholder-white/40 focus:outline-none focus:border-white transition-colors resize-none"
+                    style={{ height: "clamp(1.75rem, min(5svh, 6.5vw), 6rem)", paddingTop: "clamp(0.1875rem, min(1svh, 1.3vw), 0.625rem)" }}
+                    className="bg-transparent border-b border-white/30 text-sm text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent focus:border-white transition-colors resize-none"
                     placeholder={isDe ? "Erzählen Sie uns mehr..." : "Tell us more about the project..."}
                   />
                 </label>
 
-                <div className="flex flex-col gap-3 mt-2">
-                  <span className="text-xs text-white/60 uppercase tracking-widest font-semibold">
+                <div className="flex flex-col" style={{ gap: "clamp(0.25rem, min(1svh, 1.3vw), 0.75rem)" }}>
+                  {/* The caption above this used to repeat what the button
+                      itself says. One line carries both now, which is a whole
+                      row of height back on a short screen. */}
+                  <label
+                    style={{ padding: "clamp(0.3rem, min(1.4svh, 1.82vw), 1.25rem) 1.5rem" }}
+                    className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 hover:border-white/40 transition-colors cursor-pointer text-xs text-white/50 uppercase tracking-widest">
                     {isDe ? "Dateien anhängen (PDF, Bilder)" : "Attach Files (PDF, Images)"}
-                  </span>
-                  <label className="flex items-center justify-center gap-2 px-6 py-5 rounded-2xl border border-dashed border-white/20 hover:border-white/40 transition-colors cursor-pointer text-xs text-white/50 uppercase tracking-widest">
-                    {isDe ? "Dateien auswählen" : "Choose Files"}
                     <input
                       type="file"
                       multiple
@@ -761,25 +865,32 @@ function ContactWizardInner({ locale }) {
                       which left people guessing. Spell out the mechanism: the
                       form hands off to the visitor's own mail app, and a web
                       page cannot put attachments into it. */}
-                  <p className="text-[11px] text-white/50 leading-relaxed">
+                  <p
+                    style={{ fontSize: "clamp(0.5625rem, min(1.2svh, 1.56vw), 0.6875rem)", lineHeight: 1.4 }}
+                    className="text-white/50"
+                  >
                     {isDe
-                      ? "„Senden“ öffnet Ihr eigenes E-Mail-Programm mit allen Angaben — Dateien kann eine Website dort jedoch nicht anhängen. Bitte ziehen Sie die Dateien vor dem Absenden in diese E-Mail. Die Namen listen wir mit, damit nichts vergessen wird."
+                      ? "«Senden» öffnet Ihr eigenes E-Mail-Programm mit allen Angaben — Dateien kann eine Website dort jedoch nicht anhängen. Bitte ziehen Sie die Dateien vor dem Absenden in diese E-Mail. Die Namen listen wir mit, damit nichts vergessen wird."
                       : "Pressing Send opens your own email app with everything filled in — a web page can't attach files to it. Please drag the files into that email before you send it. We list their names in the message so nothing gets missed."}
                   </p>
                 </div>
               </div>
             )}
 
-            {STEPS[step].key === "details" && (
-              <div className="flex flex-col gap-8">
-                <StepHeading className="text-xl md:text-2xl font-bold uppercase tracking-wider">
+            {STEPS[step] === "details" && (
+              <div className="flex flex-col" style={{ gap: "clamp(0.4rem, min(1.8svh, 2.34vw), 2rem)" }}>
+                <StepHeading className="font-bold uppercase tracking-wider">
                   {isDe ? "Ihre Kontaktdaten" : "Your Details"}
                 </StepHeading>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div
+                  className="grid grid-cols-2"
+                  style={{ gap: "clamp(0.4rem, min(1.6svh, 2.08vw), 1.5rem)" }}
+                >
                   <TextField
                     label={isDe ? "Name" : "Name"}
                     required
                     type="text"
+                    autoComplete="name"
                     value={data.name}
                     onChange={(e) => set({ name: e.target.value })}
                   />
@@ -787,6 +898,7 @@ function ContactWizardInner({ locale }) {
                     label={isDe ? "Firmenname" : "Company Name"}
                     required
                     type="text"
+                    autoComplete="organization"
                     value={data.company}
                     onChange={(e) => set({ company: e.target.value })}
                   />
@@ -794,6 +906,8 @@ function ContactWizardInner({ locale }) {
                     label={isDe ? "E-Mail-Adresse" : "E-mail Address"}
                     required
                     type="email"
+                    autoComplete="email"
+                    inputMode="email"
                     placeholder="example@example.com"
                     value={data.email}
                     onChange={(e) => set({ email: e.target.value })}
@@ -801,12 +915,14 @@ function ContactWizardInner({ locale }) {
                   <TextField
                     label={isDe ? "Telefon" : "Phone"}
                     type="tel"
-                    placeholder="(000) 000-0000"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    placeholder="+41 00 000 00 00"
                     pattern="^[\d()+\-\s]{7,}$"
                     value={data.phone}
                     onChange={(e) => set({ phone: e.target.value })}
                   />
-                  <div className="sm:col-span-2">
+                  <div className="col-span-2">
                     <TextField
                       label={isDe ? "Projektname" : "Project Name"}
                       required
@@ -818,13 +934,21 @@ function ContactWizardInner({ locale }) {
                 </div>
 
                 {/* Auto-generated summary of everything requested so far */}
-                <div className="flex flex-col gap-3 p-5 rounded-2xl border border-white/10 bg-white/[0.02] text-xs text-white/60 leading-relaxed">
+                <div
+                  style={{
+                    gap: "clamp(0.125rem, min(0.9svh, 1.17vw), 0.75rem)",
+                    padding: "clamp(0.4rem, min(1.3svh, 1.7vw), 1.25rem)",
+                    fontSize: "clamp(0.5625rem, min(1.35svh, 1.76vw), 0.75rem)",
+                    lineHeight: 1.45,
+                  }}
+                  className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] text-white/60"
+                >
                   <span className="text-[10px] font-bold uppercase tracking-widest text-accent">
                     {isDe ? "Angeforderte Leistungen" : "Requested Products"}
                   </span>
                   <span>
                     {selectedServices.map((s) => s.label).join(", ") || "—"} · {budgetLabel} ·{" "}
-                    {data.startDate || "—"} → {data.endDate || "—"}
+                    {formatDate(data.startDate, locale)} → {formatDate(data.endDate, locale)}
                   </span>
                   {serviceLines.length > 0 && <span>{serviceLines.join(" · ")}</span>}
                   {consultAreas.length > 0 && (
@@ -849,12 +973,16 @@ function ContactWizardInner({ locale }) {
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between mt-10 pt-8 border-t border-white/10">
+      <div
+        className="flex items-center justify-between shrink-0 border-t border-white/10"
+        style={{ marginTop: "clamp(0.45rem, min(2.2svh, 2.86vw), 2rem)", paddingTop: "clamp(0.45rem, min(2.2svh, 2.86vw), 1.5rem)" }}
+      >
         <button
           type="button"
           onClick={back}
           disabled={step === 0}
-          className="text-xs font-bold uppercase tracking-widest text-white/50 hover:text-white transition-colors disabled:opacity-0 disabled:pointer-events-none cursor-pointer"
+          style={{ paddingTop: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)", paddingBottom: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)" }}
+          className="text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white transition-colors disabled:opacity-0 disabled:pointer-events-none cursor-pointer px-5 -ml-5 rounded-full"
         >
           {isDe ? "Zurück" : "Back"}
         </button>
@@ -864,7 +992,8 @@ function ContactWizardInner({ locale }) {
             type="button"
             onClick={next}
             disabled={!canProceed()}
-            className="bg-white text-black text-xs font-bold uppercase tracking-widest px-10 py-4 rounded-full hover:bg-white/80 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+            style={{ paddingTop: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)", paddingBottom: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)" }}
+            className="bg-white text-black text-xs font-bold uppercase tracking-widest px-10 rounded-full hover:bg-white/80 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
           >
             {isDe ? "Weiter" : "Next"}
           </button>
@@ -873,7 +1002,8 @@ function ContactWizardInner({ locale }) {
             type="button"
             onClick={handleSubmit}
             disabled={!canProceed()}
-            className="bg-white text-black text-xs font-bold uppercase tracking-widest px-10 py-4 rounded-full hover:bg-white/80 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+            style={{ paddingTop: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)", paddingBottom: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)" }}
+            className="bg-white text-black text-xs font-bold uppercase tracking-widest px-10 rounded-full hover:bg-white/80 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
           >
             {isDe ? "Senden" : "Send Request"}
           </button>

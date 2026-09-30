@@ -1,33 +1,49 @@
 import Image from "next/image";
 import Title3D from "@/components/Title3D";
+import en from "@/locales/en.json";
+import de from "@/locales/de.json";
+
+const translations = { en, de };
+
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  const t = translations[locale] ?? translations.en;
+  const title = `${t.about?.title ?? "About"} — SKLO Studio`;
+  return {
+    title,
+    alternates: { canonical: `/${locale}/about` },
+    openGraph: { title, url: `/${locale}/about` },
+  };
+}
 
 export default async function AboutPage({ params }) {
   const { locale } = await params;
-  const isDe = locale === "de";
+  const t = translations[locale] ?? translations.en;
+  const roles = t.about.roles;
 
   // Order follows the studio's own sheet. Den is on that sheet as a senior
   // artist but has no portrait in the set yet, so he is left out rather than
   // shown as a blank card.
   const team = [
-    { id: 1, name: "VIKTOR", role: "FOUNDER / ART DIRECTOR", photo: "/assets/team/viktor.webp" },
-    { id: 2, name: "MAX", role: "FOUNDER / ART DIRECTOR", photo: "/assets/team/max.webp" },
-    { id: 3, name: "KHRYSTIA", role: "LEAD ARTIST", photo: "/assets/team/khrystia.webp" },
-    { id: 4, name: "BOGDAN", role: "SENIOR ARTIST", photo: "/assets/team/bogdan.webp" },
-    { id: 5, name: "SASHA", role: "GRAPHIC DESIGNER", photo: "/assets/team/sasha.webp" },
-    { id: 6, name: "JULIA", role: "TALENT MANAGER", photo: "/assets/team/julia.webp" },
-    { id: 7, name: "YANA", role: "FINANCIAL MANAGER", photo: "/assets/team/yana.webp" },
+    { id: 1, name: "VIKTOR", role: roles.founder, photo: "/assets/team/viktor.webp" },
+    { id: 2, name: "MAX", role: roles.founder, photo: "/assets/team/max.webp" },
+    { id: 3, name: "KHRYSTIA", role: roles.leadArtist, photo: "/assets/team/khrystia.webp" },
+    { id: 4, name: "BOGDAN", role: roles.seniorArtist, photo: "/assets/team/bogdan.webp" },
+    { id: 5, name: "SASHA", role: roles.graphicDesigner, photo: "/assets/team/sasha.webp" },
+    { id: 6, name: "JULIA", role: roles.talentManager, photo: "/assets/team/julia.webp" },
+    { id: 7, name: "YANA", role: roles.financialManager, photo: "/assets/team/yana.webp" },
   ];
 
   return (
     <main className="w-full min-h-screen text-white flex flex-col pt-24 md:pt-28 pb-24">
       <section className="section-shell hairline-top w-full py-16 md:py-20 px-6 md:px-16 lg:px-28 xl:px-40">
         <div className="flex flex-col gap-4 mb-12 max-w-2xl">
-          <span className="eyebrow">{isDe ? "Das Studio" : "The studio"}</span>
+          <span className="eyebrow">{t.about.eyebrow}</span>
           <Title3D
             as="h1"
             className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase"
           >
-            {isDe ? "Unser Team" : "Our Team"}
+            {t.about.title}
           </Title3D>
         </div>
 

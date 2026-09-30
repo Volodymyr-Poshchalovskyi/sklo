@@ -1,9 +1,13 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { servicesData } from "@/data/servicesData";
+import { localizedServices } from "@/data/servicesData";
 import { servicePosterFor } from "@/data/galleryData";
 import Title3D from "@/components/Title3D";
+import en from "@/locales/en.json";
+import de from "@/locales/de.json";
+
+const translations = { en, de };
 
 function ServiceMedia({ service }) {
   const videoRef = useRef(null);
@@ -123,21 +127,21 @@ function ServiceTile({ service, index, locale }) {
 
 export default function ServicesPage({ params }) {
   const { locale } = React.use(params);
+  const t = translations[locale] ?? translations.en;
+  const services = localizedServices(locale);
 
   return (
     <main className="w-full min-h-screen text-white flex flex-col pt-24 md:pt-28 pb-24">
       <section className="section-shell hairline-top w-full py-16 md:py-20 px-6 md:px-16 lg:px-28 xl:px-40">
         <div className="flex flex-col gap-4 mb-12 max-w-2xl">
-          <span className="eyebrow">
-            {locale === "de" ? "Unser Angebot" : "What we offer"}
-          </span>
+          <span className="eyebrow">{t.services.eyebrow}</span>
           <Title3D as="h1" className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
-            {locale === "de" ? "Alle Dienstleistungen" : "All Services"}
+            {t.services.title}
           </Title3D>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-3 md:gap-x-4 gap-y-8 md:gap-y-10">
-          {servicesData.map((service, index) => (
+          {services.map((service, index) => (
             <ServiceTile
               key={service.slug}
               service={service}

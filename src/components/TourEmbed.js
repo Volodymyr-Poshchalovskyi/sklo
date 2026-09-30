@@ -1,6 +1,15 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
+
+// Shared across every embed on the page: one media-query listener, not one per
+// window.
+const pointerQuery = () => window.matchMedia("(hover: none)");
+function subscribeToPointer(onChange) {
+  const query = pointerQuery();
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
 import Image from "next/image";
 
 /**
@@ -21,8 +30,16 @@ import Image from "next/image";
  * delegates the sensors the VR/gyro mode in `graphics/webvr.js` asks for, and
  * `allowFullScreen` is what makes the tour's own fullscreen button work.
  */
-export default function TourEmbed({ tours, locale = "en", className = "" }) {
+export default function TourEmbed({ tours, locale = "en", className = "", showPart = false }) {
   const list = Array.isArray(tours) ? tours : tours ? [tours] : [];
+  // "Click to start" on a phone is an instruction nobody can follow. Read
+  // through `useSyncExternalStore` rather than an effect, so the first client
+  // render already has the right word and the server render stays "Click".
+  const coarsePointer = useSyncExternalStore(
+    subscribeToPointer,
+    () => window.matchMedia("(hover: none)").matches,
+    () => false
+  );
   const [activeIndex, setActiveIndex] = useState(0);
   const [started, setStarted] = useState(false);
   const frameRef = useRef(null);
@@ -40,6 +57,9 @@ export default function TourEmbed({ tours, locale = "en", className = "" }) {
     acc[item.title] = (acc[item.title] ?? 0) + 1;
     return acc;
   }, {});
+  // `showPart` is for the gallery, where each tour gets its own window: the
+  // list this embed sees is one item long, so it cannot tell on its own that
+  // two of the windows are the same property seen inside and out.
   const switcherLabel = (item) => {
     const part = de ? item.label.de : item.label.en;
     return titleCounts[item.title] > 1 ? `${item.title} · ${part}` : item.title;
@@ -137,14 +157,14 @@ export default function TourEmbed({ tours, locale = "en", className = "" }) {
               <span className="flex flex-col gap-1.5">
                 <span className="text-lg md:text-xl font-bold uppercase tracking-[0.14em]">
                   {tour.title}
-                  {titleCounts[tour.title] > 1 && (
+                  {(showPart || titleCounts[tour.title] > 1) && (
                     <> · {de ? tour.label.de : tour.label.en}</>
                   )}
                 </span>
                 <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-white/70">
                   {de
                     ? `${tour.scenes} Szenen · Klicken zum Starten`
-                    : `${tour.scenes} scenes · Click to start`}
+                    : `${tour.scenes} scenes · ${coarsePointer ? "Tap" : "Click"} to start`}
                 </span>
               </span>
             </span>

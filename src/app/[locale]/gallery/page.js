@@ -9,8 +9,12 @@ import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import LightboxVideo from "@/components/LightboxVideo";
 import TourEmbed from "@/components/TourEmbed";
 import Title3D from "@/components/Title3D";
+import en from "@/locales/en.json";
+import de from "@/locales/de.json";
 
-function GalleryCard({ item, onClick }) {
+const translations = { en, de };
+
+function GalleryCard({ item, onClick, label }) {
   const videoRef = useRef(null);
 
   // A film that fades up from black showed a black tile at rest and started
@@ -21,6 +25,26 @@ function GalleryCard({ item, onClick }) {
     if (!el || !item.start) return;
     if (el.currentTime < item.start) el.currentTime = item.start;
   };
+
+  // On a phone there is no hover, so a video tile sat on its first frame with
+  // nothing to say it was a film — in a category the page itself calls
+  // "cinematic architectural films". Where the pointer is coarse, playback
+  // follows the viewport instead, the way the services listing already does.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el || item.type !== "video") return;
+    if (!window.matchMedia("(hover: none)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) el.play().catch(() => {});
+        else el.pause();
+      },
+      { rootMargin: "0px", threshold: 0.25 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [item.type]);
 
   // Seeking needs the metadata, and the `onLoadedMetadata` prop alone misses
   // it: the element comes from the server markup, so the browser has often
@@ -61,7 +85,7 @@ function GalleryCard({ item, onClick }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{ aspectRatio: `${item.width} / ${item.height}` }}
-      className="relative w-full bg-white/5 overflow-hidden rounded-lg group cursor-pointer border border-white/5 hover:border-white/15 transition-all duration-300"
+      className="gallery-tile relative w-full bg-white/5 overflow-hidden rounded-lg group cursor-pointer border border-white/5 hover:border-white/15 transition-all duration-300"
     >
       {item.type === "video" ? (
         <video
@@ -77,7 +101,7 @@ function GalleryCard({ item, onClick }) {
       ) : (
         <Image
           src={item.src}
-          alt={item.title}
+          alt={label}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -90,15 +114,13 @@ function GalleryCard({ item, onClick }) {
 
       <div className="media-caption absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
         <span className="media-caption-accent text-[10px] font-mono uppercase tracking-widest mb-1 font-semibold">
-          {item.category}
+          {label}
         </span>
         <h3 className="text-sm font-bold uppercase tracking-wider">
-          {item.title}
+          {label}
         </h3>
-        {/* No corner badge. It only ever appeared on hover, and by then a video
-            has already started playing — so the play glyph told the reader
-            nothing, and the plus glyph on stills was pure decoration sitting on
-            top of the work. */}
+        {/* No corner badge on a pointer device: it only ever appeared on
+            hover, and by then the video had already started playing. */}
       </div>
     </div>
   );
@@ -108,27 +130,30 @@ function GalleryCard({ item, onClick }) {
 // reload and a filtered view can be linked to or bookmarked. Slugs rather than
 // the display labels keep the query string readable — "Bird's-Eye View" would
 // otherwise encode as `Bird%27s-Eye%20View`. They match the asset folder names.
+// How many tiles arrive at once, and again on every "load more".
+const PAGE_SIZE = 36;
+
 const ALL_FILTER = "All";
 const FILTER_PARAM = "filter";
 const CATEGORIES = [
-  { label: "Exterior", slug: "exterior" },
-  { label: "Interior", slug: "interior" },
-  { label: "Bird's-Eye View", slug: "bird-eye" },
-  { label: "Product", slug: "product" },
-  { label: "Virtual Staging", slug: "virtual-staging" },
+  { key: "Exterior", slug: "exterior" },
+  { key: "Interior", slug: "interior" },
+  { key: "Bird's-Eye View", slug: "bird-eye" },
+  { key: "Product", slug: "product" },
+  { key: "Virtual Staging", slug: "virtual-staging" },
   // Sits next to Virtual Staging because the two are the same kind of tab: a
   // filter that swaps the tile grid for its own viewer rather than narrowing it.
-  { label: "360° Tours", slug: "360-tours" },
-  { label: "Animation", slug: "animation" },
-  { label: "Cinemagraph", slug: "cinemagraph" },
+  { key: "360° Tours", slug: "360-tours" },
+  { key: "Animation", slug: "animation" },
+  { key: "Cinemagraph", slug: "cinemagraph" },
 ];
 
 // An unknown or missing slug falls back to "All" rather than showing an empty
 // grid, so a hand-edited or stale URL still renders something.
-const labelForSlug = (slug) =>
-  CATEGORIES.find((c) => c.slug === slug)?.label ?? ALL_FILTER;
-const slugForLabel = (label) =>
-  CATEGORIES.find((c) => c.label === label)?.slug ?? null;
+const keyForSlug = (slug) =>
+  CATEGORIES.find((c) => c.slug === slug)?.key ?? ALL_FILTER;
+const slugForKey = (key) =>
+  CATEGORIES.find((c) => c.key === key)?.slug ?? null;
 
 // CSS multi-column (`columns-3`) fills the first column top-to-bottom before
 // it starts the second one — with 98 exterior renders that puts items 1–33 in
@@ -166,10 +191,15 @@ function GalleryPageContent() {
   // Derived from the URL rather than held in local state, so there is only one
   // source of truth and a reload cannot disagree with what the sidebar shows.
   const searchParams = useSearchParams();
-  const activeFilter = labelForSlug(searchParams.get(FILTER_PARAM));
+  const activeFilter = keyForSlug(searchParams.get(FILTER_PARAM));
   // The tour switcher labels its own buttons per language; this page takes no
   // `t`, so the locale comes off the route segment.
   const locale = useParams()?.locale === "de" ? "de" : "en";
+  const t = translations[locale];
+  const g = t.gallery;
+  // Every visible category string is looked up from the English key the
+  // archive rows and the filter already agree on.
+  const labelFor = (key) => g.categories[key]?.label ?? key;
 
   // The chip rail scrolls sideways, so an active filter near its end starts
   // out of sight — on a reload of `?filter=cinemagraph` nothing on screen said
@@ -190,9 +220,9 @@ function GalleryPageContent() {
   // instantly), and Next keeps `useSearchParams` in sync with it. `replace`
   // rather than `push` keeps the Back button pointing at the previous page
   // instead of stepping back through every filter the reader tried.
-  const setActiveFilter = (label) => {
+  const setActiveFilter = (key) => {
     filterWasClicked.current = true;
-    const slug = slugForLabel(label);
+    const slug = slugForKey(key);
     const next = new URLSearchParams(searchParams.toString());
     if (slug) next.set(FILTER_PARAM, slug);
     else next.delete(FILTER_PARAM);
@@ -202,18 +232,6 @@ function GalleryPageContent() {
       "",
       query ? `?${query}` : window.location.pathname
     );
-  };
-
-  const categoryDescriptions = {
-    "All": "A curated mix of our architectural work — exteriors, interiors, aerials and motion, shown side by side. Product, Virtual Staging and 360° Tours have their own sections.",
-    "Exterior": "Photorealistic architectural renderings showing buildings, structures, and landscaping in their real-world environments.",
-    "Interior": "Highly detailed internal designs capturing lighting, materials, and atmosphere to showcase living and commercial spaces.",
-    "Bird's-Eye View": "Aerial and drone-perspective renderings showing a development within its surrounding district and landscape.",
-    "Product": "Studio-quality 3D renderings of furniture and product pieces, lit and staged for catalogs and marketing.",
-    "Virtual Staging": "Real interior photographs digitally furnished and dressed to show a space's full potential.",
-    "360° Tours": "Walkable 360° tours of a finished project — drag to look around, use the floorplan to move between scenes.",
-    "Animation": "Cinematic architectural films and motion showcases bringing a project to life through camera movement and mood.",
-    "Cinemagraph": "Static architectural visualizations enhanced with subtle loop animations, drawing instant attention to key design details."
   };
 
   // The full content list (with each file's real intrinsic dimensions)
@@ -243,11 +261,42 @@ function GalleryPageContent() {
 
   const columnCount = useColumnCount();
 
+  // "All Projects" is 214 tiles — 66,000px on a phone, about 78 screens, with
+  // no way to reach the footer and no sense of how much is left. The grid now
+  // arrives in batches; the lightbox still walks the full filtered set, so
+  // paging past the last loaded tile keeps working.
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  // Reset during render rather than from an effect: the batch size belongs to
+  // the filter, so a new filter means a new count before anything paints.
+  const [countedFilter, setCountedFilter] = useState(activeFilter);
+  if (countedFilter !== activeFilter) {
+    setCountedFilter(activeFilter);
+    setVisibleCount(PAGE_SIZE);
+  }
+
+  const shownItems = filteredItems.slice(0, visibleCount);
+  const hasMore = filteredItems.length > shownItems.length;
+
+  // Even one page of results runs several screens, and the footer is further
+  // still. ClientWrapper already broadcasts scroll, so this costs no listener
+  // of its own.
+  const [showTopButton, setShowTopButton] = useState(false);
+  useEffect(() => {
+    const onScroll = (e) => setShowTopButton(e.detail.scrollY > 1200);
+    window.addEventListener("sklo-scroll", onScroll);
+    return () => window.removeEventListener("sklo-scroll", onScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    if (lenisRef?.current) lenisRef.current.scrollTo(0);
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   // Each entry keeps its index into `filteredItems` — the lightbox and its
   // prev/next handlers walk that flat array, so a per-column index would send
   // them to the wrong item.
   const columnBuckets = Array.from({ length: columnCount }, () => []);
-  filteredItems.forEach((item, index) => {
+  shownItems.forEach((item, index) => {
     columnBuckets[index % columnCount].push({ item, index });
   });
 
@@ -282,14 +331,94 @@ function GalleryPageContent() {
     );
   };
 
+  const lightboxRef = useRef(null);
+  const openerRef = useRef(null);
+  const touchStartRef = useRef(null);
+
+  // Paging by swipe, because that is what a phone reader tries first — the
+  // arrow buttons sit on top of the artwork at 390px and are a poor second.
+  const onTouchStart = (e) => {
+    const touch = e.touches[0];
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+  };
+  const onTouchEnd = (e) => {
+    const start = touchStartRef.current;
+    touchStartRef.current = null;
+    if (!start) return;
+    const touch = e.changedTouches[0];
+    const dx = touch.clientX - start.x;
+    const dy = touch.clientY - start.y;
+    // Horizontal, and clearly so: a diagonal drag on a photo is not a page.
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    setSelectedItemIndex((prev) =>
+      dx < 0
+        ? prev === filteredItems.length - 1 ? 0 : prev + 1
+        : prev === 0 ? filteredItems.length - 1 : prev - 1
+    );
+  };
+
   const handleClose = () => {
     setSelectedItemIndex(null);
   };
+
+  // While the lightbox is open it is the page: the document behind it must not
+  // scroll (a swipe over the image used to move the gallery underneath, so
+  // closing it left you somewhere else entirely), the focus has to be inside
+  // it, and it has to come back where it started on close.
+  const lightboxOpen = selectedItemIndex !== null;
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const opener = document.activeElement;
+    openerRef.current = opener instanceof HTMLElement ? opener : null;
+
+    const { overflow, paddingRight } = document.body.style;
+    const rootOverflow = document.documentElement.style.overflow;
+    const scrollbar = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+    if (scrollbar > 0) document.body.style.paddingRight = `${scrollbar}px`;
+    // `overflow: hidden` alone does not stop Lenis — it drives the real
+    // scroll position from its own loop, so it has to be told to hold. Held in
+    // a local so the cleanup releases the same instance it paused.
+    const lenis = lenisRef?.current;
+    lenis?.stop?.();
+
+    const focusFirst = requestAnimationFrame(() => {
+      lightboxRef.current?.querySelector("button")?.focus();
+    });
+
+    return () => {
+      cancelAnimationFrame(focusFirst);
+      document.body.style.overflow = overflow;
+      document.documentElement.style.overflow = rootOverflow;
+      document.body.style.paddingRight = paddingRight;
+      lenis?.start?.();
+      openerRef.current?.focus?.();
+    };
+    // Keyed on open/closed, not on the index: paging between items must not
+    // re-run the scroll lock or bounce the focus back to the close button.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lightboxOpen]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (selectedItemIndex === null) return;
       if (e.key === "Escape") handleClose();
+      if (e.key === "Tab") {
+        const focusables = lightboxRef.current?.querySelectorAll(
+          'button, [href], video, [tabindex]:not([tabindex="-1"])'
+        );
+        if (!focusables?.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
       if (e.key === "ArrowLeft") setSelectedItemIndex((prev) => prev === 0 ? filteredItems.length - 1 : prev - 1);
       if (e.key === "ArrowRight") setSelectedItemIndex((prev) => prev === filteredItems.length - 1 ? 0 : prev + 1);
     };
@@ -298,15 +427,21 @@ function GalleryPageContent() {
   }, [selectedItemIndex, filteredItems.length]);
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row-reverse text-white">
-      {/* Right Sidebar (18% width on desktop) */}
-      {/* Sticky only from `md` up. On a phone this panel is a short bar in the
-          normal flow, not a full-height column pinned to the top. */}
-      <aside className="w-full md:w-[18%] h-auto md:h-screen md:sticky md:top-0 bg-surface border-b md:border-b-0 md:border-l border-white/10 px-6 md:p-8 pt-28 md:pt-32 pb-5 md:pb-8 flex flex-col justify-between z-20 shrink-0">
-        <div className="flex flex-col gap-4 md:gap-8">
+    <div className="min-h-screen flex flex-col lg:flex-row-reverse text-white">
+      {/* The filter rail. A plain <div>, not <aside>: it holds the page's own
+          <h1> and its primary controls, and marking those as complementary put
+          the title outside the main landmark.
+
+          It only becomes a side column at `lg`. At `md` its 18% came to a
+          136px column with 32px of padding — 72px for content — which cut the
+          heading to "GALLE", stacked every chip over three lines and pushed
+          the page 29px wider than the viewport. Tablets keep the phone
+          layout: a horizontal rail above the grid. */}
+      <div className="w-full lg:w-[18%] lg:min-w-[210px] h-auto lg:h-screen lg:sticky lg:top-0 bg-surface border-b lg:border-b-0 lg:border-l border-white/10 px-6 lg:p-8 pt-28 lg:pt-32 pb-5 lg:pb-8 flex flex-col justify-between z-20 shrink-0">
+        <div className="flex flex-col gap-4 lg:gap-8">
           <div>
-            <Title3D as="h1" className="text-2xl md:text-3xl font-bold tracking-widest uppercase mb-3 md:mb-4">
-              Gallery
+            <Title3D as="h1" className="text-2xl lg:text-3xl font-bold tracking-widest uppercase mb-3 lg:mb-4">
+              {g.title}
             </Title3D>
             <div className="h-[1px] bg-gradient-to-r from-text/20 to-transparent w-full" />
           </div>
@@ -314,14 +449,14 @@ function GalleryPageContent() {
           {/* Phone: one sideways-scrolling rail of chips. The vertical list
               below is 8 rows tall, which pushed the first photograph to 760px
               down the page — past the fold on every phone. */}
-          <div ref={chipRailRef} className="md:hidden chip-rail -mx-6 px-6 overflow-x-auto">
+          <nav aria-label={g.title} ref={chipRailRef} className="lg:hidden chip-rail -mx-6 px-6 overflow-x-auto">
             <div className="flex w-max gap-2">
-              {[{ label: ALL_FILTER }, ...CATEGORIES].map(({ label }) => {
-                const isActive = activeFilter === label;
+              {[{ key: ALL_FILTER }, ...CATEGORIES].map(({ key }) => {
+                const isActive = activeFilter === key;
                 return (
                   <button
-                    key={label}
-                    onClick={() => setActiveFilter(label)}
+                    key={key}
+                    onClick={() => setActiveFilter(key)}
                     aria-pressed={isActive}
                     className={`shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer ${
                       isActive
@@ -329,14 +464,14 @@ function GalleryPageContent() {
                         : "bg-white/5 text-white/40 border-transparent hover:bg-white/10 hover:text-white"
                     }`}
                   >
-                    {label === ALL_FILTER ? "All Projects" : label}
+                    {key === ALL_FILTER ? g.all : labelFor(key)}
                   </button>
                 );
               })}
             </div>
-          </div>
+          </nav>
 
-          <div className="hidden md:flex flex-col gap-4">
+          <nav aria-label={g.title} className="hidden lg:flex flex-col gap-4">
             {/* All Button */}
             <button
               onClick={() => setActiveFilter(ALL_FILTER)}
@@ -346,17 +481,17 @@ function GalleryPageContent() {
                   : "bg-white/5 text-white/40 border-transparent hover:bg-white/10 hover:text-white"
               }`}
             >
-              All Projects
+              {g.all}
             </button>
 
             {/* Category Filter list */}
             <div className="flex flex-col gap-1.5 pl-1">
-              {CATEGORIES.map(({ label, slug }) => {
-                const isActive = activeFilter === label;
+              {CATEGORIES.map(({ key, slug }) => {
+                const isActive = activeFilter === key;
                 return (
                   <button
                     key={slug}
-                    onClick={() => setActiveFilter(label)}
+                    onClick={() => setActiveFilter(key)}
                     className="group flex items-center text-left py-2 px-1 text-xs tracking-wider uppercase font-semibold transition-all duration-300 relative cursor-pointer"
                   >
                     <span 
@@ -373,34 +508,52 @@ function GalleryPageContent() {
                         transform: isActive ? "translateX(4px)" : "translateX(0)",
                       }}
                     >
-                      {label}
+                      {labelFor(key)}
                     </span>
                   </button>
                 );
               })}
             </div>
-          </div>
+          </nav>
         </div>
 
         {/* Bottom Category Description. The phone keeps the sentence but drops
             the label and the reserved height — it sits right under the chips
             instead of anchoring the bottom of a full-height column. */}
-        <div className="mt-4 md:mt-0 md:border-t md:border-white/10 md:pt-6">
-          <p className="hidden md:block text-[9px] font-mono uppercase tracking-widest text-white/30 mb-2">Category Info</p>
-          <p className="text-[11px] md:text-xs text-white/50 leading-relaxed md:min-h-[48px] transition-all duration-300">
-            {categoryDescriptions[activeFilter] || categoryDescriptions["All"]}
+        <div className="mt-4 lg:mt-0 lg:border-t lg:border-white/10 lg:pt-6">
+          <p className="hidden lg:block text-[9px] font-mono uppercase tracking-widest text-white/30 mb-2">{g.categoryInfo}</p>
+          <p className="text-[11px] lg:text-xs text-white/50 leading-relaxed lg:min-h-[48px] transition-all duration-300">
+            {g.categories[activeFilter]?.desc ?? g.categories.All.desc}
           </p>
         </div>
-      </aside>
+      </div>
 
       {/* Left Gallery Masonry Grid (78% width on desktop) */}
-      <main className="w-full md:w-[82%] min-h-screen pt-8 md:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
+      <main className="w-full lg:w-[82%] min-h-screen pt-8 lg:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
         {isTours ? (
-          // One viewer with the interior/exterior switcher on top, not two
-          // stacked frames — each export is its own krpano instance and loads
-          // a few megabytes of engine and tiles once started.
-          <div key={activeFilter} className="animate-fade-in-card opacity-0 flex flex-col gap-6 max-w-[1100px]">
-            <TourEmbed tours={tours} locale={locale} />
+          // One window per tour, laid out like the rest of the gallery, rather
+          // than a single viewer with a switcher above it — this is the room
+          // where a visitor browses everything the studio has, so the tours
+          // should be side by side the way the stills are. Each window still
+          // waits for a click before it mounts its iframe, so five of them cost
+          // five posters until somebody picks one. The switcher version lives
+          // on the 360° service page, where the subject is one property.
+          <div key={activeFilter} className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+            {tours.map((tour, idx) => (
+              <div
+                key={tour.id}
+                style={{ animationDelay: `${idx * 60}ms` }}
+                className="animate-fade-in-card opacity-0"
+              >
+                <TourEmbed
+                  tours={[tour]}
+                  locale={locale}
+                  // Two of these are the same property, inside and out, and a
+                  // window holding one tour cannot work that out for itself.
+                  showPart={tours.filter((t) => t.title === tour.title).length > 1}
+                />
+              </div>
+            ))}
           </div>
         ) : isVirtualStaging ? (
           // Virtual Staging is comparisons, not tiles: two per row at most, so
@@ -417,13 +570,16 @@ function GalleryPageContent() {
                   after={pair.after}
                   width={pair.width}
                   height={pair.height}
+                  beforeLabel={g.before}
+                  afterLabel={g.after}
+                  comparisonLabel={g.comparison}
                 />
                 <div className="flex items-baseline justify-between gap-4">
                   <h3 className="text-sm font-bold uppercase tracking-wider text-white">
-                    {pair.title}
+                    {locale === "de" && pair.titleDe ? pair.titleDe : pair.title}
                   </h3>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">
-                    Drag to compare
+                    {g.dragToCompare}
                   </span>
                 </div>
               </div>
@@ -443,6 +599,7 @@ function GalleryPageContent() {
                 >
                   <GalleryCard
                     item={item}
+                    label={labelFor(item.category)}
                     onClick={() => setSelectedItemIndex(index)}
                   />
                 </div>
@@ -450,6 +607,36 @@ function GalleryPageContent() {
             </div>
           ))}
         </div>
+        )}
+
+        {!isTours && !isVirtualStaging && (
+          <div className="mt-12 flex flex-col items-center gap-4">
+            <p className="text-[11px] font-mono uppercase tracking-widest text-white/40">
+              {g.shownOf
+                .replace("{shown}", shownItems.length)
+                .replace("{total}", filteredItems.length)}
+            </p>
+            {hasMore && (
+              <button
+                onClick={() => setVisibleCount((n) => n + PAGE_SIZE)}
+                className="carousel-arrow rounded-full px-8 py-4 text-xs font-semibold uppercase tracking-[0.18em] transition-all duration-300"
+              >
+                {g.loadMore}
+              </button>
+            )}
+          </div>
+        )}
+
+        {showTopButton && (
+          <button
+            onClick={scrollToTop}
+            aria-label={g.backToTop}
+            className="fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full carousel-arrow flex items-center justify-center transition-all duration-300"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+          </button>
         )}
 
         <style>{`
@@ -471,8 +658,14 @@ function GalleryPageContent() {
 
       {/* Lightbox Modal */}
       {selectedItemIndex !== null && (
-        <div 
+        <div
+          ref={lightboxRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label={labelFor(filteredItems[selectedItemIndex]?.category)}
           onClick={handleClose}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
           /* No backdrop blur: the sheet is already 95% black, so the blur was
              invisible — but the compositor still had to blur the whole
              gallery behind it on every frame, which is what made paging
@@ -483,7 +676,7 @@ function GalleryPageContent() {
           <button
             onClick={handleClose}
             className="absolute top-6 right-6 w-12 h-12 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 cursor-pointer z-50"
-            aria-label="Close lightbox"
+            aria-label={g.closeLightbox}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M18 6L6 18M6 6l12 12"/>
@@ -493,8 +686,8 @@ function GalleryPageContent() {
           {/* Left Arrow */}
           <button
             onClick={handlePrev}
-            className="absolute left-6 w-14 h-14 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 cursor-pointer z-50"
-            aria-label="Previous item"
+            className="absolute left-2 md:left-6 bottom-4 md:bottom-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 cursor-pointer z-50"
+            aria-label={g.prevItem}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M15 19l-7-7 7-7"/>
@@ -504,8 +697,8 @@ function GalleryPageContent() {
           {/* Right Arrow */}
           <button
             onClick={handleNext}
-            className="absolute right-6 w-14 h-14 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 cursor-pointer z-50"
-            aria-label="Next item"
+            className="absolute right-2 md:right-6 bottom-4 md:bottom-auto w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white transition-all duration-300 hover:scale-110 cursor-pointer z-50"
+            aria-label={g.nextItem}
           >
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
               <path d="M9 5l7 7-7 7"/>
@@ -533,7 +726,7 @@ function GalleryPageContent() {
               <Image
                 key={filteredItems[selectedItemIndex].id}
                 src={filteredItems[selectedItemIndex].src}
-                alt={filteredItems[selectedItemIndex].title}
+                alt={labelFor(filteredItems[selectedItemIndex].category)}
                 width={filteredItems[selectedItemIndex].width}
                 height={filteredItems[selectedItemIndex].height}
                 sizes="92vw"
@@ -542,13 +735,17 @@ function GalleryPageContent() {
               />
             )}
             
+            {/* The category was printed twice, once as an eyebrow and once as
+                a heading. The second line now says where you are in the set,
+                which in a 214-item filter is the thing you cannot otherwise
+                know. */}
             <div className="mt-6 text-center">
               <span className="text-xs uppercase tracking-widest text-accent font-semibold">
-                {filteredItems[selectedItemIndex]?.category}
+                {labelFor(filteredItems[selectedItemIndex]?.category)}
               </span>
-              <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-white mt-1">
-                {filteredItems[selectedItemIndex]?.title}
-              </h3>
+              <p className="text-sm font-mono tracking-widest text-white/60 mt-1">
+                {selectedItemIndex + 1} / {filteredItems.length}
+              </p>
             </div>
           </div>
         </div>

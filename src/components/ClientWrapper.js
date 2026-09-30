@@ -111,7 +111,7 @@ export default function ClientWrapper({ children, locale, t, initialShowLoader }
   }, [initialShowLoader]);
 
   // Centralized scroll listener — broadcasts a lightweight custom event
-  // so child components (Header, AnnouncementBar) share one scroll read
+  // so child components (Header, the gallery's back-to-top) share one read
   // instead of each attaching their own listener.
   useEffect(() => {
     let ticking = false;
@@ -139,10 +139,18 @@ export default function ClientWrapper({ children, locale, t, initialShowLoader }
   return (
     <LenisContext.Provider value={lenisRef}>
       <LoaderContext.Provider value={ready}>
+        {/* The first stop in the tab order: a keyboard reader lands on the
+            capsule's links on every page otherwise. */}
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:rounded-full focus:bg-text focus:px-5 focus:py-3 focus:text-sm focus:font-semibold focus:text-bg"
+        >
+          {t?.header?.skipToContent ?? "Skip to content"}
+        </a>
         {showLoader && !ready && <Loader onComplete={() => setReady(true)} />}
         <Header t={t} locale={locale} visible={ready} />
         <RouteCurtain />
-        {children}
+        <div id="main">{children}</div>
       </LoaderContext.Provider>
     </LenisContext.Provider>
   );

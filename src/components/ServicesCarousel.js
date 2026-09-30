@@ -42,7 +42,10 @@ function LazyVideo({ src, className }) {
     const videoEl = videoRef.current;
     if (!videoEl || !hasIntersected) return;
 
-    if (isIntersecting) {
+    const stillness =
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      navigator.connection?.saveData === true;
+    if (isIntersecting && !stillness) {
       videoEl.play().catch((err) => {
         // Ignore autoplay errors
       });
@@ -77,6 +80,8 @@ export default function ServicesCarousel({
   defaultHref = "#",
   viewAllHref,
   viewAllLabel,
+  prevLabel = "Previous slide",
+  nextLabel = "Next slide",
 }) {
   const carouselRef = useRef(null);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -85,11 +90,14 @@ export default function ServicesCarousel({
     ? [...items, { id: "view-all", title: viewAllLabel, isLink: true }]
     : items;
 
-  // Replicate 3 times to support infinite scroll looping
+  // Replicate 3 times to support infinite scroll looping. Only the middle
+  // copy is real as far as assistive technology is concerned — the other two
+  // exist so the strip can wrap, and without `isClone` a keyboard reader
+  // walked the same ten services three times over.
   const loopedItems = [
-    ...baseItems.map((item) => ({ ...item, uniqueId: `sec1-${item.id}` })),
+    ...baseItems.map((item) => ({ ...item, uniqueId: `sec1-${item.id}`, isClone: true })),
     ...baseItems.map((item) => ({ ...item, uniqueId: `sec2-${item.id}` })),
-    ...baseItems.map((item) => ({ ...item, uniqueId: `sec3-${item.id}` })),
+    ...baseItems.map((item) => ({ ...item, uniqueId: `sec3-${item.id}`, isClone: true })),
   ];
 
   const getCardWidthWithGap = () => {
@@ -295,7 +303,7 @@ export default function ServicesCarousel({
         <button
           onClick={scrollLeft}
           className="carousel-arrow w-12 sm:w-14 h-12 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
-          aria-label="Previous slide"
+          aria-label={prevLabel}
         >
           <svg
             className="w-5 sm:w-6 h-5 sm:h-6"
@@ -310,7 +318,7 @@ export default function ServicesCarousel({
         <button
           onClick={scrollRight}
           className="carousel-arrow w-12 sm:w-14 h-12 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
-          aria-label="Next slide"
+          aria-label={nextLabel}
         >
           <svg
             className="w-5 sm:w-6 h-5 sm:h-6"
@@ -347,6 +355,8 @@ export default function ServicesCarousel({
                 key={item.uniqueId}
                 href={viewAllHref}
                 onClick={handleLinkClick}
+                aria-hidden={item.isClone || undefined}
+                tabIndex={item.isClone ? -1 : undefined}
                 className="flex-shrink-0 w-[220px] sm:w-[260px] lg:w-[calc((100%-60px)/4)] flex flex-col gap-4 group cursor-pointer snap-start"
                 draggable="false"
               >
@@ -367,8 +377,14 @@ export default function ServicesCarousel({
                     </svg>
                   </div>
                 </div>
-                {/* Invisible element to align heights */}
-                <div className="w-full py-2.5 px-4 text-xs font-semibold uppercase opacity-0 select-none pointer-events-none">
+                {/* Invisible element to align heights. `aria-hidden` because
+                    `opacity: 0` is not hidden: this word was landing inside the
+                    link's accessible name, which read "VIEW ALL SERVICES
+                    PLACEHOLDER". */}
+                <div
+                  aria-hidden="true"
+                  className="w-full py-2.5 px-4 text-xs font-semibold uppercase opacity-0 select-none pointer-events-none"
+                >
                   Placeholder
                 </div>
               </Link>
@@ -380,6 +396,8 @@ export default function ServicesCarousel({
               key={item.uniqueId}
               href={item.href || defaultHref}
               onClick={handleLinkClick}
+              aria-hidden={item.isClone || undefined}
+              tabIndex={item.isClone ? -1 : undefined}
               className="flex-shrink-0 w-[220px] sm:w-[260px] lg:w-[calc((100%-60px)/4)] flex flex-col gap-4 group cursor-pointer snap-start"
               draggable="false"
             >

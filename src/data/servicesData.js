@@ -1,16 +1,28 @@
+// Single source of truth for every service: its copy, its hero media and its
+// four-step pipeline.
+//
+// German lives here as a `De` sibling next to each translatable field
+// (`titleDe`, `descDe`) rather than as a `{ en, de }` object, so that a call
+// site which has not been localised yet still renders the English string
+// instead of `[object Object]`. Read it through `localizeService()` /
+// `localizedServices()` below, which hand back a plain flat service whose
+// `title`, `desc` and `pipeline[].title|desc` are already in the right
+// language — everything downstream keeps working with flat fields.
 export const servicesData = [
   {
     id: 0,
     slug: "exterior-visualization",
     title: "EXTERIOR VISUALIZATION",
+    titleDe: "AUSSEN­VISUALI­SIERUNG",
     desc: "Show your project from the best side with photorealistic exterior renderings. Must-have for successful marketing campaigns and investor attraction.",
+    descDe: "Zeigen Sie Ihr Projekt von seiner besten Seite — mit fotorealistischen Aussenvisualisierungen. Ein Muss für erfolgreiche Vermarktung und die Ansprache von Investoren.",
     src: "/assets/services/exterior-visualization-wide.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "Briefing & Base Modeling", desc: "We study your architectural drawings, BIM models, and reference photos to construct the precise 3D geometry of the building." },
-      { step: "02", title: "Camera Composition", desc: "We select the most impactful angles, lighting directions, and landscape frame settings for client approval." },
-      { step: "03", title: "Texturing & Environment", desc: "We apply high-fidelity textures, wood/stone/concrete shaders, and construct surrounding vegetation, roads, and skies." },
-      { step: "04", title: "Final Render & Post-production", desc: "We execute raw high-resolution rendering and perform color-grading, atmospheric enhancements, and detailing in Photoshop." }
+      { step: "01", title: "Briefing & Base Modeling", titleDe: "Briefing & Basismodell", desc: "We study your architectural drawings, BIM models, and reference photos to construct the precise 3D geometry of the building.", descDe: "Wir studieren Ihre Architekturpläne, BIM-Modelle und Referenzfotos und bauen daraus die präzise 3D-Geometrie des Gebäudes." },
+      { step: "02", title: "Camera Composition", titleDe: "Kameras & Komposition", desc: "We select the most impactful angles, lighting directions, and landscape frame settings for client approval.", descDe: "Wir wählen die wirkungsvollsten Blickwinkel, Lichtrichtungen und Bildausschnitte und stimmen sie mit Ihnen ab." },
+      { step: "03", title: "Texturing & Environment", titleDe: "Texturierung & Umgebung", desc: "We apply high-fidelity textures, wood/stone/concrete shaders, and construct surrounding vegetation, roads, and skies.", descDe: "Wir legen hochaufgelöste Texturen sowie Holz-, Stein- und Betonshader an und bauen Bepflanzung, Strassen und Himmel der Umgebung auf." },
+      { step: "04", title: "Final Render & Post-production", titleDe: "Finales Rendering & Postproduktion", desc: "We execute raw high-resolution rendering and perform color-grading, atmospheric enhancements, and detailing in Photoshop.", descDe: "Wir rendern in hoher Auflösung und übernehmen Farbkorrektur, atmosphärische Effekte und Detailarbeit in Photoshop." }
     ],
     gallery: [
       { src: "/assets/heroImage.jpg", aspect: "aspect-[16/9]" },
@@ -23,14 +35,16 @@ export const servicesData = [
     id: 1,
     slug: "interior-visualization",
     title: "INTERIOR VISUALIZATION",
+    titleDe: "INNEN­VISUALI­SIERUNG",
     desc: "Showcase interiors with atmosphere and detail. Visualizations that help potential clients imagine life inside your project even on the construction stage.",
+    descDe: "Zeigen Sie Innenräume mit Atmosphäre und Detail. Visualisierungen, die Interessenten schon während der Bauphase erleben lassen, wie es sich in Ihrem Projekt lebt.",
     src: "/assets/services/interior-visualization-wide.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "Concept & Blockout", desc: "Understanding the design intent, furniture layout, moodboards, and placing raw placeholder geometries." },
-      { step: "02", title: "Custom Props & Lighting", desc: "Refining custom furniture models, placing decor, and setting up natural daylight or cozy night scene lighting." },
-      { step: "03", title: "Shading & Fabrics", desc: "Developing realistic fabric textures, leather wrinkles, glass reflections, and wood grains." },
-      { step: "04", title: "Finishing Touches", desc: "Final rendering with high-sample counts, adding color grading and micro-details like dust, steam, and lens flares." }
+      { step: "01", title: "Concept & Blockout", titleDe: "Konzept & Blockout", desc: "Understanding the design intent, furniture layout, moodboards, and placing raw placeholder geometries.", descDe: "Wir erfassen die Entwurfsidee, das Möblierungskonzept und die Moodboards und setzen erste Platzhaltergeometrien." },
+      { step: "02", title: "Custom Props & Lighting", titleDe: "Einrichtung & Licht", desc: "Refining custom furniture models, placing decor, and setting up natural daylight or cozy night scene lighting.", descDe: "Wir modellieren Sondermöbel aus, platzieren die Dekoration und richten Tageslicht oder eine warme Abendstimmung ein." },
+      { step: "03", title: "Shading & Fabrics", titleDe: "Shader & Bemusterung", desc: "Developing realistic fabric textures, leather wrinkles, glass reflections, and wood grains.", descDe: "Wir entwickeln realistische Stofftexturen, Lederfalten, Glasreflexe und Holzmaserungen." },
+      { step: "04", title: "Finishing Touches", titleDe: "Letzter Schliff", desc: "Final rendering with high-sample counts, adding color grading and micro-details like dust, steam, and lens flares.", descDe: "Finales Rendering mit hoher Samplezahl, Farbkorrektur und Mikro-Details wie Staub, Dampf und Lens Flares." }
     ],
     gallery: [
       { src: "/assets/home/3d tour.jpg", aspect: "aspect-[16/9]" },
@@ -43,14 +57,16 @@ export const servicesData = [
     id: 2,
     slug: "animation-mood-film",
     title: "ANIMATION | MOOD FILM",
+    titleDe: "ANIMATION | MOOD FILM",
     desc: "A cinematic story that captures attention and excitement around your project. Experience the mood, the story, the life of your project through the screen.",
+    descDe: "Eine filmische Erzählung, die Aufmerksamkeit und Begeisterung für Ihr Projekt weckt. Stimmung, Geschichte und Leben Ihres Projekts — erlebbar auf dem Bildschirm.",
     src: "/assets/services/animation-mood-film-wide.mp4",
     type: "video",
     pipeline: [
-      { step: "01", title: "Storyboard & Styleframe", desc: "We write a shot list, layout key frames, outline the sound design direction and video rhythm." },
-      { step: "02", title: "Animatic & Camera Path", desc: "Setting up low-res render tests with basic camera motion to align pacing with music beats." },
-      { step: "03", title: "Sequencer Render", desc: "Full frame rendering across render farm servers to produce thousands of high-fidelity images." },
-      { step: "04", title: "VFX & Sound Editing", desc: "Compositing clips, adding cinematic ambient sounds, professional voiceovers, and transitions." }
+      { step: "01", title: "Storyboard & Styleframe", titleDe: "Storyboard & Styleframes", desc: "We write a shot list, layout key frames, outline the sound design direction and video rhythm.", descDe: "Wir schreiben die Shotlist, legen die Schlüsselbilder an und definieren Sounddesign-Richtung und Schnittrhythmus." },
+      { step: "02", title: "Animatic & Camera Path", titleDe: "Animatic & Kamerafahrt", desc: "Setting up low-res render tests with basic camera motion to align pacing with music beats.", descDe: "Testrenderings in niedriger Auflösung mit grober Kamerabewegung, um das Timing auf die Musik abzustimmen." },
+      { step: "03", title: "Sequencer Render", titleDe: "Sequenz-Rendering", desc: "Full frame rendering across render farm servers to produce thousands of high-fidelity images.", descDe: "Rendering aller Einzelbilder über die Renderfarm — tausende hochaufgelöste Frames." },
+      { step: "04", title: "VFX & Sound Editing", titleDe: "VFX & Tonschnitt", desc: "Compositing clips, adding cinematic ambient sounds, professional voiceovers, and transitions.", descDe: "Compositing der Clips, filmische Atmo, professionelle Sprecher und Übergänge." }
     ],
     gallery: [
       { src: "/assets/home/360 services.mp4", type: "video", aspect: "aspect-[16/9]" },
@@ -63,14 +79,16 @@ export const servicesData = [
     id: 3,
     slug: "bird-eye-visualization",
     title: "BIRD-EYE VISUALISATION",
+    titleDe: "VOGEL­PERSPEKTIVE",
     desc: "Highlight the project’s scale and surroundings. The best way to show context, infrastructure and overall appeal in one rendering.",
+    descDe: "Machen Sie Massstab und Umfeld des Projekts sichtbar. Der beste Weg, Kontext, Infrastruktur und Gesamtwirkung in einem einzigen Bild zu zeigen.",
     src: "/assets/services/bird-eye-visualization-wide.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "GIS & UAV Briefing", desc: "Processing topographic maps, satellite data, or drone photographs to reconstruct the district topography." },
-      { step: "02", title: "Context Integration", desc: "3D modeling the immediate neighborhood surroundings and the central development object." },
-      { step: "03", title: "Atmosphere & Scale", desc: "Adding thousands of trees, cars, pathways, realistic atmospheric haze, and sun orientations." },
-      { step: "04", title: "Render & Matte Painting", desc: "Blending 3D rendering with real drone backplates using advanced Photoshop compositing tools." }
+      { step: "01", title: "GIS & UAV Briefing", titleDe: "GIS- & Drohnen-Briefing", desc: "Processing topographic maps, satellite data, or drone photographs to reconstruct the district topography.", descDe: "Auswertung von Topografiekarten, Satellitendaten oder Drohnenaufnahmen, um das Gelände des Quartiers zu rekonstruieren." },
+      { step: "02", title: "Context Integration", titleDe: "Kontext einbinden", desc: "3D modeling the immediate neighborhood surroundings and the central development object.", descDe: "3D-Modellierung der direkten Nachbarschaft und des zentralen Bauvorhabens." },
+      { step: "03", title: "Atmosphere & Scale", titleDe: "Atmosphäre & Massstab", desc: "Adding thousands of trees, cars, pathways, realistic atmospheric haze, and sun orientations.", descDe: "Tausende Bäume, Fahrzeuge und Wege, realistischer Dunst und passender Sonnenstand." },
+      { step: "04", title: "Render & Matte Painting", titleDe: "Rendering & Matte Painting", desc: "Blending 3D rendering with real drone backplates using advanced Photoshop compositing tools.", descDe: "Wir fügen das 3D-Rendering mit realen Drohnenaufnahmen zusammen — Compositing in Photoshop." }
     ],
     gallery: [
       { src: "/assets/heroImage.jpg", aspect: "aspect-[16/9]" },
@@ -83,14 +101,16 @@ export const servicesData = [
     id: 4,
     slug: "360-virtual-tour",
     title: "360° VIRTUAL TOUR | VR",
+    titleDe: "360° VIRTUAL TOUR | VR",
     desc: "Let your clients step inside before it’s real. Immersive tours that boosts engagement, trust and turns interest into purchase.",
+    descDe: "Lassen Sie Ihre Kunden eintreten, bevor gebaut ist. Immersive Rundgänge, die Interesse und Vertrauen steigern — und aus Interesse einen Kauf machen.",
     src: "/assets/services/360-virtual-tour-wide.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "Hotspot Layout", desc: "Drafting the transition points (nodes) inside the architectural layout to design the walking path." },
-      { step: "02", title: "Equirectangular Render", desc: "Rendering complete spherical 360° images (panoramas) for each designated camera node." },
-      { step: "03", title: "VR Web Interface", desc: "Composing nodes into a browser-based interactive engine, linking hotspots, map radars and popups." },
-      { step: "04", title: "Testing & Hosting", desc: "Optimizing code files for ultra-fast loading speeds on mobile, desktop, and VR headsets." }
+      { step: "01", title: "Hotspot Layout", titleDe: "Hotspots & Wegführung", desc: "Drafting the transition points (nodes) inside the architectural layout to design the walking path.", descDe: "Wir legen die Standpunkte im Grundriss fest und entwerfen daraus den Rundgang." },
+      { step: "02", title: "Equirectangular Render", titleDe: "Panorama-Rendering", desc: "Rendering complete spherical 360° images (panoramas) for each designated camera node.", descDe: "Rendering vollständiger sphärischer 360°-Panoramen für jeden festgelegten Standpunkt." },
+      { step: "03", title: "VR Web Interface", titleDe: "VR-Weboberfläche", desc: "Composing nodes into a browser-based interactive engine, linking hotspots, map radars and popups.", descDe: "Wir fügen die Standpunkte zu einer interaktiven Browser-Anwendung zusammen — mit Hotspots, Grundriss-Radar und Infofenstern." },
+      { step: "04", title: "Testing & Hosting", titleDe: "Test & Hosting", desc: "Optimizing code files for ultra-fast loading speeds on mobile, desktop, and VR headsets.", descDe: "Optimierung für sehr schnelle Ladezeiten auf Smartphone, Desktop und VR-Brille." }
     ],
     gallery: [
       { src: "/assets/home/360 services.mp4", type: "video", aspect: "aspect-[16/9]" },
@@ -103,14 +123,16 @@ export const servicesData = [
     id: 5,
     slug: "cinemagraph-live-shot",
     title: "CINEMAGRAPH | LIVE SHOT",
+    titleDe: "CINEMAGRAPH | LIVE SHOT",
     desc: "Add life to static images for eye-catching WOW-effect. Subtle animations that grab attention instantly.",
+    descDe: "Erwecken Sie Standbilder zum Leben — für den WOW-Effekt. Feine Animationen, die den Blick sofort fesseln.",
     src: "/assets/services/cinemagraph-live-shot.webm",
     type: "video",
     pipeline: [
-      { step: "01", title: "Base Rendering", desc: "Generating a high-resolution base render image of the exterior or interior space." },
-      { step: "02", title: "Cinematic Layers", desc: "Isolating loop components like flowing water, drifting smoke, moving shadows, or burning fireplace flames." },
-      { step: "03", title: "Loop Easing", desc: "Masking and color-keying the isolated elements, creating seamless infinite loop animations." },
-      { step: "04", title: "Compression & Delivery", desc: "Exporting as MP4/WebM files optimized for social media feeds and website heroes." }
+      { step: "01", title: "Base Rendering", titleDe: "Basis-Rendering", desc: "Generating a high-resolution base render image of the exterior or interior space.", descDe: "Wir erzeugen ein hochaufgelöstes Basisbild des Aussen- oder Innenraums." },
+      { step: "02", title: "Cinematic Layers", titleDe: "Bewegte Ebenen", desc: "Isolating loop components like flowing water, drifting smoke, moving shadows, or burning fireplace flames.", descDe: "Wir isolieren die Loop-Elemente: fliessendes Wasser, ziehender Rauch, wandernde Schatten oder Kaminfeuer." },
+      { step: "03", title: "Loop Easing", titleDe: "Loop-Feinschliff", desc: "Masking and color-keying the isolated elements, creating seamless infinite loop animations.", descDe: "Maskieren und Freistellen der isolierten Elemente und Aufbau nahtloser Endlosschleifen." },
+      { step: "04", title: "Compression & Delivery", titleDe: "Export & Auslieferung", desc: "Exporting as MP4/WebM files optimized for social media feeds and website heroes.", descDe: "Export als MP4/WebM, optimiert für Social Media und Website-Header." }
     ],
     gallery: [
       { src: "/assets/home/cinemagraph services.mp4", type: "video", aspect: "aspect-[16/9]" },
@@ -123,14 +145,16 @@ export const servicesData = [
     id: 6,
     slug: "product-visualization",
     title: "PRODUCT VISUALISATION",
+    titleDe: "PRODUKT­VISUALI­SIERUNG",
     desc: "High-end visuals for furniture, household appliances, materials or any living and architecture-related things. Perfect for catalogs, marketing and presentations.",
+    descDe: "Hochwertige Visualisierungen von Möbeln, Haushaltsgeräten, Materialien und allem rund um Wohnen und Architektur. Ideal für Kataloge, Marketing und Präsentationen.",
     src: "/assets/services/product-visualization-wide.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "CAD Import & Clean", desc: "Importing manufacturing CAD/STEP files and rebuilding clean subdivision surfaces for texturing." },
-      { step: "02", title: "Studio Light Setup", desc: "Placing softboxes, bounce cards, and accent lights to highlight product outlines and materials." },
-      { step: "03", title: "Micro-texture Shaders", desc: "Developing hyper-realistic metal brushing, fabric stitches, plastics, and brand logos." },
-      { step: "04", title: "Angles & Transparent PNG", desc: "Rendering clean hero angles, close-up details, and transparent alpha-channel images for catalogs." }
+      { step: "01", title: "CAD Import & Clean", titleDe: "CAD-Import & Aufbereitung", desc: "Importing manufacturing CAD/STEP files and rebuilding clean subdivision surfaces for texturing.", descDe: "Import der CAD/STEP-Daten aus der Fertigung und Aufbau sauberer Flächen für die Texturierung." },
+      { step: "02", title: "Studio Light Setup", titleDe: "Studiolicht einrichten", desc: "Placing softboxes, bounce cards, and accent lights to highlight product outlines and materials.", descDe: "Softboxen, Aufheller und Akzentlichter, die Kontur und Material des Produkts herausarbeiten." },
+      { step: "03", title: "Micro-texture Shaders", titleDe: "Mikrotexturen & Shader", desc: "Developing hyper-realistic metal brushing, fabric stitches, plastics, and brand logos.", descDe: "Wir entwickeln hyperrealistischen Metallschliff, Nähte, Kunststoffe und Markenlogos." },
+      { step: "04", title: "Angles & Transparent PNG", titleDe: "Ansichten & Freisteller", desc: "Rendering clean hero angles, close-up details, and transparent alpha-channel images for catalogs.", descDe: "Rendering von Hero-Ansichten, Detailaufnahmen und freigestellten PNGs mit Alphakanal für Kataloge." }
     ],
     gallery: [
       { src: "/assets/home/3d tour.jpg", aspect: "aspect-[16/9]" },
@@ -143,14 +167,16 @@ export const servicesData = [
     id: 7,
     slug: "virtual-staging",
     title: "VIRTUAL STAGING",
+    titleDe: "VIRTUAL STAGING",
     desc: "Turn empty spaces into dream homes. Cost-effective, realistic staging that boosts sales potential. Perfect for sales without physical staging costs.",
+    descDe: "Machen Sie aus leeren Räumen Wunschwohnungen. Realistisches Staging, das das Verkaufspotenzial hebt — ohne die Kosten einer physischen Möblierung.",
     src: "/assets/services/virtual-staging-wide.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "Photo Match", desc: "Aligning virtual camera perspective and lens settings with the photograph of the empty room." },
-      { step: "02", title: "Style Curation", desc: "Selecting design direction (modern, industrial, Scandinavian) and arranging high-end 3D furniture." },
-      { step: "03", title: "Shadow & Light Match", desc: "Reconstructing window sunlight and artificial light sources to cast realistic shadows from 3D objects." },
-      { step: "04", title: "Seamless Blend", desc: "Compositing rendering with the original photo, matching grain levels, noise, and sharp details." }
+      { step: "01", title: "Photo Match", titleDe: "Perspektive angleichen", desc: "Aligning virtual camera perspective and lens settings with the photograph of the empty room.", descDe: "Wir gleichen virtuelle Kamera und Objektiv exakt an die Aufnahme des leeren Raums an." },
+      { step: "02", title: "Style Curation", titleDe: "Stil & Einrichtung", desc: "Selecting design direction (modern, industrial, Scandinavian) and arranging high-end 3D furniture.", descDe: "Wahl der Stilrichtung (modern, industriell, skandinavisch) und Einrichtung mit hochwertigen 3D-Möbeln." },
+      { step: "03", title: "Shadow & Light Match", titleDe: "Licht & Schatten angleichen", desc: "Reconstructing window sunlight and artificial light sources to cast realistic shadows from 3D objects.", descDe: "Wir bauen Fensterlicht und Kunstlicht nach, damit die 3D-Objekte realistische Schatten werfen." },
+      { step: "04", title: "Seamless Blend", titleDe: "Nahtloses Compositing", desc: "Compositing rendering with the original photo, matching grain levels, noise, and sharp details.", descDe: "Zusammenführung von Rendering und Originalfoto — abgestimmt auf Korn, Rauschen und Schärfe." }
     ],
     gallery: [
       { src: "/assets/home/3d tour.jpg", aspect: "aspect-[16/9]" },
@@ -163,14 +189,16 @@ export const servicesData = [
     id: 8,
     slug: "graphic-design",
     title: "GRAPHIC DESIGN",
+    titleDe: "GRAFIK­DESIGN",
     desc: "From billboards, construction fences, brochures to logo, schemes and more — everything you need to strengthen brand identity, impress and attract clients.",
+    descDe: "Von Plakatwänden, Bauzäunen und Broschüren bis zu Logo, Schemas und mehr — alles, was Ihre Markenidentität stärkt, beeindruckt und Kunden gewinnt.",
     src: "/assets/services/graphic-design-wide.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "Brand Audit & Brief", desc: "Analyzing your target audience, existing guidelines, size constraints, and design goals." },
-      { step: "02", title: "Wireframe Layout", desc: "Drafting typographical hierarchies, grid alignments, and color palettes." },
-      { step: "03", title: "Vector & Imagery Prep", desc: "Drawing custom illustrations, vector icons, blueprints, and editing render images." },
-      { step: "04", title: "Print & Digital Proofing", desc: "Exporting production-ready vector files (CMYK for print, RGB for web) with crop marks." }
+      { step: "01", title: "Brand Audit & Brief", titleDe: "Markenaudit & Briefing", desc: "Analyzing your target audience, existing guidelines, size constraints, and design goals.", descDe: "Analyse von Zielgruppe, bestehenden Guidelines, Formatvorgaben und Gestaltungszielen." },
+      { step: "02", title: "Wireframe Layout", titleDe: "Layout & Raster", desc: "Drafting typographical hierarchies, grid alignments, and color palettes.", descDe: "Entwurf von Typo-Hierarchien, Rastern und Farbpaletten." },
+      { step: "03", title: "Vector & Imagery Prep", titleDe: "Vektoren & Bildmaterial", desc: "Drawing custom illustrations, vector icons, blueprints, and editing render images.", descDe: "Eigene Illustrationen, Vektor-Icons, Schemas und die Bearbeitung der Renderings." },
+      { step: "04", title: "Print & Digital Proofing", titleDe: "Druck- & Digitalabnahme", desc: "Exporting production-ready vector files (CMYK for print, RGB for web) with crop marks.", descDe: "Export produktionsfertiger Vektordaten (CMYK für Druck, RGB für Web) inklusive Beschnittmarken." }
     ],
     gallery: [
       { src: "/assets/home/3dplan_interior.jpg", aspect: "aspect-[16/9]" },
@@ -183,14 +211,16 @@ export const servicesData = [
     id: 9,
     slug: "3d-floorplans",
     title: "3D FLOORPLANS",
+    titleDe: "3D-GRUNDRISSE",
     desc: "Make layouts easy to understand. A clear visual tool that speeds up decision-making for buyers.",
+    descDe: "Machen Sie Grundrisse auf einen Blick verständlich. Ein klares visuelles Hilfsmittel, das Kaufentscheidungen beschleunigt.",
     src: "/assets/services/3d-floorplans-wide.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "CAD Import", desc: "Importing 2D AutoCAD floorplan blueprints and extruding interior/exterior wall geometries." },
-      { step: "02", title: "Material Mapping", desc: "Setting up materials for floors (parquet, tiles, carpet), wall paint colors, and balcony decking." },
-      { step: "03", title: "Furniture Layout", desc: "Populating the floor plan with custom, proportional kitchen units, bath fittings, and lounge furniture." },
-      { step: "04", title: "Bird-Eye Render", desc: "Rendering from an isometric or orthographic top-down camera with soft ambient occlusion shadows." }
+      { step: "01", title: "CAD Import", titleDe: "CAD-Import", desc: "Importing 2D AutoCAD floorplan blueprints and extruding interior/exterior wall geometries.", descDe: "Import der 2D-AutoCAD-Grundrisse und Extrusion der Innen- und Aussenwände." },
+      { step: "02", title: "Material Mapping", titleDe: "Materialzuweisung", desc: "Setting up materials for floors (parquet, tiles, carpet), wall paint colors, and balcony decking.", descDe: "Materialien für Böden (Parkett, Platten, Teppich), Wandfarben und Balkonbeläge." },
+      { step: "03", title: "Furniture Layout", titleDe: "Möblierung", desc: "Populating the floor plan with custom, proportional kitchen units, bath fittings, and lounge furniture.", descDe: "Wir stellen den Grundriss massstäblich mit Küchen, Sanitär und Wohnmöbeln." },
+      { step: "04", title: "Bird-Eye Render", titleDe: "Rendering von oben", desc: "Rendering from an isometric or orthographic top-down camera with soft ambient occlusion shadows.", descDe: "Rendering aus isometrischer oder orthografischer Aufsicht mit weichen Umgebungsschatten." }
     ],
     gallery: [
       { src: "/assets/home/3dplan_interior.jpg", aspect: "aspect-[16/9]" },
@@ -203,14 +233,16 @@ export const servicesData = [
     id: 10,
     slug: "fly-around-navigator",
     title: "360° FLY-AROUND | NAVIGATOR",
+    titleDe: "360° FLY-AROUND | NAVIGATOR",
     desc: "An orbit of the whole building that a buyer can steer. Stop anywhere, open an apartment and read its floor, size and layout — the view and the plan in one place.",
+    descDe: "Ein Rundflug um das ganze Gebäude, den der Käufer selbst steuert. Überall anhalten, eine Wohnung öffnen und Geschoss, Fläche und Grundriss ablesen — Ansicht und Plan an einem Ort.",
     src: "/assets/services/fly-around-navigator.webm",
     type: "video",
     pipeline: [
-      { step: "01", title: "Orbit & Coverage", desc: "Setting the camera path around the building, its height, and the stops the buyer can land on." },
-      { step: "02", title: "Rendering the Ring", desc: "Rendering the full orbit as one continuous sequence, so every angle matches in light and season." },
-      { step: "03", title: "Unit Mapping", desc: "Tying each apartment to its position on every frame, with floor, area and room count behind it." },
-      { step: "04", title: "Interactive Build", desc: "Assembling the navigator so it scrubs smoothly, and handing it over ready to embed." }
+      { step: "01", title: "Orbit & Coverage", titleDe: "Umlauf & Abdeckung", desc: "Setting the camera path around the building, its height, and the stops the buyer can land on.", descDe: "Wir legen Kamerapfad, Höhe und die Haltepunkte fest, auf denen der Käufer landen kann." },
+      { step: "02", title: "Rendering the Ring", titleDe: "Rendering des Umlaufs", desc: "Rendering the full orbit as one continuous sequence, so every angle matches in light and season.", descDe: "Wir rendern den gesamten Umlauf als eine durchgehende Sequenz, damit Licht und Jahreszeit in jedem Winkel stimmen." },
+      { step: "03", title: "Unit Mapping", titleDe: "Wohnungen zuordnen", desc: "Tying each apartment to its position on every frame, with floor, area and room count behind it.", descDe: "Wir verknüpfen jede Wohnung mit ihrer Position in jedem Einzelbild — inklusive Geschoss, Fläche und Zimmerzahl." },
+      { step: "04", title: "Interactive Build", titleDe: "Interaktiver Aufbau", desc: "Assembling the navigator so it scrubs smoothly, and handing it over ready to embed.", descDe: "Wir bauen den Navigator so, dass er flüssig läuft, und übergeben ihn einbettungsfertig." }
     ],
     gallery: [
       { src: "/assets/services/fly-around-navigator.webm", type: "video", aspect: "aspect-[16/9]" },
@@ -223,14 +255,16 @@ export const servicesData = [
     id: 11,
     slug: "web-development",
     title: "WEB DEVELOPMENT",
+    titleDe: "WEB­ENTWICKLUNG",
     desc: "The site your visuals live on. Project pages, portfolios and landing pages built around the renders, so the work that sells the project is the first thing a visitor meets.",
+    descDe: "Die Website, auf der Ihre Visualisierungen leben. Projektseiten, Portfolios und Landingpages rund um die Renderings gebaut — damit die Arbeit, die das Projekt verkauft, als Erstes sichtbar ist.",
     src: "/assets/services/web-development-wide.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "Scope & Structure", desc: "We map what the site has to do — sell a development, present a studio, capture enquiries — and lay out the pages and navigation around that goal." },
-      { step: "02", title: "Design & Layout", desc: "We design the pages around your imagery rather than fitting images into a template, so renders, tours and animations get the space they need." },
-      { step: "03", title: "Build & Integration", desc: "We build it to load fast on phones and desktops, wire up contact forms, and hook in the 360° tours, video loops and galleries." },
-      { step: "04", title: "Launch & Handover", desc: "We deploy, connect your domain and analytics, and hand over a site you can update — or keep maintaining it for you." }
+      { step: "01", title: "Scope & Structure", titleDe: "Ziel & Struktur", desc: "We map what the site has to do — sell a development, present a studio, capture enquiries — and lay out the pages and navigation around that goal.", descDe: "Wir klären, was die Website leisten soll — ein Bauvorhaben verkaufen, ein Studio zeigen, Anfragen gewinnen — und legen Seiten und Navigation darauf aus." },
+      { step: "02", title: "Design & Layout", titleDe: "Design & Layout", desc: "We design the pages around your imagery rather than fitting images into a template, so renders, tours and animations get the space they need.", descDe: "Wir gestalten die Seiten um Ihr Bildmaterial herum, statt Bilder in ein Template zu pressen — Renderings, Rundgänge und Animationen bekommen den Raum, den sie brauchen." },
+      { step: "03", title: "Build & Integration", titleDe: "Umsetzung & Integration", desc: "We build it to load fast on phones and desktops, wire up contact forms, and hook in the 360° tours, video loops and galleries.", descDe: "Wir bauen die Seite für schnelle Ladezeiten auf Smartphone und Desktop, binden Kontaktformulare ein und integrieren 360°-Touren, Videoloops und Galerien." },
+      { step: "04", title: "Launch & Handover", titleDe: "Launch & Übergabe", desc: "We deploy, connect your domain and analytics, and hand over a site you can update — or keep maintaining it for you.", descDe: "Wir veröffentlichen die Seite, verbinden Domain und Analytics und übergeben Ihnen eine Website, die Sie selbst pflegen können — oder wir pflegen sie weiter für Sie." }
     ],
     gallery: [
       { src: "/assets/home/3d tour.jpg", aspect: "aspect-[16/9]" },
@@ -240,3 +274,42 @@ export const servicesData = [
     ]
   }
 ];
+
+// Picks the right language off the `De` siblings and hands back a flat service
+// object: `title`, `desc` and each `pipeline[].title|desc` are plain strings, so
+// every consumer keeps reading the same field names it always did. Anything
+// without a German string falls back to the English one.
+export function localizeService(service, locale) {
+  if (!service || locale !== "de") return service;
+  return {
+    ...service,
+    title: service.titleDe || service.title,
+    desc: service.descDe || service.desc,
+    pipeline: service.pipeline?.map((step) => ({
+      ...step,
+      title: step.titleDe || step.title,
+      desc: step.descDe || step.desc,
+    })),
+  };
+}
+
+// A service name carries soft hyphens in German (see `titleDe` above). They
+// are right for the page and wrong for anything plain-text, such as the
+// enquiry e-mail the contact wizard composes.
+export function stripSoftHyphens(value) {
+  return typeof value === "string" ? value.replace(/\u00ad/g, "") : value;
+}
+
+export function localizedServices(locale) {
+  return servicesData.map((service) => localizeService(service, locale));
+}
+
+// The one German glossary of service names. The header's mega menu and the
+// homepage carousel keep their own English title lists (they are worded
+// slightly differently on purpose), but both take their German from here so
+// the name of a service is translated in exactly one place.
+export function serviceTitleFor(slug, locale, fallback) {
+  const service = servicesData.find((s) => s.slug === slug);
+  if (locale === "de" && service?.titleDe) return service.titleDe;
+  return fallback ?? service?.title ?? "";
+}

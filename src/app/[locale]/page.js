@@ -16,7 +16,7 @@ export default function Home({ params }) {
     <main>
       <HeroSection t={t} locale={locale} />
       <WhoWeAre locale={locale} t={t} />
-      <FAQ locale={locale} />
+      <FAQ locale={locale} t={t} />
     </main>
   );
 }

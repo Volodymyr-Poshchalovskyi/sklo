@@ -27,16 +27,25 @@ export async function generateMetadata({ params }) {
 
   return {
     title: isDe
-      ? "SKLO Studio | Where Vision Meets Reality | Stunnig 3D Visualizations"
-      : "SKLO Studio | Where Vision Meets Reality | Stunnig 3D Visualizations",
+      ? "SKLO Studio | Wo Vision auf Wirklichkeit trifft | 3D-Visualisierungen"
+      : "SKLO Studio | Where Vision Meets Reality | Stunning 3D Visualizations",
     description: isDe
       ? "SKLO ist ein 3D-Visualisierungsstudio für Architekten, Entwickler und Immobilien. Hochwertige Renderings, Motion Design und Produktvisualisierung."
       : "SKLO is a 3D visualization studio for architects, developers and real estate. High-quality renderings, motion design and product visualization.",
     metadataBase: new URL("https://sklo-iota.vercel.app"),
+    // Without these the two locales look like duplicate pages to a search
+    // engine, and neither is offered to the other's audience.
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        en: "/en",
+        "de-CH": "/de",
+      },
+    },
     openGraph: {
       title: isDe
-        ? "SKLO Studio | Where Vision Meets Reality | Stunnig 3D Visualizations"
-        : "SKLO Studio | Where Vision Meets Reality | Stunnig 3D Visualizations",
+        ? "SKLO Studio | Wo Vision auf Wirklichkeit trifft | 3D-Visualisierungen"
+        : "SKLO Studio | Where Vision Meets Reality | Stunning 3D Visualizations",
       description: isDe
         ? "3D-Visualisierungsstudio für Architekten, Entwickler & Immobilien."
         : "3D visualization studio for architects, developers & real estate.",
@@ -50,14 +59,17 @@ export async function generateMetadata({ params }) {
           alt: "SKLO Studio",
         },
       ],
-      locale: isDe ? "de_DE" : "en_US",
+      locale: isDe ? "de_CH" : "en_US",
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: "SKLO Studio — 3D Visualization",
-      description:
-        "3D visualization studio for architects, developers & real estate.",
+      title: isDe
+        ? "SKLO Studio — 3D-Visualisierung"
+        : "SKLO Studio — 3D Visualization",
+      description: isDe
+        ? "3D-Visualisierungsstudio für Architekten, Entwickler & Immobilien."
+        : "3D visualization studio for architects, developers & real estate.",
       images: ["/assets/ogImage.jpg"],
     },
     icons: {
@@ -110,7 +122,7 @@ export default async function LocaleLayout({ children, params }) {
             {children}
           </div>
         </ClientWrapper>
-        <Footer locale={locale} />
+        <Footer locale={locale} t={t} />
       </body>
     </html>
   );
