@@ -1,8 +1,17 @@
 "use client";
-import { useState, useRef, Suspense } from "react";
+import { useState, useRef, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { upload } from "@vercel/blob/client";
 import { localizedServices, stripSoftHyphens } from "@/data/servicesData";
+import {
+  ALLOWED_EXTENSIONS,
+  MAX_FILES,
+  MAX_FILE_BYTES,
+  MAX_TOTAL_BYTES,
+  formatBytes,
+  isAllowedFile,
+} from "@/lib/contact/validate";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 
@@ -20,6 +29,9 @@ const TIMELINE_PRESETS = [
   { id: "flexible", startOffset: 30, endOffset: 90 },
 ];
 const MATERIAL_IDS = ["model", "drawings", "photos", "scratch"];
+const FILE_ACCEPT = ALLOWED_EXTENSIONS.map((e) => `.${e}`).join(",");
+
+let fileSeq = 0;
 
 function toDateInputValue(daysFromNow) {
   const d = new Date();
@@ -296,6 +308,16 @@ function ContactWizardInner({ locale }) {
   const [direction, setDirection] = useState(1);
   const [maxReached, setMaxReached] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  // "idle" | "sending" | "error". Success is `submitted`.
+  const [sendState, setSendState] = useState("idle");
+  // null while unknown, then true/false once /api/upload has answered.
+  const [uploadsEnabled, setUploadsEnabled] = useState(null);
+  // When the form was opened — the API rejects anything filled in under
+  // three seconds, which no person manages and every bot does.
+  const startedAt = useRef(0);
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
 
   const [data, setData] = useState({
     services: initialServices,
@@ -349,28 +371,102 @@ function ContactWizardInner({ locale }) {
     }));
   };
 
-  const addFiles = (fileList) => {
-    const incoming = Array.from(fileList);
-    setData((prev) => {
-      const existingKeys = new Set(prev.files.map((f) => `${f.name}_${f.size}`));
-      const merged = [...prev.files];
-      for (const f of incoming) {
-        const key = `${f.name}_${f.size}`;
-        if (!existingKeys.has(key)) {
-          existingKeys.add(key);
-          merged.push(f);
-        }
-      }
-      return { ...prev, files: merged };
-    });
-  };
-
-  const removeFile = (index) => {
+  const patchFile = (id, patch) =>
     setData((prev) => ({
       ...prev,
-      files: prev.files.filter((_, i) => i !== index),
+      files: prev.files.map((f) => (f.id === id ? { ...f, ...patch } : f)),
     }));
+
+  // Files start uploading the moment they are picked, straight from the
+  // browser to storage. By the time the visitor reaches Send there is nothing
+  // left to wait for, and a 100MB plan never has to squeeze through the API.
+  const addFiles = (fileList) => {
+    const incoming = Array.from(fileList);
+    const existing = data.files;
+    const existingKeys = new Set(existing.map((f) => `${f.name}_${f.size}`));
+    let total = existing.reduce((n, f) => n + f.size, 0);
+    const accepted = [];
+
+    for (const file of incoming) {
+      const key = `${file.name}_${file.size}`;
+      if (existingKeys.has(key)) continue;
+      if (existing.length + accepted.length >= MAX_FILES) break;
+      const entry = {
+        id: `f${++fileSeq}`,
+        name: file.name,
+        size: file.size,
+        status: "uploading",
+        progress: 0,
+        url: null,
+        error: null,
+      };
+      if (!isAllowedFile(file.name)) {
+        entry.status = "error";
+        entry.error = isDe ? "Dateityp nicht unterstützt" : "File type not supported";
+      } else if (file.size > MAX_FILE_BYTES) {
+        entry.status = "error";
+        entry.error = isDe
+          ? `Grösser als ${formatBytes(MAX_FILE_BYTES)}`
+          : `Larger than ${formatBytes(MAX_FILE_BYTES)}`;
+      } else if (total + file.size > MAX_TOTAL_BYTES) {
+        entry.status = "error";
+        entry.error = isDe
+          ? `Gesamtlimit ${formatBytes(MAX_TOTAL_BYTES)} überschritten`
+          : `Exceeds the ${formatBytes(MAX_TOTAL_BYTES)} total`;
+      } else {
+        total += file.size;
+      }
+      existingKeys.add(key);
+      accepted.push({ entry, file });
+    }
+
+    if (!accepted.length) return;
+    setData((prev) => ({ ...prev, files: [...prev.files, ...accepted.map((a) => a.entry)] }));
+
+    for (const { entry, file } of accepted) {
+      if (entry.status !== "uploading") continue;
+      upload(`inquiries/${file.name}`, file, {
+        access: "public",
+        handleUploadUrl: "/api/upload",
+        contentType: file.type || "application/octet-stream",
+        onUploadProgress: ({ percentage }) => patchFile(entry.id, { progress: percentage }),
+      })
+        .then((blob) => patchFile(entry.id, { status: "done", progress: 100, url: blob.url }))
+        .catch(() =>
+          patchFile(entry.id, {
+            status: "error",
+            error: isDe ? "Upload fehlgeschlagen" : "Upload failed",
+          })
+        );
+    }
   };
+
+  const removeFile = (id) => {
+    setData((prev) => ({ ...prev, files: prev.files.filter((f) => f.id !== id) }));
+  };
+
+  const filesUploading = data.files.some((f) => f.status === "uploading");
+  const uploadedFiles = data.files.filter((f) => f.status === "done" && f.url);
+
+  // Asked once, lazily, when the step that shows the picker is reached. With
+  // no storage token on the server the picker is hidden rather than shown
+  // and then failing on every file.
+  const onMaterialsStep = STEPS[step] === "materials";
+  useEffect(() => {
+    if (!onMaterialsStep || uploadsEnabled !== null) return;
+    let cancelled = false;
+    fetch("/api/upload", { method: "GET" })
+      .then((r) => (r.ok ? r.json() : { enabled: false }))
+      .then((j) => {
+        if (!cancelled) setUploadsEnabled(Boolean(j.enabled));
+      })
+      .catch(() => {
+        if (!cancelled) setUploadsEnabled(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [onMaterialsStep, uploadsEnabled]);
 
   const applyTimelinePreset = (preset) => {
     set({
@@ -417,7 +513,9 @@ function ContactWizardInner({ locale }) {
           !!data.name &&
           !!data.company &&
           isEmail(data.email) &&
-          !!data.projectName
+          !!data.projectName &&
+          !filesUploading &&
+          sendState !== "sending"
         );
       default:
         return true;
@@ -483,9 +581,7 @@ function ContactWizardInner({ locale }) {
       `Preferred Start Date: ${data.startDate || "-"}`,
       `Preferred End Date: ${data.endDate || "-"}`,
       `Materials available: ${materialsLabels.join(", ") || "-"}`,
-      `Attached files (please attach manually): ${
-        data.files.map((f) => f.name).join(", ") || "-"
-      }`,
+      `Files: ${uploadedFiles.map((f) => `${f.name} ${f.url}`).join(", ") || "-"}`,
       "",
       "Additional Information:",
       data.additionalInfo || "-",
@@ -497,10 +593,43 @@ function ContactWizardInner({ locale }) {
     return `mailto:info@sklo.studio?subject=${subject}&body=${body}`;
   };
 
-  const handleSubmit = () => {
+  const buildPayload = () => ({
+    kind: "wizard",
+    locale,
+    startedAt: startedAt.current,
+    website: "", // honeypot — see validateInquiry
+    name: data.name,
+    company: data.company,
+    email: data.email,
+    phone: data.phone,
+    projectName: data.projectName,
+    message: data.additionalInfo,
+    services: serviceLines,
+    budget: data.consult.budget ? (isDe ? "Beratung gewünscht" : "consultation requested") : budgetLabel,
+    startDate: data.startDate,
+    endDate: data.endDate,
+    materials: materialsLabels.map((m) => stripSoftHyphens(m || "")),
+    consultAreas,
+    files: uploadedFiles.map((f) => ({ name: f.name, size: f.size, url: f.url })),
+  });
+
+  const handleSubmit = async () => {
     if (!canProceed()) return;
-    window.location.assign(buildMailto());
-    setSubmitted(true);
+    setSendState("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(buildPayload()),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSendState("idle");
+      setSubmitted(true);
+    } catch {
+      // The mailto link stays on screen as the way out: the visitor has
+      // typed everything already and should not have to do it twice.
+      setSendState("error");
+    }
   };
 
   const resetForm = () => {
@@ -524,6 +653,8 @@ function ContactWizardInner({ locale }) {
     setStep(0);
     setMaxReached(0);
     setSubmitted(false);
+    setSendState("idle");
+    startedAt.current = Date.now();
   };
 
   if (submitted) {
@@ -549,8 +680,8 @@ function ContactWizardInner({ locale }) {
         </h2>
         <p className="text-sm text-white/60 max-w-md">
           {isDe
-            ? "Ihr E-Mail-Programm hat sich mit Ihrer Anfrage geöffnet. Wir melden uns in Kürze bei Ihnen."
-            : "Your email client just opened with your request pre-filled. We'll get back to you shortly."}
+            ? "Ihre Anfrage ist bei uns eingegangen. Wir melden uns in Kürze bei Ihnen."
+            : "Your request has been sent. We'll be in touch with you shortly."}
         </p>
         <button
           type="button"
@@ -826,34 +957,63 @@ function ContactWizardInner({ locale }) {
                   {/* The caption above this used to repeat what the button
                       itself says. One line carries both now, which is a whole
                       row of height back on a short screen. */}
-                  <label
-                    style={{ padding: "clamp(0.3rem, min(1.4svh, 1.82vw), 1.25rem) 1.5rem" }}
-                    className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 hover:border-white/40 transition-colors cursor-pointer text-xs text-white/50 uppercase tracking-widest">
-                    {isDe ? "Dateien anhängen (PDF, Bilder)" : "Attach Files (PDF, Images)"}
-                    <input
-                      type="file"
-                      multiple
-                      accept="image/*,.pdf"
-                      className="hidden"
-                      onChange={(e) => {
-                        if (e.target.files?.length) addFiles(e.target.files);
-                        e.target.value = "";
+                  {uploadsEnabled !== false && (
+                    <label
+                      style={{ padding: "clamp(0.3rem, min(1.4svh, 1.82vw), 1.25rem) 1.5rem" }}
+                      className="flex items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 hover:border-white/40 transition-colors cursor-pointer text-xs text-white/50 uppercase tracking-widest"
+                      onDragOver={(e) => e.preventDefault()}
+                      onDrop={(e) => {
+                        e.preventDefault();
+                        if (e.dataTransfer.files?.length) addFiles(e.dataTransfer.files);
                       }}
-                    />
-                  </label>
+                    >
+                      {isDe ? "Dateien anhängen (PDF, Bilder, CAD)" : "Attach Files (PDF, Images, CAD)"}
+                      <input
+                        type="file"
+                        multiple
+                        accept={FILE_ACCEPT}
+                        className="hidden"
+                        onChange={(e) => {
+                          if (e.target.files?.length) addFiles(e.target.files);
+                          e.target.value = "";
+                        }}
+                      />
+                    </label>
+                  )}
                   {data.files.length > 0 && (
                     <div className="flex flex-wrap gap-2">
-                      {data.files.map((f, i) => (
+                      {data.files.map((f) => (
                         <span
-                          key={`${f.name}_${f.size}`}
-                          className="flex items-center gap-2 px-3 py-2 rounded-full border border-white/15 bg-white/[0.02] text-xs text-white/70"
+                          key={f.id}
+                          className={`relative overflow-hidden flex items-center gap-2 px-3 py-2 rounded-full border text-xs ${
+                            f.status === "error"
+                              ? "border-accent/60 text-accent"
+                              : "border-white/15 bg-white/[0.02] text-white/70"
+                          }`}
+                          title={f.error || `${f.name} · ${formatBytes(f.size)}`}
                         >
-                          {f.name}
+                          {/* The upload bar fills the chip from the left;
+                              at 100% it is simply the chip's background. */}
+                          {f.status === "uploading" && (
+                            <span
+                              aria-hidden="true"
+                              className="absolute inset-y-0 left-0 bg-white/10 transition-[width] duration-200"
+                              style={{ width: `${f.progress}%` }}
+                            />
+                          )}
+                          <span className="relative max-w-[14rem] truncate">{f.name}</span>
+                          <span className="relative text-white/40 whitespace-nowrap">
+                            {f.status === "uploading"
+                              ? `${Math.round(f.progress)}%`
+                              : f.status === "error"
+                              ? f.error
+                              : formatBytes(f.size)}
+                          </span>
                           <button
                             type="button"
-                            onClick={() => removeFile(i)}
+                            onClick={() => removeFile(f.id)}
                             aria-label={isDe ? "Entfernen" : "Remove"}
-                            className="text-white/40 hover:text-white cursor-pointer"
+                            className="relative text-white/40 hover:text-white cursor-pointer"
                           >
                             ×
                           </button>
@@ -861,17 +1021,17 @@ function ContactWizardInner({ locale }) {
                       ))}
                     </div>
                   )}
-                  {/* The old wording only said files "can't be auto-attached",
-                      which left people guessing. Spell out the mechanism: the
-                      form hands off to the visitor's own mail app, and a web
-                      page cannot put attachments into it. */}
                   <p
                     style={{ fontSize: "clamp(0.5625rem, min(1.2svh, 1.56vw), 0.6875rem)", lineHeight: 1.4 }}
                     className="text-white/50"
                   >
-                    {isDe
-                      ? "«Senden» öffnet Ihr eigenes E-Mail-Programm mit allen Angaben — Dateien kann eine Website dort jedoch nicht anhängen. Bitte ziehen Sie die Dateien vor dem Absenden in diese E-Mail. Die Namen listen wir mit, damit nichts vergessen wird."
-                      : "Pressing Send opens your own email app with everything filled in — a web page can't attach files to it. Please drag the files into that email before you send it. We list their names in the message so nothing gets missed."}
+                    {uploadsEnabled === false
+                      ? isDe
+                        ? "Der Datei-Upload ist derzeit nicht verfügbar. Schicken Sie uns Unterlagen gern per E-Mail nach."
+                        : "File upload is currently unavailable. Feel free to email us your documents afterwards."
+                      : isDe
+                      ? `Bis zu ${MAX_FILES} Dateien, je max. ${formatBytes(MAX_FILE_BYTES)}. Die Dateien werden sofort hochgeladen und uns mit Ihrer Anfrage zugestellt.`
+                      : `Up to ${MAX_FILES} files, ${formatBytes(MAX_FILE_BYTES)} each. Files upload right away and reach us together with your request.`}
                   </p>
                 </div>
               </div>
@@ -1005,10 +1165,25 @@ function ContactWizardInner({ locale }) {
             style={{ paddingTop: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)", paddingBottom: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)" }}
             className="bg-white text-black text-xs font-bold uppercase tracking-widest px-10 rounded-full hover:bg-white/80 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
           >
-            {isDe ? "Senden" : "Send Request"}
+            {sendState === "sending"
+              ? isDe ? "Wird gesendet…" : "Sending…"
+              : filesUploading
+              ? isDe ? "Dateien laden…" : "Uploading files…"
+              : isDe ? "Senden" : "Send Request"}
           </button>
         )}
       </div>
+      {sendState === "error" && (
+        <p role="alert" className="text-xs text-accent mt-3 text-right">
+          {isDe
+            ? "Senden fehlgeschlagen. Bitte erneut versuchen oder "
+            : "Sending failed. Please try again or "}
+          <a href={buildMailto()} className="underline">
+            {isDe ? "per E-Mail schicken" : "send it by email"}
+          </a>
+          .
+        </p>
+      )}
 
     </div>
   );
