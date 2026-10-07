@@ -256,21 +256,66 @@ export const servicesData = [
     slug: "web-development",
     title: "WEB DEVELOPMENT",
     titleDe: "WEB­ENTWICKLUNG",
-    desc: "The site your visuals live on. Project pages, portfolios and landing pages built around the renders, so the work that sells the project is the first thing a visitor meets.",
-    descDe: "Die Website, auf der Ihre Visualisierungen leben. Projektseiten, Portfolios und Landingpages rund um die Renderings gebaut — damit die Arbeit, die das Projekt verkauft, als Erstes sichtbar ist.",
-    src: "/assets/services/web-development-wide.webp",
+    desc: "Your renders are the sales argument. We build the site that puts them in front of a buyer first, loads in a second on a phone, and turns the visit into an enquiry — project sites, landing pages and portfolios, designed around the imagery, not a template.",
+    descDe: "Ihre Visualisierungen sind das Verkaufsargument. Wir bauen die Website, die sie einem Käufer als Erstes zeigt, auf dem Smartphone in einer Sekunde lädt und aus dem Besuch eine Anfrage macht — Projektseiten, Landingpages und Portfolios, gestaltet um das Bildmaterial herum, nicht um ein Template.",
+    // Above the pipeline, the page spells out what the site has to do for the
+    // client. These are the three conversations that lead to every web
+    // enquiry the studio gets.
+    intro: "A development with twelve apartments and no website is sold through a PDF and a phone number. The same development with a project site sells from the first render on screen: the buyer walks the 360° tour at home, picks a unit from the table, and asks for the dossier. The site exists to make that happen — and to be found when someone searches for the project.",
+    introDe: "Eine Überbauung mit zwölf Wohnungen und ohne Website wird über ein PDF und eine Telefonnummer verkauft. Dieselbe Überbauung mit Projektseite verkauft sich ab dem ersten Rendering am Bildschirm: Der Käufer geht zuhause durch den 360°-Rundgang, wählt eine Wohnung aus der Tabelle und fordert das Dossier an. Dafür ist die Website da — und dafür, gefunden zu werden, wenn jemand nach dem Projekt sucht.",
+    problems: [
+      {
+        problem: "The renders live in a PDF",
+        problemDe: "Die Renderings liegen in einem PDF",
+        title: "A sales site that leads with the imagery",
+        titleDe: "Eine Verkaufsseite, die mit dem Bild beginnt",
+        desc: "Buyers decide in the first three seconds. We put the key render full-screen, keep the text short, and place the unit table, floor plans and the 360° tour one scroll below — so the site does what the brochure can't: let someone walk through the apartment before it exists.",
+        descDe: "Käufer entscheiden in den ersten drei Sekunden. Wir setzen das Schlüsselrendering bildschirmfüllend, halten den Text kurz und legen Wohnungsspiegel, Grundrisse und den 360°-Rundgang eine Bildschirmhöhe tiefer — damit die Seite kann, was die Broschüre nicht kann: jemanden durch die Wohnung gehen lassen, bevor sie steht."
+      },
+      {
+        problem: "The studio's website doesn't match the work",
+        problemDe: "Die Website des Büros passt nicht zur Arbeit",
+        title: "A portfolio built around the projects",
+        titleDe: "Ein Portfolio, das aus den Projekten entsteht",
+        desc: "An architecture office is judged on its buildings, not its paragraphs. We design a project grid where each image sits at its own proportion, the filters match how clients actually look — housing, public, conversion — and the office page says in two sentences what the practice stands for.",
+        descDe: "Ein Architekturbüro wird an seinen Bauten gemessen, nicht an seinen Absätzen. Wir gestalten ein Projektraster, in dem jedes Bild in seiner eigenen Proportion steht, Filter, die so sortieren, wie Bauherren suchen — Wohnen, Öffentlich, Umbau — und eine Büroseite, die in zwei Sätzen sagt, wofür das Büro steht."
+      },
+      {
+        problem: "Nobody finds the project online",
+        problemDe: "Niemand findet das Projekt online",
+        title: "Fast, found, and feeding your inbox",
+        titleDe: "Schnell, auffindbar, und die Anfragen landen bei Ihnen",
+        desc: "A site that loads in a second on a phone, carries the project name in every title, is in German and English from day one, and has a form that writes straight to the sales team — with the floor plan the buyer was looking at attached. Analytics show you which unit gets the most clicks.",
+        descDe: "Eine Seite, die auf dem Smartphone in einer Sekunde lädt, den Projektnamen in jedem Titel trägt, von Anfang an auf Deutsch und Englisch läuft und ein Formular hat, das direkt an den Verkauf schreibt — mit dem Grundriss, den der Käufer gerade angeschaut hat. Die Statistik zeigt Ihnen, welche Wohnung die meisten Klicks bekommt."
+      }
+    ],
+    deliverables: [
+      "Design and build of the complete site, desktop and mobile",
+      "Your renders, tours and films integrated and optimised",
+      "Unit table, floor plans and enquiry form wired to your inbox",
+      "German and English, domain, hosting and analytics set up",
+      "Handover you can edit yourself — or we maintain it for you"
+    ],
+    deliverablesDe: [
+      "Gestaltung und Umsetzung der kompletten Website, Desktop und Mobile",
+      "Ihre Renderings, Rundgänge und Filme eingebunden und optimiert",
+      "Wohnungsspiegel, Grundrisse und Anfrageformular direkt in Ihr Postfach",
+      "Deutsch und Englisch, Domain, Hosting und Analytics eingerichtet",
+      "Übergabe zum Selberpflegen — oder wir betreuen die Seite weiter"
+    ],
+    src: "/assets/services/web-development/hero.webp",
     type: "image",
     pipeline: [
-      { step: "01", title: "Scope & Structure", titleDe: "Ziel & Struktur", desc: "We map what the site has to do — sell a development, present a studio, capture enquiries — and lay out the pages and navigation around that goal.", descDe: "Wir klären, was die Website leisten soll — ein Bauvorhaben verkaufen, ein Studio zeigen, Anfragen gewinnen — und legen Seiten und Navigation darauf aus." },
-      { step: "02", title: "Design & Layout", titleDe: "Design & Layout", desc: "We design the pages around your imagery rather than fitting images into a template, so renders, tours and animations get the space they need.", descDe: "Wir gestalten die Seiten um Ihr Bildmaterial herum, statt Bilder in ein Template zu pressen — Renderings, Rundgänge und Animationen bekommen den Raum, den sie brauchen." },
-      { step: "03", title: "Build & Integration", titleDe: "Umsetzung & Integration", desc: "We build it to load fast on phones and desktops, wire up contact forms, and hook in the 360° tours, video loops and galleries.", descDe: "Wir bauen die Seite für schnelle Ladezeiten auf Smartphone und Desktop, binden Kontaktformulare ein und integrieren 360°-Touren, Videoloops und Galerien." },
-      { step: "04", title: "Launch & Handover", titleDe: "Launch & Übergabe", desc: "We deploy, connect your domain and analytics, and hand over a site you can update — or keep maintaining it for you.", descDe: "Wir veröffentlichen die Seite, verbinden Domain und Analytics und übergeben Ihnen eine Website, die Sie selbst pflegen können — oder wir pflegen sie weiter für Sie." }
+      { step: "01", title: "Scope & Structure", titleDe: "Ziel & Struktur", desc: "We start with the question the site has to answer — sell a development, present a studio, capture enquiries — and lay out the pages around it as a wireframe: what a visitor sees first, where the units are, where the form sits. You approve the structure before a single pixel is designed.", descDe: "Wir beginnen mit der Frage, die die Website beantworten muss — ein Bauvorhaben verkaufen, ein Büro zeigen, Anfragen gewinnen — und legen die Seiten als Wireframe darum an: was ein Besucher zuerst sieht, wo die Wohnungen stehen, wo das Formular sitzt. Sie geben die Struktur frei, bevor ein einziger Pixel gestaltet wird." },
+      { step: "02", title: "Design & Layout", titleDe: "Design & Layout", desc: "The design is built from your imagery outwards: typography, colour and spacing are chosen so the renders carry the page, not fight it. You see the full homepage and one inner page as real screens, on desktop and on a phone, and we iterate until it's right.", descDe: "Das Design entsteht von Ihrem Bildmaterial aus: Schrift, Farbe und Abstände sind so gewählt, dass die Renderings die Seite tragen und nicht gegen sie arbeiten. Sie sehen die komplette Startseite und eine Unterseite als echte Screens, auf Desktop und Smartphone, und wir überarbeiten, bis es stimmt." },
+      { step: "03", title: "Build & Integration", titleDe: "Umsetzung & Integration", desc: "We build it to load fast on any phone, embed the 360° tours, video loops and galleries at full quality, connect the unit table to your spreadsheet or CRM, and wire the enquiry form straight to your sales inbox with attachments.", descDe: "Wir bauen die Seite für schnelle Ladezeiten auf jedem Smartphone, binden 360°-Rundgänge, Videoloops und Galerien in voller Qualität ein, verbinden den Wohnungsspiegel mit Ihrer Tabelle oder Ihrem CRM und leiten das Anfrageformular mit Anhängen direkt an Ihren Verkauf." },
+      { step: "04", title: "Launch & Handover", titleDe: "Launch & Übergabe", desc: "We connect your domain, set up analytics and search indexing in both languages, test every unit and form on real devices, and hand over a site you can update yourself — or keep maintaining it as the project sells.", descDe: "Wir verbinden Ihre Domain, richten Analytics und die Suchmaschinen-Indexierung in beiden Sprachen ein, testen jede Wohnung und jedes Formular auf echten Geräten und übergeben Ihnen eine Website, die Sie selbst pflegen können — oder wir betreuen sie weiter, während das Projekt verkauft wird." }
     ],
     gallery: [
-      { src: "/assets/home/3d tour.jpg", aspect: "aspect-[16/9]" },
-      { src: "/assets/home/3dplan_interior.jpg", aspect: "aspect-[4/3]" },
-      { src: "/assets/heroImage.jpg", aspect: "aspect-[1/1]" },
-      { src: "/assets/home/360 services.mp4", type: "video", aspect: "aspect-[3/4]" }
+      { src: "/assets/services/web-development/showcase-seeblick-duo.webp", aspect: "aspect-[16/10]" },
+      { src: "/assets/services/web-development/showcase-villa-phone.webp", aspect: "aspect-[4/5]" },
+      { src: "/assets/services/web-development/showcase-atelier-desktop.webp", aspect: "aspect-[16/10]" },
+      { src: "/assets/services/web-development/showcase-seeblick-scroll.webp", aspect: "aspect-[3/4]" }
     ]
   }
 ];
@@ -290,6 +335,16 @@ export function localizeService(service, locale) {
       title: step.titleDe || step.title,
       desc: step.descDe || step.desc,
     })),
+    // The problem/solution block and the deliverables list exist only on
+    // services that declare them; both follow the same `De` sibling rule.
+    intro: service.introDe || service.intro,
+    problems: service.problems?.map((item) => ({
+      ...item,
+      problem: item.problemDe || item.problem,
+      title: item.titleDe || item.title,
+      desc: item.descDe || item.desc,
+    })),
+    deliverables: service.deliverablesDe || service.deliverables,
   };
 }
 

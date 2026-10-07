@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams, useParams } from "next/navigation";
 import { useLenis } from "@/context/LenisContext";
-import { galleryItems, allProjectsItems, virtualStagingPairs, serviceTourFor } from "@/data/galleryData";
+import { galleryItems, allProjectsItems, virtualStagingPairs, serviceTourFor, ALL_PROJECTS_EXCLUDED } from "@/data/galleryData";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import LightboxVideo from "@/components/LightboxVideo";
 import TourEmbed from "@/components/TourEmbed";
@@ -146,6 +146,7 @@ const CATEGORIES = [
   { key: "360° Tours", slug: "360-tours" },
   { key: "Animation", slug: "animation" },
   { key: "Cinemagraph", slug: "cinemagraph" },
+  { key: "Web", slug: "web" },
 ];
 
 // An unknown or missing slug falls back to "All" rather than showing an empty
@@ -295,9 +296,22 @@ function GalleryPageContent() {
   // Each entry keeps its index into `filteredItems` — the lightbox and its
   // prev/next handlers walk that flat array, so a per-column index would send
   // them to the wrong item.
+  //
+  // Items go to whichever column is currently shortest, measured by the sum
+  // of their aspect ratios (height at a common width). Plain round-robin
+  // counted tiles, not height: a run of portrait renders in one column left
+  // it a full screen taller than its neighbours, and the Exterior filter
+  // ended in one lonely column with empty space beside it. The curated order
+  // is still read in sequence — only the column each item lands in changes.
   const columnBuckets = Array.from({ length: columnCount }, () => []);
+  const columnHeights = Array.from({ length: columnCount }, () => 0);
   shownItems.forEach((item, index) => {
-    columnBuckets[index % columnCount].push({ item, index });
+    let target = 0;
+    for (let c = 1; c < columnCount; c++) {
+      if (columnHeights[c] < columnHeights[target] - 0.001) target = c;
+    }
+    columnBuckets[target].push({ item, index });
+    columnHeights[target] += (item.height || 1) / (item.width || 1);
   });
 
   // Switching filters swaps in a whole new (shorter) grid — if the reader was
@@ -426,45 +440,93 @@ function GalleryPageContent() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedItemIndex, filteredItems.length]);
 
+  // The sidebar groups the filters the way the archive is organised: the
+  // categories that take part in the "All projects" mix, then the ones that
+  // only exist as their own showcase (Product, Virtual Staging, 360° Tours,
+  // Web). Numbering runs across both groups so a filter can be referred to
+  // by its number ("filter 07") in a conversation.
+  const mixCategories = CATEGORIES.filter(
+    ({ key }) => !ALL_PROJECTS_EXCLUDED.includes(key) && key !== "360° Tours"
+  );
+  const showcaseCategories = CATEGORIES.filter(
+    ({ key }) => ALL_PROJECTS_EXCLUDED.includes(key) || key === "360° Tours"
+  );
+  const numberOf = (key) =>
+    String([...mixCategories, ...showcaseCategories].findIndex((c) => c.key === key) + 1).padStart(2, "0");
+
+  const FilterRow = ({ cat }) => {
+    const isActive = activeFilter === cat.key;
+    return (
+      <button
+        onClick={() => setActiveFilter(cat.key)}
+        aria-pressed={isActive}
+        className={`filter-row group w-full flex items-center gap-3 text-left rounded-xl px-3 py-2 text-sm font-medium transition-colors duration-300 cursor-pointer ${
+          isActive ? "is-active text-white" : "text-white/70 hover:text-white"
+        }`}
+      >
+        <span className="font-mono text-[10px] tracking-widest text-white/40 w-5 shrink-0">{numberOf(cat.key)}</span>
+        <span className="flex-1">{labelFor(cat.key)}</span>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className={`w-3.5 h-3.5 shrink-0 transition-all duration-300 ${
+            isActive ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-1 group-hover:opacity-50 group-hover:translate-x-0"
+          }`}
+        >
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </svg>
+      </button>
+    );
+  };
+
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row-reverse text-white">
+    <div className="min-h-screen flex flex-col lg:flex-row text-white">
       {/* The filter rail. A plain <div>, not <aside>: it holds the page's own
           <h1> and its primary controls, and marking those as complementary put
           the title outside the main landmark.
 
-          It only becomes a side column at `lg`. At `md` its 18% came to a
-          136px column with 32px of padding — 72px for content — which cut the
-          heading to "GALLE", stacked every chip over three lines and pushed
-          the page 29px wider than the viewport. Tablets keep the phone
+          A side column at `lg` only. At `md` the column came to 72px of
+          content, which cut the heading to "GALLE" — tablets keep the phone
           layout: a horizontal rail above the grid. */}
-      <div className="w-full lg:w-[18%] lg:min-w-[210px] h-auto lg:h-screen lg:sticky lg:top-0 bg-surface border-b lg:border-b-0 lg:border-l border-white/10 px-6 lg:p-8 pt-28 lg:pt-32 pb-5 lg:pb-8 flex flex-col justify-between z-20 shrink-0">
-        <div className="flex flex-col gap-4 lg:gap-8">
-          <div>
-            <Title3D as="h1" className="text-2xl lg:text-3xl font-bold tracking-widest uppercase mb-3 lg:mb-4">
+      <div className="chip-rail w-full lg:w-[23%] lg:min-w-[270px] lg:max-w-[330px] h-auto lg:h-screen lg:sticky lg:top-0 bg-surface border-b lg:border-b-0 lg:border-r border-white/10 px-6 lg:px-6 pt-28 lg:pt-28 pb-5 lg:pb-6 flex flex-col z-20 shrink-0 lg:overflow-y-auto">
+        <div className="flex flex-col gap-4 lg:gap-5 flex-1">
+          <div className="flex flex-col gap-3">
+            <Title3D as="h1" className="text-3xl lg:text-4xl font-bold tracking-widest uppercase">
               {g.title}
             </Title3D>
-            <div className="h-[1px] bg-gradient-to-r from-text/20 to-transparent w-full" />
+            {/* The sentence under the title follows the active filter, so the
+                column explains what is on screen instead of keeping a
+                separate "category info" box at the bottom. */}
+            <p className="text-[13px] text-white/60 leading-relaxed transition-all duration-300">
+              {g.categories[activeFilter]?.desc ?? g.categories.All.desc}
+            </p>
           </div>
 
           {/* Phone: one sideways-scrolling rail of chips. The vertical list
-              below is 8 rows tall, which pushed the first photograph to 760px
-              down the page — past the fold on every phone. */}
+              below is nine rows tall, which pushed the first photograph past
+              the fold on every phone. */}
           <nav aria-label={g.title} ref={chipRailRef} className="lg:hidden chip-rail -mx-6 px-6 overflow-x-auto">
             <div className="flex w-max gap-2">
-              {[{ key: ALL_FILTER }, ...CATEGORIES].map(({ key }) => {
+              {[{ key: ALL_FILTER }, ...mixCategories, ...showcaseCategories].map(({ key }) => {
                 const isActive = activeFilter === key;
                 return (
                   <button
                     key={key}
                     onClick={() => setActiveFilter(key)}
                     aria-pressed={isActive}
-                    className={`shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-[10px] font-bold uppercase tracking-widest transition-all duration-300 cursor-pointer ${
+                    className={`shrink-0 whitespace-nowrap rounded-full border px-4 py-2 text-[11px] font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
                       isActive
-                        ? "bg-white/15 text-white border-white/30"
-                        : "bg-white/5 text-white/40 border-transparent hover:bg-white/10 hover:text-white"
+                        ? "bg-text text-bg border-transparent"
+                        : "bg-white/5 text-white/60 border-transparent hover:bg-white/10 hover:text-white"
                     }`}
                   >
                     {key === ALL_FILTER ? g.all : labelFor(key)}
+                    {key === ALL_FILTER && (
+                      <span className="ml-2 font-mono text-[10px] opacity-60">{allProjectsItems.length}</span>
+                    )}
                   </button>
                 );
               })}
@@ -472,64 +534,69 @@ function GalleryPageContent() {
           </nav>
 
           <nav aria-label={g.title} className="hidden lg:flex flex-col gap-4">
-            {/* All Button */}
             <button
               onClick={() => setActiveFilter(ALL_FILTER)}
-              className={`w-full text-left py-2.5 px-4 rounded-lg tracking-widest uppercase text-[10px] font-bold border transition-all duration-300 cursor-pointer ${
+              aria-pressed={activeFilter === ALL_FILTER}
+              className={`w-full flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-300 cursor-pointer border ${
                 activeFilter === ALL_FILTER
-                  ? "bg-white/15 text-white border-white/30"
-                  : "bg-white/5 text-white/40 border-transparent hover:bg-white/10 hover:text-white"
+                  ? "bg-text text-bg border-transparent"
+                  : "bg-white/5 text-white border-white/10 hover:border-white/30"
               }`}
             >
-              {g.all}
+              <span>{g.all}</span>
+              <span
+                className={`font-mono text-[11px] px-2 py-0.5 rounded-md ${
+                  activeFilter === ALL_FILTER ? "bg-bg/15" : "bg-white/10"
+                }`}
+              >
+                {allProjectsItems.length}
+              </span>
             </button>
 
-            {/* Category Filter list */}
-            <div className="flex flex-col gap-1.5 pl-1">
-              {CATEGORIES.map(({ key, slug }) => {
-                const isActive = activeFilter === key;
-                return (
-                  <button
-                    key={slug}
-                    onClick={() => setActiveFilter(key)}
-                    className="group flex items-center text-left py-2 px-1 text-xs tracking-wider uppercase font-semibold transition-all duration-300 relative cursor-pointer"
-                  >
-                    <span 
-                      className="w-1.5 h-1.5 rounded-full bg-accent mr-3 transition-all duration-300"
-                      style={{
-                        opacity: isActive ? 1 : 0,
-                        transform: isActive ? "scale(1)" : "scale(0)",
-                      }}
-                    />
-                    <span
-                      className="transition-all duration-300 group-hover:translate-x-1"
-                      style={{
-                        color: isActive ? "var(--color-text)" : "var(--color-text-muted)",
-                        transform: isActive ? "translateX(4px)" : "translateX(0)",
-                      }}
-                    >
-                      {labelFor(key)}
-                    </span>
-                  </button>
-                );
-              })}
+            <div className="flex flex-col gap-1">
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40 px-3 pb-1">
+                {g.groups.mix}
+              </span>
+              {mixCategories.map((cat) => (
+                <FilterRow key={cat.slug} cat={cat} />
+              ))}
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40 px-3 pb-1">
+                {g.groups.showcases}
+              </span>
+              {showcaseCategories.map((cat) => (
+                <FilterRow key={cat.slug} cat={cat} />
+              ))}
             </div>
           </nav>
         </div>
 
-        {/* Bottom Category Description. The phone keeps the sentence but drops
-            the label and the reserved height — it sits right under the chips
-            instead of anchoring the bottom of a full-height column. */}
-        <div className="mt-4 lg:mt-0 lg:border-t lg:border-white/10 lg:pt-6">
-          <p className="hidden lg:block text-[9px] font-mono uppercase tracking-widest text-white/30 mb-2">{g.categoryInfo}</p>
-          <p className="text-[11px] lg:text-xs text-white/50 leading-relaxed lg:min-h-[48px] transition-all duration-300">
-            {g.categories[activeFilter]?.desc ?? g.categories.All.desc}
-          </p>
-        </div>
+        {/* The route out. A gallery is where someone decides they want the
+            same for their project; the next step sits where the eye lands
+            after the list. */}
+        <Link
+          href={`/${locale}/contact`}
+          className="ink-card group hidden lg:flex flex-col gap-2.5 rounded-2xl p-5 mt-6 transition-transform duration-300 hover:-translate-y-0.5"
+        >
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] opacity-60">
+            {t.footer.eyebrow}
+          </span>
+          <span className="text-lg font-semibold leading-snug">
+            {g.ctaHeading}
+          </span>
+          <span className="ink-card-btn inline-flex items-center gap-2 w-fit text-xs font-semibold tracking-wide px-4 py-2.5 rounded-full mt-1 transition-colors duration-300">
+            {t.hero.contact}
+            <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </span>
+        </Link>
       </div>
 
-      {/* Left Gallery Masonry Grid (78% width on desktop) */}
-      <main className="w-full lg:w-[82%] min-h-screen pt-8 lg:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
+      {/* The masonry grid takes whatever width the rail leaves. */}
+      <main className="w-full lg:flex-1 lg:min-w-0 min-h-screen pt-8 lg:pt-32 pb-24 px-6 md:px-12 lg:px-16 overflow-y-auto">
         {isTours ? (
           // One window per tour, laid out like the rest of the gallery, rather
           // than a single viewer with a switcher above it — this is the room

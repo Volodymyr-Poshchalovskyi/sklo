@@ -148,9 +148,9 @@ export default function FAQ({ locale = "en", t }) {
       <div className="faq-fade absolute inset-0 z-0" />
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start w-full">
-        {/* The heading column used to hold nothing but the word "FAQS", leaving
-            half the section empty. It now carries the supporting copy and a
-            direct route out for anyone whose question isn't listed. */}
+        {/* The heading column carries the supporting copy. The "ask us"
+            call to action moved out to its own band after this section
+            (CtaBand): inside the column it read as an afterthought. */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-32">
           <span className="eyebrow">{faq.eyebrow}</span>
           <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">
@@ -159,24 +159,6 @@ export default function FAQ({ locale = "en", t }) {
           <p className="text-base sm:text-lg text-white/60 leading-relaxed max-w-md">
             {faq.intro}
           </p>
-
-          <div className="tile no-lift flex flex-col gap-4 p-6 mt-2 max-w-md">
-            <p className="text-sm text-white/70 leading-relaxed">
-              {faq.askCopy}
-            </p>
-            <Link
-              href={`/${locale}/contact`}
-              className="group inline-flex items-center gap-2 w-fit text-xs font-semibold tracking-widest uppercase border border-white/20 hover:border-white/50 bg-white/5 hover:bg-white/10 px-5 py-3 rounded-full transition-all duration-300"
-            >
-              {faq.askCta}
-              <svg
-                className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
-                fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </Link>
-          </div>
         </div>
 
         <div className="flex flex-col w-full">

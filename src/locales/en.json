@@ -135,7 +135,10 @@
         },
         "p4": "Additionally, every client receives exclusive free bonuses after project completion — materials that help you present your project even more effectively."
       }
-    }
+    },
+    "bandTitle": "Still not sure about something?",
+    "bandCopy": "Tell us about the project and we'll come back with specifics — timing, deliverables and a price.",
+    "bandEmail": "Write an email"
   },
   "footer": {
     "eyebrow": "Get in touch",
@@ -195,7 +198,10 @@
       "viewAll": "ALL SERVICES",
       "lightboxHint": "Arrow keys to navigate | ESC to close",
       "stepAlt": "Workflow step visual",
-      "lightboxAlt": "Fullscreen gallery item"
+      "lightboxAlt": "Fullscreen gallery item",
+      "problemsEyebrow": "Why a website",
+      "problemsTitle": "What it solves",
+      "deliverablesTitle": "What you get"
     }
   },
   "gallery": {
@@ -247,11 +253,20 @@
       "Cinemagraph": {
         "label": "Cinemagraph",
         "desc": "Static architectural visualizations enhanced with subtle loop animations, drawing instant attention to key design details."
+      },
+      "Web": {
+        "label": "Web",
+        "desc": "Project sites, portfolios and landing pages built around the renders — shown as device mockups of three example sites."
       }
     },
     "shownOf": "Showing {shown} of {total}",
     "loadMore": "Load more",
-    "backToTop": "Back to top"
+    "backToTop": "Back to top",
+    "groups": {
+      "mix": "In the mix",
+      "showcases": "Separate showcases"
+    },
+    "ctaHeading": "Looking to start your next project?"
   },
   "wizard": {
     "steps": {
@@ -277,10 +292,27 @@
       "model": "3D Model / CAD Files",
       "drawings": "Architectural Drawings",
       "photos": "Reference Photos",
-      "scratch": "Starting From Scratch"
+      "scratch": "Starting From Scratch",
+      "brand": "Logo / Brand Guidelines",
+      "website": "Existing Website"
     },
     "quantityTbd": "quantity to be discussed",
     "decrease": "Decrease",
-    "increase": "Increase"
+    "increase": "Increase",
+    "siteType": {
+      "landing": "Landing page — one project, one goal",
+      "project": "Project site — units, plans, tour",
+      "portfolio": "Portfolio — studio or office site",
+      "other": "Something else"
+    },
+    "siteTypeHint": "Which kind of site is it?"
+  },
+  "seo": {
+    "home": "SKLO is a 3D visualisation studio in Switzerland for architects, developers and real estate: photorealistic exterior and interior renderings, animations, 360° tours and project websites.",
+    "services": "Twelve services from one studio: exterior and interior visualisation, bird's-eye views, animation, 360° tours, virtual staging, 3D floor plans, product shots and web development.",
+    "gallery": "Selected work by SKLO Studio: exterior and interior renderings, aerial views, animations, cinemagraphs and virtual staging for Swiss architecture and real estate.",
+    "about": "The team behind SKLO Studio — 3D artists, animators and developers who turn architectural plans into images that sell a project before it is built.",
+    "contact": "Tell us about your project in five short steps — services, scope, budget, materials — and receive a tailored quote from SKLO Studio. Plans and files can be attached directly.",
+    "servicesCrumb": "Services"
   }
 }

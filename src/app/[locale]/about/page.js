@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Title3D from "@/components/Title3D";
+import TeamCard from "@/components/TeamCard";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 
@@ -47,38 +47,12 @@ export default async function AboutPage({ params }) {
           </Title3D>
         </div>
 
-        {/* Same grid and card language as the services listing: four per row on
-            wide screens, image scaling inside its own frame on hover, and the
-            caption block lighting up underneath. */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-3 md:gap-x-4 gap-y-8 md:gap-y-10">
+        {/* Same grid as the services listing. Each card is a TeamCard (the
+            portrait drifts behind its frame on hover); while one card is
+            hovered the others step back a little — a pure CSS rule below. */}
+        <div className="team-grid grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-x-3 md:gap-x-4 gap-y-8 md:gap-y-10">
           {team.map((member, index) => (
-            <div
-              key={member.id}
-              className="group flex flex-col animate-fade-in-tile opacity-0"
-              style={{ animationDelay: `${index * 60}ms` }}
-            >
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-white/10 group-hover:border-white/40 bg-white/[0.02] transition-colors duration-300">
-                <Image
-                  src={member.photo}
-                  alt={member.name}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                />
-                <span className="media-chip absolute top-3 left-3 md:top-4 md:left-4 font-mono text-[10px] backdrop-blur-sm rounded-full px-2 py-0.5">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-              </div>
-
-              <div className="service-caption mt-4 md:mt-5 rounded-xl px-4 py-3.5 transition-all duration-300">
-                <h2 className="text-lg md:text-xl font-bold uppercase tracking-wide text-white/90 group-hover:text-white leading-snug transition-colors duration-300">
-                  {member.name}
-                </h2>
-                <p className="mt-1.5 text-xs md:text-sm text-white/50 group-hover:text-white/75 leading-relaxed transition-colors duration-300">
-                  {member.role}
-                </p>
-              </div>
-            </div>
+            <TeamCard key={member.id} member={member} index={index} />
           ))}
         </div>
       </section>
@@ -90,6 +64,10 @@ export default async function AboutPage({ params }) {
         }
         .animate-fade-in-tile {
           animation: fadeInTile 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .team-grid .team-card { transition: opacity 0.4s ease; }
+        @media (hover: hover) {
+          .team-grid:has(.team-card:hover) .team-card:not(:hover) { opacity: 0.55; }
         }
       `}</style>
     </main>

@@ -109,6 +109,15 @@ const PIPELINE_STEP_MEDIA = {
     "/assets/services/pipeline/interior/03-preview.webp",
     "/assets/services/pipeline/interior/04-final.webp",
   ],
+  // Web development has no photographs of a job in progress, so its four
+  // steps are device mockups of one fictional sales site moving from
+  // wireframe to launch — see public/assets/services/web-development/.
+  "web-development": [
+    "/assets/services/web-development/step-01-structure.webp",
+    "/assets/services/web-development/step-02-design.webp",
+    "/assets/services/web-development/step-03-build.webp",
+    "/assets/services/web-development/step-04-launch.webp",
+  ],
 };
 
 // Function to return distinct high quality media for each of the 4 pipeline steps
@@ -132,10 +141,58 @@ const getStepMedia = (service, index) => {
   return { src: service.src || "/assets/heroImage.jpg", type: service.type || "image" };
 };
 
-// Only these two services have a detailed enough workflow to justify the
+// The mini gallery as its own memoised component. The page around it
+// re-renders on every pipeline step and every time the progress plank
+// appears or leaves; without the memo each of those re-rendered twelve image
+// tiles, which was the hitch felt on the way from the pipeline into this
+// section.
+const MiniGalleryGrid = React.memo(function MiniGalleryGrid({ items, categories, onSelect }) {
+  return (
+    /* Same rule as the big gallery: the tile takes the media's own aspect
+       ratio, so nothing is cropped. Columns are CSS multi-column here because
+       this list is short enough that filling one column before the next does
+       not bury anything. */
+    <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
+      {items.map((media, idx) => (
+        <div
+          key={media.id}
+          onClick={() => onSelect(idx)}
+          style={{ aspectRatio: `${media.width} / ${media.height}` }}
+          className="relative group mb-6 break-inside-avoid rounded-2xl border border-white/10 hover:border-white/30 bg-white/5 overflow-hidden cursor-pointer transition-colors duration-300"
+        >
+          {media.type === "video" ? (
+            <MiniGalleryVideo
+              src={media.src}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          ) : (
+            /* Through `next/image`, like the main gallery: these are 3840px
+               archive originals shown in a ~510px column, and a plain <img>
+               made the browser decode all twelve at full size. */
+            <Image
+              src={media.src}
+              alt={categories?.[media.category]?.label ?? media.title}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+          )}
+
+          <div className="media-caption absolute inset-0 flex items-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
+            <span className="text-[10px] font-mono uppercase tracking-widest">
+              {String(idx + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+});
+
+// Only these services have a detailed enough workflow to justify the
 // pinned pipeline section — every other service page skips straight from
 // the hero to the mini gallery.
-const PIPELINE_SERVICE_SLUGS = ["exterior-visualization", "interior-visualization"];
+const PIPELINE_SERVICE_SLUGS = ["exterior-visualization", "interior-visualization", "web-development"];
 
 export default function ServiceDetailClient({ service, otherServices, locale, t }) {
   const d = t?.services?.detail ?? {};
@@ -238,8 +295,14 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
       const rect = pipelineEl.getBoundingClientRect();
       const windowHeight = window.innerHeight;
 
-      // Check if pipeline is in view (only update React state on boolean change)
-      const inView = rect.top < windowHeight * 0.8 && rect.bottom > windowHeight * 0.2;
+      // The progress plank is a control for the pinned stage, so it is shown
+      // exactly while the stage is pinned: from the moment the section's top
+      // reaches the viewport top until its bottom leaves the viewport bottom
+      // — which is the frame the last step completes on. The old 20% margin
+      // kept it on screen for most of a viewport after the pipeline was done,
+      // hovering over the next section with nothing left to show. (Only React
+      // state on a boolean change, as before.)
+      const inView = rect.top <= 1 && rect.bottom >= windowHeight - 1;
       if (inView !== prevInViewRef.current) {
         prevInViewRef.current = inView;
         setIsPipelineInView(inView);
@@ -392,7 +455,73 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
         </motion.div>
       </section>
 
-      {/* 2. PINNED SCROLL PIPELINE SECTION — exterior/interior visualization only */}
+      {/* 1b. WHAT IT SOLVES — only services that spell out the client's
+          problem (web development so far). A visualisation client knows what
+          a render is; a developer rarely knows what a project site has to do
+          for them, so the page says it before showing how it is built. */}
+      {service.problems?.length > 0 && (
+      <section className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div className="flex flex-col gap-6 lg:sticky lg:top-32">
+            <span className="text-xs font-semibold tracking-widest uppercase text-accent block">
+              {d.problemsEyebrow}
+            </span>
+            <Title3D className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wider">
+              {d.problemsTitle}
+            </Title3D>
+            {service.intro && (
+              <p className="text-base sm:text-lg text-white/60 leading-relaxed max-w-md">
+                {service.intro}
+              </p>
+            )}
+            {service.deliverables?.length > 0 && (
+              <div className="tile no-lift flex flex-col gap-4 p-6 mt-2 max-w-md">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">
+                  {d.deliverablesTitle}
+                </span>
+                <ul className="flex flex-col gap-2.5">
+                  {service.deliverables.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm text-white/70 leading-relaxed">
+                      <span aria-hidden="true" className="mt-[7px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-4">
+            {service.problems.map((item, idx) => (
+              <article
+                key={idx}
+                className="tile no-lift grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-8 p-6 md:p-8"
+              >
+                <span
+                  className="text-3xl md:text-4xl font-bold text-transparent select-none tracking-tight leading-none"
+                  style={{ WebkitTextStroke: "1px var(--color-border-stroke)", opacity: 0.6 }}
+                >
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+                <div className="flex flex-col gap-3">
+                  <p className="text-xs font-semibold tracking-widest uppercase text-white/50">
+                    {item.problem}
+                  </p>
+                  <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-white leading-snug">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-white/70 leading-relaxed font-light">
+                    {item.desc}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      )}
+
+      {/* 2. PINNED SCROLL PIPELINE SECTION — services with a documented workflow */}
       {hasPipeline && (
       <section
         ref={pipelineRef}
@@ -447,8 +576,8 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
                   >
                     <div className="flex items-center gap-4 mb-4">
                       <span
-                        className="text-6xl sm:text-7xl md:text-8xl font-black font-serif text-transparent select-none tracking-tighter"
-                        style={{ WebkitTextStroke: "1.5px var(--color-border-stroke)" }}
+                        className="text-5xl sm:text-6xl md:text-7xl font-bold text-transparent select-none tracking-tight"
+                        style={{ WebkitTextStroke: "1px var(--color-border-stroke)", opacity: 0.6 }}
                       >
                         {service.pipeline[activeStepIndex].step}
                       </span>
@@ -520,8 +649,8 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
               <article key={idx} className="flex flex-col gap-5">
                 <div className="flex items-center gap-4">
                   <span
-                    className="text-5xl sm:text-6xl font-black font-serif text-transparent select-none tracking-tighter leading-none"
-                    style={{ WebkitTextStroke: "1.5px var(--color-border-stroke)" }}
+                    className="text-4xl sm:text-5xl font-bold text-transparent select-none tracking-tight leading-none"
+                    style={{ WebkitTextStroke: "1px var(--color-border-stroke)", opacity: 0.6 }}
                   >
                     {step.step}
                   </span>
@@ -597,42 +726,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
                aspect ratio, so nothing is cropped. Columns are CSS multi-column
                here because this list is short enough that filling one column
                before the next does not bury anything. */
-            <div className="columns-1 sm:columns-2 lg:columns-3 gap-6">
-              {miniItems.map((media, idx) => (
-                <div
-                  key={media.id}
-                  onClick={() => setActiveMediaIndex(idx)}
-                  style={{ aspectRatio: `${media.width} / ${media.height}` }}
-                  className="relative group mb-6 break-inside-avoid rounded-2xl border border-white/10 hover:border-white/30 bg-white/5 overflow-hidden cursor-pointer transition-colors duration-300"
-                >
-                  {media.type === "video" ? (
-                    <MiniGalleryVideo
-                      src={media.src}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  ) : (
-                    /* Through `next/image`, like the main gallery: these are
-                       3840px archive originals shown in a ~510px column, and a
-                       plain <img> made the browser decode all twelve at full
-                       size — about 450 MB of bitmap for 16 MB of download,
-                       which is what froze this section on scroll. */
-                    <Image
-                      src={media.src}
-                      alt={g.categories?.[media.category]?.label ?? media.title}
-                      fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  )}
-
-                  <div className="media-caption absolute inset-0 flex items-end p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/75 via-black/10 to-transparent">
-                    <span className="text-[10px] font-mono uppercase tracking-widest">
-                      {String(idx + 1).padStart(2, "0")} / {String(miniItems.length).padStart(2, "0")}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <MiniGalleryGrid items={miniItems} categories={g.categories} onSelect={setActiveMediaIndex} />
           )}
 
           {/* Route into the big gallery with this category already selected. */}
@@ -658,17 +752,17 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
       {/* 4. OTHER SERVICES SECTION */}
       <section className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
         <div className="w-full">
-          <div className="mb-16">
-            <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
-              {d.exploreEyebrow}
-            </span>
-            <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
-              {d.exploreTitle}
-            </Title3D>
-            <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
-          </div>
-
           <ServicesCarousel
+            heading={
+              <div>
+                <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
+                  {d.exploreEyebrow}
+                </span>
+                <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
+                  {d.exploreTitle}
+                </Title3D>
+              </div>
+            }
             items={otherServiceItems}
             defaultHref={`/${locale}/services`}
             viewAllHref={`/${locale}/services`}
@@ -828,7 +922,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
             animate={{ opacity: 1, y: 0, x: "-50%" }}
             exit={{ opacity: 0, y: 80, x: "-50%" }}
             transition={{ type: "spring", stiffness: 260, damping: 25 }}
-            className="pipeline-progress-bar hidden lg:flex fixed bottom-6 left-1/2 z-40 w-[92%] max-w-2xl bg-surface/95 border border-[var(--color-progress-border)] backdrop-blur-xl rounded-2xl py-4 px-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex-col gap-2.5 select-none text-text"
+            className="pipeline-progress-bar hidden lg:flex fixed bottom-6 left-1/2 z-40 w-[92%] max-w-2xl bg-surface border border-[var(--color-progress-border)] rounded-2xl py-4 px-6 shadow-[0_20px_50px_rgba(0,0,0,0.15)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] flex-col gap-2.5 select-none text-text"
           >
             {/* Header info */}
             <div className="pipeline-header flex justify-between items-center text-[10px] font-bold uppercase tracking-widest text-text-muted px-1">

@@ -135,7 +135,10 @@
         },
         "p4": "Zusätzlich erhält jeder Kunde nach Projektabschluss exklusive Gratis-Boni — Material, mit dem Sie Ihr Projekt noch wirkungsvoller präsentieren."
       }
-    }
+    },
+    "bandTitle": "Noch etwas offen?",
+    "bandCopy": "Erzählen Sie uns von Ihrem Projekt — wir melden uns mit konkreten Angaben zu Zeitplan, Lieferumfang und Preis.",
+    "bandEmail": "E-Mail schreiben"
   },
   "footer": {
     "eyebrow": "Kontakt",
@@ -195,7 +198,10 @@
       "viewAll": "ALLE LEISTUNGEN",
       "lightboxHint": "Pfeiltasten zur Navigation | ESC zum Schliessen",
       "stepAlt": "Visual zum Arbeitsschritt",
-      "lightboxAlt": "Galeriebild im Vollbild"
+      "lightboxAlt": "Galeriebild im Vollbild",
+      "problemsEyebrow": "Warum eine Website",
+      "problemsTitle": "Was sie löst",
+      "deliverablesTitle": "Das erhalten Sie"
     }
   },
   "gallery": {
@@ -247,11 +253,20 @@
       "Cinemagraph": {
         "label": "Cinemagraph",
         "desc": "Statische Visualisierungen mit feinen Loop-Animationen, die den Blick sofort auf zentrale Details lenken."
+      },
+      "Web": {
+        "label": "Web",
+        "desc": "Projektseiten, Portfolios und Landingpages, gebaut um die Renderings herum — gezeigt als Geräte-Mockups von drei Beispielseiten."
       }
     },
     "shownOf": "{shown} von {total} sichtbar",
     "loadMore": "Mehr laden",
-    "backToTop": "Nach oben"
+    "backToTop": "Nach oben",
+    "groups": {
+      "mix": "Im Mix",
+      "showcases": "Eigene Bereiche"
+    },
+    "ctaHeading": "Bereit für Ihr nächstes Projekt?"
   },
   "wizard": {
     "steps": {
@@ -277,10 +292,27 @@
       "model": "3D-Modell / CAD-Dateien",
       "drawings": "Architekturpläne",
       "photos": "Referenzfotos",
-      "scratch": "Noch nichts vorhanden"
+      "scratch": "Noch nichts vorhanden",
+      "brand": "Logo / Markenrichtlinien",
+      "website": "Bestehende Website"
     },
     "quantityTbd": "Anzahl noch offen",
     "decrease": "Verringern",
-    "increase": "Erhöhen"
+    "increase": "Erhöhen",
+    "siteType": {
+      "landing": "Landingpage — ein Projekt, ein Ziel",
+      "project": "Projektseite — Wohnungen, Pläne, Rundgang",
+      "portfolio": "Portfolio — Studio- oder Bürowebsite",
+      "other": "Etwas anderes"
+    },
+    "siteTypeHint": "Welche Art von Website?"
+  },
+  "seo": {
+    "home": "SKLO ist ein 3D-Visualisierungsstudio in der Schweiz für Architekten, Entwickler und Immobilien: fotorealistische Aussen- und Innenrenderings, Animationen, 360°-Rundgänge und Projektwebsites.",
+    "services": "Zwölf Leistungen aus einem Studio: Aussen- und Innenvisualisierung, Vogelperspektiven, Animation, 360°-Rundgänge, Virtual Staging, 3D-Grundrisse, Produktbilder und Webentwicklung.",
+    "gallery": "Ausgewählte Arbeiten von SKLO Studio: Aussen- und Innenrenderings, Luftaufnahmen, Animationen, Cinemagraphs und Virtual Staging für Schweizer Architektur und Immobilien.",
+    "about": "Das Team hinter SKLO Studio — 3D-Artists, Animatoren und Entwickler, die aus Architekturplänen Bilder machen, die ein Projekt verkaufen, bevor es gebaut ist.",
+    "contact": "Beschreiben Sie Ihr Projekt in fünf kurzen Schritten — Leistungen, Umfang, Budget, Unterlagen — und erhalten Sie ein individuelles Angebot von SKLO Studio. Pläne und Dateien können direkt angehängt werden.",
+    "servicesCrumb": "Leistungen"
   }
 }

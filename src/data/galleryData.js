@@ -295,7 +295,25 @@ export const galleryItems = [
 // Staging is presented as before/after sliders, so neither sits naturally in
 // a stream of architectural renders. Both stay reachable from their own
 // sidebar filter.
-export const ALL_PROJECTS_EXCLUDED = ["Product", "Virtual Staging"];
+// Web development has no shot archive: its examples are device mockups of
+// three fictional client sites (a development sales page, an architect's
+// portfolio, a villa landing page), each built on real SKLO renders. They are
+// its own "Web" filter in the gallery and the mini gallery on its service
+// page. `title` doubles as the alt text.
+export const WEB_SHOWCASE = [
+  { id: "web-1", category: "Web", src: "/assets/services/web-development/showcase-seeblick-duo.webp", type: "image", title: "Residenz Seeblick — sales site for a lakeside development, desktop and phone", width: 2400, height: 1500 },
+  { id: "web-2", category: "Web", src: "/assets/services/web-development/showcase-villa-phone.webp", type: "image", title: "Villa Lindenhof — single-property landing page on a phone", width: 1200, height: 1500 },
+  { id: "web-3", category: "Web", src: "/assets/services/web-development/showcase-atelier-desktop.webp", type: "image", title: "Brunner Keller Architekten — portfolio site with project grid", width: 2400, height: 1500 },
+  { id: "web-4", category: "Web", src: "/assets/services/web-development/showcase-seeblick-scroll.webp", type: "image", title: "Residenz Seeblick — full page: hero, unit table, gallery, 360° tour", width: 1800, height: 2400 },
+  { id: "web-5", category: "Web", src: "/assets/services/web-development/showcase-atelier-phone.webp", type: "image", title: "Brunner Keller Architekten — portfolio on a phone", width: 1200, height: 1500 },
+  { id: "web-6", category: "Web", src: "/assets/services/web-development/showcase-villa-hero.webp", type: "image", title: "Villa Lindenhof — landing page hero, desktop and phone", width: 2400, height: 1029 },
+];
+
+// Appended rather than written into the literal above, so the archive list
+// stays a plain copy of the numbered folders.
+galleryItems.push(...WEB_SHOWCASE);
+
+export const ALL_PROJECTS_EXCLUDED = ["Product", "Virtual Staging", "Web"];
 
 // Each category is spread evenly across the whole run rather than chunked, and
 // its internal order (the curated archive order — strongest work first) is
@@ -383,10 +401,10 @@ export const virtualStagingPairs = [
 ];
 
 // Which gallery category backs each service's mini gallery, and the sidebar
-// filter slug its "see everything" link points at. Four services (360 tour,
-// graphic design, 3D floorplans, media/website packages) have no shot category
-// in the archive yet and are deliberately absent: their detail pages hide the
-// mini gallery rather than pad it with unrelated renders.
+// filter slug its "see everything" link points at. Three services (360 tour,
+// graphic design, 3D floorplans) have no category in the archive yet and are
+// deliberately absent: their detail pages hide the mini gallery rather than
+// pad it with unrelated renders.
 export const SERVICE_GALLERY = {
   "exterior-visualization": { category: "Exterior", slug: "exterior", cta: "exteriors" },
   "interior-visualization": { category: "Interior", slug: "interior", cta: "interiors" },
@@ -395,6 +413,7 @@ export const SERVICE_GALLERY = {
   "virtual-staging": { category: "Virtual Staging", slug: "virtual-staging", cta: "staging" },
   "animation-mood-film": { category: "Animation", slug: "animation", cta: "animations" },
   "cinemagraph-live-shot": { category: "Cinemagraph", slug: "cinemagraph", cta: "cinemagraphs" },
+  "web-development": { category: "Web", slug: "web", cta: "websites" },
 };
 
 // The archive order is curated strongest-first, so taking the leading slice is

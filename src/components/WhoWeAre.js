@@ -44,7 +44,7 @@ export default function WhoWeAre({ locale, t }) {
   const leftFeatures = [
     value(
       "communication",
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <path d="M5 8h18a3 3 0 013 3v7a3 3 0 01-3 3H14l-6 5v-5H5a3 3 0 01-3-3v-7a3 3 0 013-3z" />
           <circle cx="9.5" cy="14.5" r="0.9" fill="currentColor" stroke="none" />
           <circle cx="14.5" cy="14.5" r="0.9" fill="currentColor" stroke="none" />
@@ -53,7 +53,7 @@ export default function WhoWeAre({ locale, t }) {
     ),
     value(
       "discounts",
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <circle cx="10" cy="10" r="3.2" />
           <circle cx="22" cy="22" r="3.2" />
           <path d="M23 9L9 23" />
@@ -61,7 +61,7 @@ export default function WhoWeAre({ locale, t }) {
     ),
     value(
       "workflow",
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <path d="M5 9l2 2 4-4" />
           <path d="M15 9h12" />
           <path d="M5 16l2 2 4-4" />
@@ -75,7 +75,7 @@ export default function WhoWeAre({ locale, t }) {
   const rightFeatures = [
     value(
       "precision",
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <circle cx="16" cy="16" r="10.5" />
           <circle cx="16" cy="16" r="6" />
           <circle cx="16" cy="16" r="1.4" fill="currentColor" stroke="none" />
@@ -83,7 +83,7 @@ export default function WhoWeAre({ locale, t }) {
     ),
     value(
       "quality",
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <rect x="4" y="6" width="24" height="20" rx="2.5" />
           <circle cx="11" cy="13" r="2.3" />
           <path d="M4 22l7-7 4.5 4.5L21 14l7 8" />
@@ -91,7 +91,7 @@ export default function WhoWeAre({ locale, t }) {
     ),
     value(
       "speed",
-        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+        <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
           <circle cx="16" cy="18" r="10" />
           <path d="M16 18l4-5" />
           <path d="M12 3h8" />

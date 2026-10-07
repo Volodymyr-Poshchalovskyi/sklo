@@ -6,24 +6,29 @@ import de from "@/locales/de.json";
 
 const translations = { en, de };
 import ServiceDetailClient from "./ServiceDetailClient";
+import { pageMetadata, serviceJsonLd, breadcrumbJsonLd, humanizeTitle, JsonLd } from "@/lib/seo";
 
-// Every page shared one title until now, so twelve service pages were
-// indistinguishable in a tab strip, a bookmark list or a search result.
+// A description longer than a search snippet gets cut mid-sentence; the
+// service copy is written for the page, so it is trimmed at a word boundary.
+function snippet(text = "", max = 158) {
+  if (text.length <= max) return text;
+  return `${text.slice(0, max).replace(/\s+\S*$/, "")}…`;
+}
+
 export async function generateMetadata({ params }) {
   const { locale, slug } = await params;
   const service = servicesData.find((s) => s.slug === slug);
   if (!service) return {};
   const localized = localizeService(service, locale);
-  return {
-    title: `${localized.title} — SKLO Studio`,
-    description: localized.desc,
-    alternates: { canonical: `/${locale}/services/${slug}` },
-    openGraph: {
-      title: `${localized.title} — SKLO Studio`,
-      description: localized.desc,
-      url: `/${locale}/services/${slug}`,
-    },
-  };
+  return pageMetadata({
+    locale,
+    path: `/services/${slug}`,
+    title: localized.title,
+    description: snippet(localized.desc),
+    // The service's own hero stands in for the generic share image. Video
+    // heroes keep the default: a share card cannot play a clip.
+    image: localized.type === "image" ? localized.src : undefined,
+  });
 }
 
 export default async function ServiceDetailPage({ params }) {
@@ -40,13 +45,26 @@ export default async function ServiceDetailPage({ params }) {
     .filter((s) => s.slug !== slug)
     .map((s) => localizeService(s, locale));
 
+  const t = translations[locale] ?? translations.en;
+  const localized = localizeService(service, locale);
+
   return (
-    <ServiceDetailClient
-      service={localizeService(service, locale)}
-      otherServices={otherServices}
-      locale={locale}
-      t={translations[locale] ?? translations.en}
-    />
+    <>
+      <JsonLd data={serviceJsonLd({ locale, service: localized })} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "SKLO Studio", path: `/${locale}` },
+          { name: t.seo.servicesCrumb, path: `/${locale}/services` },
+          { name: humanizeTitle(localized.title), path: `/${locale}/services/${slug}` },
+        ])}
+      />
+      <ServiceDetailClient
+        service={localized}
+        otherServices={otherServices}
+        locale={locale}
+        t={t}
+      />
+    </>
   );
 }
 

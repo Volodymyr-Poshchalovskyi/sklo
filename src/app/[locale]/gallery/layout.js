@@ -1,5 +1,6 @@
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
+import { pageMetadata } from "@/lib/seo";
 
 const translations = { en, de };
 
@@ -9,12 +10,12 @@ const translations = { en, de };
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = translations[locale] ?? translations.en;
-  const title = t.gallery.title;
-  return {
-    title: `${title} — SKLO Studio`,
-    alternates: { canonical: `/${locale}/gallery` },
-    openGraph: { title: `${title} — SKLO Studio`, url: `/${locale}/gallery` },
-  };
+  return pageMetadata({
+    locale,
+    path: "/gallery",
+    title: t.gallery.title,
+    description: t.seo.gallery,
+  });
 }
 
 export default function RouteLayout({ children }) {

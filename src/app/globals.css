@@ -860,3 +860,76 @@ html {
 :root[data-theme="light"] .pipeline-label {
   color: #121214 !important;
 }
+/* Ink cards: the gallery sidebar CTA and the band after the FAQ. Ink on
+   paper in the light theme, a raised card in the dark one — a white block in
+   a dark column read as a hole. */
+.ink-card,
+:root[data-theme="light"] .ink-card {
+  background: #15151a !important;
+  color: #f4f2ec !important;
+  border: 1px solid transparent;
+}
+/* The light-theme block recolours headings and paragraphs wholesale; inside
+   an ink card they take the card's colour. */
+.ink-card h2,
+.ink-card p,
+.ink-card span,
+:root[data-theme="light"] .ink-card h2,
+:root[data-theme="light"] .ink-card p,
+:root[data-theme="light"] .ink-card span {
+  color: inherit !important;
+}
+/* The button is itself a span inside the card, so it has to beat the
+   `.ink-card span { color: inherit }` rule above — hence the compound
+   selectors. */
+.ink-card .ink-card-btn,
+.ink-card .ink-card-btn *,
+:root[data-theme="light"] .ink-card .ink-card-btn,
+:root[data-theme="light"] .ink-card .ink-card-btn * {
+  background: #f4f2ec !important;
+  color: #15151a !important;
+}
+.ink-card .ink-card-btn * { background: transparent !important; }
+.ink-card-ghost {
+  color: #f4f2ec;
+  border-color: rgba(244, 242, 236, 0.3);
+}
+.ink-card-ghost:hover {
+  border-color: rgba(244, 242, 236, 0.7);
+}
+:root:not([data-theme="light"]) .ink-card {
+  background: var(--color-surface-2) !important;
+  color: var(--color-text) !important;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+:root:not([data-theme="light"]) .ink-card .ink-card-btn,
+:root:not([data-theme="light"]) .ink-card .ink-card-btn * {
+  background: var(--color-text) !important;
+  color: var(--color-bg) !important;
+}
+:root:not([data-theme="light"]) .ink-card .ink-card-btn * { background: transparent !important; }
+:root:not([data-theme="light"]) .ink-card-ghost {
+  color: var(--color-text);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+:root:not([data-theme="light"]) .ink-card-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Sidebar filter rows. Painted from tokens rather than white tints: the
+   light theme remaps only a fixed set of `bg-white/NN` classes, and a tint
+   outside that set is invisible on the near-white column. */
+.filter-row:hover {
+  background: color-mix(in srgb, var(--color-text) 5%, transparent);
+}
+.filter-row.is-active {
+  background: color-mix(in srgb, var(--color-text) 8%, transparent);
+}
+
+/* Wizard tiles and chips: no transform on hover at all. The step body clips
+   horizontally (`overflow-x: hidden`), so any scale on a tile at the edge was
+   cut off by the container and read as a broken border. Hover feedback is
+   the border and background change the classes already carry. */
+.lift-card:active:not(:disabled) {
+  opacity: 0.85;
+}

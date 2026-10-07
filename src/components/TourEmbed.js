@@ -140,7 +140,7 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
               sizes="(max-width: 1024px) 100vw, 1100px"
               className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
-            <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/10" />
+            <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/15" />
 
             <span className="media-caption absolute inset-0 flex flex-col items-center justify-center gap-4 text-center px-6">
               <span className="flex h-16 w-16 items-center justify-center rounded-full border border-white/70 bg-white/10 backdrop-blur-sm transition-colors duration-300 group-hover:bg-white/25">
@@ -155,13 +155,23 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
                 </svg>
               </span>
               <span className="flex flex-col gap-1.5">
-                <span className="text-lg md:text-xl font-bold uppercase tracking-[0.14em]">
+                <span
+                  className="text-lg md:text-xl font-bold uppercase tracking-[0.14em]"
+                  style={{ color: "#fff", textShadow: "0 1px 10px rgba(0,0,0,0.55)" }}
+                >
                   {tour.title}
                   {(showPart || titleCounts[tour.title] > 1) && (
                     <> · {de ? tour.label.de : tour.label.en}</>
                   )}
                 </span>
-                <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-white/70">
+                {/* Inline colour, not `text-white/70`: the light theme remaps
+                    that utility to dark grey, which vanished against the
+                    bright part of the photo. This text always sits on the
+                    poster, so it is always light. */}
+                <span
+                  className="text-[11px] font-mono uppercase tracking-[0.2em]"
+                  style={{ color: "rgba(255,255,255,0.8)", textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
+                >
                   {de
                     ? `${tour.scenes} Szenen · Klicken zum Starten`
                     : `${tour.scenes} scenes · ${coarsePointer ? "Tap" : "Click"} to start`}

@@ -28,7 +28,11 @@ const TIMELINE_PRESETS = [
   { id: "1month", startOffset: 14, endOffset: 42 },
   { id: "flexible", startOffset: 30, endOffset: 90 },
 ];
-const MATERIAL_IDS = ["model", "drawings", "photos", "scratch"];
+const MATERIAL_IDS = ["model", "drawings", "photos", "brand", "website", "scratch"];
+// A website is not ordered by the piece. For these services the scope step
+// asks which kind of site it is instead of how many.
+const SITE_TYPE_SERVICES = ["web-development"];
+const SITE_TYPE_IDS = ["landing", "project", "portfolio", "other"];
 const FILE_ACCEPT = ALLOWED_EXTENSIONS.map((e) => `.${e}`).join(",");
 
 let fileSeq = 0;
@@ -42,38 +46,21 @@ function toDateInputValue(daysFromNow) {
 // `style` is forwarded, not dropped: the option tiles, chips and the
 // consultation toggle size themselves in svh through it, and while it was
 // being swallowed here every one of them rendered with no padding at all.
-function TiltCard({ children, className = "", style, onClick, disabled, intensity = 7 }) {
-  const ref = useRef(null);
-
-  const handleMouseMove = (e) => {
-    const el = ref.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const rotateY = ((x - rect.width / 2) / (rect.width / 2)) * intensity;
-    const rotateX = -((y - rect.height / 2) / (rect.height / 2)) * intensity;
-    el.style.transition = "transform 0s";
-    el.style.transform = `perspective(700px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03,1.03,1.03)`;
-  };
-
-  const handleMouseLeave = () => {
-    const el = ref.current;
-    if (!el) return;
-    el.style.transition = "transform 0.4s cubic-bezier(0.16,1,0.3,1)";
-    el.style.transform = "perspective(700px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
-  };
-
+// Formerly a 3D tilt that followed the cursor. Rotating a 1px-bordered box
+// in perspective rasterises the border at sub-pixel positions, and in the
+// light theme every hovered tile showed a doubled, ghosted edge — three
+// attempts to tame it (no preserve-3d, no will-change, backface hidden)
+// softened it without removing it. A flat lift is artefact-free on every
+// renderer; `intensity` is kept in the signature so call sites need not
+// change.
+function TiltCard({ children, className = "", style, onClick, disabled, intensity }) {
   return (
     <button
       type="button"
-      ref={ref}
       disabled={disabled}
       onClick={onClick}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ transformStyle: "preserve-3d", willChange: "transform", ...style }}
-      className={`cursor-pointer transition-[border-color,background-color,box-shadow] duration-200 ease-out disabled:cursor-default ${className}`}
+      style={style}
+      className={`lift-card cursor-pointer transition-[border-color,background-color,box-shadow,transform] duration-200 ease-out disabled:cursor-default ${className}`}
     >
       {children}
     </button>
@@ -186,8 +173,8 @@ function ConsultToggle({ selected, onClick, isDe }) {
       }}
       className={`w-full shrink-0 flex items-center gap-2 rounded-2xl border text-left font-semibold uppercase tracking-widest ${
         selected
-          ? "border-accent bg-accent/[0.08] text-white"
-          : "border-dashed border-white/25 bg-transparent text-white/60 hover:border-white/50 hover:text-white"
+          ? "border-accent/40 bg-accent/[0.14] text-white"
+          : "border-transparent bg-white/[0.04] text-white/60 hover:bg-white/[0.07] hover:text-white"
       }`}
     >
       <span
@@ -212,19 +199,17 @@ function ConsultToggle({ selected, onClick, isDe }) {
 function QuantityField({ label, value, onChange, needsQuantity, decreaseLabel, increaseLabel }) {
   return (
     <div
-      style={{ padding: "clamp(0.4rem, min(2svh, 2.6vw), 1.25rem)" }}
-      className={`flex flex-wrap items-center justify-between gap-2 rounded-2xl border bg-white/[0.02] transition-colors duration-300 ${
-        needsQuantity ? "border-accent/60" : "border-white/10"
-      }`}
+      style={{ padding: "clamp(0.25rem, min(1.2svh, 1.56vw), 0.75rem) 0.5rem", gap: "clamp(0.4rem, min(1.4svh, 1.82vw), 0.9rem)" }}
+      className="flex flex-col items-start"
     >
       <span
         style={{ fontSize: "clamp(0.625rem, min(1.6svh, 2.08vw), 0.875rem)" }}
-        className="font-semibold uppercase tracking-wider text-white/80 leading-tight"
+        className={`font-semibold uppercase tracking-wider leading-tight ${needsQuantity ? "text-accent" : "text-white/80"}`}
       >
         {label}
         {needsQuantity && <span className="text-accent"> *</span>}
       </span>
-      <div className="flex items-center gap-2 shrink-0 ml-auto">
+      <div className="flex items-center gap-2 shrink-0">
         <HitArea onClick={() => onChange(Math.max(0, value - 1))} ariaLabel={decreaseLabel}>
           <span className="w-7 h-7 rounded-full border border-white/15 group-hover:border-white/40 flex items-center justify-center text-white transition-colors">
             −
@@ -256,11 +241,11 @@ function TextField({ label, required, ...props }) {
       <input
         required={required}
         style={{
-          paddingTop: "clamp(0.1875rem, min(0.95svh, 1.23vw), 0.625rem)",
-          paddingBottom: "clamp(0.1875rem, min(0.95svh, 1.23vw), 0.625rem)",
+          paddingTop: "clamp(0.4rem, min(1.2svh, 1.56vw), 0.75rem)",
+          paddingBottom: "clamp(0.4rem, min(1.2svh, 1.56vw), 0.75rem)",
           fontSize: "clamp(0.75rem, min(1.6svh, 2.08vw), 0.875rem)",
         }}
-        className="bg-transparent border-b border-white/30 text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent focus:border-white transition-colors"
+        className="wizard-field w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-3.5 text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-300"
         {...props}
       />
     </label>
@@ -330,6 +315,7 @@ function ContactWizardInner({ locale }) {
     materials: [],
     additionalInfo: "",
     files: [],
+    siteType: "",
     name: "",
     company: "",
     email: "",
@@ -480,8 +466,10 @@ function ContactWizardInner({ locale }) {
   // across services let "3 exteriors, 0 interiors" through, which is a request
   // the studio cannot quote.
   const servicesMissingQuantity = data.services.filter(
-    (id) => (data.quantities[id] || 0) < 1
+    (id) => !SITE_TYPE_SERVICES.includes(id) && (data.quantities[id] || 0) < 1
   );
+  const siteTypeService = data.services.find((id) => SITE_TYPE_SERVICES.includes(id));
+  const siteTypeMissing = Boolean(siteTypeService) && !data.siteType;
 
   // Not a full RFC check — enough to catch "a", a missing @ and a missing dot,
   // which is what actually arrives. A malformed address means the reply
@@ -498,7 +486,7 @@ function ContactWizardInner({ locale }) {
         // least one item — unless the visitor has said they want to talk it
         // through instead.
         return (
-          servicesMissingQuantity.length === 0 ||
+          (servicesMissingQuantity.length === 0 && !siteTypeMissing) ||
           data.consult.scope ||
           data.consult.services
         );
@@ -560,6 +548,10 @@ function ContactWizardInner({ locale }) {
 
   // "1x / 2x" reads as a count of deliverables; "pcs." read like stock units.
   const serviceLines = selectedServices.map((s) => {
+    if (SITE_TYPE_SERVICES.includes(s.id)) {
+      const kind = data.siteType ? w.siteType[data.siteType] : w.quantityTbd;
+      return `${stripSoftHyphens(s.label)}: ${kind}`;
+    }
     const qty = data.quantities[s.id] || 0;
     return `${stripSoftHyphens(s.label)}: ${qty > 0 ? `${qty}x` : w.quantityTbd}`;
   });
@@ -644,6 +636,7 @@ function ContactWizardInner({ locale }) {
       materials: [],
       additionalInfo: "",
       files: [],
+      siteType: "",
       name: "",
       company: "",
       email: "",
@@ -806,20 +799,22 @@ function ContactWizardInner({ locale }) {
                     className="grid grid-cols-2 md:grid-cols-3"
                     style={{ gap: "clamp(0.375rem, min(1.6svh, 2.08vw), 1rem)" }}
                   >
-                    {selectedServices.map((service) => (
-                      <QuantityField
-                        key={service.id}
-                        label={service.label}
-                        value={data.quantities[service.id] || 0}
-                        onChange={(v) => setQuantity(service.id, v)}
-                        decreaseLabel={w.decrease}
-                        increaseLabel={w.increase}
-                        needsQuantity={
-                          !data.consult.scope &&
-                          servicesMissingQuantity.includes(service.id)
-                        }
-                      />
-                    ))}
+                    {selectedServices
+                      .filter((service) => !SITE_TYPE_SERVICES.includes(service.id))
+                      .map((service) => (
+                        <QuantityField
+                          key={service.id}
+                          label={service.label}
+                          value={data.quantities[service.id] || 0}
+                          onChange={(v) => setQuantity(service.id, v)}
+                          decreaseLabel={w.decrease}
+                          increaseLabel={w.increase}
+                          needsQuantity={
+                            !data.consult.scope &&
+                            servicesMissingQuantity.includes(service.id)
+                          }
+                        />
+                      ))}
                   </div>
                 ) : (
                   <p className="text-xs text-white/40">
@@ -827,6 +822,28 @@ function ContactWizardInner({ locale }) {
                       ? "Keine Leistung ausgewählt — wir klären den Umfang im Gespräch."
                       : "No service selected — we'll work out the scope together."}
                   </p>
+                )}
+                {siteTypeService && (
+                  <div className="flex flex-col" style={{ gap: "clamp(0.3rem, min(1.2svh, 1.56vw), 0.75rem)" }}>
+                    <span
+                      style={{ fontSize: "clamp(0.6875rem, min(1.8svh, 2.34vw), 0.875rem)" }}
+                      className={`font-bold uppercase tracking-wider leading-tight ${
+                        siteTypeMissing && !data.consult.scope ? "text-accent" : "text-white/80"
+                      }`}
+                    >
+                      {w.siteTypeHint}
+                    </span>
+                    <div className="flex flex-wrap" style={{ gap: "clamp(0.25rem, min(0.8svh, 1.04vw), 0.75rem)" }}>
+                      {SITE_TYPE_IDS.map((id) => (
+                        <Chip
+                          key={id}
+                          label={w.siteType[id]}
+                          selected={data.siteType === id}
+                          onClick={() => set({ siteType: data.siteType === id ? "" : id })}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 )}
                 {servicesMissingQuantity.length > 0 && !data.consult.scope && (
                   <p className="text-xs text-accent">
@@ -947,8 +964,8 @@ function ContactWizardInner({ locale }) {
                     rows={2}
                     value={data.additionalInfo}
                     onChange={(e) => set({ additionalInfo: e.target.value })}
-                    style={{ height: "clamp(1.75rem, min(5svh, 6.5vw), 6rem)", paddingTop: "clamp(0.1875rem, min(1svh, 1.3vw), 0.625rem)" }}
-                    className="bg-transparent border-b border-white/30 text-sm text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent focus:border-white transition-colors resize-none"
+                    style={{ height: "clamp(2.25rem, min(5.5svh, 7.15vw), 6rem)", paddingTop: "clamp(0.4rem, min(1.2svh, 1.56vw), 0.75rem)" }}
+                    className="wizard-field w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-3.5 text-sm text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-300 resize-none"
                     placeholder={isDe ? "Erzählen Sie uns mehr..." : "Tell us more about the project..."}
                   />
                 </label>

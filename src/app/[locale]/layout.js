@@ -1,20 +1,23 @@
-import { Inter, Space_Grotesk, Cormorant_Garamond } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { cookies } from "next/headers";
+import { notFound } from "next/navigation";
 import "../globals.css";
 import Footer from "@/components/Footer";
 import ClientWrapper from "@/components/ClientWrapper";
+import en from "@/locales/en.json";
+import de from "@/locales/de.json";
+import { pageMetadata, organizationJsonLd, websiteJsonLd, JsonLd, LOCALES } from "@/lib/seo";
 
-const inter = Inter({ variable: "--font-sans", subsets: ["latin"] });
+const translations = { en, de };
+
+// Space Grotesk is the only typeface the site uses: globals.css points
+// --font-sans at --font-display, so the Inter that used to load here was never
+// painted, and the Cormorant italic had no consumer at all. Two font requests
+// fewer on every first visit.
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-});
-const cormorant = Cormorant_Garamond({
-  variable: "--font-script",
-  subsets: ["latin"],
-  weight: ["300"],
-  style: ["italic"],
 });
 
 export async function generateStaticParams() {
@@ -23,55 +26,17 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
+  const t = translations[locale] ?? translations.en;
   const isDe = locale === "de";
-
   return {
-    title: isDe
-      ? "SKLO Studio | Wo Vision auf Wirklichkeit trifft | 3D-Visualisierungen"
-      : "SKLO Studio | Where Vision Meets Reality | Stunning 3D Visualizations",
-    description: isDe
-      ? "SKLO ist ein 3D-Visualisierungsstudio für Architekten, Entwickler und Immobilien. Hochwertige Renderings, Motion Design und Produktvisualisierung."
-      : "SKLO is a 3D visualization studio for architects, developers and real estate. High-quality renderings, motion design and product visualization.",
-    metadataBase: new URL("https://sklo-iota.vercel.app"),
-    // Without these the two locales look like duplicate pages to a search
-    // engine, and neither is offered to the other's audience.
-    alternates: {
-      canonical: `/${locale}`,
-      languages: {
-        en: "/en",
-        "de-CH": "/de",
-      },
-    },
-    openGraph: {
+    ...pageMetadata({
+      locale,
+      path: "",
       title: isDe
-        ? "SKLO Studio | Wo Vision auf Wirklichkeit trifft | 3D-Visualisierungen"
-        : "SKLO Studio | Where Vision Meets Reality | Stunning 3D Visualizations",
-      description: isDe
-        ? "3D-Visualisierungsstudio für Architekten, Entwickler & Immobilien."
-        : "3D visualization studio for architects, developers & real estate.",
-      url: `https://sklo-iota.vercel.app/${locale}`,
-      siteName: "SKLO Studio",
-      images: [
-        {
-          url: "/assets/ogImage.jpg",
-          width: 1200,
-          height: 630,
-          alt: "SKLO Studio",
-        },
-      ],
-      locale: isDe ? "de_CH" : "en_US",
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: isDe
-        ? "SKLO Studio — 3D-Visualisierung"
-        : "SKLO Studio — 3D Visualization",
-      description: isDe
-        ? "3D-Visualisierungsstudio für Architekten, Entwickler & Immobilien."
-        : "3D visualization studio for architects, developers & real estate.",
-      images: ["/assets/ogImage.jpg"],
-    },
+        ? "3D-Visualisierung für Architektur & Immobilien in der Schweiz"
+        : "3D Visualisation for Architecture & Real Estate in Switzerland",
+      description: t.seo.home,
+    }),
     icons: {
       icon: [
         { url: "/assets/favicon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -85,6 +50,10 @@ export async function generateMetadata({ params }) {
 
 export default async function LocaleLayout({ children, params }) {
   const { locale } = await params;
+  // Anything with a dot in it skips the locale redirect in proxy.js, so a
+  // request like /favicon.png used to render the home page as locale
+  // "favicon.png" with a 200. It is a 404.
+  if (!LOCALES.includes(locale)) notFound();
   let t;
   
   try {
@@ -101,7 +70,7 @@ export default async function LocaleLayout({ children, params }) {
   return (
     <html
       lang={locale}
-      className={`${inter.variable} ${spaceGrotesk.variable} ${cormorant.variable}`}
+      className={spaceGrotesk.variable}
       suppressHydrationWarning
     >
       <head>
@@ -117,6 +86,8 @@ export default async function LocaleLayout({ children, params }) {
         />
       </head>
       <body className="grain min-h-screen flex flex-col bg-bg text-text">
+        <JsonLd data={organizationJsonLd(locale)} />
+        <JsonLd data={websiteJsonLd(locale)} />
         <ClientWrapper locale={locale} t={t} initialShowLoader={initialShowLoader}>
           <div className="flex-1">
             {children}

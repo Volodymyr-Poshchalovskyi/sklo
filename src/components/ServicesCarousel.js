@@ -82,6 +82,11 @@ export default function ServicesCarousel({
   viewAllLabel,
   prevLabel = "Previous slide",
   nextLabel = "Next slide",
+  // Optional heading rendered in the same row as the arrows. With the
+  // section title above and the arrows alone on their own line there was a
+  // band of empty space between title and cards; side by side they read as
+  // one header.
+  heading = null,
 }) {
   const carouselRef = useRef(null);
   const [isInitialized, setIsInitialized] = useState(false);
@@ -299,7 +304,9 @@ export default function ServicesCarousel({
       {/* Carousel Navigation Arrows — a control row above the track, not
           floating over its edges: sitting on top of the cards they were both
           hard to see and easy to mistake for decoration. */}
-      <div className="flex justify-end items-center gap-4 mb-6">
+      <div className={`flex items-end gap-4 mb-6 ${heading ? "justify-between" : "justify-end"}`}>
+        {heading && <div className="min-w-0 flex-1">{heading}</div>}
+        <div className="flex items-center gap-4 shrink-0">
         <button
           onClick={scrollLeft}
           className="carousel-arrow w-12 sm:w-14 h-12 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 active:scale-95 cursor-pointer"
@@ -330,7 +337,11 @@ export default function ServicesCarousel({
             <path d="M9 5l7 7-7 7" />
           </svg>
         </button>
+        </div>
       </div>
+      {heading && (
+        <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mb-10" />
+      )}
 
       {/* Horizontal Carousel */}
       <div

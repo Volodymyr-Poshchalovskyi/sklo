@@ -2,6 +2,7 @@
 import HeroSection from "@/components/HeroSection";
 import WhoWeAre from "@/components/WhoWeAre";
 import FAQ from "@/components/FAQ";
+import CtaBand from "@/components/CtaBand";
 import { use } from "react";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
@@ -17,6 +18,7 @@ export default function Home({ params }) {
       <HeroSection t={t} locale={locale} />
       <WhoWeAre locale={locale} t={t} />
       <FAQ locale={locale} t={t} />
+      <CtaBand locale={locale} t={t} />
     </main>
   );
 }
