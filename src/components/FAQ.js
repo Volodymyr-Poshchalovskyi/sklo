@@ -62,6 +62,15 @@ export default function FAQ({ locale = "en", t }) {
     </div>
   );
 
+  const handleDownloadRequirements = () => {
+    const link = document.createElement("a");
+    link.href = "/api/download-requirements";
+    link.download = "project requirements.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const faqs = [
     {
       question: items.start?.q,
@@ -71,12 +80,25 @@ export default function FAQ({ locale = "en", t }) {
           <p className="mt-4">
             <Link
               href={`/${locale}/contact`}
+              onClick={handleDownloadRequirements}
               className="underline font-bold text-white hover:text-white/80 transition-colors duration-300"
             >
               {items.start?.linkText}
             </Link>{" "}
             {items.start?.linkTail}
           </p>
+          {items.start?.note && (
+            <div
+              onClick={handleDownloadRequirements}
+              className="mt-3 text-sm text-white/50 hover:text-white/80 flex items-center gap-2 cursor-pointer transition-colors duration-200 select-none"
+              title="Download project requirements PDF"
+            >
+              <svg className="w-4 h-4 shrink-0 text-accent/80" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span>{items.start?.note}</span>
+            </div>
+          )}
         </div>
       ),
     },

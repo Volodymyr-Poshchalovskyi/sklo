@@ -76,7 +76,8 @@
         "q": "What do we need to start a project?",
         "p1": "We begin with your 3D-model or drawings and a brief describing the mood, materials, and goals of your project. Using our structured onboarding system, our team refines your model and translates all inputs into high-end visuals.",
         "linkText": "Click here",
-        "linkTail": "to get the full list of needed materials."
+        "linkTail": "to get the full list of needed materials.",
+        "note": "*(A detailed PDF guide with all requirements will be downloaded automatically)"
       },
       "workflow": {
         "q": "What’s the project workflow?",

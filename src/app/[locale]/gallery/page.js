@@ -14,7 +14,7 @@ import de from "@/locales/de.json";
 
 const translations = { en, de };
 
-function GalleryCard({ item, onClick, label }) {
+function GalleryCard({ item, onClick, label, showCategory = true }) {
   const videoRef = useRef(null);
 
   // A film that fades up from black showed a black tile at rest and started
@@ -112,16 +112,13 @@ function GalleryCard({ item, onClick, label }) {
           pitch, so they stay at full contrast. Only the hover caption below
           brings its own gradient, and just far enough to keep text legible. */}
 
-      <div className="media-caption absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-        <span className="media-caption-accent text-[10px] font-mono uppercase tracking-widest mb-1 font-semibold">
-          {label}
-        </span>
-        <h3 className="text-sm font-bold uppercase tracking-wider">
-          {label}
-        </h3>
-        {/* No corner badge on a pointer device: it only ever appeared on
-            hover, and by then the video had already started playing. */}
-      </div>
+      {showCategory && label && (
+        <div className="media-caption absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none">
+          <span className="text-sm font-bold uppercase tracking-wider text-white">
+            {label}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
@@ -667,6 +664,7 @@ function GalleryPageContent() {
                   <GalleryCard
                     item={item}
                     label={labelFor(item.category)}
+                    showCategory={activeFilter === ALL_FILTER}
                     onClick={() => setSelectedItemIndex(index)}
                   />
                 </div>

@@ -76,7 +76,8 @@
         "q": "Was brauchen wir für den Projektstart?",
         "p1": "Wir starten mit Ihrem 3D-Modell oder Ihren Plänen und einem Briefing zu Stimmung, Materialien und Zielen des Projekts. Über unser strukturiertes Onboarding bereitet unser Team Ihr Modell auf und übersetzt alle Vorgaben in hochwertige Visualisierungen.",
         "linkText": "Hier klicken",
-        "linkTail": "für die vollständige Liste der benötigten Unterlagen."
+        "linkTail": "für die vollständige Liste der benötigten Unterlagen.",
+        "note": "*(Ein detaillierter PDF-Leitfaden mit allen Anforderungen wird automatisch heruntergeladen)"
       },
       "workflow": {
         "q": "Wie läuft ein Projekt ab?",
