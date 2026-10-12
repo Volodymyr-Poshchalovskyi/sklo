@@ -15,7 +15,7 @@ There is no test runner configured in this repo (no Jest/Vitest/Playwright) — 
 
 ## Architecture
 
-**Routing & i18n.** All pages live under `src/app/[locale]/...` (App Router). `src/middleware.js` redirects any path without a `/en` or `/de` prefix to `/en/...`. Locale strings are `src/locales/{en,de}.json`, loaded once in `src/app/[locale]/layout.js` (dynamic `import`, falls back to `en` on error) and passed down as a `t` prop. **`t` is only partially wired up** — several components (`HeroSection.js`, most of `WhoWeAre.js`) hardcode English copy directly in JSX instead of reading from `t`, so don't assume translated text covers everything visible on a page.
+**Routing & i18n.** All pages live under `src/app/[locale]/...` (App Router). `src/proxy.js` (Next 16's renamed middleware) 308-redirects any path without a `/en` or `/de` prefix to `/en/...` and sets `X-Robots-Tag: noindex` on every host except sklo.studio. Locale strings are `src/locales/{en,de}.json`, loaded once in `src/app/[locale]/layout.js` (dynamic `import`, falls back to `en` on error) and passed down as a `t` prop. **`t` is only partially wired up** — several components (`HeroSection.js`, most of `WhoWeAre.js`) hardcode English copy directly in JSX instead of reading from `t`, so don't assume translated text covers everything visible on a page.
 
 **Root layout (`src/app/[locale]/layout.js`).** Sets up fonts, runs an inline pre-hydration script that reads `sklo-theme` from `localStorage` (default `"light"`) and sets `data-theme` on `<html>` before paint (avoids a flash), wraps `children` in `ClientWrapper`, and renders `Footer` outside of it.
 
@@ -40,4 +40,4 @@ There is no test runner configured in this repo (no Jest/Vitest/Playwright) — 
 ## Gotchas
 
 - **React 19 inline styles:** never mix the `animation` shorthand with a separate `animationDelay`/`animationName` in the same style object across re-renders — React warns and the animation breaks ("Updating/Removing a style property ... don't mix shorthand and non-shorthand"). Use the fully longhand set instead: `animationName`, `animationDuration`, `animationTimingFunction`, `animationFillMode`, `animationDelay` (see the mega-menu items in `Header.js` or `RotatingWord` in `HeroSection.js`).
-- **Next.js 16 deprecation:** the dev server logs `"middleware" file convention is deprecated. Please use "proxy" instead` on every start — `src/middleware.js` has not been migrated to the new `proxy.ts` convention yet.
+- **Fonts are self-hosted** (`src/app/fonts/`, `next/font/local`). Do not switch back to `next/font/google`: its build-time download failed on Vercel and broke two deploys (2026-10-12).
