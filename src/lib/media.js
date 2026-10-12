@@ -12,8 +12,14 @@ import { useSyncExternalStore } from "react";
 const ORIGIN = (process.env.NEXT_PUBLIC_MEDIA_URL || "").replace(/\/$/, "");
 export const IMAGE_WIDTHS = [640, 1280, 1920, 2560];
 
+// Only what was uploaded to R2 gets the origin: the gallery archive, the 360°
+// tours and the hero film. Everything else under /assets (service tiles, the
+// web-development mockups, team photos) still ships with the deploy — giving
+// those the R2 prefix sent the Web showcase to files that were never uploaded.
+const ON_R2 = /^\/(assets\/gallery\/|tours\/|assets\/home\/hero_video)/;
+
 export function mediaUrl(path = "") {
-  if (!path || /^https?:/.test(path)) return path;
+  if (!path || /^https?:/.test(path) || !ON_R2.test(path)) return path;
   return `${ORIGIN}${path}`;
 }
 
