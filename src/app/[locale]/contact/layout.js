@@ -13,6 +13,7 @@ export async function generateMetadata({ params }) {
   return pageMetadata({
     locale,
     path: "/contact",
+    image: "/assets/og/contact.jpg",
     title: t.contact.title,
     description: t.seo.contact,
   });

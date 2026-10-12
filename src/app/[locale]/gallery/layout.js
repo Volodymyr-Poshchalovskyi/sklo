@@ -13,6 +13,7 @@ export async function generateMetadata({ params }) {
   return pageMetadata({
     locale,
     path: "/gallery",
+    image: "/assets/og/gallery.jpg",
     title: t.gallery.title,
     description: t.seo.gallery,
   });

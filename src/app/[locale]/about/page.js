@@ -2,18 +2,20 @@ import Title3D from "@/components/Title3D";
 import TeamCard from "@/components/TeamCard";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
+import { pageMetadata } from "@/lib/seo";
 
 const translations = { en, de };
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;
   const t = translations[locale] ?? translations.en;
-  const title = `${t.about?.title ?? "About"} — SKLO Studio`;
-  return {
-    title,
-    alternates: { canonical: `/${locale}/about` },
-    openGraph: { title, url: `/${locale}/about` },
-  };
+  return pageMetadata({
+    locale,
+    path: "/about",
+    title: t.about?.title ?? "About",
+    description: t.seo.about,
+    image: "/assets/og/about.jpg",
+  });
 }
 
 export default async function AboutPage({ params }) {

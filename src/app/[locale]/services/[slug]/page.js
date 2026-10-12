@@ -25,9 +25,9 @@ export async function generateMetadata({ params }) {
     path: `/services/${slug}`,
     title: localized.title,
     description: snippet(localized.desc),
-    // The service's own hero stands in for the generic share image. Video
-    // heroes keep the default: a share card cannot play a clip.
-    image: localized.type === "image" ? localized.src : undefined,
+    // A 1200×630 JPEG cut from the service's own hero (a poster frame for the
+    // two video services): WhatsApp and LinkedIn ignore webp share images.
+    image: `/assets/og/services/${slug}.jpg`,
   });
 }
 

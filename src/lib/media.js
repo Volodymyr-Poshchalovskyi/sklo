@@ -19,7 +19,7 @@ export function mediaUrl(path = "") {
 
 // Folders that never went through the variant script: small UI assets that
 // are referenced by their real file name.
-const NO_VARIANTS = ["/assets/services/", "/assets/team/", "/assets/home/", "/assets/ogImage", "/assets/Logo", "/assets/heroImage"];
+const NO_VARIANTS = ["/assets/services/", "/assets/team/", "/assets/home/", "/assets/og/", "/assets/Logo", "/assets/heroImage"];
 const hasVariants = (src) => src.startsWith("/assets/gallery/");
 
 export function imageVariant(src, width) {

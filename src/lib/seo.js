@@ -12,7 +12,9 @@ import { stripSoftHyphens } from "@/data/servicesData";
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://sklo.studio").replace(/\/$/, "");
 export const SITE_NAME = "SKLO Studio";
 export const LOCALES = ["en", "de"];
-export const DEFAULT_OG_IMAGE = { url: "/assets/ogImage.jpg", width: 1200, height: 630, alt: "SKLO Studio" };
+// 1200×630 cards rendered from the studio's own work (scratch template kept
+// out of the repo; regenerate with any 1200×630 screenshot pipeline).
+export const DEFAULT_OG_IMAGE = { url: "/assets/og/home.jpg", width: 1200, height: 630, alt: "SKLO Studio" };
 
 export const STATIC_PATHS = ["", "/services", "/gallery", "/about", "/contact", "/imprint", "/privacy"];
 
