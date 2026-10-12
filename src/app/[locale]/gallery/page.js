@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef, Suspense } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { useSearchParams, useParams } from "next/navigation";
 import { useLenis } from "@/context/LenisContext";
 import { galleryItems, allProjectsItems, virtualStagingPairs, serviceTourFor, ALL_PROJECTS_EXCLUDED } from "@/data/galleryData";
@@ -9,12 +8,14 @@ import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import LightboxVideo from "@/components/LightboxVideo";
 import TourEmbed from "@/components/TourEmbed";
 import Title3D from "@/components/Title3D";
+import { imageSrcSet, imageVariant, videoSrc, videoPoster, useVideoTier } from "@/lib/media";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 
 const translations = { en, de };
 
 function GalleryCard({ item, onClick, label, showCategory = true }) {
+  const tier = useVideoTier();
   const videoRef = useRef(null);
 
   // A film that fades up from black showed a black tile at rest and started
@@ -90,7 +91,8 @@ function GalleryCard({ item, onClick, label, showCategory = true }) {
       {item.type === "video" ? (
         <video
           ref={videoRef}
-          src={item.src}
+          src={videoSrc(item.src, tier)}
+          poster={videoPoster(item.src)}
           preload="metadata"
           onLoadedMetadata={seekToStart}
           loop
@@ -99,12 +101,17 @@ function GalleryCard({ item, onClick, label, showCategory = true }) {
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       ) : (
-        <Image
-          src={item.src}
-          alt={label}
-          fill
+        /* Plain <img> with the pre-built widths from scripts/media: no
+            per-request optimisation (Vercel's free tier caps it), and the
+            browser still picks the size for its column. */
+        <img
+          src={imageVariant(item.src, 1280)}
+          srcSet={imageSrcSet(item.src)}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          alt={label}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       )}
       
@@ -769,14 +776,15 @@ function GalleryPageContent() {
                  and decode ~39 MB of bitmap before the next frame could be
                  painted — which is what made the viewer stutter. At `92vw`
                  Next hands back a variant sized to the screen instead. */
-              <Image
+              <img
                 key={filteredItems[selectedItemIndex].id}
-                src={filteredItems[selectedItemIndex].src}
+                src={imageVariant(filteredItems[selectedItemIndex].src, 1920)}
+                srcSet={imageSrcSet(filteredItems[selectedItemIndex].src)}
+                sizes="92vw"
                 alt={labelFor(filteredItems[selectedItemIndex].category)}
                 width={filteredItems[selectedItemIndex].width}
                 height={filteredItems[selectedItemIndex].height}
-                sizes="92vw"
-                priority
+                decoding="async"
                 className="max-w-full max-h-[80vh] w-auto h-auto rounded-lg object-contain shadow-2xl"
               />
             )}

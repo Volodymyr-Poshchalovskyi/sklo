@@ -161,7 +161,9 @@
       "about": "About us",
       "contact": "Contact",
       "services": "Services",
-      "portfolio": "Gallery"
+      "portfolio": "Gallery",
+      "imprint": "Imprint",
+      "privacy": "Privacy"
     },
     "follow": "Follow us"
   },

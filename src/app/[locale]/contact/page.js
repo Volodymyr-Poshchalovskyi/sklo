@@ -47,10 +47,10 @@ export default function ContactPage({ params }) {
             {t.contact.intro}
           </p>
           <a
-            href="mailto:info@sklo.studio"
+            href="mailto:sklo.rendering@gmail.com"
             className="text-sm text-white/70 hover:text-white transition-colors w-fit"
           >
-            info@sklo.studio
+            sklo.rendering@gmail.com
           </a>
         </div>
 

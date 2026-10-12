@@ -50,12 +50,12 @@ is registered: Hostpoint, Infomaniak, Cloudflare, …).
 
    ```
    CONTACT_FROM = SKLO Studio <inquiries@sklo.studio>
-   CONTACT_TO   = info@sklo.studio
+   CONTACT_TO   = sklo.rendering@gmail.com
    ```
 
    `inquiries@` does not need to exist as a mailbox — it is only the sender
    name. Replies go to the visitor's own address automatically.
-5. Redeploy. Send a test inquiry and check that it lands in `info@sklo.studio`
+5. Redeploy. Send a test inquiry and check that it lands in `sklo.rendering@gmail.com`
    and not in Spam. The DKIM record is what keeps it out of Spam, so if it
    does land there, re-check that record.
 

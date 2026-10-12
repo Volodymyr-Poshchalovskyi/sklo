@@ -1,4 +1,5 @@
 "use client";
+import { videoSrc, useVideoTier } from "@/lib/media";
 import { useEffect, useRef, useContext, useState } from "react";
 import { LoaderContext } from "@/context/LoaderContext";
 import Link from "next/link";
@@ -112,6 +113,7 @@ function RotatingWord({ words = ROTATING_WORDS, hold = 1800 }) {
 }
 
 export default function HeroSection({ t, locale }) {
+  const tier = useVideoTier();
   const ready = useContext(LoaderContext);
   const headRef = useRef(null);
   const btnsRef = useRef(null);
@@ -184,7 +186,9 @@ export default function HeroSection({ t, locale }) {
         className="absolute inset-0 w-full h-full object-cover"
         style={{ pointerEvents: "none" }}
       >
-        <source src="/assets/home/hero_video.webm" type="video/webm" />
+        {/* One tier per connection; see src/lib/media.js. The VP9 webm is
+            the HD file, the SD one is a 1280px H.264 at a fifth of the size. */}
+        <source src={videoSrc("/assets/home/hero_video.webm", tier)} type={tier === "hd" ? "video/webm" : "video/mp4"} />
       </video>
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />

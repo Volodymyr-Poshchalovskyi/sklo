@@ -2,11 +2,13 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Title3D from "@/components/Title3D";
+import { videoSrc, useVideoTier } from "@/lib/media";
 
 export default function FAQ({ locale = "en", t }) {
   const [openIndex, setOpenIndex] = useState(0);
   const [videoLoaded, setVideoLoaded] = useState(false);
   const videoRef = useRef(null);
+  const tier = useVideoTier();
 
   useEffect(() => {
     const videoEl = videoRef.current;
@@ -166,7 +168,7 @@ export default function FAQ({ locale = "en", t }) {
         muted
         playsInline
         preload="none"
-        src={videoLoaded ? "/assets/services/animation-mood-film-wide.mp4" : undefined}
+        src={videoLoaded ? videoSrc("/assets/services/animation-mood-film-wide.mp4", tier) : undefined}
         className="absolute inset-0 w-full h-full object-cover z-0"
         style={{ pointerEvents: "none" }}
       />

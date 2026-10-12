@@ -11,6 +11,7 @@ function subscribeToPointer(onChange) {
   return () => query.removeEventListener("change", onChange);
 }
 import Image from "next/image";
+import { mediaUrl } from "@/lib/media";
 
 /**
  * Click-to-start embed for the Panotour 360° exports.
@@ -119,7 +120,7 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
           <iframe
             key={tour.id}
             ref={frameRef}
-            src={tour.entry}
+            src={mediaUrl(tour.entry)}
             title={`${tour.title} — ${de ? tour.label.de : tour.label.en}`}
             className="absolute inset-0 h-full w-full border-0"
             allow="gyroscope; accelerometer; magnetometer; xr-spatial-tracking; fullscreen"
@@ -199,7 +200,7 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
             </button>
           )}
           <a
-            href={tour.entry}
+            href={mediaUrl(tour.entry)}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[11px] font-mono uppercase tracking-widest text-accent hover:underline"

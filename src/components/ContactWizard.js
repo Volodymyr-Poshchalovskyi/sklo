@@ -582,7 +582,7 @@ function ContactWizardInner({ locale }) {
       `New Project Inquiry — ${data.projectName || data.company || "SKLO"}`
     );
     const body = encodeURIComponent(lines.join("\n"));
-    return `mailto:info@sklo.studio?subject=${subject}&body=${body}`;
+    return `mailto:sklo.rendering@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const buildPayload = () => ({

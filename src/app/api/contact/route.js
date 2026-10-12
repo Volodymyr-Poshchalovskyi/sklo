@@ -5,7 +5,7 @@ import { buildInquiryEmail } from "@/lib/contact/email";
 // Until the studio's domain is verified in Resend, mail goes out from
 // Resend's shared test sender and can only be delivered to the address that
 // owns the Resend account. Both values move to env vars so the switch to
-// `inquiries@sklo.studio` → `info@sklo.studio` is a dashboard change, not a
+// `inquiries@sklo.studio` → `sklo.rendering@gmail.com` is a dashboard change, not a
 // deploy. See docs/CONTACT_FORM_SETUP.md.
 const FROM = process.env.CONTACT_FROM || "SKLO Studio <onboarding@resend.dev>";
 const TO = (process.env.CONTACT_TO || "volodumer2005@gmail.com")

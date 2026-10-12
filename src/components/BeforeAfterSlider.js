@@ -1,4 +1,5 @@
 "use client";
+import { imageSrcSet, imageVariant } from "@/lib/media";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 // Before/after comparison with a draggable divider.
@@ -100,7 +101,9 @@ export default function BeforeAfterSlider({
     >
       {/* After (revealed on the right, sits underneath) */}
       <img
-        src={after}
+        src={imageVariant(after, 1920)}
+        srcSet={imageSrcSet(after)}
+        sizes="(max-width: 1280px) 100vw, 50vw"
         alt={afterLabel}
         draggable="false"
         className="absolute inset-0 w-full h-full object-cover pointer-events-none"
@@ -108,7 +111,9 @@ export default function BeforeAfterSlider({
 
       {/* Before (clipped from the right edge inward, sits on top) */}
       <img
-        src={before}
+        src={imageVariant(before, 1920)}
+        srcSet={imageSrcSet(before)}
+        sizes="(max-width: 1280px) 100vw, 50vw"
         alt={beforeLabel}
         draggable="false"
         style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}

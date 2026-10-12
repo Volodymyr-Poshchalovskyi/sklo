@@ -14,7 +14,7 @@ export const SITE_NAME = "SKLO Studio";
 export const LOCALES = ["en", "de"];
 export const DEFAULT_OG_IMAGE = { url: "/assets/ogImage.jpg", width: 1200, height: 630, alt: "SKLO Studio" };
 
-export const STATIC_PATHS = ["", "/services", "/gallery", "/about", "/contact"];
+export const STATIC_PATHS = ["", "/services", "/gallery", "/about", "/contact", "/imprint", "/privacy"];
 
 export function absoluteUrl(path = "") {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
@@ -96,7 +96,7 @@ export function organizationJsonLd(locale) {
     name: SITE_NAME,
     url: SITE_URL,
     logo: absoluteUrl("/assets/android-chrome-512x512.png"),
-    email: "info@sklo.studio",
+    email: "sklo.rendering@gmail.com",
     areaServed: "CH",
     description:
       locale === "de"

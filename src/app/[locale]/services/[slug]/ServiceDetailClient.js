@@ -10,6 +10,7 @@ import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import LightboxVideo from "@/components/LightboxVideo";
 import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor, serviceTourFor } from "@/data/galleryData";
 import { useLenis } from "@/context/LenisContext";
+import { imageSrcSet, imageVariant, videoSrc, videoPoster, useVideoTier } from "@/lib/media";
 
 // Helper component to render step media dynamically
 function StepMedia({ src, type, isActive, alt }) {
@@ -59,6 +60,7 @@ function StepMedia({ src, type, isActive, alt }) {
 function MiniGalleryVideo({ src, className }) {
   const ref = useRef(null);
   const [near, setNear] = useState(false);
+  const tier = useVideoTier();
 
   useEffect(() => {
     const el = ref.current;
@@ -74,7 +76,8 @@ function MiniGalleryVideo({ src, className }) {
   return (
     <video
       ref={ref}
-      src={near ? src : undefined}
+      src={near ? videoSrc(src, tier) : undefined}
+      poster={videoPoster(src)}
       muted
       loop
       playsInline
@@ -169,12 +172,14 @@ const MiniGalleryGrid = React.memo(function MiniGalleryGrid({ items, categories,
             /* Through `next/image`, like the main gallery: these are 3840px
                archive originals shown in a ~510px column, and a plain <img>
                made the browser decode all twelve at full size. */
-            <Image
-              src={media.src}
-              alt={categories?.[media.category]?.label ?? media.title}
-              fill
+            <img
+              src={imageVariant(media.src, 1280)}
+              srcSet={imageSrcSet(media.src)}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              alt={categories?.[media.category]?.label ?? media.title}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           )}
 
@@ -840,13 +845,13 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
                         className="max-w-full max-h-[78vh] object-contain rounded-2xl shadow-2xl border border-white/5"
                       />
                     ) : (
-                      <Image
-                        src={miniItems[activeMediaIndex].src}
+                      <img
+                        src={imageVariant(miniItems[activeMediaIndex].src, 1920)}
+                        srcSet={imageSrcSet(miniItems[activeMediaIndex].src)}
+                        sizes="92vw"
                         alt={d.lightboxAlt}
                         width={miniItems[activeMediaIndex].width}
                         height={miniItems[activeMediaIndex].height}
-                        sizes="92vw"
-                        priority
                         className="max-w-full max-h-[78vh] w-auto h-auto object-contain rounded-2xl shadow-2xl border border-white/5"
                       />
                     )}

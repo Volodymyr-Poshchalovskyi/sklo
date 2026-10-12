@@ -42,3 +42,11 @@ yarn-error.log*
 next-env.d.ts
 # playwright mcp scratch output
 /.playwright-mcp
+
+# Served from Cloudflare R2 (media.sklo.studio) — see docs/CLOUDFLARE_R2_SETUP.md.
+# Local copies live in ~/Documents/SKLO-media-masters/deploy if ever needed.
+public/assets/gallery/
+public/tours/
+
+# 3840px masters, never deployed
+images for gallery/

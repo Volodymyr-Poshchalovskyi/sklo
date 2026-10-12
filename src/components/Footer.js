@@ -126,7 +126,7 @@ function QuickContactForm({ locale, form, isDe }) {
       {state === "error" && (
         <p role="alert" className="text-xs text-accent">
           {isDe ? "Senden fehlgeschlagen. Bitte erneut versuchen oder an " : "Sending failed. Please try again or write to "}
-          <a href="mailto:info@sklo.studio" className="underline">info@sklo.studio</a>
+          <a href="mailto:sklo.rendering@gmail.com" className="underline">sklo.rendering@gmail.com</a>
           {isDe ? " schreiben." : "."}
         </p>
       )}
@@ -156,10 +156,10 @@ export default function Footer({ locale, t }) {
               {f.copy}
             </p>
             <a
-              href="mailto:info@sklo.studio"
+              href="mailto:sklo.rendering@gmail.com"
               className="text-sm sm:text-base text-white/50 hover:text-white transition-colors duration-300 w-fit"
             >
-              {f.emailLead} <span className="underline underline-offset-4 text-white">info@sklo.studio</span>
+              {f.emailLead} <span className="underline underline-offset-4 text-white">sklo.rendering@gmail.com</span>
             </a>
           </div>
 
@@ -188,10 +188,10 @@ export default function Footer({ locale, t }) {
             </h2>
           </div>
           <a 
-            href="mailto:info@sklo.studio" 
+            href="mailto:sklo.rendering@gmail.com" 
             className="text-base text-white/60 hover:text-white transition-colors duration-300 hover:underline w-fit"
           >
-            info@sklo.studio
+            sklo.rendering@gmail.com
           </a>
         </div>
 
@@ -231,8 +231,16 @@ export default function Footer({ locale, t }) {
         </div>
       </div>
       
-      <div className="w-full mt-20 pt-6 border-t border-white/10 flex justify-between items-center text-xs text-white/50">
+      <div className="w-full mt-20 pt-6 border-t border-white/10 flex flex-wrap justify-between items-center gap-3 text-xs text-white/50">
         <span>© {new Date().getFullYear()} SKLO Studio.</span>
+        <nav className="flex gap-5" aria-label="Legal">
+          <Link href={`/${locale}/imprint`} className="hover:text-white transition-colors duration-300">
+            {links.imprint}
+          </Link>
+          <Link href={`/${locale}/privacy`} className="hover:text-white transition-colors duration-300">
+            {links.privacy}
+          </Link>
+        </nav>
       </div>
 
       <style>{`

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { videoSrc, videoPoster, useVideoTier } from "@/lib/media";
 
 // The films are sold with their soundtrack, so the viewer gets it — but at
 // half volume, because a gallery is browsed, not attended, and landing on a
@@ -20,6 +21,8 @@ const DEFAULT_VOLUME = 0.5;
  */
 export default function LightboxVideo({ src, start, className }) {
   const ref = useRef(null);
+  const tier = useVideoTier();
+  const file = videoSrc(src, tier);
 
   const begin = () => {
     const el = ref.current;
@@ -46,12 +49,13 @@ export default function LightboxVideo({ src, start, className }) {
     el.addEventListener("loadedmetadata", begin, { once: true });
     return () => el.removeEventListener("loadedmetadata", begin);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [src, start]);
+  }, [file, start]);
 
   return (
     <video
       ref={ref}
-      src={src}
+      src={file}
+      poster={videoPoster(src)}
       onLoadedMetadata={begin}
       controls
       loop
