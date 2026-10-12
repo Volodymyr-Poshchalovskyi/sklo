@@ -1,4 +1,4 @@
-import { Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import Footer from "@/components/Footer";
@@ -13,13 +13,16 @@ import { pageMetadata, organizationJsonLd, websiteJsonLd, JsonLd, LOCALES } from
 const translations = { en, de };
 
 // Space Grotesk is the only typeface the site uses: globals.css points
-// --font-sans at --font-display, so the Inter that used to load here was never
-// painted, and the Cormorant italic had no consumer at all. Two font requests
-// fewer on every first visit.
-const spaceGrotesk = Space_Grotesk({
+// --font-sans at --font-display. Self-hosted from the repo (variable font,
+// latin subset, SIL OFL — see fonts/SpaceGrotesk-OFL.txt) rather than
+// next/font/google: the build no longer depends on reaching Google Fonts,
+// which failed often enough to break deploys, and no visitor request goes
+// to Google either.
+const spaceGrotesk = localFont({
+  src: "../fonts/SpaceGrotesk-latin-wght.woff2",
   variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: "300 700",
+  display: "swap",
 });
 
 export async function generateStaticParams() {
