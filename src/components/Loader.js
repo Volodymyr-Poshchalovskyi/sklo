@@ -1,14 +1,12 @@
 "use client";
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
+// Shown only while the hero film is still loading (ClientWrapper decides
+// that). Just the logo turning over on black — no card, no progress line.
+// A click, a key or a scroll means "I am here, get on with it".
 export default function Loader({ onComplete }) {
   const [phase, setPhase] = useState("visible");
 
-  // 2.8s of animation before a 0.7s fade meant every first-time visitor —
-  // the ones arriving from a search result — spent three and a half seconds
-  // looking at a black screen before the pitch. Shorter, and skippable:
-  // a click, a key or a scroll means "I am here, get on with it".
   useEffect(() => {
     let released = false;
     const release = () => {
@@ -17,17 +15,22 @@ export default function Loader({ onComplete }) {
       setPhase("fadeout");
       setTimeout(onComplete, 500);
     };
-    const t1 = setTimeout(release, 1600);
     window.addEventListener("pointerdown", release);
     window.addEventListener("keydown", release);
     window.addEventListener("wheel", release, { passive: true });
     return () => {
-      clearTimeout(t1);
       window.removeEventListener("pointerdown", release);
       window.removeEventListener("keydown", release);
       window.removeEventListener("wheel", release);
     };
   }, [onComplete]);
+
+  const face = {
+    position: "absolute",
+    inset: 0,
+    backfaceVisibility: "hidden",
+    WebkitBackfaceVisibility: "hidden",
+  };
 
   return (
     <div
@@ -38,12 +41,11 @@ export default function Loader({ onComplete }) {
         transition: "opacity 0.5s ease",
       }}
     >
-      {/* 3D flip сцена */}
       <div
         style={{
-          perspective: "800px",
-          width:  "clamp(100px, 20vw, 160px)",
-          height: "clamp(100px, 20vw, 160px)",
+          perspective: "900px",
+          width: "clamp(72px, 12vw, 112px)",
+          height: "clamp(72px, 12vw, 112px)",
         }}
       >
         <div
@@ -52,128 +54,30 @@ export default function Loader({ onComplete }) {
             height: "100%",
             position: "relative",
             transformStyle: "preserve-3d",
-            animation: "cardFlip 1s cubic-bezier(0.4,0,0.2,1) infinite",
-            borderRadius: "18px",
+            animationName: "logoTurn",
+            animationDuration: "1.6s",
+            animationTimingFunction: "cubic-bezier(0.65, 0, 0.35, 1)",
+            animationIterationCount: "infinite",
           }}
         >
-          {/* Лицьова сторона — логотип */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-              borderRadius: "18px",
-              overflow: "hidden",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08)",
-            }}
-          >
-            <Image
-              src="/assets/Logo.jpg"
-              alt="SKLO"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-
-          {/* Зворотня сторона — темна з акцентом */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-              borderRadius: "18px",
-              transform: "rotateY(180deg)",
-              background: "linear-gradient(135deg, #0b0c10 0%, #191c2b 50%, #0b0c10 100%)",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.08)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {/* Логотип менший по центру */}
-            <div
-              style={{
-                position: "relative",
-                width: "55%",
-                height: "55%",
-                borderRadius: "10px",
-                overflow: "hidden",
-                opacity: 0.85,
-              }}
-            >
-              <Image
-                src="/assets/Logo.jpg"
-                alt="SKLO"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-
-            {/* Subtle glow */}
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                borderRadius: "18px",
-                background: "radial-gradient(circle at 50% 50%, rgba(140,190,255,0.06) 0%, transparent 70%)",
-              }}
-            />
-          </div>
+          {/* Two faces with the same mark so the logo never reads mirrored
+              while the back is towards the viewer. */}
+          <img src="/LogoHeader.svg" alt="" style={face} draggable={false} />
+          <img
+            src="/LogoHeader.svg"
+            alt="SKLO"
+            style={{ ...face, transform: "rotateY(180deg)" }}
+            draggable={false}
+          />
         </div>
       </div>
 
-      {/* Тінь під карточкою */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: "calc(50% - clamp(80px, 14vw, 110px))",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "clamp(80px, 15vw, 120px)",
-          height: "20px",
-          background: "radial-gradient(ellipse, rgba(0,0,0,0.5) 0%, transparent 70%)",
-          animation: "shadowPulse 1.8s cubic-bezier(0.4,0,0.2,1) infinite",
-          filter: "blur(6px)",
-        }}
-      />
-
-      {/* Прогрес-лінія */}
-      <div
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 overflow-hidden"
-        style={{
-          width: "clamp(60px, 10vw, 96px)",
-          height: "1px",
-          background: "rgba(255,255,255,0.12)",
-        }}
-      >
-        <div
-          style={{
-            height: "100%",
-            background: "rgba(255,255,255,0.8)",
-            animation: "progressLine 2.8s cubic-bezier(0.4,0,0.2,1) forwards",
-          }}
-        />
-      </div>
-
       <style>{`
-        @keyframes cardFlip {
-          0%    { transform: rotateY(0deg)   scale(1);    }
-          40%   { transform: rotateY(180deg) scale(1.04); }
-          50%   { transform: rotateY(180deg) scale(1);    }
-          90%   { transform: rotateY(360deg) scale(1.04); }
-          100%  { transform: rotateY(360deg) scale(1);    }
-        }
-        @keyframes shadowPulse {
-          0%, 100% { transform: translateX(-50%) scaleX(1);    opacity: 0.5; }
-          40%, 50% { transform: translateX(-50%) scaleX(0.7);  opacity: 0.2; }
-        }
-        @keyframes progressLine {
-          from { width: 0%; }
-          to   { width: 100%; }
+        @keyframes logoTurn {
+          0%   { transform: rotateY(0deg); }
+          45%  { transform: rotateY(180deg); }
+          55%  { transform: rotateY(180deg); }
+          100% { transform: rotateY(360deg); }
         }
       `}</style>
     </div>

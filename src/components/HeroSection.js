@@ -2,6 +2,7 @@
 import { videoSrc, useVideoTier } from "@/lib/media";
 import { useEffect, useRef, useContext, useState } from "react";
 import { LoaderContext } from "@/context/LoaderContext";
+import { HERO_READY_EVENT } from "@/components/ClientWrapper";
 import Link from "next/link";
 
 // Fallback for the rotating line. The live list comes from `t.hero.words`,
@@ -128,7 +129,28 @@ export default function HeroSection({ t, locale }) {
     const stillness =
       window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
       navigator.connection?.saveData === true;
-    if (stillness) return;
+
+    // Tell ClientWrapper the film can play (or won't): that is what the
+    // loader waits for. `playing` covers the autoplay path, `loadeddata` the
+    // stillness path where only the first frame is fetched, `error` both.
+    const announce = () => {
+      if (window.__skloHeroReady) return;
+      window.__skloHeroReady = true;
+      window.dispatchEvent(new Event(HERO_READY_EVENT));
+    };
+    if (videoEl.readyState >= 2) announce();
+    videoEl.addEventListener("playing", announce);
+    videoEl.addEventListener("loadeddata", announce);
+    videoEl.addEventListener("error", announce);
+    const cleanupAnnounce = () => {
+      videoEl.removeEventListener("playing", announce);
+      videoEl.removeEventListener("loadeddata", announce);
+      videoEl.removeEventListener("error", announce);
+    };
+    if (stillness) {
+      videoEl.load();
+      return cleanupAnnounce;
+    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -151,6 +173,7 @@ export default function HeroSection({ t, locale }) {
 
     return () => {
       observer.disconnect();
+      cleanupAnnounce();
     };
   }, []);
 

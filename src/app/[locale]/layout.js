@@ -1,5 +1,4 @@
 import { Space_Grotesk } from "next/font/google";
-import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import Footer from "@/components/Footer";
@@ -62,11 +61,6 @@ export default async function LocaleLayout({ children, params }) {
     t = (await import(`@/locales/en.json`)).default;
   }
 
-  const cookieStore = await cookies();
-  const lastLoad = cookieStore.get("sklo_last_load")?.value;
-  const today = new Date().toDateString();
-  const initialShowLoader = lastLoad !== today;
-
   return (
     <html
       lang={locale}
@@ -88,7 +82,7 @@ export default async function LocaleLayout({ children, params }) {
       <body className="grain min-h-screen flex flex-col bg-bg text-text">
         <JsonLd data={organizationJsonLd(locale)} />
         <JsonLd data={websiteJsonLd(locale)} />
-        <ClientWrapper locale={locale} t={t} initialShowLoader={initialShowLoader}>
+        <ClientWrapper locale={locale} t={t}>
           <div className="flex-1">
             {children}
           </div>

@@ -35,8 +35,12 @@ export function proxy(request) {
   );
 
   if (!hasLocale) {
+    // "/" would become "/en/", which Next then 308s to "/en" — one hop, not
+    // two, for the most common entry URL. Permanent, so browsers and Google
+    // remember it.
+    const target = pathname === "/" ? `/${defaultLocale}` : `/${defaultLocale}${pathname}`;
     return withIndexingPolicy(
-      NextResponse.redirect(new URL(`/${defaultLocale}${pathname}`, request.url)),
+      NextResponse.redirect(new URL(target, request.url), 308),
       request
     );
   }

@@ -2,6 +2,7 @@
 // `/assets/gallery/x.webp` becomes `https://media.sklo.studio/assets/gallery/x.webp`.
 //
 //   node scripts/media/upload-r2.mjs public/assets/gallery [public/tours ...]
+//   (folders or single files under public/)
 //
 // Reads R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_ENDPOINT, R2_BUCKET from
 // .env.local. Skips objects that already exist with the same size, so the
@@ -39,7 +40,7 @@ function* walk(dir) {
   }
 }
 
-const files = roots.flatMap((r) => [...walk(r)]);
+const files = roots.flatMap((r) => (fs.statSync(r).isDirectory() ? [...walk(r)] : [r]));
 let done = 0, skipped = 0, sent = 0, failed = 0;
 const total = files.length;
 
