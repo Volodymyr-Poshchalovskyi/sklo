@@ -317,5 +317,13 @@
     "about": "The team behind SKLO Studio — 3D artists, animators and developers who turn architectural plans into images that sell a project before it is built.",
     "contact": "Tell us about your project in five short steps — services, scope, budget, materials — and receive a tailored quote from SKLO Studio. Plans and files can be attached directly.",
     "servicesCrumb": "Services"
+  },
+  "consent": {
+    "title": "Cookies for usage analysis",
+    "text": "With your consent we use Microsoft Clarity to see how visitors use this site (clicks, scrolling, session recordings). It sets cookies. Without consent it is not loaded.",
+    "more": "Privacy policy",
+    "accept": "Accept",
+    "decline": "Decline",
+    "settings": "Cookie settings"
   }
 }

@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { OPEN_EVENT as CONSENT_OPEN_EVENT } from "@/components/CookieConsent";
 import { usePathname } from "next/navigation";
 import Title3D from "@/components/Title3D";
 
@@ -240,6 +241,13 @@ export default function Footer({ locale, t }) {
           <Link href={`/${locale}/privacy`} className="hover:text-white transition-colors duration-300">
             {links.privacy}
           </Link>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event(CONSENT_OPEN_EVENT))}
+            className="hover:text-white transition-colors duration-300"
+          >
+            {t?.consent?.settings ?? "Cookie settings"}
+          </button>
         </nav>
       </div>
 

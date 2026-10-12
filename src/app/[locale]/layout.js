@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ClientWrapper from "@/components/ClientWrapper";
+import CookieConsent from "@/components/CookieConsent";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 import { pageMetadata, organizationJsonLd, websiteJsonLd, JsonLd, LOCALES } from "@/lib/seo";
@@ -92,6 +93,7 @@ export default async function LocaleLayout({ children, params }) {
         <Footer locale={locale} t={t} />
         {/* Cookie-free page views and Core Web Vitals; both are switched on per
             project in the Vercel dashboard and are no-ops until then. */}
+        <CookieConsent locale={locale} t={t} />
         <Analytics />
         <SpeedInsights />
       </body>

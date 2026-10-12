@@ -317,5 +317,13 @@
     "about": "Das Team hinter SKLO Studio — 3D-Artists, Animatoren und Entwickler, die aus Architekturplänen Bilder machen, die ein Projekt verkaufen, bevor es gebaut ist.",
     "contact": "Beschreiben Sie Ihr Projekt in fünf kurzen Schritten — Leistungen, Umfang, Budget, Unterlagen — und erhalten Sie ein individuelles Angebot von SKLO Studio. Pläne und Dateien können direkt angehängt werden.",
     "servicesCrumb": "Leistungen"
+  },
+  "consent": {
+    "title": "Cookies zur Nutzungsanalyse",
+    "text": "Mit Ihrer Einwilligung verwenden wir Microsoft Clarity, um zu sehen, wie Besucher diese Website nutzen (Klicks, Scrollen, Sitzungsaufzeichnungen). Dabei werden Cookies gesetzt. Ohne Einwilligung wird Clarity nicht geladen.",
+    "more": "Datenschutzerklärung",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen",
+    "settings": "Cookie-Einstellungen"
   }
 }

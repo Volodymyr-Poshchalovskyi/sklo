@@ -136,14 +136,14 @@ export const legalContent = {
         {
           heading: "Cookies und lokale Speicherung",
           body: [
-            "Diese Website setzt keine Tracking-Cookies. Im Browser gespeichert werden ausschliesslich technische Einstellungen: die gewählte Farbdarstellung (hell/dunkel) und ein Merker, ob der Ladebildschirm heute bereits angezeigt wurde. Diese Angaben werden nicht an Dritte übermittelt.",
+            "Im Browser gespeichert werden technische Einstellungen: die gewählte Farbdarstellung (hell/dunkel) und Ihre Entscheidung zu Microsoft Clarity. Diese Angaben werden nicht an Dritte übermittelt. Cookies setzt nur Microsoft Clarity, und nur nach Ihrer Einwilligung (siehe unten).",
           ],
         },
         {
           heading: "Reichweitenmessung",
           body: [
             "Wir verwenden Vercel Web Analytics, um zu verstehen, welche Seiten wie oft aufgerufen werden. Vercel Web Analytics setzt keine Cookies und speichert keine IP-Adressen; Besuche werden anhand eines täglich wechselnden, anonymen Kennzeichens gezählt. Ein Rückschluss auf einzelne Personen ist nicht möglich.",
-            "Wir beabsichtigen, zusätzlich Microsoft Clarity einzusetzen, um Nutzungsmuster (Klicks, Scrollverhalten) zu analysieren. Clarity würde Cookies setzen und Sitzungen aufzeichnen. Sollten wir Clarity aktivieren, fragen wir Sie vorher um Ihre Einwilligung über einen Hinweis auf der Website; ohne Einwilligung wird Clarity nicht geladen.",
+            "Mit Ihrer Einwilligung setzen wir zusätzlich Microsoft Clarity (Microsoft Corporation, USA) ein, um Nutzungsmuster wie Klicks und Scrollverhalten zu analysieren. Clarity setzt Cookies und zeichnet Sitzungen auf; Eingaben in Formularfelder werden dabei maskiert. Ohne Einwilligung wird Clarity nicht geladen. Rechtsgrundlage ist Ihre Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Sie können sie jederzeit über «Cookie-Einstellungen» im Fussbereich der Website widerrufen. Microsoft ist unter dem EU-U.S. Data Privacy Framework und dem Swiss-U.S. Data Privacy Framework zertifiziert.",
           ],
         },
         {
@@ -205,14 +205,14 @@ export const legalContent = {
         {
           heading: "Cookies and local storage",
           body: [
-            "This website sets no tracking cookies. Only technical settings are stored in your browser: your chosen colour scheme (light or dark) and a note of whether the loading screen has already been shown today. Neither is sent to third parties.",
+            "Technical settings are stored in your browser: your chosen colour scheme (light or dark) and your decision about Microsoft Clarity. Neither is sent to third parties. Cookies are set only by Microsoft Clarity, and only with your consent (see below).",
           ],
         },
         {
           heading: "Audience measurement",
           body: [
             "We use Vercel Web Analytics to understand which pages are viewed and how often. Vercel Web Analytics sets no cookies and stores no IP addresses; visits are counted with an anonymous identifier that changes daily. Individual people cannot be identified.",
-            "We intend to additionally use Microsoft Clarity to analyse usage patterns (clicks, scrolling). Clarity would set cookies and record sessions. Should we activate Clarity, we will ask for your consent first through a notice on the website; without consent Clarity is not loaded.",
+            "With your consent we additionally use Microsoft Clarity (Microsoft Corporation, USA) to analyse usage patterns such as clicks and scrolling. Clarity sets cookies and records sessions; input in form fields is masked. Without consent Clarity is not loaded. The legal basis is your consent (Art. 6(1)(a) GDPR). You can withdraw it at any time via "Cookie settings" in the footer of the website. Microsoft is certified under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework.",
           ],
         },
         {
