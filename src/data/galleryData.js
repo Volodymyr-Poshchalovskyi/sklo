@@ -25,11 +25,11 @@
 export const galleryItems = [
 
   // Exterior
-  { id: 1, category: "Exterior", src: "/assets/gallery/exterior/001.webp", type: "image", title: "Exterior", width: 3840, height: 2560 },
-  { id: 2, category: "Exterior", src: "/assets/gallery/exterior/002.webp", type: "image", title: "Exterior", width: 3990, height: 2245 },
-  { id: 3, category: "Exterior", src: "/assets/gallery/exterior/003.webp", type: "image", title: "Exterior", width: 3840, height: 2160 },
-  { id: 4, category: "Exterior", src: "/assets/gallery/exterior/004.webp", type: "image", title: "Exterior", width: 3840, height: 2160 },
-  { id: 5, category: "Exterior", src: "/assets/gallery/exterior/005.webp", type: "image", title: "Exterior", width: 3840, height: 2160 },
+  { id: 1, category: "Exterior", src: "/assets/gallery/exterior/001.webp", type: "image", title: "Exterior", width: 3840, height: 2560, alt: "Exterior rendering of a timber-clad apartment complex with balconies and a playground at dusk", altDe: "Aussenvisualisierung einer holzverkleideten Wohnüberbauung mit Balkonen und Spielplatz in der Abenddämmerung" },
+  { id: 2, category: "Exterior", src: "/assets/gallery/exterior/002.webp", type: "image", title: "Exterior", width: 3990, height: 2245, alt: "Street-side rendering of a green apartment building with glass balconies and planted terraces", altDe: "Strassenansicht einer grünen Wohnüberbauung mit Glasbalkonen und begrünten Terrassen" },
+  { id: 3, category: "Exterior", src: "/assets/gallery/exterior/003.webp", type: "image", title: "Exterior", width: 3840, height: 2160, alt: "Evening rendering of terraced townhouses with glazed facades and lit interiors", altDe: "Abendvisualisierung von Reihenhäusern mit verglasten Fassaden und beleuchteten Innenräumen" },
+  { id: 4, category: "Exterior", src: "/assets/gallery/exterior/004.webp", type: "image", title: "Exterior", width: 3840, height: 2160, alt: "Rendering of a hillside apartment building with stepped terraces on a sunny meadow", altDe: "Visualisierung eines Mehrfamilienhauses am Hang mit gestaffelten Terrassen auf einer Wiese" },
+  { id: 5, category: "Exterior", src: "/assets/gallery/exterior/005.webp", type: "image", title: "Exterior", width: 3840, height: 2160, alt: "Rendering of a converted farmhouse with a timber extension and pitched roof in a village", altDe: "Visualisierung eines umgebauten Bauernhauses mit Holzanbau und Satteldach im Dorf" },
   { id: 6, category: "Exterior", src: "/assets/gallery/exterior/006.webp", type: "image", title: "Exterior", width: 3840, height: 2160 },
   { id: 7, category: "Exterior", src: "/assets/gallery/exterior/007.webp", type: "image", title: "Exterior", width: 3840, height: 2160 },
   { id: 8, category: "Exterior", src: "/assets/gallery/exterior/008.webp", type: "image", title: "Exterior", width: 3840, height: 2560 },
@@ -125,11 +125,11 @@ export const galleryItems = [
   { id: 98, category: "Exterior", src: "/assets/gallery/exterior/098.webp", type: "image", title: "Exterior", width: 2400, height: 3000 },
 
   // Interior
-  { id: 99, category: "Interior", src: "/assets/gallery/interior/001.webp", type: "image", title: "Interior", width: 3840, height: 2160 },
-  { id: 100, category: "Interior", src: "/assets/gallery/interior/002.webp", type: "image", title: "Interior", width: 5333, height: 3000 },
-  { id: 101, category: "Interior", src: "/assets/gallery/interior/003.webp", type: "image", title: "Interior", width: 3840, height: 2160 },
-  { id: 102, category: "Interior", src: "/assets/gallery/interior/004.webp", type: "image", title: "Interior", width: 3840, height: 2160 },
-  { id: 103, category: "Interior", src: "/assets/gallery/interior/005.webp", type: "image", title: "Interior", width: 3200, height: 4000 },
+  { id: 99, category: "Interior", src: "/assets/gallery/interior/001.webp", type: "image", title: "Interior", width: 3840, height: 2160, alt: "Interior rendering of an open-plan kitchen and dining area with a patterned rug and mountain views", altDe: "Innenvisualisierung einer offenen Wohnküche mit gemustertem Teppich und Bergblick" },
+  { id: 100, category: "Interior", src: "/assets/gallery/interior/002.webp", type: "image", title: "Interior", width: 5333, height: 3000, alt: "Interior rendering of a minimalist living room with exposed concrete ceiling and floor-to-ceiling glazing", altDe: "Innenvisualisierung eines minimalistischen Wohnzimmers mit Sichtbetondecke und raumhoher Verglasung" },
+  { id: 101, category: "Interior", src: "/assets/gallery/interior/003.webp", type: "image", title: "Interior", width: 3840, height: 2160, alt: "Interior rendering of a bright living and dining space with oak floor and wooden window frames", altDe: "Innenvisualisierung eines hellen Wohn- und Essbereichs mit Eichenboden und Holzfenstern" },
+  { id: 102, category: "Interior", src: "/assets/gallery/interior/004.webp", type: "image", title: "Interior", width: 3840, height: 2160, alt: "Interior rendering of a loft with a red steel staircase, red kitchen and terrazzo floor", altDe: "Innenvisualisierung eines Lofts mit roter Stahltreppe, roter Küche und Terrazzoboden" },
+  { id: 103, category: "Interior", src: "/assets/gallery/interior/005.webp", type: "image", title: "Interior", width: 3200, height: 4000, alt: "Close-up interior rendering of a fireplace with a decanter and fruit bowl on a stone counter", altDe: "Detail-Innenvisualisierung eines Cheminées mit Karaffe und Obstschale auf einer Steinablage" },
   { id: 104, category: "Interior", src: "/assets/gallery/interior/006.webp", type: "image", title: "Interior", width: 3840, height: 2160 },
   { id: 105, category: "Interior", src: "/assets/gallery/interior/007.webp", type: "image", title: "Interior", width: 3942, height: 4928 },
   { id: 106, category: "Interior", src: "/assets/gallery/interior/008.webp", type: "image", title: "Interior", width: 3840, height: 2160 },
@@ -204,11 +204,11 @@ export const galleryItems = [
   { id: 175, category: "Interior", src: "/assets/gallery/interior/077.webp", type: "image", title: "Interior", width: 3840, height: 2160 },
 
   // Bird's-Eye View
-  { id: 176, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/001.webp", type: "image", title: "Bird's-Eye View", width: 3840, height: 2160 },
-  { id: 177, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/002.webp", type: "image", title: "Bird's-Eye View", width: 4800, height: 3584 },
-  { id: 178, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/003.webp", type: "image", title: "Bird's-Eye View", width: 4800, height: 3584 },
-  { id: 179, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/004.webp", type: "image", title: "Bird's-Eye View", width: 4800, height: 3584 },
-  { id: 180, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/005.webp", type: "image", title: "Bird's-Eye View", width: 5272, height: 3948 },
+  { id: 176, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/001.webp", type: "image", title: "Bird's-Eye View", width: 3840, height: 2160, alt: "Aerial rendering of a residential courtyard with a playground between new apartment blocks", altDe: "Vogelperspektive eines Wohnhofs mit Spielplatz zwischen neuen Mehrfamilienhäusern" },
+  { id: 177, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/002.webp", type: "image", title: "Bird's-Eye View", width: 4800, height: 3584, alt: "Bird's-eye rendering of three new apartment buildings with solar roofs in a suburban town", altDe: "Vogelperspektive von drei neuen Mehrfamilienhäusern mit Solardächern in einer Agglomerationsgemeinde" },
+  { id: 178, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/003.webp", type: "image", title: "Bird's-Eye View", width: 4800, height: 3584, alt: "Aerial rendering of a renovated farmhouse with surrounding fields at sunrise", altDe: "Luftaufnahme-Visualisierung eines renovierten Bauernhauses mit Feldern bei Sonnenaufgang" },
+  { id: 179, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/004.webp", type: "image", title: "Bird's-Eye View", width: 4800, height: 3584, alt: "Bird's-eye rendering of a village centre with a new pitched-roof apartment building", altDe: "Vogelperspektive eines Dorfkerns mit neuem Mehrfamilienhaus mit Satteldach" },
+  { id: 180, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/005.webp", type: "image", title: "Bird's-Eye View", width: 5272, height: 3948, alt: "Aerial rendering of a terraced housing development at the edge of open farmland", altDe: "Vogelperspektive einer Terrassenhaussiedlung am Rand von offenem Kulturland" },
   { id: 181, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/006.webp", type: "image", title: "Bird's-Eye View", width: 5272, height: 3948 },
   { id: 182, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/007.webp", type: "image", title: "Bird's-Eye View", width: 5280, height: 3956 },
   { id: 183, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/008.webp", type: "image", title: "Bird's-Eye View", width: 5272, height: 3948 },
@@ -227,11 +227,11 @@ export const galleryItems = [
   { id: 196, category: "Bird's-Eye View", src: "/assets/gallery/bird-eye/021.webp", type: "image", title: "Bird's-Eye View", width: 4800, height: 3584 },
 
   // Product
-  { id: 197, category: "Product", src: "/assets/gallery/product/001.webp", type: "image", title: "Product", width: 3000, height: 3750 },
-  { id: 198, category: "Product", src: "/assets/gallery/product/002.webp", type: "image", title: "Product", width: 3840, height: 2160 },
-  { id: 199, category: "Product", src: "/assets/gallery/product/003.webp", type: "image", title: "Product", width: 4000, height: 5000 },
-  { id: 200, category: "Product", src: "/assets/gallery/product/004.webp", type: "image", title: "Product", width: 4000, height: 5000 },
-  { id: 201, category: "Product", src: "/assets/gallery/product/005.webp", type: "image", title: "Product", width: 3200, height: 4000 },
+  { id: 197, category: "Product", src: "/assets/gallery/product/001.webp", type: "image", title: "Product", width: 3000, height: 3750, alt: "Product rendering of a kitchen worktop with dark marble splashback and a chrome tap", altDe: "Produktvisualisierung einer Küchenarbeitsplatte mit dunkler Marmorrückwand und Chromarmatur" },
+  { id: 198, category: "Product", src: "/assets/gallery/product/002.webp", type: "image", title: "Product", width: 3840, height: 2160, alt: "Product rendering of glass office pods with green ribbed walls and task chairs", altDe: "Produktvisualisierung von verglasten Bürokabinen mit grünen Lamellenwänden und Bürostühlen" },
+  { id: 199, category: "Product", src: "/assets/gallery/product/003.webp", type: "image", title: "Product", width: 4000, height: 5000, alt: "Product rendering of a sage-green wall panel with brass hooks and a hanging coat", altDe: "Produktvisualisierung einer salbeigrünen Wandverkleidung mit Messinghaken und Mantel" },
+  { id: 200, category: "Product", src: "/assets/gallery/product/004.webp", type: "image", title: "Product", width: 4000, height: 5000, alt: "Product rendering of a white kitchen with under-cabinet lighting and a pull-down tap", altDe: "Produktvisualisierung einer weissen Küche mit Unterschrankbeleuchtung und Auszugsarmatur" },
+  { id: 201, category: "Product", src: "/assets/gallery/product/005.webp", type: "image", title: "Product", width: 3200, height: 4000, alt: "Product rendering of a light grey kitchen island with a white tiled splashback and chair", altDe: "Produktvisualisierung einer hellgrauen Kücheninsel mit weisser Fliesenrückwand und Stuhl" },
   { id: 202, category: "Product", src: "/assets/gallery/product/006.webp", type: "image", title: "Product", width: 3000, height: 3750 },
   { id: 203, category: "Product", src: "/assets/gallery/product/007.webp", type: "image", title: "Product", width: 4000, height: 5000 },
   { id: 204, category: "Product", src: "/assets/gallery/product/008.webp", type: "image", title: "Product", width: 5333, height: 3000 },
@@ -252,11 +252,11 @@ export const galleryItems = [
   { id: 219, category: "Product", src: "/assets/gallery/product/023.webp", type: "image", title: "Product", width: 4000, height: 4000 },
 
   // Virtual Staging
-  { id: 220, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/001.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160 },
-  { id: 221, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/002.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160 },
-  { id: 222, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/003.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160 },
-  { id: 223, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/004.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160 },
-  { id: 224, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/005.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160 },
+  { id: 220, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/001.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160, alt: "Virtually staged living room with kitchen, dining table and armchair on an oak floor", altDe: "Virtuell eingerichtetes Wohnzimmer mit Küche, Esstisch und Sessel auf Eichenboden" },
+  { id: 221, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/002.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160, alt: "Virtually staged bedroom with an upholstered bed and balcony doors", altDe: "Virtuell eingerichtetes Schlafzimmer mit Polsterbett und Balkontüren" },
+  { id: 222, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/003.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160, alt: "Empty room with oak flooring before virtual staging", altDe: "Leerer Raum mit Eichenboden vor dem Virtual Staging" },
+  { id: 223, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/004.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160, alt: "Apartment building under construction with scaffolding, before visualisation", altDe: "Mehrfamilienhaus im Rohbau mit Baugerüst, vor der Visualisierung" },
+  { id: 224, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/005.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160, alt: "Rendering of the finished apartment building with balconies and a mansard roof", altDe: "Visualisierung des fertigen Mehrfamilienhauses mit Balkonen und Mansarddach" },
   { id: 225, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/006.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160 },
   { id: 226, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/007.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160 },
   { id: 227, category: "Virtual Staging", src: "/assets/gallery/virtual-staging/008.webp", type: "image", title: "Virtual Staging", width: 3840, height: 2160 },
@@ -266,19 +266,19 @@ export const galleryItems = [
   // second — so at rest the tile was a dark rectangle and the lightbox opened
   // on nothing. Playback begins from this second instead; nothing is cut from
   // the file, so the rest of the film is still there to scrub back to.
-  { id: 228, category: "Animation", src: "/assets/gallery/animation/001.mp4", type: "video", title: "Animation", width: 1920, height: 1080, start: 1.2 },
-  { id: 229, category: "Animation", src: "/assets/gallery/animation/002.mp4", type: "video", title: "Animation", width: 1920, height: 1080 },
-  { id: 230, category: "Animation", src: "/assets/gallery/animation/003.mp4", type: "video", title: "Animation", width: 1664, height: 1244, start: 1.4 },
-  { id: 231, category: "Animation", src: "/assets/gallery/animation/004.mp4", type: "video", title: "Animation", width: 1920, height: 1080 },
-  { id: 232, category: "Animation", src: "/assets/gallery/animation/005.mp4", type: "video", title: "Animation", width: 1280, height: 1920 },
+  { id: 228, category: "Animation", src: "/assets/gallery/animation/001.mp4", type: "video", title: "Animation", width: 1920, height: 1080, start: 1.2, alt: "Animation: aerial fly-over of a residential neighbourhood with a new development site", altDe: "Animation: Überflug über ein Wohnquartier mit neuer Überbauung" },
+  { id: 229, category: "Animation", src: "/assets/gallery/animation/002.mp4", type: "video", title: "Animation", width: 1920, height: 1080, alt: "Animation: street view of white apartment blocks with red maples in autumn", altDe: "Animation: Strassenansicht weisser Mehrfamilienhäuser mit roten Ahornbäumen im Herbst" },
+  { id: 230, category: "Animation", src: "/assets/gallery/animation/003.mp4", type: "video", title: "Animation", width: 1664, height: 1244, start: 1.4, alt: "Animation: top-down aerial of a suburban neighbourhood with a new housing estate", altDe: "Animation: Luftaufnahme von oben auf ein Quartier mit neuer Wohnsiedlung" },
+  { id: 231, category: "Animation", src: "/assets/gallery/animation/004.mp4", type: "video", title: "Animation", width: 1920, height: 1080, alt: "Animation: apartment buildings with solar roofs in a village at sunset", altDe: "Animation: Mehrfamilienhäuser mit Solardächern in einem Dorf bei Sonnenuntergang" },
+  { id: 232, category: "Animation", src: "/assets/gallery/animation/005.mp4", type: "video", title: "Animation", width: 1280, height: 1920, alt: "Animation: lakeside cultural building with a glazed upper storey and a pier", altDe: "Animation: Kulturbau am See mit verglastem Obergeschoss und Steg" },
   { id: 233, category: "Animation", src: "/assets/gallery/animation/006.mp4", type: "video", title: "Animation", width: 1280, height: 1920 },
 
   // Cinemagraph
-  { id: 234, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/001.mp4", type: "video", title: "Cinemagraph", width: 1248, height: 1664 },
-  { id: 235, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/002.mp4", type: "video", title: "Cinemagraph", width: 1664, height: 1248 },
-  { id: 236, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/003.mp4", type: "video", title: "Cinemagraph", width: 1920, height: 1088 },
-  { id: 237, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/004.mp4", type: "video", title: "Cinemagraph", width: 1920, height: 1080 },
-  { id: 238, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/005.mp4", type: "video", title: "Cinemagraph", width: 1248, height: 1664 },
+  { id: 234, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/001.mp4", type: "video", title: "Cinemagraph", width: 1248, height: 1664, alt: "Cinemagraph: close-up of a beige sofa with a checked cushion by a window", altDe: "Cinemagraph: Nahaufnahme eines beigen Sofas mit kariertem Kissen am Fenster" },
+  { id: 235, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/002.mp4", type: "video", title: "Cinemagraph", width: 1664, height: 1248, alt: "Cinemagraph: living room with a burning fireplace and grey armchairs", altDe: "Cinemagraph: Wohnzimmer mit brennendem Cheminée und grauen Sesseln" },
+  { id: 236, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/003.mp4", type: "video", title: "Cinemagraph", width: 1920, height: 1088, alt: "Cinemagraph: living room with a cream sofa, kitchen island and abstract painting", altDe: "Cinemagraph: Wohnzimmer mit cremefarbenem Sofa, Kücheninsel und abstraktem Bild" },
+  { id: 237, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/004.mp4", type: "video", title: "Cinemagraph", width: 1920, height: 1080, alt: "Cinemagraph: residents walking past a new apartment building with balconies", altDe: "Cinemagraph: Bewohner vor einem neuen Mehrfamilienhaus mit Balkonen" },
+  { id: 238, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/005.mp4", type: "video", title: "Cinemagraph", width: 1248, height: 1664, alt: "Cinemagraph: dining table by a window with snow falling outside", altDe: "Cinemagraph: Esstisch am Fenster mit Schneefall draussen" },
   { id: 239, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/006.mp4", type: "video", title: "Cinemagraph", width: 1920, height: 1080 },
   { id: 240, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/007.mp4", type: "video", title: "Cinemagraph", width: 1248, height: 1664 },
   { id: 241, category: "Cinemagraph", src: "/assets/gallery/cinemagraph/008.mp4", type: "video", title: "Cinemagraph", width: 1920, height: 1080 },
@@ -299,7 +299,9 @@ export const galleryItems = [
 // three fictional client sites (a development sales page, an architect's
 // portfolio, a villa landing page), each built on real SKLO renders. They are
 // its own "Web" filter in the gallery and the mini gallery on its service
-// page. `title` doubles as the alt text.
+// page. `title` doubles as the alt text unless the item carries `alt`/`altDe`:
+// a short description of what the render shows (first five per category so
+// far — see the launch plan for the rest).
 export const WEB_SHOWCASE = [
   { id: "web-1", category: "Web", src: "/assets/services/web-development/showcase-seeblick-duo.webp", type: "image", title: "Residenz Seeblick — sales site for a lakeside development, desktop and phone", width: 2400, height: 1500 },
   { id: "web-2", category: "Web", src: "/assets/services/web-development/showcase-villa-phone.webp", type: "image", title: "Villa Lindenhof — single-property landing page on a phone", width: 1200, height: 1500 },

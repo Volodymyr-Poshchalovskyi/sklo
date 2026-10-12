@@ -14,7 +14,7 @@ import de from "@/locales/de.json";
 
 const translations = { en, de };
 
-function GalleryCard({ item, onClick, label, showCategory = true }) {
+function GalleryCard({ item, onClick, label, alt, showCategory = true }) {
   const tier = useVideoTier();
   const videoRef = useRef(null);
 
@@ -108,7 +108,7 @@ function GalleryCard({ item, onClick, label, showCategory = true }) {
           src={imageVariant(item.src, 1280)}
           srcSet={imageSrcSet(item.src)}
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          alt={label}
+          alt={alt ?? label}
           loading="lazy"
           decoding="async"
           className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -205,6 +205,8 @@ function GalleryPageContent() {
   // Every visible category string is looked up from the English key the
   // archive rows and the filter already agree on.
   const labelFor = (key) => g.categories[key]?.label ?? key;
+  // Descriptive alt where the data has one, the category name otherwise.
+  const altFor = (item) => (locale === "de" ? item.altDe : item.alt) ?? labelFor(item.category);
 
   // The chip rail scrolls sideways, so an active filter near its end starts
   // out of sight — on a reload of `?filter=cinemagraph` nothing on screen said
@@ -652,6 +654,7 @@ function GalleryPageContent() {
                   <GalleryCard
                     item={item}
                     label={labelFor(item.category)}
+                    alt={altFor(item)}
                     showCategory={activeFilter === ALL_FILTER}
                     onClick={() => setSelectedItemIndex(index)}
                   />
@@ -781,7 +784,7 @@ function GalleryPageContent() {
                 src={imageVariant(filteredItems[selectedItemIndex].src, 1920)}
                 srcSet={imageSrcSet(filteredItems[selectedItemIndex].src)}
                 sizes="92vw"
-                alt={labelFor(filteredItems[selectedItemIndex].category)}
+                alt={altFor(filteredItems[selectedItemIndex])}
                 width={filteredItems[selectedItemIndex].width}
                 height={filteredItems[selectedItemIndex].height}
                 decoding="async"
