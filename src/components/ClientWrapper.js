@@ -113,10 +113,10 @@ export default function ClientWrapper({ children, locale, t }) {
   // A cached film is ready within a frame or two: then nothing is shown at
   // all. Past a short grace period the logo appears and stays until the film
   // can play — for at least one full turn, so it never blinks — or until a
-  // hard ceiling, so a stalled video can't hold the page hostage.
+  // hard ceiling of two seconds: a slow film plays in behind the page.
   useEffect(() => {
     if (!isHome) return;
-    const GRACE = 200, MIN_SHOW = 1600, CEILING = 8000;
+    const GRACE = 200, MIN_SHOW = 1600, CEILING = 2000;
     let shownAt = 0;
     let done = false;
     const timers = [];
