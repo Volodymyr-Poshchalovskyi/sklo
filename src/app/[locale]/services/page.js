@@ -64,7 +64,13 @@ function ServiceMedia({ service }) {
     // `preload="metadata"` fetches no frame, so a video tile stayed an empty
     // rectangle until the pointer reached it — one card read as broken. The
     // poster gives every tile something to show at rest.
+    const frame = card?.frame;
     return (
+      <div className="relative w-full h-full">
+      <div
+        className="w-full h-full"
+        style={frame ? { transform: `scale(${frame.scale}) translateX(${frame.x}%)` } : undefined}
+      >
       <video
         ref={videoRef}
         src={cardSrc}
@@ -77,6 +83,8 @@ function ServiceMedia({ service }) {
         onMouseLeave={handleMouseLeave}
         className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
       />
+      </div>
+      </div>
     );
   }
 
@@ -118,7 +126,7 @@ function ServiceTile({ service, index, locale }) {
           {service.title}
         </h3>
         <p className="mt-1.5 text-xs md:text-sm text-white/50 group-hover:text-white/75 leading-relaxed line-clamp-2 transition-colors duration-300">
-          {service.desc}
+          {service.cardDesc ?? service.desc}
         </p>
       </div>
     </Link>

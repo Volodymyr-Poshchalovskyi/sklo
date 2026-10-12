@@ -64,8 +64,8 @@ export default function FAQ({ locale = "en", t }) {
 
   const handleDownloadRequirements = () => {
     const link = document.createElement("a");
-    link.href = "/api/download-requirements";
-    link.download = "project requirements.pdf";
+    link.href = `/api/download-requirements?lang=${locale === "de" ? "de" : "en"}`;
+    link.download = locale === "de" ? "Projektanforderungen.pdf" : "project requirements.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -172,7 +172,7 @@ export default function FAQ({ locale = "en", t }) {
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start w-full">
         {/* The heading column carries the supporting copy. The "ask us"
             call to action moved out to its own band after this section
-            (CtaBand): inside the column it read as an afterthought. */}
+            moved out of the page: the design round dropped it. */}
         <div className="flex flex-col gap-6 lg:sticky lg:top-32">
           <span className="eyebrow">{faq.eyebrow}</span>
           <Title3D className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase">

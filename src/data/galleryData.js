@@ -452,7 +452,10 @@ export const SERVICE_POSTER = {
   // A service whose hero is a film is advertised with that film rather than a
   // still of it — cropped to the card's 4:5 so the card carries the shot, not
   // a letterboxed strip of it.
-  "animation-mood-film": { src: "/assets/services/animation-mood-film-tile.webm", type: "video" },
+  // `frame` re-centres a clip whose subject sits off-centre in its 4:5 crop:
+  // a slight zoom buys the room, the shift (in % of the tile) moves the
+  // subject toward the middle. Here: the house and the car's headlights.
+  "animation-mood-film": { src: "/assets/services/animation-mood-film-tile.webm", type: "video", frame: { scale: 1.3, x: -6 } },
   "bird-eye-visualization": { src: "/assets/services/bird-eye-visualization-tile.webp", type: "image" },
   "360-virtual-tour": { src: "/assets/services/360-virtual-tour-tile.webp", type: "image" },
   "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot-tile.webm", type: "video" },
@@ -460,7 +463,7 @@ export const SERVICE_POSTER = {
   "virtual-staging": { src: "/assets/services/virtual-staging-tile.webp", type: "image" },
   "graphic-design": { src: "/assets/services/graphic-design-tile.webp", type: "image" },
   "3d-floorplans": { src: "/assets/services/3d-floorplans-tile.webp", type: "image" },
-  "fly-around-navigator": { src: "/assets/services/fly-around-navigator-tile.webm", type: "video" },
+  "fly-around-navigator": { src: "/assets/services/fly-around-navigator-tile.webm", type: "video", frame: { scale: 1.06, x: -2 } },
   "web-development": { src: "/assets/services/web-development-tile.webp", type: "image" },
 };
 
@@ -472,7 +475,9 @@ export const SERVICE_WIDE = {
   "animation-mood-film": { src: "/assets/services/animation-mood-film-wide.mp4", type: "video" },
   "bird-eye-visualization": { src: "/assets/services/bird-eye-visualization-wide.webp", type: "image" },
   "360-virtual-tour": { src: "/assets/services/360-virtual-tour-wide.webp", type: "image" },
-  "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot.webm", type: "video" },
+  // A portrait clip in a 21:9 box: `position` picks which band of it shows —
+  // the chairs and the table, not the curtains above them.
+  "cinemagraph-live-shot": { src: "/assets/services/cinemagraph-live-shot.webm", type: "video", position: "50% 74%" },
   "product-visualization": { src: "/assets/services/product-visualization-wide.webp", type: "image" },
   "virtual-staging": { src: "/assets/services/virtual-staging-wide.webp", type: "image" },
   "graphic-design": { src: "/assets/services/graphic-design-wide.webp", type: "image" },

@@ -27,11 +27,11 @@ export default async function AboutPage({ params }) {
   const team = [
     { id: 1, name: "VIKTOR", role: roles.founder, photo: "/assets/team/viktor.webp" },
     { id: 2, name: "MAX", role: roles.founder, photo: "/assets/team/max.webp" },
-    { id: 3, name: "KHRYSTIA", role: roles.leadArtist, photo: "/assets/team/khrystia.webp" },
+    { id: 3, name: "KHRYSTIA", role: roles.financialManager, photo: "/assets/team/khrystia.webp" },
     { id: 4, name: "BOGDAN", role: roles.seniorArtist, photo: "/assets/team/bogdan.webp" },
     { id: 5, name: "SASHA", role: roles.graphicDesigner, photo: "/assets/team/sasha.webp" },
     { id: 6, name: "JULIA", role: roles.talentManager, photo: "/assets/team/julia.webp" },
-    { id: 7, name: "YANA", role: roles.financialManager, photo: "/assets/team/yana.webp" },
+    { id: 7, name: "YANA", role: roles.leadArtist, photo: "/assets/team/yana.webp" },
   ];
 
   return (

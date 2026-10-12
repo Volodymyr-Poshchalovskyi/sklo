@@ -521,9 +521,6 @@ function GalleryPageContent() {
                     }`}
                   >
                     {key === ALL_FILTER ? g.all : labelFor(key)}
-                    {key === ALL_FILTER && (
-                      <span className="ml-2 font-mono text-[10px] opacity-60">{allProjectsItems.length}</span>
-                    )}
                   </button>
                 );
               })}
@@ -541,29 +538,13 @@ function GalleryPageContent() {
               }`}
             >
               <span>{g.all}</span>
-              <span
-                className={`font-mono text-[11px] px-2 py-0.5 rounded-md ${
-                  activeFilter === ALL_FILTER ? "bg-bg/15" : "bg-white/10"
-                }`}
-              >
-                {allProjectsItems.length}
-              </span>
             </button>
 
+            {/* One list. The order still puts the categories of the "All"
+                mix first and the stand-alone showcases after them; the group
+                headings were dropped in the design round. */}
             <div className="flex flex-col gap-1">
-              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40 px-3 pb-1">
-                {g.groups.mix}
-              </span>
-              {mixCategories.map((cat) => (
-                <FilterRow key={cat.slug} cat={cat} />
-              ))}
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/40 px-3 pb-1">
-                {g.groups.showcases}
-              </span>
-              {showcaseCategories.map((cat) => (
+              {[...mixCategories, ...showcaseCategories].map((cat) => (
                 <FilterRow key={cat.slug} cat={cat} />
               ))}
             </div>

@@ -287,6 +287,7 @@ function MenuPreviewItem({ service, isActive, previewLabel }) {
           muted
           playsInline
           className="w-full h-full object-cover"
+          style={service.position ? { objectPosition: service.position } : undefined}
         />
       ) : (
         // next/image, not a raw <img>: the gallery stills behind these are up
@@ -379,6 +380,7 @@ export default function Header({ t, locale, visible }) {
       href: `/${locale}/services/${entry.slug}`,
       image: poster?.type === "image" ? poster.src : undefined,
       video: poster?.type === "video" ? poster.src : undefined,
+      position: poster?.position,
     };
   });
 

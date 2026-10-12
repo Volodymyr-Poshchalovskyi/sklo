@@ -933,3 +933,15 @@ html {
 .lift-card:active:not(:disabled) {
   opacity: 0.85;
 }
+
+/* The contact wizard marks selection in white rather than the lime accent
+   (design round, 2026-10-12). Every accent utility inside the card reads the
+   variable, so redefining it here recolours tiles, chips, the consultation
+   toggle, the check badges and the hints at once. In the light theme "white"
+   would vanish on the paper card, so it is ink there. */
+.contact-wizard {
+  --color-accent: #f4f2ec;
+}
+:root[data-theme="light"] .contact-wizard {
+  --color-accent: #15151a;
+}

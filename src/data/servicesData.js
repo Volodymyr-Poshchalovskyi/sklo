@@ -12,6 +12,10 @@ export const servicesData = [
   {
     id: 0,
     slug: "exterior-visualization",
+    // Two lines at most on a services card — the full `desc` is for the
+    // service page itself.
+    cardDesc: "Your building, photorealistic.",
+    cardDescDe: "Ihr Gebäude, fotorealistisch.",
     title: "EXTERIOR VISUALIZATION",
     titleDe: "AUSSEN­VISUALI­SIERUNG",
     desc: "Show your project from the best side with photorealistic exterior renderings. Must-have for successful marketing campaigns and investor attraction.",
@@ -34,6 +38,8 @@ export const servicesData = [
   {
     id: 1,
     slug: "interior-visualization",
+    cardDesc: "Interiors with atmosphere.",
+    cardDescDe: "Räume mit Atmosphäre.",
     title: "INTERIOR VISUALIZATION",
     titleDe: "INNEN­VISUALI­SIERUNG",
     desc: "Showcase interiors with atmosphere and detail. Visualizations that help potential clients imagine life inside your project even on the construction stage.",
@@ -56,6 +62,8 @@ export const servicesData = [
   {
     id: 2,
     slug: "animation-mood-film",
+    cardDesc: "A cinematic film of your project.",
+    cardDescDe: "Ein Film, der Ihr Projekt erzählt.",
     title: "ANIMATION | MOOD FILM",
     titleDe: "ANIMATION | MOOD FILM",
     desc: "A cinematic story that captures attention and excitement around your project. Experience the mood, the story, the life of your project through the screen.",
@@ -78,6 +86,8 @@ export const servicesData = [
   {
     id: 3,
     slug: "bird-eye-visualization",
+    cardDesc: "Your project in its full context.",
+    cardDescDe: "Ihr Projekt in seinem Umfeld.",
     title: "BIRD-EYE VISUALISATION",
     titleDe: "VOGEL­PERSPEKTIVE",
     desc: "Highlight the project’s scale and surroundings. The best way to show context, infrastructure and overall appeal in one rendering.",
@@ -100,6 +110,8 @@ export const servicesData = [
   {
     id: 4,
     slug: "360-virtual-tour",
+    cardDesc: "Walk inside before it is built.",
+    cardDescDe: "Begehbar, bevor es gebaut ist.",
     title: "360° VIRTUAL TOUR | VR",
     titleDe: "360° VIRTUAL TOUR | VR",
     desc: "Let your clients step inside before it’s real. Immersive tours that boosts engagement, trust and turns interest into purchase.",
@@ -122,6 +134,8 @@ export const servicesData = [
   {
     id: 5,
     slug: "cinemagraph-live-shot",
+    cardDesc: "Still images with a subtle loop.",
+    cardDescDe: "Standbilder mit dezenter Bewegung.",
     title: "CINEMAGRAPH | LIVE SHOT",
     titleDe: "CINEMAGRAPH | LIVE SHOT",
     desc: "Add life to static images for eye-catching WOW-effect. Subtle animations that grab attention instantly.",
@@ -144,6 +158,8 @@ export const servicesData = [
   {
     id: 6,
     slug: "product-visualization",
+    cardDesc: "Studio-quality product imagery.",
+    cardDescDe: "Produktbilder in Studioqualität.",
     title: "PRODUCT VISUALISATION",
     titleDe: "PRODUKT­VISUALI­SIERUNG",
     desc: "High-end visuals for furniture, household appliances, materials or any living and architecture-related things. Perfect for catalogs, marketing and presentations.",
@@ -166,6 +182,8 @@ export const servicesData = [
   {
     id: 7,
     slug: "virtual-staging",
+    cardDesc: "Empty rooms, furnished digitally.",
+    cardDescDe: "Leere Räume, digital eingerichtet.",
     title: "VIRTUAL STAGING",
     titleDe: "VIRTUAL STAGING",
     desc: "Turn empty spaces into dream homes. Cost-effective, realistic staging that boosts sales potential. Perfect for sales without physical staging costs.",
@@ -188,6 +206,8 @@ export const servicesData = [
   {
     id: 8,
     slug: "graphic-design",
+    cardDesc: "Brochures, banners and branding.",
+    cardDescDe: "Broschüren, Banner und Branding.",
     title: "GRAPHIC DESIGN",
     titleDe: "GRAFIK­DESIGN",
     desc: "From billboards, construction fences, brochures to logo, schemes and more — everything you need to strengthen brand identity, impress and attract clients.",
@@ -210,6 +230,8 @@ export const servicesData = [
   {
     id: 9,
     slug: "3d-floorplans",
+    cardDesc: "Layouts anyone can read at a glance.",
+    cardDescDe: "Grundrisse, auf einen Blick verständlich.",
     title: "3D FLOORPLANS",
     titleDe: "3D-GRUNDRISSE",
     desc: "Make layouts easy to understand. A clear visual tool that speeds up decision-making for buyers.",
@@ -232,6 +254,8 @@ export const servicesData = [
   {
     id: 10,
     slug: "fly-around-navigator",
+    cardDesc: "An orbit buyers steer themselves.",
+    cardDescDe: "Ein Rundflug zum Selbststeuern.",
     title: "360° FLY-AROUND | NAVIGATOR",
     titleDe: "360° FLY-AROUND | NAVIGATOR",
     desc: "An orbit of the whole building that a buyer can steer. Stop anywhere, open an apartment and read its floor, size and layout — the view and the plan in one place.",
@@ -254,6 +278,8 @@ export const servicesData = [
   {
     id: 11,
     slug: "web-development",
+    cardDesc: "Sites built around your renders.",
+    cardDescDe: "Websites rund um Ihre Renderings.",
     title: "WEB DEVELOPMENT",
     titleDe: "WEB­ENTWICKLUNG",
     desc: "Your renders are the sales argument. We build the site that puts them in front of a buyer first, loads in a second on a phone, and turns the visit into an enquiry — project sites, landing pages and portfolios, designed around the imagery, not a template.",
@@ -330,6 +356,7 @@ export function localizeService(service, locale) {
     ...service,
     title: service.titleDe || service.title,
     desc: service.descDe || service.desc,
+    cardDesc: service.cardDescDe || service.cardDesc,
     pipeline: service.pipeline?.map((step) => ({
       ...step,
       title: step.titleDe || step.title,
