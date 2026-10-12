@@ -62,10 +62,18 @@ export default function FAQ({ locale = "en", t }) {
     </div>
   );
 
+  // The requirements sheets are static files in /public, so the link points
+  // at the file itself; `download` makes the browser save it rather than
+  // open it. An API route used to stream it from disk, which made Next trace
+  // the whole /public folder — tours included, 1.8 GB — into the function.
+  const requirementsPdf =
+    locale === "de"
+      ? { href: "/projektanforderungen.pdf", name: "Projektanforderungen.pdf" }
+      : { href: "/project-requirements.pdf", name: "project requirements.pdf" };
   const handleDownloadRequirements = () => {
     const link = document.createElement("a");
-    link.href = `/api/download-requirements?lang=${locale === "de" ? "de" : "en"}`;
-    link.download = locale === "de" ? "Projektanforderungen.pdf" : "project requirements.pdf";
+    link.href = requirementsPdf.href;
+    link.download = requirementsPdf.name;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
