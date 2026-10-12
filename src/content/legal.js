@@ -212,7 +212,7 @@ export const legalContent = {
           heading: "Audience measurement",
           body: [
             "We use Vercel Web Analytics to understand which pages are viewed and how often. Vercel Web Analytics sets no cookies and stores no IP addresses; visits are counted with an anonymous identifier that changes daily. Individual people cannot be identified.",
-            "With your consent we additionally use Microsoft Clarity (Microsoft Corporation, USA) to analyse usage patterns such as clicks and scrolling. Clarity sets cookies and records sessions; input in form fields is masked. Without consent Clarity is not loaded. The legal basis is your consent (Art. 6(1)(a) GDPR). You can withdraw it at any time via "Cookie settings" in the footer of the website. Microsoft is certified under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework.",
+            "With your consent we additionally use Microsoft Clarity (Microsoft Corporation, USA) to analyse usage patterns such as clicks and scrolling. Clarity sets cookies and records sessions; input in form fields is masked. Without consent Clarity is not loaded. The legal basis is your consent (Art. 6(1)(a) GDPR). You can withdraw it at any time via “Cookie settings” in the footer of the website. Microsoft is certified under the EU-U.S. Data Privacy Framework and the Swiss-U.S. Data Privacy Framework.",
           ],
         },
         {
