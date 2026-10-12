@@ -945,3 +945,13 @@ html {
 :root[data-theme="light"] .contact-wizard {
   --color-accent: #15151a;
 }
+
+/* Blur-up images (src/lib/blur.js): hidden only while still loading, then
+   faded in over the blurred placeholder painted behind them. The transition
+   list keeps the hover zoom the tiles already had. */
+img.fade-in {
+  transition-property: opacity, transform;
+}
+img.fade-in[data-loading] {
+  opacity: 0;
+}

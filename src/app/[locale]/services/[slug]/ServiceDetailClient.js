@@ -11,6 +11,7 @@ import LightboxVideo from "@/components/LightboxVideo";
 import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor, serviceTourFor } from "@/data/galleryData";
 import { useLenis } from "@/context/LenisContext";
 import { imageSrcSet, imageVariant, videoSrc, videoPoster, useVideoTier } from "@/lib/media";
+import { blurStyle, fadeInOnLoad } from "@/lib/blur";
 
 // Helper component to render step media dynamically
 function StepMedia({ src, type, isActive, alt }) {
@@ -160,7 +161,7 @@ const MiniGalleryGrid = React.memo(function MiniGalleryGrid({ items, categories,
         <div
           key={media.id}
           onClick={() => onSelect(idx)}
-          style={{ aspectRatio: `${media.width} / ${media.height}` }}
+          style={{ aspectRatio: `${media.width} / ${media.height}`, ...blurStyle(media.src, media.width, media.height) }}
           className="relative group mb-6 break-inside-avoid rounded-2xl border border-white/10 hover:border-white/30 bg-white/5 overflow-hidden cursor-pointer transition-colors duration-300"
         >
           {media.type === "video" ? (
@@ -179,7 +180,8 @@ const MiniGalleryGrid = React.memo(function MiniGalleryGrid({ items, categories,
               alt={categories?.[media.category]?.label ?? media.title}
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              ref={fadeInOnLoad}
+              className="fade-in absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
           )}
 
@@ -847,6 +849,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
                     ) : (
                       <img
                         src={imageVariant(miniItems[activeMediaIndex].src, 1920)}
+                        style={blurStyle(miniItems[activeMediaIndex].src, miniItems[activeMediaIndex].width, miniItems[activeMediaIndex].height)}
                         srcSet={imageSrcSet(miniItems[activeMediaIndex].src)}
                         sizes="92vw"
                         alt={d.lightboxAlt}

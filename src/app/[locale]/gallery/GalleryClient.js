@@ -9,6 +9,7 @@ import LightboxVideo from "@/components/LightboxVideo";
 import TourEmbed from "@/components/TourEmbed";
 import Title3D from "@/components/Title3D";
 import { imageSrcSet, imageVariant, videoSrc, videoPoster, useVideoTier } from "@/lib/media";
+import { blurStyle, fadeInOnLoad } from "@/lib/blur";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 
@@ -85,7 +86,7 @@ function GalleryCard({ item, onClick, label, alt, showCategory = true }) {
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={{ aspectRatio: `${item.width} / ${item.height}` }}
+      style={{ aspectRatio: `${item.width} / ${item.height}`, ...blurStyle(item.src, item.width, item.height) }}
       className="gallery-tile relative w-full bg-white/5 overflow-hidden rounded-lg group cursor-pointer border border-white/5 hover:border-white/15 transition-all duration-300"
     >
       {item.type === "video" ? (
@@ -111,7 +112,8 @@ function GalleryCard({ item, onClick, label, alt, showCategory = true }) {
           alt={alt ?? label}
           loading="lazy"
           decoding="async"
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          ref={fadeInOnLoad}
+          className="fade-in absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
       )}
       
@@ -782,6 +784,8 @@ function GalleryPageContent() {
               <img
                 key={filteredItems[selectedItemIndex].id}
                 src={imageVariant(filteredItems[selectedItemIndex].src, 1920)}
+                // The blurred preview sits behind the large image until it lands.
+                style={blurStyle(filteredItems[selectedItemIndex].src, filteredItems[selectedItemIndex].width, filteredItems[selectedItemIndex].height)}
                 srcSet={imageSrcSet(filteredItems[selectedItemIndex].src)}
                 sizes="92vw"
                 alt={altFor(filteredItems[selectedItemIndex])}

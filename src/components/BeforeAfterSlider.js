@@ -1,5 +1,6 @@
 "use client";
 import { imageSrcSet, imageVariant } from "@/lib/media";
+import { blurStyle, fadeInOnLoad } from "@/lib/blur";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 // Before/after comparison with a draggable divider.
@@ -96,7 +97,7 @@ export default function BeforeAfterSlider({
       onPointerMove={handlePointerMove}
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
-      style={{ aspectRatio: `${width} / ${height}`, touchAction: "none" }}
+      style={{ aspectRatio: `${width} / ${height}`, touchAction: "none", ...blurStyle(after, width, height) }}
       className={`relative w-full overflow-hidden rounded-lg border border-white/10 bg-white/5 select-none cursor-ew-resize ${className}`}
     >
       {/* After (revealed on the right, sits underneath) */}
@@ -106,7 +107,8 @@ export default function BeforeAfterSlider({
         sizes="(max-width: 1280px) 100vw, 50vw"
         alt={afterLabel}
         draggable="false"
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        ref={fadeInOnLoad}
+        className="fade-in duration-500 absolute inset-0 w-full h-full object-cover pointer-events-none"
       />
 
       {/* Before (clipped from the right edge inward, sits on top) */}
@@ -116,8 +118,9 @@ export default function BeforeAfterSlider({
         sizes="(max-width: 1280px) 100vw, 50vw"
         alt={beforeLabel}
         draggable="false"
+        ref={fadeInOnLoad}
         style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        className="fade-in duration-500 absolute inset-0 w-full h-full object-cover pointer-events-none"
       />
 
       {/* Corner labels — each fades out as the divider passes over it, so the
