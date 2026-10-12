@@ -1,5 +1,5 @@
 "use client";
-import { videoSrc, useVideoTier } from "@/lib/media";
+import { videoSrc, videoPoster, useVideoTier } from "@/lib/media";
 import { useEffect, useRef, useContext, useState } from "react";
 import { LoaderContext } from "@/context/LoaderContext";
 import { HERO_READY_EVENT } from "@/components/ClientWrapper";
@@ -206,6 +206,10 @@ export default function HeroSection({ t, locale }) {
         muted
         playsInline
         preload="metadata"
+        // The first frame as a still: it paints long before the film can
+        // play, so the page has its largest element on screen within the
+        // first second instead of after the loader lets the heading in.
+        poster={videoPoster("/assets/home/hero_video.webm")}
         className="absolute inset-0 w-full h-full object-cover"
         style={{ pointerEvents: "none" }}
       >
