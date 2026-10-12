@@ -5,6 +5,7 @@ import FAQ from "@/components/FAQ";
 import { use } from "react";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
+import { faqJsonLd, JsonLd } from "@/lib/seo";
 
 const translations = { en, de };
 
@@ -14,6 +15,7 @@ export default function Home({ params }) {
 
   return (
     <main>
+      <JsonLd data={faqJsonLd(t)} />
       <HeroSection t={t} locale={locale} />
       <WhoWeAre locale={locale} t={t} />
       <FAQ locale={locale} t={t} />

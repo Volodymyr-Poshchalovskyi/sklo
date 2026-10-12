@@ -154,3 +154,33 @@ export function JsonLd({ data }) {
   const json = JSON.stringify(data).replace(/</g, "\\u003c");
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: json }} />;
 }
+
+// The home page FAQ as FAQPage structured data. The answers are assembled
+// from the same locale strings FAQ.js renders, flattened to plain text, so
+// the markup can never say something the page does not.
+export function faqJsonLd(t) {
+  const items = t?.faq?.items ?? {};
+  const text = (v) => {
+    if (!v) return "";
+    if (typeof v === "string") return v;
+    if (Array.isArray(v)) return v.map(text).filter(Boolean).join(" ");
+    if (typeof v === "object") return ["before", "strong", "after"].map((k) => v[k]).filter(Boolean).join("");
+    return "";
+  };
+  const entries = [
+    [items.start?.q, [items.start?.p1].map(text).join(" ")],
+    [items.workflow?.q, [items.workflow?.intro, ...(items.workflow?.steps ?? []).map((st) => `${st.title}: ${st.desc}`)].join(" ")],
+    [items.duration?.q, text(items.duration?.paragraphs)],
+    [items.pricing?.q, text(items.pricing?.paragraphs)],
+    [items.partnership?.q, [items.partnership?.p1, text(items.partnership?.p2), text(items.partnership?.p3), items.partnership?.p4].filter(Boolean).join(" ")],
+  ].filter(([q, a]) => q && a);
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: entries.map(([q, a]) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a.replace(/\s+/g, " ").trim() },
+    })),
+  };
+}

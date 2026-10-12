@@ -2,6 +2,8 @@ import { Space_Grotesk } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import ClientWrapper from "@/components/ClientWrapper";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
@@ -88,6 +90,10 @@ export default async function LocaleLayout({ children, params }) {
           </div>
         </ClientWrapper>
         <Footer locale={locale} t={t} />
+        {/* Cookie-free page views and Core Web Vitals; both are switched on per
+            project in the Vercel dashboard and are no-ops until then. */}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
