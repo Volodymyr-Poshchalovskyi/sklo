@@ -1,24 +1,20 @@
 import galleryBlur from "@/data/galleryBlur";
 
 // Blur-up loading for gallery media. Each render has a 16px webp in
-// galleryBlur.js (scripts/media/build-blur-placeholders.mjs); wrapped in an
-// SVG Gaussian blur it becomes a soft preview of the image itself, painted
-// as the tile's background until the real file arrives. The blur is
-// rasterised once by the browser — no CSS filter layer to recomposite on
-// every scroll frame. Same technique as next/image's placeholder="blur".
+// galleryBlur.js (scripts/media/build-blur-placeholders.mjs), painted as the
+// tile's background and stretched by the browser's own smooth scaling into a
+// soft preview of the image itself until the real file arrives.
+//
+// Deliberately a plain image, not next/image's SVG-with-feGaussianBlur: that
+// filter is rasterised at the full tile size for every tile, and on a slow
+// phone CPU rasterising 36 of them pushed the gallery's first paint back by
+// more than a second.
 
-export function blurStyle(src, width = 16, height = 9) {
+export function blurStyle(src) {
   const data = galleryBlur[src];
   if (!data) return undefined;
-  const w = 320;
-  const h = Math.round((w * height) / width) || 180;
-  const svg =
-    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${w} ${h}'>` +
-    `<filter id='b' color-interpolation-filters='sRGB'><feGaussianBlur stdDeviation='20'/>` +
-    `<feComponentTransfer><feFuncA type='discrete' tableValues='1 1'/></feComponentTransfer></filter>` +
-    `<image width='100%' height='100%' preserveAspectRatio='none' filter='url(#b)' href='data:image/webp;base64,${data}'/></svg>`;
   return {
-    backgroundImage: `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`,
+    backgroundImage: `url("data:image/webp;base64,${data}")`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   };
