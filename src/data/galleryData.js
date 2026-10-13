@@ -559,6 +559,7 @@ export const SERVICE_TOUR = {
   "fly-around-navigator": [
     {
       id: "luxe17-navigator",
+      kind: "navigator",
       title: "Luxe 17",
       label: { en: "360° navigator", de: "360°-Navigator" },
       entry: "/navigators/luxe17/index.html",

@@ -173,9 +173,13 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
                   className="text-[11px] font-mono uppercase tracking-[0.2em]"
                   style={{ color: "rgba(255,255,255,0.8)", textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
                 >
-                  {de
-                    ? `${tour.scenes} Szenen · Klicken zum Starten`
-                    : `${tour.scenes} scenes · ${coarsePointer ? "Tap" : "Click"} to start`}
+                  {tour.kind === "navigator"
+                    ? de
+                      ? `${tour.scenes} Ansichten · Klicken zum Starten`
+                      : `${tour.scenes} views · ${coarsePointer ? "Tap" : "Click"} to start`
+                    : de
+                      ? `${tour.scenes} Szenen · Klicken zum Starten`
+                      : `${tour.scenes} scenes · ${coarsePointer ? "Tap" : "Click"} to start`}
                 </span>
               </span>
             </span>
@@ -185,9 +189,13 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
 
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <span className="text-[11px] font-mono uppercase tracking-widest text-text-muted">
-          {de
-            ? "Ziehen zum Umsehen · Grundriss zum Standortwechsel"
-            : "Drag to look around · Floorplan to move"}
+          {tour.kind === "navigator"
+            ? de
+              ? "Ziehen zum Drehen · Wohnung antippen für Details"
+              : "Drag to orbit · Tap a unit for details"
+            : de
+              ? "Ziehen zum Umsehen · Grundriss zum Standortwechsel"
+              : "Drag to look around · Floorplan to move"}
         </span>
         <div className="flex items-center gap-4">
           {started && (
