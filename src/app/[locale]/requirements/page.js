@@ -37,19 +37,19 @@ export default async function RequirementsPage({ params }) {
       <JsonLd data={breadcrumbJsonLd([{ name: "SKLO Studio", path: `/${locale}` }, { name: r.title, path: `/${locale}/requirements` }])} />
 
       <section className="section-shell hairline-top w-full py-16 md:py-20 px-6 md:px-16 lg:px-28 xl:px-40">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-start">
-          <div className="lg:col-span-5 flex flex-col gap-6">
-            <Title3D as="h1" className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-widest uppercase text-balance">{r.title}</Title3D>
-            <a
-              href={data.pdf.href}
-              download={data.pdf.name}
-              className="inline-flex items-center gap-2 rounded-full bg-text text-bg px-6 py-3 text-sm font-semibold transition-all duration-300 hover:opacity-90 hover:scale-[1.03] w-fit"
-            >
-              {r.download}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M12 4v12M6 10l6 6 6-6M5 20h14" /></svg>
-            </a>
-          </div>
-          <p className="lg:col-span-6 lg:col-start-7 text-xl md:text-2xl text-white/90 leading-snug tracking-[-0.01em] max-w-[34ch] text-balance lg:pt-2">{r.intro}</p>
+        {/* The German title is one 20-letter word: it gets the full width,
+            and the download button and the lead share the row below. */}
+        <Title3D as="h1" className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-wider uppercase text-balance break-words">{r.title}</Title3D>
+        <div className="mt-8 md:mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-start">
+          <a
+            href={data.pdf.href}
+            download={data.pdf.name}
+            className="lg:col-span-4 inline-flex items-center gap-2 rounded-full bg-text text-bg px-6 py-3 text-sm font-semibold transition-all duration-300 hover:opacity-90 hover:scale-[1.03] w-fit"
+          >
+            {r.download}
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M12 4v12M6 10l6 6 6-6M5 20h14" /></svg>
+          </a>
+          <p className="lg:col-span-7 lg:col-start-6 text-xl md:text-2xl text-white/90 leading-snug tracking-[-0.01em] max-w-[36ch] text-balance">{r.intro}</p>
         </div>
 
         {/* The six groups as a numbered checklist on hairlines. The number
