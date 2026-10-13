@@ -206,10 +206,10 @@
       "stepAlt": "Visual zum Arbeitsschritt",
       "lightboxAlt": "Galeriebild im Vollbild",
       "problemsEyebrow": "Die Ausgangslage",
-      "problemsTitle": "Was sie löst",
+      "problemsTitle": "Warum {service}",
       "deliverablesTitle": "Das erhalten Sie",
       "investmentEyebrow": "Investition",
-      "investmentTitle": "Was es kostet",
+      "investmentTitle": "Was {service} kostet",
       "from": "ab",
       "includesTitle": "Inbegriffen",
       "turnaroundTitle": "Dauer",
@@ -217,7 +217,7 @@
       "priceNote": "Preise exkl. MwSt. Jedes Projekt erhält nach dem Briefing eine verbindliche Offerte.",
       "quoteCta": "Offerte anfragen",
       "faqEyebrow": "Bevor wir starten",
-      "faqTitle": "Fragen zu dieser Leistung"
+      "faqTitle": "Fragen zu {service}"
     }
   },
   "gallery": {

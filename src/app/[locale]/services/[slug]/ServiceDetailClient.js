@@ -7,6 +7,7 @@ import ServicesCarousel from "@/components/ServicesCarousel";
 import Title3D from "@/components/Title3D";
 import TourEmbed from "@/components/TourEmbed";
 import { formatPrice } from "@/data/serviceContent";
+import { humanizeTitle } from "@/lib/seo";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import LightboxVideo from "@/components/LightboxVideo";
 import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor, serviceTourFor } from "@/data/galleryData";
@@ -205,6 +206,12 @@ const PIPELINE_SERVICE_SLUGS = ["exterior-visualization", "interior-visualizatio
 
 export default function ServiceDetailClient({ service, otherServices, locale, t }) {
   const d = t?.services?.detail ?? {};
+  // The section headings name the service ("Why interior visualisation",
+  // "What interior visualisation costs"): that is the phrase people search
+  // for, and the heading is where it counts. The part after "|" is a
+  // subtitle ("| VR", "| Mood Film") and reads wrong mid-sentence.
+  const serviceName = humanizeTitle(service.title.split("|")[0].trim());
+  const named = (template = "") => template.replace("{service}", serviceName);
   const g = t?.gallery ?? {};
   const hasPipeline = PIPELINE_SERVICE_SLUGS.includes(service.slug);
 
@@ -478,7 +485,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
           <div className="lg:col-span-4 flex flex-col gap-8 lg:sticky lg:top-32">
             <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
-              {d.problemsTitle}
+              {named(d.problemsTitle)}
             </Title3D>
             {service.intro && (
               <p className="text-xl md:text-2xl text-white/90 leading-snug tracking-[-0.01em] max-w-[30ch] text-balance">
@@ -767,7 +774,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
               {d.investmentEyebrow}
             </span>
             <Title3D className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wider">
-              {d.investmentTitle}
+              {named(d.investmentTitle)}
             </Title3D>
             <p className="text-sm text-white/50 max-w-md leading-relaxed">{d.priceNote}</p>
           </div>
@@ -828,7 +835,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
               {d.faqEyebrow}
             </span>
             <Title3D className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wider">
-              {d.faqTitle}
+              {named(d.faqTitle)}
             </Title3D>
           </div>
           <div className="flex flex-col border-b border-white/10">

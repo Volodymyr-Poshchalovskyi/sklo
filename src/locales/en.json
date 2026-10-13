@@ -206,10 +206,10 @@
       "stepAlt": "Workflow step visual",
       "lightboxAlt": "Fullscreen gallery item",
       "problemsEyebrow": "The challenge",
-      "problemsTitle": "What it solves",
+      "problemsTitle": "Why {service}",
       "deliverablesTitle": "What you get",
       "investmentEyebrow": "Investment",
-      "investmentTitle": "What it costs",
+      "investmentTitle": "What {service} costs",
       "from": "from",
       "includesTitle": "Included",
       "turnaroundTitle": "Turnaround",
@@ -217,7 +217,7 @@
       "priceNote": "Prices exclude VAT. Every project receives a binding quote after the briefing.",
       "quoteCta": "Request a quote",
       "faqEyebrow": "Before we start",
-      "faqTitle": "Questions about this service"
+      "faqTitle": "Questions about {service}"
     }
   },
   "gallery": {

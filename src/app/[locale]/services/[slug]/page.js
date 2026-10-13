@@ -1,7 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { servicesData, localizeService } from "@/data/servicesData";
-import { localizeServiceContent } from "@/data/serviceContent";
+import { localizeServiceContent, formatPrice } from "@/data/serviceContent";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 
@@ -20,12 +20,22 @@ export async function generateMetadata({ params }) {
   const { locale, slug } = await params;
   const service = servicesData.find((s) => s.slug === slug);
   if (!service) return {};
-  const localized = localizeService(service, locale);
+  const localized = { ...localizeService(service, locale), ...localizeServiceContent(slug, locale) };
+  const name = humanizeTitle(localized.title.split("|")[0].trim());
+  const de = locale === "de";
+  // Title and description carry what a search for this service wants to
+  // see first: the service, the market, the "from" price and the turnaround.
+  const inv = localized.investment;
+  const description = inv
+    ? de
+      ? `${name} für Architekten, Bauträger und Makler in der Schweiz, Deutschland und Österreich: ab ${formatPrice(inv.from)} ${inv.unit}, ${inv.turnaround}. ${localized.cardDesc ?? ""}`
+      : `${name} for architects, developers and estate agents in Switzerland, Germany and Austria: from ${formatPrice(inv.from)} ${inv.unit}, ${inv.turnaround}. ${localized.cardDesc ?? ""}`
+    : localized.desc;
   return pageMetadata({
     locale,
     path: `/services/${slug}`,
-    title: localized.title,
-    description: snippet(localized.desc),
+    title: de ? `${name} Schweiz, Deutschland & Österreich` : `${name} Switzerland, Germany & Austria`,
+    description: snippet(description.trim()),
     // A 1200×630 JPEG cut from the service's own hero (a poster frame for the
     // two video services): WhatsApp and LinkedIn ignore webp share images.
     image: `/assets/og/services/${slug}.jpg`,
