@@ -469,62 +469,60 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
           servicesData). Said before the pipeline, because a developer
           decides on the outcome, not on how the render is made. */}
       {service.problems?.length > 0 && (
-      <section className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
-          <div className="flex flex-col gap-6 lg:sticky lg:top-32">
-            <span className="text-xs font-semibold tracking-widest uppercase text-accent block">
-              {d.problemsEyebrow}
-            </span>
-            <Title3D className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wider">
+      <section className="section-shell hairline-top w-full py-24 md:py-32 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        {/* An argument, not a card grid: the lead paragraph says why the
+            service exists, then three rows set the client's problem against
+            what the studio answers it with — the way a proposal reads, left
+            column "you said", right column "we do". Hairlines carry the
+            structure; nothing is boxed. */}
+        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+          <div className="lg:col-span-4 flex flex-col gap-8 lg:sticky lg:top-32">
+            <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
               {d.problemsTitle}
             </Title3D>
             {service.intro && (
-              <p className="text-base sm:text-lg text-white/60 leading-relaxed max-w-md">
+              <p className="text-xl md:text-2xl text-white/90 leading-snug tracking-[-0.01em] max-w-[30ch] text-balance">
                 {service.intro}
               </p>
             )}
+          </div>
+
+          <div className="lg:col-span-7 lg:col-start-6 flex flex-col">
+            <ol className="flex flex-col border-b border-white/10">
+              {service.problems.map((item, idx) => (
+                <li key={idx} className="grid grid-cols-1 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-x-10 gap-y-3 py-8 md:py-9 border-t border-white/10">
+                  <p className="text-base md:text-[17px] text-white/50 leading-snug max-w-[26ch]">
+                    {item.problem}
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    <h3 className="text-lg md:text-xl font-semibold text-white leading-snug tracking-[-0.01em] text-balance">
+                      {item.title}
+                    </h3>
+                    <p className="text-[15px] md:text-base text-white/70 leading-relaxed max-w-[58ch]">
+                      {item.desc}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
             {service.deliverables?.length > 0 && (
-              <div className="tile no-lift flex flex-col gap-4 p-6 mt-2 max-w-md">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">
+              <div className="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-x-10 gap-y-4">
+                <h3 className="text-base md:text-[17px] font-semibold text-white leading-snug">
                   {d.deliverablesTitle}
-                </span>
-                <ul className="flex flex-col gap-2.5">
+                </h3>
+                <ul className="flex flex-col">
                   {service.deliverables.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-white/70 leading-relaxed">
-                      <span aria-hidden="true" className="mt-[7px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
-                      {item}
+                    <li key={item} className="flex items-start gap-4 py-3 border-b border-white/10 last:border-b-0 text-[15px] md:text-base text-white/80 leading-relaxed">
+                      <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-[7px] w-3.5 h-3.5 shrink-0 text-accent" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M2.5 8.5l3.5 3.5 7.5-8" />
+                      </svg>
+                      <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
             )}
-          </div>
-
-          <div className="flex flex-col gap-4">
-            {service.problems.map((item, idx) => (
-              <article
-                key={idx}
-                className="tile no-lift grid grid-cols-1 md:grid-cols-[auto_1fr] gap-4 md:gap-8 p-6 md:p-8"
-              >
-                <span
-                  className="text-3xl md:text-4xl font-bold text-transparent select-none tracking-tight leading-none"
-                  style={{ WebkitTextStroke: "1px var(--color-border-stroke)", opacity: 0.6 }}
-                >
-                  {String(idx + 1).padStart(2, "0")}
-                </span>
-                <div className="flex flex-col gap-3">
-                  <p className="text-xs font-semibold tracking-widest uppercase text-white/50">
-                    {item.problem}
-                  </p>
-                  <h3 className="text-lg md:text-xl font-bold uppercase tracking-wider text-white leading-snug">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-white/70 leading-relaxed font-light">
-                    {item.desc}
-                  </p>
-                </div>
-              </article>
-            ))}
           </div>
         </div>
       </section>
@@ -833,9 +831,9 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
               {d.faqTitle}
             </Title3D>
           </div>
-          <div className="flex flex-col divide-y divide-white/10 border-y border-white/10">
+          <div className="flex flex-col border-b border-white/10">
             {service.faq.map((item, idx) => (
-              <details key={idx} className="group py-5">
+              <details key={idx} className="group py-5 border-t border-white/10">
                 <summary className="flex items-start justify-between gap-6 cursor-pointer list-none text-base md:text-lg font-semibold text-white">
                   <span>{item.q}</span>
                   <span aria-hidden="true" className="mt-1 shrink-0 text-white/50 transition-transform duration-300 group-open:rotate-45">+</span>
