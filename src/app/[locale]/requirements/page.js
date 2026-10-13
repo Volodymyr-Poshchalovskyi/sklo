@@ -39,7 +39,7 @@ export default async function RequirementsPage({ params }) {
       <section className="section-shell hairline-top w-full py-16 md:py-20 px-6 md:px-16 lg:px-28 xl:px-40">
         {/* The German title is one 20-letter word: it gets the full width,
             and the download button and the lead share the row below. */}
-        <Title3D as="h1" className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-wider uppercase text-balance break-words">{r.title}</Title3D>
+        <Title3D as="h1" className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-wider uppercase text-balance hyphens-auto [overflow-wrap:anywhere]">{r.title}</Title3D>
         <div className="mt-8 md:mt-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-start">
           <a
             href={data.pdf.href}
