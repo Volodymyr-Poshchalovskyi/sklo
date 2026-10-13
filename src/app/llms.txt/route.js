@@ -58,6 +58,8 @@ ${projects.map((p) => `- [${p.name}, ${p.city} (${p.country})](${SITE_URL}/en/pr
 - [About](${SITE_URL}/en/about): the team
 - [Contact](${SITE_URL}/en/contact): five-step project enquiry with file upload
 - [Imprint](${SITE_URL}/en/imprint) · [Privacy](${SITE_URL}/en/privacy)
+- [All questions and answers](${SITE_URL}/en/faq)
+- [Glossary](${SITE_URL}/en/glossary): the terms used in a visualisation quote, defined
 - [Sitemap](${SITE_URL}/sitemap.xml)
 
 ## Optional

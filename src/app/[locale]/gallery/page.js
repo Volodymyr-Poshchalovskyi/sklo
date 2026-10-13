@@ -1,6 +1,6 @@
 import GalleryClient from "./GalleryClient";
 import { galleryItems } from "@/data/galleryData";
-import { imageVariant } from "@/lib/media";
+import { imageVariant, videoSrc, videoPoster } from "@/lib/media";
 import { absoluteUrl, JsonLd, SITE_URL } from "@/lib/seo";
 
 // A server component on purpose: awaiting `searchParams` opts the route out
@@ -12,7 +12,7 @@ export default async function GalleryPage({ params, searchParams }) {
   await searchParams;
   // The renders that have a descriptive alt, as an ItemList of ImageObjects:
   // what Google Images and the AI engines read as "these are the works".
-  const described = galleryItems.filter((i) => i.type === "image" && (locale === "de" ? i.altDe : i.alt)).slice(0, 40);
+  const described = galleryItems.filter((i) => (locale === "de" ? i.altDe : i.alt)).slice(0, 48);
   return (
     <>
       <JsonLd
@@ -25,18 +25,29 @@ export default async function GalleryPage({ params, searchParams }) {
           itemListElement: described.map((i, n) => ({
             "@type": "ListItem",
             position: n + 1,
-            item: {
-              "@type": "ImageObject",
-              contentUrl: imageVariant(i.src, 1920),
-              thumbnailUrl: imageVariant(i.src, 640),
-              name: locale === "de" ? i.altDe : i.alt,
-              description: locale === "de" ? i.altDe : i.alt,
-              creator: { "@id": `${SITE_URL}/#organization` },
-              copyrightNotice: "© SKLO Studio",
-              creditText: "SKLO Studio",
-              license: absoluteUrl(`/${locale}/imprint`),
-              acquireLicensePage: absoluteUrl(`/${locale}/contact`),
-            },
+            item:
+              i.type === "video"
+                ? {
+                    "@type": "VideoObject",
+                    name: locale === "de" ? i.altDe : i.alt,
+                    description: locale === "de" ? i.altDe : i.alt,
+                    contentUrl: videoSrc(i.src, "hd"),
+                    thumbnailUrl: videoPoster(i.src),
+                    uploadDate: "2026-10-12",
+                    creator: { "@id": `${SITE_URL}/#organization` },
+                  }
+                : {
+                    "@type": "ImageObject",
+                    contentUrl: imageVariant(i.src, 1920),
+                    thumbnailUrl: imageVariant(i.src, 640),
+                    name: locale === "de" ? i.altDe : i.alt,
+                    description: locale === "de" ? i.altDe : i.alt,
+                    creator: { "@id": `${SITE_URL}/#organization` },
+                    copyrightNotice: "© SKLO Studio",
+                    creditText: "SKLO Studio",
+                    license: absoluteUrl(`/${locale}/imprint`),
+                    acquireLicensePage: absoluteUrl(`/${locale}/contact`),
+                  },
           })),
         }}
       />

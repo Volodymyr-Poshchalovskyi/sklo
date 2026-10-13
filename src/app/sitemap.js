@@ -18,6 +18,8 @@ export default function sitemap() {
     ...regions.map((r) => ({ path: `/regions/${r.slug}`, priority: 0.8, changeFrequency: "monthly" })),
     ...audiences.map((a) => ({ path: `/for/${a.slug}`, priority: 0.8, changeFrequency: "monthly" })),
     { path: "/knowledge", priority: 0.6, changeFrequency: "monthly" },
+    { path: "/faq", priority: 0.6, changeFrequency: "monthly" },
+    { path: "/glossary", priority: 0.5, changeFrequency: "yearly" },
     ...knowledge.map((a) => ({ path: `/knowledge/${a.slug}`, priority: 0.6, changeFrequency: "monthly" })),
   ];
 

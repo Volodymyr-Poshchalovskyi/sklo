@@ -182,7 +182,9 @@
       "privacy": "Datenschutz",
       "projects": "Projekte",
       "knowledge": "Wissen",
-      "audiencesTitle": "Für"
+      "audiencesTitle": "Für",
+      "glossary": "Glossar",
+      "faq": "FAQ"
     },
     "follow": "Folgen Sie uns",
     "phoneLead": "Anruf oder WhatsApp"
@@ -256,43 +258,43 @@
     "categories": {
       "All": {
         "label": "Alle Projekte",
-        "desc": "Ein kuratierter Querschnitt unserer Architekturarbeiten — Aussen, Innen, Vogelperspektive und Bewegtbild nebeneinander. Produkt, Virtual Staging und 360°-Touren haben eigene Bereiche."
+        "desc": "Ein kuratierter Querschnitt der Architekturvisualisierung des Studios: Aussen- und Innenrenderings, Vogelperspektiven, Animationen und Cinemagraphs für Wohnüberbauungen, Umbauten und Wettbewerbe in der Schweiz, Deutschland und Österreich, nebeneinander gezeigt. Produktvisualisierung, Virtual Staging und die 360°-Rundgänge haben eigene Bereiche."
       },
       "Exterior": {
         "label": "Aussen",
-        "desc": "Fotorealistische Architekturvisualisierungen, die Gebäude, Bauwerke und Aussenräume in ihrer realen Umgebung zeigen."
+        "desc": "Fotorealistische Aussenvisualisierungen von Mehrfamilienhäusern, Villen, Umbauten und öffentlichen Bauten in ihrer echten Umgebung — Strassenansichten, Höfe und Abendstimmungen für Verkaufsbroschüren, Projektwebsites und Baugesuche. Jedes Bild ist aus den Plänen oder dem Modell des Architekten mit den ausgeschriebenen Fassadenmaterialien gerendert."
       },
       "Interior": {
         "label": "Innen",
-        "desc": "Detailreiche Innenvisualisierungen, die Licht, Materialien und Atmosphäre einfangen und Wohn- wie Geschäftsräume erlebbar machen."
+        "desc": "Innenvisualisierungen von Wohnzimmern, Küchen, Schlafzimmern und Bädern auf Augenhöhe, eingerichtet für die Käufer, an die sich das Projekt richtet, und aus der Ausbauliste gebaut — die Musterwohnung für Überbauungen im Verkauf ab Plan und die Basis für 360°-Rundgänge derselben Räume."
       },
       "Bird's-Eye View": {
         "label": "Vogel­perspektive",
-        "desc": "Luft- und Drohnenperspektiven, die ein Projekt im Kontext seines Quartiers und der umgebenden Landschaft zeigen."
+        "desc": "Luft- und Drohnenperspektiven, die eine Überbauung in ihr Quartier setzen: Gelände aus Höhendaten, Nachbarn aus Satelliten- und Drohnenbildern, das Projekt selbst in echter Höhe. Eingesetzt als Broschürentitel, Bauzaunbanner und neutrale Ansichten fürs Baugesuch."
       },
       "Product": {
         "label": "Produkt",
-        "desc": "Produktvisualisierungen in Studioqualität von Möbeln und Objekten — ausgeleuchtet und inszeniert für Kataloge und Marketing."
+        "desc": "Produktvisualisierung in Studioqualität von Küchen, Möbeln, Armaturen und Materialien aus CAD-Daten — Packshots auf Weiss und Lifestyle-Szenen in gestylten Innenräumen, mit jeder Farb- und Materialvariante aus einem Setup gerendert, für Kataloge, Onlineshops und Messen."
       },
       "Virtual Staging": {
         "label": "Virtual Staging",
-        "desc": "Reale Innenaufnahmen, digital möbliert und eingerichtet, um das volle Potenzial eines Raums zu zeigen."
+        "desc": "Echte Fotos leerer Räume, digital in korrektem Massstab und Licht eingerichtet, geliefert mit dem Original und dem Hinweis «virtuell eingerichtet», den die Portale erwarten — und Sanierungsvarianten, die neue Böden, Küchen und Wände im bestehenden Raum zeigen, als Vorher-Nachher-Paare."
       },
       "360° Tours": {
         "label": "360°-Touren",
-        "desc": "Begehbare 360°-Rundgänge durch ein fertiges Projekt — zum Umsehen ziehen, über den Grundriss die Szene wechseln."
+        "desc": "Begehbare 360°-Rundgänge, gerendert aus denselben Szenen wie die Standbilder: zum Umsehen ziehen, über Hotspots oder den Grundriss von Raum zu Raum, auf Smartphone, Desktop oder VR-Brille. Die Musterwohnung für Projekte, die noch auf dem Papier stehen."
       },
       "Animation": {
         "label": "Animation",
-        "desc": "Architekturfilme und Motion-Showcases, die ein Projekt über Kamerafahrt und Stimmung zum Leben erwecken."
+        "desc": "Architekturanimationen und Mood Films: Kameraflüge vom Quartier in die Wohnung, Menschen, Verkehr und das Licht einer bestimmten Stunde, geschnitten für Websites, Verkaufsanlässe und Social Media. Jeder Film stammt aus demselben Modell wie die Renderings des Projekts."
       },
       "Cinemagraph": {
         "label": "Cinemagraph",
-        "desc": "Statische Visualisierungen mit feinen Loop-Animationen, die den Blick sofort auf zentrale Details lenken."
+        "desc": "Standbild-Renderings mit einem lebendigen Detail in nahtloser Schleife — ein Cheminée, Regen am Fenster, Vorhänge in der Brise —, die das Scrollen im Feed stoppen und ein Hero-Video mit einem Zehntel der Dateigrösse ersetzen."
       },
       "Web": {
         "label": "Web",
-        "desc": "Projektseiten, Portfolios und Landingpages, gebaut um die Renderings herum — gezeigt als Geräte-Mockups von drei Beispielseiten."
+        "desc": "Projektwebsites, Portfolios und Landingpages, gebaut um die Renderings herum: Wohnungsspiegel, Grundrisse, eingebettete Rundgänge und Anfrageformulare, die die Wohnung nennen, auf Deutsch und Englisch — hier gezeigt als Geräte-Mockups von drei Beispielseiten."
       }
     },
     "shownOf": "{shown} von {total} sichtbar",
@@ -432,5 +434,17 @@
       "estate-agents": "Makler",
       "cooperatives": "Genossenschaften"
     }
+  },
+  "glossary": {
+    "title": "Glossar",
+    "intro": "Die Begriffe, die in einer Visualisierungsofferte vorkommen — Rendering, Fotomontage, Styleframe, Ausbauliste, Verkauf ab Plan — jeder in zwei Sätzen erklärt.",
+    "footerLink": "Glossar"
+  },
+  "faqHub": {
+    "title": "Fragen und Antworten",
+    "intro": "{count} Fragen, die Kunden zu unseren Leistungen, unseren Märkten und unserer Arbeitsweise stellen, mit den Antworten an einem Ort. Jede Gruppe verlinkt auf ihre Seite.",
+    "jumpTo": "Springen zu",
+    "toPage": "Zur Seite",
+    "footerLink": "FAQ"
   }
 }

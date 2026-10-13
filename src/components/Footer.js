@@ -225,6 +225,12 @@ export default function Footer({ locale, t }) {
             <Link href={`/${locale}/knowledge`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               {links.knowledge}
             </Link>
+            <Link href={`/${locale}/faq`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
+              {links.faq}
+            </Link>
+            <Link href={`/${locale}/glossary`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
+              {links.glossary}
+            </Link>
             <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mt-6 mb-2">
               {t?.regions?.footerTitle}
             </span>

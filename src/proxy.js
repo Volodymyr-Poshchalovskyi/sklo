@@ -35,12 +35,20 @@ export function proxy(request) {
   );
 
   if (!hasLocale) {
+    // Which language for a bare path: the browser's own preference first,
+    // then the country Vercel sees the request from (Switzerland, Germany,
+    // Austria, Liechtenstein → German), English otherwise. Only the choice
+    // of language is geo-based; every page is the same for everyone.
+    const accept = request.headers.get("accept-language") ?? "";
+    const country = request.headers.get("x-vercel-ip-country") ?? "";
+    const prefersDe = /^de\b|,\s*de\b/i.test(accept.split(";")[0] ?? "") || (!/^en\b/i.test(accept) && ["CH", "DE", "AT", "LI"].includes(country));
+    const locale = prefersDe ? "de" : defaultLocale;
     // "/" would become "/en/", which Next then 308s to "/en" — one hop, not
-    // two, for the most common entry URL. Permanent, so browsers and Google
-    // remember it.
-    const target = pathname === "/" ? `/${defaultLocale}` : `/${defaultLocale}${pathname}`;
+    // two. A 307: the answer depends on the visitor, so neither the browser
+    // nor Google may cache it as permanent.
+    const target = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
     return withIndexingPolicy(
-      NextResponse.redirect(new URL(target, request.url), 308),
+      NextResponse.redirect(new URL(target, request.url), 307),
       request
     );
   }

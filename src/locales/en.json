@@ -182,7 +182,9 @@
       "privacy": "Privacy",
       "projects": "Projects",
       "knowledge": "Knowledge",
-      "audiencesTitle": "For"
+      "audiencesTitle": "For",
+      "glossary": "Glossary",
+      "faq": "FAQ"
     },
     "follow": "Follow us",
     "phoneLead": "Call or WhatsApp"
@@ -256,43 +258,43 @@
     "categories": {
       "All": {
         "label": "All Projects",
-        "desc": "A curated mix of our architectural work — exteriors, interiors, aerials and motion, shown side by side. Product, Virtual Staging and 360° Tours have their own sections."
+        "desc": "A curated cross-section of the studio's architectural visualisation: exterior and interior renderings, aerial views, animations and cinemagraphs for residential developments, conversions and competitions in Switzerland, Germany and Austria, shown side by side. Product visualisation, virtual staging and the 360° tours have their own sections."
       },
       "Exterior": {
         "label": "Exterior",
-        "desc": "Photorealistic architectural renderings showing buildings, structures, and landscaping in their real-world environments."
+        "desc": "Photorealistic exterior visualisations of apartment buildings, villas, conversions and public buildings in their real surroundings — street views, courtyards and evening moods for sales brochures, project websites and building permits. Every image is rendered from the architect's plans or model with the specified facade materials."
       },
       "Interior": {
         "label": "Interior",
-        "desc": "Highly detailed internal designs capturing lighting, materials, and atmosphere to showcase living and commercial spaces."
+        "desc": "Interior renderings of living rooms, kitchens, bedrooms and bathrooms at eye level, furnished for the buyer the project is aimed at and built from the finish schedule — the show apartment for developments sold off-plan, and the base for 360° tours of the same rooms."
       },
       "Bird's-Eye View": {
         "label": "Bird's-Eye View",
-        "desc": "Aerial and drone-perspective renderings showing a development within its surrounding district and landscape."
+        "desc": "Aerial and drone-perspective renderings that place a development in its district: terrain from elevation data, neighbours from satellite and drone imagery, the project itself at true height. Used as brochure covers, construction-site banners and neutral permit views."
       },
       "Product": {
         "label": "Product",
-        "desc": "Studio-quality 3D renderings of furniture and product pieces, lit and staged for catalogs and marketing."
+        "desc": "Studio-quality product visualisation of kitchens, furniture, fittings and materials from CAD data — packshots on white and lifestyle scenes in styled interiors, with every colour and material variant rendered from one setup for catalogues, web shops and trade fairs."
       },
       "Virtual Staging": {
         "label": "Virtual Staging",
-        "desc": "Real interior photographs digitally furnished and dressed to show a space's full potential."
+        "desc": "Real photographs of empty rooms furnished digitally at correct scale and light, delivered with the original and the 'virtually staged' note the portals expect — and renovation variants that show new floors, kitchens and walls in the existing room, as before-and-after pairs."
       },
       "360° Tours": {
         "label": "360° Tours",
-        "desc": "Walkable 360° tours of a finished project — drag to look around, use the floorplan to move between scenes."
+        "desc": "Walkable 360° tours rendered from the same scenes as the stills: drag to look around, follow the hotspots or the floor plan from room to room, on a phone, a desktop or a VR headset. The show apartment for projects that are still on paper."
       },
       "Animation": {
         "label": "Animation",
-        "desc": "Cinematic architectural films and motion showcases bringing a project to life through camera movement and mood."
+        "desc": "Architectural animations and mood films: camera flights from the quarter into the apartment, people, traffic and the light of a particular hour, cut for websites, sales events and social media. Each film comes from the same model as the project's renderings."
       },
       "Cinemagraph": {
         "label": "Cinemagraph",
-        "desc": "Static architectural visualizations enhanced with subtle loop animations, drawing instant attention to key design details."
+        "desc": "Still renderings with one living detail in a seamless loop — a fireplace, rain on the window, curtains in a breeze — that stop the scroll in a feed and replace a hero video at a tenth of the file size."
       },
       "Web": {
         "label": "Web",
-        "desc": "Project sites, portfolios and landing pages built around the renders — shown as device mockups of three example sites."
+        "desc": "Project websites, portfolios and landing pages built around the renderings: unit tables, floor plans, embedded tours and enquiry forms that name the unit, in German and English — shown here as device mockups of three example sites."
       }
     },
     "shownOf": "Showing {shown} of {total}",
@@ -432,5 +434,17 @@
       "estate-agents": "Estate agents",
       "cooperatives": "Cooperatives"
     }
+  },
+  "glossary": {
+    "title": "Glossary",
+    "intro": "The terms you meet in a visualisation quote — rendering, photomontage, styleframe, finish schedule, off-plan — each explained in two sentences.",
+    "footerLink": "Glossary"
+  },
+  "faqHub": {
+    "title": "Questions and answers",
+    "intro": "{count} questions clients ask about our services, our markets and the way we work, with the answers in one place. Each group links to its page.",
+    "jumpTo": "Jump to",
+    "toPage": "To the page",
+    "footerLink": "FAQ"
   }
 }

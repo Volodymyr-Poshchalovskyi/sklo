@@ -52,6 +52,8 @@ export default async function KnowledgeArticle({ params }) {
           author: { "@id": `${SITE_URL}/#organization` },
           publisher: { "@id": `${SITE_URL}/#organization` },
           inLanguage: locale,
+          // The definition paragraph is what a voice assistant should read.
+          speakable: { "@type": "SpeakableSpecification", cssSelector: [".speakable-definition"] },
           about: services.map((s) => ({ "@type": "Service", name: s.name, url: absoluteUrl(`/${locale}/services/${s.slug}`) })),
         }}
       />
@@ -77,7 +79,7 @@ export default async function KnowledgeArticle({ params }) {
 
           <div className="lg:col-span-7 lg:col-start-6 flex flex-col gap-10">
             {/* The definition is the answer: first, large, quotable. */}
-            <p className="text-xl md:text-2xl text-white/90 leading-snug tracking-[-0.01em] max-w-[36ch] text-balance">{a.definition}</p>
+            <p className="speakable-definition text-xl md:text-2xl text-white/90 leading-snug tracking-[-0.01em] max-w-[36ch] text-balance">{a.definition}</p>
             {a.sections.map((s) => (
               <section key={s.h} className="flex flex-col gap-3 pt-8 border-t border-white/10">
                 <h2 className="text-lg md:text-xl font-semibold text-white leading-snug tracking-[-0.01em]">{s.h}</h2>
