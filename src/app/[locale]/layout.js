@@ -34,6 +34,9 @@ export async function generateMetadata({ params }) {
   const t = translations[locale] ?? translations.en;
   const isDe = locale === "de";
   return {
+    // Bing Webmaster Tools site verification (the GSC import did not find
+    // the property); Google is verified through DNS.
+    verification: { other: { "msvalidate.01": "A6E70172D88657F9D53FA752C91F8CC3" } },
     ...pageMetadata({
       locale,
       path: "",

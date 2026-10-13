@@ -165,7 +165,8 @@
       "portfolio": "Gallery",
       "imprint": "Imprint",
       "privacy": "Privacy",
-      "projects": "Projects"
+      "projects": "Projects",
+      "knowledge": "Knowledge"
     },
     "follow": "Follow us",
     "phoneLead": "Call or WhatsApp"
@@ -387,5 +388,13 @@
       "germany": "Germany",
       "austria": "Austria"
     }
+  },
+  "knowledge": {
+    "title": "Knowledge",
+    "intro": "Short answers to the questions clients ask before a visualisation project: what the services are, what they cost, and which of two options fits.",
+    "faqTitle": "Related questions",
+    "related": "Read next",
+    "from": "from",
+    "footerLink": "Knowledge"
   }
 }

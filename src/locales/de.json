@@ -165,7 +165,8 @@
       "portfolio": "Galerie",
       "imprint": "Impressum",
       "privacy": "Datenschutz",
-      "projects": "Projekte"
+      "projects": "Projekte",
+      "knowledge": "Wissen"
     },
     "follow": "Folgen Sie uns",
     "phoneLead": "Anruf oder WhatsApp"
@@ -387,5 +388,13 @@
       "germany": "Deutschland",
       "austria": "Österreich"
     }
+  },
+  "knowledge": {
+    "title": "Wissen",
+    "intro": "Kurze Antworten auf die Fragen, die Kunden vor einem Visualisierungsprojekt stellen: was die Leistungen sind, was sie kosten und welche von zwei Optionen passt.",
+    "faqTitle": "Verwandte Fragen",
+    "related": "Weiterlesen",
+    "from": "ab",
+    "footerLink": "Wissen"
   }
 }

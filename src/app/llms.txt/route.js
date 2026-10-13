@@ -1,6 +1,7 @@
 import { servicesData, stripSoftHyphens } from "@/data/servicesData";
 import { projects } from "@/data/projects";
 import { regions } from "@/data/regions";
+import { knowledge } from "@/data/knowledge";
 import { SITE_URL, SITE_NAME } from "@/lib/seo";
 import { CONTACT_EMAIL, PHONE, SOCIALS, FOUNDED, TEAM_SIZE } from "@/data/studio";
 
@@ -34,6 +35,10 @@ ${services}
 ## Markets
 
 ${regions.map((r) => `- [${r.name}](${SITE_URL}/en/regions/${r.slug}): ${r.lead}`).join("\n")}
+
+## Knowledge
+
+${knowledge.map((a) => `- [${a.title}](${SITE_URL}/en/knowledge/${a.slug}): ${a.definition}`).join("\n")}
 
 ## Projects
 
