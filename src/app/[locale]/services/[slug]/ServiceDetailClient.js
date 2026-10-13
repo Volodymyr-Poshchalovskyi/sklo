@@ -8,6 +8,7 @@ import Title3D from "@/components/Title3D";
 import TourEmbed from "@/components/TourEmbed";
 import { formatPrice } from "@/data/serviceContent";
 import { humanizeTitle } from "@/lib/seo";
+import ProjectCard from "@/components/ProjectCard";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import LightboxVideo from "@/components/LightboxVideo";
 import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor, serviceTourFor } from "@/data/galleryData";
@@ -204,7 +205,7 @@ const MiniGalleryGrid = React.memo(function MiniGalleryGrid({ items, categories,
 // the hero to the mini gallery.
 const PIPELINE_SERVICE_SLUGS = ["exterior-visualization", "interior-visualization", "web-development"];
 
-export default function ServiceDetailClient({ service, otherServices, locale, t }) {
+export default function ServiceDetailClient({ service, otherServices, locale, t, relatedProjects = [], relatedReading = [] }) {
   const d = t?.services?.detail ?? {};
   // The section headings name the service ("Why interior visualisation",
   // "What interior visualisation costs"): that is the phrase people search
@@ -821,6 +822,42 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
             </Link>
           </div>
         </div>
+      </section>
+      )}
+
+      {/* 3b2. PROJECTS WITH THIS SERVICE + RELATED READING — the cross-links
+          that turn twelve service pages into one site: cases that used the
+          service, explainers that mention it. */}
+      {(relatedProjects.length > 0 || relatedReading.length > 0) && (
+      <section className="section-shell section-band hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        {relatedProjects.length > 0 && (
+          <div className="mb-20">
+            <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">{named(d.projectsTitle)}</Title3D>
+              <Link href={`/${locale}/projects`} className="text-xs font-mono uppercase tracking-widest text-white/60 hover:text-white">{d.allProjects} →</Link>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-10">
+              {relatedProjects.map((p, i) => (
+                <ProjectCard key={p.slug} project={p} locale={locale} index={i} />
+              ))}
+            </div>
+          </div>
+        )}
+        {relatedReading.length > 0 && (
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div className="lg:col-span-4">
+              <Title3D className="text-2xl md:text-3xl font-bold uppercase tracking-wider">{d.readingTitle}</Title3D>
+            </div>
+            <div className="lg:col-span-7 lg:col-start-6 flex flex-col border-b border-white/10">
+              {relatedReading.map((a) => (
+                <Link key={a.slug} href={`/${locale}/knowledge/${a.slug}`} className="group flex flex-col gap-2 py-6 border-t border-white/10">
+                  <span className="text-base md:text-lg font-semibold text-white group-hover:underline underline-offset-4">{a.title}</span>
+                  <span className="text-sm text-white/60 leading-relaxed max-w-[60ch] line-clamp-2">{a.definition}</span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
       )}
 

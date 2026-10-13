@@ -2,6 +2,8 @@ import React from "react";
 import { notFound } from "next/navigation";
 import { servicesData, localizeService } from "@/data/servicesData";
 import { localizeServiceContent, formatPrice } from "@/data/serviceContent";
+import { projects, localizeProject } from "@/data/projects";
+import { knowledge, localizeKnowledge } from "@/data/knowledge";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 
@@ -57,6 +59,13 @@ export default async function ServiceDetailPage({ params }) {
     .map((s) => localizeService(s, locale));
 
   const t = translations[locale] ?? translations.en;
+  // Cross-links computed here so the client gets flat, localised lists: the
+  // case studies that used this service and the explainers that mention it.
+  const relatedProjects = projects.filter((p) => p.services.includes(slug)).slice(0, 3).map((p) => localizeProject(p, locale));
+  const relatedReading = knowledge.filter((a) => a.services.includes(slug)).slice(0, 3).map((a) => {
+    const l = localizeKnowledge(a, locale);
+    return { slug: l.slug, title: l.title, definition: l.definition };
+  });
   // The offer — problem, deliverables, price, FAQ — comes from
   // serviceContent.js and is laid over the service record, so the client
   // reads one flat object. Web development keeps its own problems/deliverables
@@ -67,6 +76,23 @@ export default async function ServiceDetailPage({ params }) {
     <>
       <JsonLd data={serviceJsonLd({ locale, service: localized })} />
       {localized.faq?.length > 0 && <JsonLd data={faqJsonLd({ faq: localized.faq })} />}
+      {localized.pipeline?.length > 0 && (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            name: `${humanizeTitle(localized.title.split("|")[0].trim())}: ${t.services.detail.workflowTitle}`,
+            description: localized.desc,
+            totalTime: localized.investment?.turnaround,
+            step: localized.pipeline.map((st, i) => ({
+              "@type": "HowToStep",
+              position: i + 1,
+              name: st.title,
+              text: st.desc,
+            })),
+          }}
+        />
+      )}
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "SKLO Studio", path: `/${locale}` },
@@ -77,6 +103,8 @@ export default async function ServiceDetailPage({ params }) {
       <ServiceDetailClient
         service={localized}
         otherServices={otherServices}
+        relatedProjects={relatedProjects}
+        relatedReading={relatedReading}
         locale={locale}
         t={t}
       />

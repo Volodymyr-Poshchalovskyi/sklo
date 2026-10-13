@@ -218,7 +218,10 @@
       "priceNote": "Preise exkl. MwSt. Jedes Projekt erhält nach dem Briefing eine verbindliche Offerte.",
       "quoteCta": "Offerte anfragen",
       "faqEyebrow": "Bevor wir starten",
-      "faqTitle": "Fragen zu {service}"
+      "faqTitle": "Fragen zu {service}",
+      "projectsTitle": "{service} in der Praxis",
+      "allProjects": "Alle Projekte",
+      "readingTitle": "Weiterlesen"
     }
   },
   "gallery": {

@@ -1,10 +1,13 @@
 import Link from "next/link";
 import { imageVariant, imageSrcSet } from "@/lib/media";
 import { blurStyle } from "@/lib/blur";
+import { humanizeTitle } from "@/lib/seo";
+import { serviceTitleFor } from "@/data/servicesData";
 
 // One project on the listing and on the home page: hero render, name, place,
 // the services it used. The whole card is the link.
 export default function ProjectCard({ project, locale, serviceLabel, index = 0 }) {
+  const label = serviceLabel ?? ((slug) => humanizeTitle(serviceTitleFor(slug, locale).split("|")[0].trim()));
   const hero = project.heroItem;
   return (
     <Link
@@ -38,7 +41,7 @@ export default function ProjectCard({ project, locale, serviceLabel, index = 0 }
         </div>
         <p className="text-sm text-white/60 leading-relaxed">{project.type}</p>
         <p className="text-[11px] font-mono uppercase tracking-widest text-white/40 pt-1">
-          {project.services.map(serviceLabel).join(" · ")}
+          {project.services.map(label).join(" · ")}
         </p>
       </div>
     </Link>

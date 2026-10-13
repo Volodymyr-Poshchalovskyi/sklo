@@ -218,7 +218,10 @@
       "priceNote": "Prices exclude VAT. Every project receives a binding quote after the briefing.",
       "quoteCta": "Request a quote",
       "faqEyebrow": "Before we start",
-      "faqTitle": "Questions about {service}"
+      "faqTitle": "Questions about {service}",
+      "projectsTitle": "{service} in practice",
+      "allProjects": "All projects",
+      "readingTitle": "Read more"
     }
   },
   "gallery": {
