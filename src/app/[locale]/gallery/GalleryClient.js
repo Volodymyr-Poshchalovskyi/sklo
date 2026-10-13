@@ -506,12 +506,6 @@ function GalleryPageContent() {
             <Title3D as="h1" className="text-3xl lg:text-4xl font-bold tracking-widest uppercase">
               {g.title}
             </Title3D>
-            {/* The sentence under the title follows the active filter, so the
-                column explains what is on screen instead of keeping a
-                separate "category info" box at the bottom. */}
-            <p className="text-[13px] text-white/60 leading-relaxed transition-all duration-300">
-              {g.categories[activeFilter]?.desc ?? g.categories.All.desc}
-            </p>
           </div>
 
           {/* Phone: one sideways-scrolling rail of chips. The vertical list
@@ -583,6 +577,23 @@ function GalleryPageContent() {
             </svg>
           </span>
         </Link>
+
+        {/* What the active filter shows, written for the reader who wants
+            it and for search engines: small, muted, at the foot of the
+            column, under the call to action — never competing with the
+            title. On phones it folds behind one line. */}
+        <p className="hidden lg:block mt-6 pt-5 border-t border-white/10 text-[11.5px] text-white/45 leading-relaxed transition-all duration-300">
+          {g.categories[activeFilter]?.desc ?? g.categories.All.desc}
+        </p>
+        <details className="lg:hidden mt-3 group">
+          <summary className="list-none cursor-pointer text-[11px] font-mono uppercase tracking-widest text-white/45 flex items-center gap-2">
+            {g.categoryInfo}
+            <span aria-hidden="true" className="transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <p className="pt-2 text-[12px] text-white/55 leading-relaxed">
+            {g.categories[activeFilter]?.desc ?? g.categories.All.desc}
+          </p>
+        </details>
       </div>
 
       {/* The masonry grid takes whatever width the rail leaves. */}
