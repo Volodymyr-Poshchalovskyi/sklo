@@ -1,6 +1,7 @@
 "use client";
 import { use } from "react";
 import ContactWizard from "@/components/ContactWizard";
+import { CONTACT_EMAIL, PHONE, PHONE_HREF, WHATSAPP_HREF } from "@/data/studio";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 
@@ -46,12 +47,18 @@ export default function ContactPage({ params }) {
           <p className="contact-intro text-sm text-white/60 max-w-lg">
             {t.contact.intro}
           </p>
-          <a
-            href="mailto:sklo.rendering@gmail.com"
-            className="text-sm text-white/70 hover:text-white transition-colors w-fit"
-          >
-            sklo.rendering@gmail.com
-          </a>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-white/70">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-white transition-colors">
+              {CONTACT_EMAIL}
+            </a>
+            <a href={PHONE_HREF} className="hover:text-white transition-colors">
+              {PHONE}
+            </a>
+            <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              WhatsApp
+            </a>
+            <span className="contact-intro text-white/50">{t.contactLine.reply}</span>
+          </div>
         </div>
 
         <ContactWizard locale={locale} />

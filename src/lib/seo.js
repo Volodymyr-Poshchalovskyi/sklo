@@ -1,4 +1,5 @@
 import { stripSoftHyphens } from "@/data/servicesData";
+import { CONTACT_EMAIL, PHONE, SOCIALS, FOUNDED, TEAM_SIZE, AREA_SERVED } from "@/data/studio";
 
 // One place for everything a search engine reads off a page. Every route
 // builds its metadata through `pageMetadata()` so canonical, hreflang, Open
@@ -49,7 +50,10 @@ export function humanizeTitle(raw = "") {
 export function languageAlternates(path = "") {
   return {
     en: `/en${path}`,
-    "de-CH": `/de${path}`,
+    // One German version for Switzerland, Germany and Austria — the copy is
+    // the same for all three, so a single `de` rather than three regional
+    // tags that would point at identical pages.
+    de: `/de${path}`,
     "x-default": `/en${path}`,
   };
 }
@@ -98,8 +102,31 @@ export function organizationJsonLd(locale) {
     name: SITE_NAME,
     url: SITE_URL,
     logo: absoluteUrl("/assets/android-chrome-512x512.png"),
-    email: "sklo.rendering@gmail.com",
-    areaServed: "CH",
+    email: CONTACT_EMAIL,
+    telephone: PHONE.replace(/\s+/g, ""),
+    foundingDate: FOUNDED,
+    numberOfEmployees: { "@type": "QuantitativeValue", value: TEAM_SIZE },
+    sameAs: SOCIALS.map((s) => s.href),
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: CONTACT_EMAIL,
+      telephone: PHONE.replace(/\s+/g, ""),
+      availableLanguage: ["en", "de"],
+    },
+    areaServed: AREA_SERVED.map((code) => ({ "@type": "Country", name: code })),
+    knowsAbout: [
+      "Architectural visualization",
+      "3D rendering",
+      "Exterior visualization",
+      "Interior visualization",
+      "Architectural animation",
+      "360° virtual tours",
+      "Virtual staging",
+      "3D floor plans",
+      "Real estate marketing",
+      "Project websites",
+    ],
     description:
       locale === "de"
         ? "3D-Visualisierungsstudio für Architektur, Immobilien und Produkte: Renderings, Animationen, 360°-Rundgänge und Projektwebsites."
@@ -114,7 +141,7 @@ export function websiteJsonLd(locale) {
     "@id": `${SITE_URL}/#website`,
     url: absoluteUrl(`/${locale}`),
     name: SITE_NAME,
-    inLanguage: locale === "de" ? "de-CH" : "en",
+    inLanguage: locale === "de" ? "de" : "en",
     publisher: { "@id": ORG_ID },
   };
 }
@@ -143,7 +170,7 @@ export function serviceJsonLd({ locale, service }) {
     image: service.type === "image" ? absoluteUrl(service.src) : undefined,
     provider: { "@id": ORG_ID },
     areaServed: "CH",
-    inLanguage: locale === "de" ? "de-CH" : "en",
+    inLanguage: locale === "de" ? "de" : "en",
   };
 }
 

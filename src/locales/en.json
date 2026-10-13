@@ -165,7 +165,8 @@
       "imprint": "Imprint",
       "privacy": "Privacy"
     },
-    "follow": "Follow us"
+    "follow": "Follow us",
+    "phoneLead": "Call or WhatsApp"
   },
   "about": {
     "eyebrow": "The studio",
@@ -325,5 +326,16 @@
     "accept": "Accept",
     "decline": "Decline",
     "settings": "Cookie settings"
+  },
+  "stats": {
+    "projects": "completed projects",
+    "team": "specialists in the team",
+    "perYear": "projects a year",
+    "reply": "average reply time"
+  },
+  "contactLine": {
+    "phone": "Phone",
+    "whatsapp": "WhatsApp",
+    "reply": "We reply within 12 hours on working days."
   }
 }

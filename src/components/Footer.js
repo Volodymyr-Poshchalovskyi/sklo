@@ -5,6 +5,7 @@ import Link from "next/link";
 import { OPEN_EVENT as CONSENT_OPEN_EVENT } from "@/components/CookieConsent";
 import { usePathname } from "next/navigation";
 import Title3D from "@/components/Title3D";
+import { CONTACT_EMAIL, PHONE, PHONE_HREF, WHATSAPP_HREF, SOCIALS } from "@/data/studio";
 
 const FIELD_CLASS =
   "w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-4 py-3 text-sm text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-300";
@@ -188,12 +189,17 @@ export default function Footer({ locale, t }) {
               SKLO STUDIO
             </h2>
           </div>
-          <a 
-            href="mailto:sklo.rendering@gmail.com" 
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
             className="text-base text-white/60 hover:text-white transition-colors duration-300 hover:underline w-fit"
           >
-            sklo.rendering@gmail.com
+            {CONTACT_EMAIL}
           </a>
+          <div className="flex flex-wrap items-center gap-x-4 text-sm text-white/50">
+            <span>{f.phoneLead}</span>
+            <a href={PHONE_HREF} className="text-white/70 hover:text-white transition-colors duration-300">{PHONE}</a>
+            <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors duration-300">WhatsApp</a>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-12 sm:gap-20 w-full">
@@ -219,15 +225,17 @@ export default function Footer({ locale, t }) {
             <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mb-2">
               {f.follow}
             </span>
-            <a href="#" className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              Behance
-            </a>
-            <a href="#" className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              Instagram
-            </a>
-            <a href="#" className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              LinkedIn
-            </a>
+            {SOCIALS.map((social) => (
+              <a
+                key={social.key}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block"
+              >
+                {social.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>

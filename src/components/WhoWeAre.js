@@ -3,6 +3,7 @@ import ServicesCarousel from "@/components/ServicesCarousel";
 import { servicePosterFor } from "@/data/galleryData";
 import { serviceTitleFor } from "@/data/servicesData";
 import Title3D from "@/components/Title3D";
+import StatsStrip from "@/components/StatsStrip";
 
 export default function WhoWeAre({ locale, t }) {
 
@@ -143,8 +144,9 @@ export default function WhoWeAre({ locale, t }) {
               </Title3D>
             </div>
 
-            <div className="flex flex-col gap-5 text-sm sm:text-base md:text-lg text-white/80 leading-relaxed lg:pt-3">
+            <div className="flex flex-col gap-8 text-sm sm:text-base md:text-lg text-white/80 leading-relaxed lg:pt-3">
               <p>{values.intro}</p>
+              <StatsStrip t={t} compact />
             </div>
           </div>
 

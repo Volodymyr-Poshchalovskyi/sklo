@@ -1,5 +1,6 @@
 import Title3D from "@/components/Title3D";
 import TeamCard from "@/components/TeamCard";
+import StatsStrip from "@/components/StatsStrip";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 import { pageMetadata } from "@/lib/seo";
@@ -48,6 +49,8 @@ export default async function AboutPage({ params }) {
             {t.about.title}
           </Title3D>
         </div>
+
+        <StatsStrip t={t} className="mb-14 max-w-4xl" />
 
         {/* Same grid as the services listing. Each card is a TeamCard (the
             portrait drifts behind its frame on hover); while one card is

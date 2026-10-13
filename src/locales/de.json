@@ -165,7 +165,8 @@
       "imprint": "Impressum",
       "privacy": "Datenschutz"
     },
-    "follow": "Folgen Sie uns"
+    "follow": "Folgen Sie uns",
+    "phoneLead": "Anruf oder WhatsApp"
   },
   "about": {
     "eyebrow": "Das Studio",
@@ -325,5 +326,16 @@
     "accept": "Akzeptieren",
     "decline": "Ablehnen",
     "settings": "Cookie-Einstellungen"
+  },
+  "stats": {
+    "projects": "abgeschlossene Projekte",
+    "team": "Spezialisten im Team",
+    "perYear": "Projekte pro Jahr",
+    "reply": "durchschnittliche Antwortzeit"
+  },
+  "contactLine": {
+    "phone": "Telefon",
+    "whatsapp": "WhatsApp",
+    "reply": "Wir antworten an Werktagen innerhalb von 12 Stunden."
   }
 }
