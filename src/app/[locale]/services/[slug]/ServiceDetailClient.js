@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import ServicesCarousel from "@/components/ServicesCarousel";
 import Title3D from "@/components/Title3D";
 import TourEmbed from "@/components/TourEmbed";
+import { formatPrice } from "@/data/serviceContent";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import LightboxVideo from "@/components/LightboxVideo";
 import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor, serviceTourFor } from "@/data/galleryData";
@@ -462,10 +463,10 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
         </motion.div>
       </section>
 
-      {/* 1b. WHAT IT SOLVES — only services that spell out the client's
-          problem (web development so far). A visualisation client knows what
-          a render is; a developer rarely knows what a project site has to do
-          for them, so the page says it before showing how it is built. */}
+      {/* 1b. WHAT IT SOLVES — the client's problem and what is delivered,
+          from serviceContent.js (web development keeps its own in
+          servicesData). Said before the pipeline, because a developer
+          decides on the outcome, not on how the render is made. */}
       {service.problems?.length > 0 && (
       <section className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
@@ -752,6 +753,96 @@ export default function ServiceDetailClient({ service, otherServices, locale, t 
               </Link>
             </div>
           )}
+        </div>
+      </section>
+      )}
+
+      {/* 3b. INVESTMENT — the "from" price, what it includes, how long it
+          takes. Figures come from serviceContent.js (samples until the
+          client's price list replaces them). */}
+      {service.investment && (
+      <section className="section-shell hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div className="flex flex-col gap-6">
+            <span className="text-xs font-semibold tracking-widest uppercase text-accent block">
+              {d.investmentEyebrow}
+            </span>
+            <Title3D className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wider">
+              {d.investmentTitle}
+            </Title3D>
+            <p className="text-sm text-white/50 max-w-md leading-relaxed">{d.priceNote}</p>
+          </div>
+
+          <div className="tile no-lift p-6 md:p-8 flex flex-col gap-6">
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <span className="text-xs font-mono uppercase tracking-widest text-white/50">{d.from}</span>
+              <span className="text-4xl md:text-5xl font-bold tracking-tight text-white">
+                {formatPrice(service.investment.from, service.investment.currency)}
+              </span>
+              <span className="text-sm text-white/60">{service.investment.unit}</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-white/10">
+              <div className="flex flex-col gap-3">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">{d.includesTitle}</span>
+                <ul className="flex flex-col gap-2">
+                  {service.investment.includes.map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-sm text-white/70 leading-relaxed">
+                      <span aria-hidden="true" className="mt-[7px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-accent">{d.turnaroundTitle}</span>
+                  <p className="text-sm text-white/70 leading-relaxed">{service.investment.turnaround}</p>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-accent">{d.revisionsTitle}</span>
+                  <p className="text-sm text-white/70 leading-relaxed">{service.investment.revisions}</p>
+                </div>
+              </div>
+            </div>
+
+            <Link
+              href={`/${locale}/contact?service=${service.slug}`}
+              className="self-start inline-flex items-center gap-2 rounded-full bg-text text-bg px-6 py-3 text-sm font-semibold transition-all duration-300 hover:opacity-90 hover:scale-[1.03]"
+            >
+              {d.quoteCta}
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+      )}
+
+      {/* 3c. FAQ — the questions a client asks before ordering this service.
+          Native <details>: open state is the browser's, no JS, and the
+          FAQPage JSON-LD in page.js is built from the same list. */}
+      {service.faq?.length > 0 && (
+      <section className="section-shell section-band hairline-top w-full py-24 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+          <div className="flex flex-col gap-6 lg:sticky lg:top-32">
+            <span className="text-xs font-semibold tracking-widest uppercase text-accent block">
+              {d.faqEyebrow}
+            </span>
+            <Title3D className="text-3xl md:text-4xl lg:text-5xl font-bold uppercase tracking-wider">
+              {d.faqTitle}
+            </Title3D>
+          </div>
+          <div className="flex flex-col divide-y divide-white/10 border-y border-white/10">
+            {service.faq.map((item, idx) => (
+              <details key={idx} className="group py-5">
+                <summary className="flex items-start justify-between gap-6 cursor-pointer list-none text-base md:text-lg font-semibold text-white">
+                  <span>{item.q}</span>
+                  <span aria-hidden="true" className="mt-1 shrink-0 text-white/50 transition-transform duration-300 group-open:rotate-45">+</span>
+                </summary>
+                <p className="pt-3 pr-10 text-sm md:text-base text-white/70 leading-relaxed">{item.a}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
       )}

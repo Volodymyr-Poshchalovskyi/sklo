@@ -203,9 +203,19 @@
       "lightboxHint": "Pfeiltasten zur Navigation | ESC zum Schliessen",
       "stepAlt": "Visual zum Arbeitsschritt",
       "lightboxAlt": "Galeriebild im Vollbild",
-      "problemsEyebrow": "Warum eine Website",
+      "problemsEyebrow": "Die Ausgangslage",
       "problemsTitle": "Was sie löst",
-      "deliverablesTitle": "Das erhalten Sie"
+      "deliverablesTitle": "Das erhalten Sie",
+      "investmentEyebrow": "Investition",
+      "investmentTitle": "Was es kostet",
+      "from": "ab",
+      "includesTitle": "Inbegriffen",
+      "turnaroundTitle": "Dauer",
+      "revisionsTitle": "Korrekturrunden",
+      "priceNote": "Preise exkl. MwSt. Jedes Projekt erhält nach dem Briefing eine verbindliche Offerte.",
+      "quoteCta": "Offerte anfragen",
+      "faqEyebrow": "Bevor wir starten",
+      "faqTitle": "Fragen zu dieser Leistung"
     }
   },
   "gallery": {

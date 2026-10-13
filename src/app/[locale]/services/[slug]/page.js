@@ -1,12 +1,13 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { servicesData, localizeService } from "@/data/servicesData";
+import { localizeServiceContent } from "@/data/serviceContent";
 import en from "@/locales/en.json";
 import de from "@/locales/de.json";
 
 const translations = { en, de };
 import ServiceDetailClient from "./ServiceDetailClient";
-import { pageMetadata, serviceJsonLd, breadcrumbJsonLd, humanizeTitle, JsonLd } from "@/lib/seo";
+import { pageMetadata, serviceJsonLd, breadcrumbJsonLd, faqJsonLd, humanizeTitle, JsonLd } from "@/lib/seo";
 
 // A description longer than a search snippet gets cut mid-sentence; the
 // service copy is written for the page, so it is trimmed at a word boundary.
@@ -46,11 +47,16 @@ export default async function ServiceDetailPage({ params }) {
     .map((s) => localizeService(s, locale));
 
   const t = translations[locale] ?? translations.en;
-  const localized = localizeService(service, locale);
+  // The offer — problem, deliverables, price, FAQ — comes from
+  // serviceContent.js and is laid over the service record, so the client
+  // reads one flat object. Web development keeps its own problems/deliverables
+  // in servicesData and only takes investment and FAQ from here.
+  const localized = { ...localizeService(service, locale), ...localizeServiceContent(slug, locale) };
 
   return (
     <>
       <JsonLd data={serviceJsonLd({ locale, service: localized })} />
+      {localized.faq?.length > 0 && <JsonLd data={faqJsonLd({ faq: localized.faq })} />}
       <JsonLd
         data={breadcrumbJsonLd([
           { name: "SKLO Studio", path: `/${locale}` },

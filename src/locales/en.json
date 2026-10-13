@@ -203,9 +203,19 @@
       "lightboxHint": "Arrow keys to navigate | ESC to close",
       "stepAlt": "Workflow step visual",
       "lightboxAlt": "Fullscreen gallery item",
-      "problemsEyebrow": "Why a website",
+      "problemsEyebrow": "The challenge",
       "problemsTitle": "What it solves",
-      "deliverablesTitle": "What you get"
+      "deliverablesTitle": "What you get",
+      "investmentEyebrow": "Investment",
+      "investmentTitle": "What it costs",
+      "from": "from",
+      "includesTitle": "Included",
+      "turnaroundTitle": "Turnaround",
+      "revisionsTitle": "Revision rounds",
+      "priceNote": "Prices exclude VAT. Every project receives a binding quote after the briefing.",
+      "quoteCta": "Request a quote",
+      "faqEyebrow": "Before we start",
+      "faqTitle": "Questions about this service"
     }
   },
   "gallery": {

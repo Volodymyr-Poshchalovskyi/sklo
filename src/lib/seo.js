@@ -169,8 +169,22 @@ export function serviceJsonLd({ locale, service }) {
     url: absoluteUrl(`/${locale}/services/${service.slug}`),
     image: service.type === "image" ? absoluteUrl(service.src) : undefined,
     provider: { "@id": ORG_ID },
-    areaServed: "CH",
+    areaServed: AREA_SERVED.map((code) => ({ "@type": "Country", name: code })),
     inLanguage: locale === "de" ? "de" : "en",
+    // "From" price as a minimum, the way the page states it.
+    offers: service.investment
+      ? {
+          "@type": "Offer",
+          priceCurrency: service.investment.currency,
+          priceSpecification: {
+            "@type": "PriceSpecification",
+            priceCurrency: service.investment.currency,
+            minPrice: service.investment.from,
+          },
+          availability: "https://schema.org/InStock",
+          url: absoluteUrl(`/${locale}/services/${service.slug}`),
+        }
+      : undefined,
   };
 }
 
@@ -186,6 +200,19 @@ export function JsonLd({ data }) {
 // from the same locale strings FAQ.js renders, flattened to plain text, so
 // the markup can never say something the page does not.
 export function faqJsonLd(t) {
+  // Service pages hand in a ready list of { q, a }; the home page hands in
+  // the locale object whose FAQ strings are assembled below.
+  if (Array.isArray(t?.faq)) {
+    return {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: t.faq.map(({ q, a }) => ({
+        "@type": "Question",
+        name: q,
+        acceptedAnswer: { "@type": "Answer", text: a },
+      })),
+    };
+  }
   const items = t?.faq?.items ?? {};
   const text = (v) => {
     if (!v) return "";
