@@ -16,8 +16,8 @@
   },
   "hero": {
     "title": "Wir gestalten 3D-Erlebnisse",
-    "subtitle": "Ein Studio für 3D-Visualisierung, Motion & Produktrendering.",
-    "headlineLead": "Visualisierungen",
+    "subtitle": "Studio für 3D-Visualisierung in Architektur und Immobilien — Schweiz, Deutschland, Österreich. Fotorealistische Renderings, Animationen, 360°-Rundgänge und Projektwebsites.",
+    "headlineLead": "3D-Visualisierung",
     "headlineAccent": "",
     "for": "für",
     "words": [
@@ -63,6 +63,21 @@
           "title": "TEMPO & VERLÄSSLICHKEIT",
           "desc": "Termine sind immer knapp, das wissen wir. Unser Ablauf ist auf schnelle Lieferung ausgelegt — ohne Abstriche bei der Qualität."
         }
+      }
+    },
+    "links": {
+      "forTitle": "Für wen wir arbeiten",
+      "whereTitle": "Wo wir arbeiten",
+      "audiences": {
+        "developers": "Verkauf ab Plan mit komplettem Bildpaket und Projektwebsite",
+        "architects": "Wettbewerbsbilder und Baugesuchsansichten ab Ihrem Modell, tägliche Vorschauen",
+        "estate-agents": "Virtual Staging, 3D-Grundrisse und Hero-Bilder für Inserate",
+        "cooperatives": "Ehrliche Visualisierungen für Versammlungen, Mitwirkung und Vermietung"
+      },
+      "regions": {
+        "switzerland": "Baugesuchsansichten, Genossenschaften, Wettbewerbe — offeriert in CHF",
+        "germany": "Exposé-Bilder und Projektwebsites — offeriert in EUR",
+        "austria": "Dachgeschossausbau und Bauträgerwettbewerbe — offeriert in EUR"
       }
     }
   },
@@ -166,7 +181,8 @@
       "imprint": "Impressum",
       "privacy": "Datenschutz",
       "projects": "Projekte",
-      "knowledge": "Wissen"
+      "knowledge": "Wissen",
+      "audiencesTitle": "Für"
     },
     "follow": "Folgen Sie uns",
     "phoneLead": "Anruf oder WhatsApp"
@@ -399,5 +415,22 @@
     "related": "Weiterlesen",
     "from": "ab",
     "footerLink": "Wissen"
+  },
+  "audiences": {
+    "titleTemplate": "3D-Visualisierung für {audience}",
+    "needsTitle": "Was Sie brauchen",
+    "servicesTitle": "Leistungen für {audience}",
+    "projectsTitle": "Projekte für {audience}",
+    "allProjects": "Alle Projekte",
+    "faqTitle": "Fragen von {audience}",
+    "from": "ab",
+    "alsoFor": "Auch für",
+    "cta": "Projekt starten",
+    "nav": {
+      "developers": "Bauträger",
+      "architects": "Architekten",
+      "estate-agents": "Makler",
+      "cooperatives": "Genossenschaften"
+    }
   }
 }

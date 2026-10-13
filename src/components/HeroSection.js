@@ -118,6 +118,7 @@ export default function HeroSection({ t, locale }) {
   const tier = useVideoTier();
   const ready = useContext(LoaderContext);
   const headRef = useRef(null);
+  const subRef = useRef(null);
   const btnsRef = useRef(null);
   const videoRef = useRef(null);
 
@@ -183,7 +184,7 @@ export default function HeroSection({ t, locale }) {
   // Heading + buttons fade-in
   useEffect(() => {
     if (!ready) return;
-    const els = [headRef.current, btnsRef.current];
+    const els = [headRef.current, subRef.current, btnsRef.current];
     els.forEach((el, i) => {
       if (!el) return;
       el.style.transition = `opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 150}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 150}ms`;
@@ -223,10 +224,13 @@ export default function HeroSection({ t, locale }) {
 
       <div className="relative z-10 w-full px-6 md:px-16 lg:px-28 xl:px-40 pt-24 pb-24">
         <div className="flex flex-col items-start justify-center max-w-4xl">
-          <h1
+          {/* The big animated line is the visual headline, not the document
+              heading: its last word rotates. The <h1> is the static sentence
+              below it — the service, the market, the deliverables. */}
+          <p
             ref={headRef}
             style={hidden}
-            className="font-bold leading-[1.05] tracking-tight text-white mb-10"
+            className="font-bold leading-[1.05] tracking-tight text-white mb-6"
           >
             {/* `whitespace-nowrap` waits for `lg`: at the md size the headline
                 is 72px, which is 804px of unbreakable text in a 768px window —
@@ -247,6 +251,14 @@ export default function HeroSection({ t, locale }) {
               {t?.hero?.for ?? "for"}
               <RotatingWord words={t?.hero?.words?.length ? t.hero.words : ROTATING_WORDS} />
             </span>
+          </p>
+
+          <h1
+            ref={subRef}
+            style={hidden}
+            className="text-base sm:text-lg md:text-xl font-normal text-white/80 leading-relaxed max-w-[56ch] mb-10 text-balance"
+          >
+            {t?.hero?.subtitle}
           </h1>
 
           <div ref={btnsRef} style={hidden} className="flex flex-wrap gap-4">

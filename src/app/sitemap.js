@@ -2,6 +2,7 @@ import { servicesData } from "@/data/servicesData";
 import { projects } from "@/data/projects";
 import { regions } from "@/data/regions";
 import { knowledge } from "@/data/knowledge";
+import { audiences } from "@/data/audiences";
 import { LOCALES, STATIC_PATHS, absoluteUrl, languageAlternates } from "@/lib/seo";
 
 // Every page in both languages, each entry carrying the other language as an
@@ -15,6 +16,7 @@ export default function sitemap() {
     ...servicesData.map((s) => ({ path: `/services/${s.slug}`, priority: 0.7, changeFrequency: "monthly" })),
     ...projects.map((p) => ({ path: `/projects/${p.slug}`, priority: 0.6, changeFrequency: "yearly" })),
     ...regions.map((r) => ({ path: `/regions/${r.slug}`, priority: 0.8, changeFrequency: "monthly" })),
+    ...audiences.map((a) => ({ path: `/for/${a.slug}`, priority: 0.8, changeFrequency: "monthly" })),
     { path: "/knowledge", priority: 0.6, changeFrequency: "monthly" },
     ...knowledge.map((a) => ({ path: `/knowledge/${a.slug}`, priority: 0.6, changeFrequency: "monthly" })),
   ];

@@ -2,6 +2,7 @@ import { servicesData, stripSoftHyphens } from "@/data/servicesData";
 import { projects } from "@/data/projects";
 import { regions } from "@/data/regions";
 import { knowledge } from "@/data/knowledge";
+import { audiences } from "@/data/audiences";
 import { SITE_URL, SITE_NAME } from "@/lib/seo";
 import { CONTACT_EMAIL, PHONE, SOCIALS, FOUNDED, TEAM_SIZE } from "@/data/studio";
 
@@ -31,6 +32,10 @@ Founded ${FOUNDED}, a team of ${TEAM_SIZE}, 70+ completed projects, around 35 pr
 ## Services
 
 ${services}
+
+## Who we work for
+
+${audiences.map((a) => `- [${a.name}](${SITE_URL}/en/for/${a.slug}): ${a.lead}`).join("\n")}
 
 ## Markets
 

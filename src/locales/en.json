@@ -16,8 +16,8 @@
   },
   "hero": {
     "title": "We craft 3D experiences",
-    "subtitle": "A studio specializing in 3D visualization, motion & product rendering.",
-    "headlineLead": "Visualization",
+    "subtitle": "3D visualisation studio for architecture and real estate in Switzerland, Germany and Austria — photorealistic renderings, animations, 360° tours and project websites.",
+    "headlineLead": "3D Visualization",
     "headlineAccent": "services",
     "for": "for",
     "words": [
@@ -63,6 +63,21 @@
           "title": "SPEED & RELIABILITY",
           "desc": "We know deadlines are always tight. Our workflow is optimized for fast delivery without compromising quality."
         }
+      }
+    },
+    "links": {
+      "forTitle": "Who we work for",
+      "whereTitle": "Where we work",
+      "audiences": {
+        "developers": "Sell off-plan with a complete image set and a project website",
+        "architects": "Competition images and permit views from your model, daily previews",
+        "estate-agents": "Virtual staging, 3D floor plans and hero images for listings",
+        "cooperatives": "Honest visualisations for assemblies, consultations and letting"
+      },
+      "regions": {
+        "switzerland": "Baugesuch views, cooperatives, competitions — quoted in CHF",
+        "germany": "Exposé imagery and project websites — quoted in EUR",
+        "austria": "Attic conversions and developer competitions — quoted in EUR"
       }
     }
   },
@@ -166,7 +181,8 @@
       "imprint": "Imprint",
       "privacy": "Privacy",
       "projects": "Projects",
-      "knowledge": "Knowledge"
+      "knowledge": "Knowledge",
+      "audiencesTitle": "For"
     },
     "follow": "Follow us",
     "phoneLead": "Call or WhatsApp"
@@ -399,5 +415,22 @@
     "related": "Read next",
     "from": "from",
     "footerLink": "Knowledge"
+  },
+  "audiences": {
+    "titleTemplate": "3D visualisation for {audience}",
+    "needsTitle": "What you need",
+    "servicesTitle": "Services for {audience}",
+    "projectsTitle": "Projects for {audience}",
+    "allProjects": "All projects",
+    "faqTitle": "Questions from {audience}",
+    "from": "from",
+    "alsoFor": "Also for",
+    "cta": "Start a project",
+    "nav": {
+      "developers": "Developers",
+      "architects": "Architects",
+      "estate-agents": "Estate agents",
+      "cooperatives": "Cooperatives"
+    }
   }
 }

@@ -233,6 +233,14 @@ export default function Footer({ locale, t }) {
                 {t?.regions?.nav?.[slug]}
               </Link>
             ))}
+            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mt-6 mb-2">
+              {links.audiencesTitle}
+            </span>
+            {["developers", "architects", "estate-agents", "cooperatives"].map((slug) => (
+              <Link key={slug} href={`/${locale}/for/${slug}`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
+                {t?.audiences?.nav?.[slug]}
+              </Link>
+            ))}
           </div>
 
           <div className="flex flex-col gap-3">
