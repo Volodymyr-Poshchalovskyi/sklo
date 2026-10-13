@@ -91,9 +91,9 @@
       "start": {
         "q": "What do we need to start a project?",
         "p1": "We begin with your 3D-model or drawings and a brief describing the mood, materials, and goals of your project. Using our structured onboarding system, our team refines your model and translates all inputs into high-end visuals.",
-        "linkText": "See the full list of materials we need",
+        "linkText": "See the full list of what we need",
         "linkTail": "",
-        "note": "*(A detailed PDF guide with all requirements will be downloaded automatically)"
+        "note": ""
       },
       "workflow": {
         "q": "What’s the project workflow?",
@@ -184,7 +184,8 @@
       "knowledge": "Knowledge",
       "audiencesTitle": "For",
       "glossary": "Glossary",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "requirements": "Project requirements"
     },
     "follow": "Follow us",
     "phoneLead": "Call or WhatsApp"
@@ -446,5 +447,16 @@
     "jumpTo": "Jump to",
     "toPage": "To the page",
     "footerLink": "FAQ"
+  },
+  "requirements": {
+    "title": "Project requirements",
+    "intro": "What we need to start a visualisation: the model or the drawings, the materials, a few references, and what the images are for. Send what you have — we tell you within a day whether anything is missing.",
+    "download": "Download as PDF",
+    "afterTitle": "What happens next",
+    "afterIntro": "From the first upload to the final images, in four steps.",
+    "faqTitle": "Questions about the start",
+    "ctaCopy": "Have the documents ready? The contact form takes plans, models and references up to 200 MB each.",
+    "cta": "Send your project",
+    "footerLink": "Project requirements"
   }
 }

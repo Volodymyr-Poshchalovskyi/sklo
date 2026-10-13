@@ -93,7 +93,7 @@
         "p1": "Wir starten mit Ihrem 3D-Modell oder Ihren Plänen und einem Briefing zu Stimmung, Materialien und Zielen des Projekts. Über unser strukturiertes Onboarding bereitet unser Team Ihr Modell auf und übersetzt alle Vorgaben in hochwertige Visualisierungen.",
         "linkText": "Zur vollständigen Liste der benötigten Unterlagen",
         "linkTail": "",
-        "note": "*(Ein detaillierter PDF-Leitfaden mit allen Anforderungen wird automatisch heruntergeladen)"
+        "note": ""
       },
       "workflow": {
         "q": "Wie läuft ein Projekt ab?",
@@ -184,7 +184,8 @@
       "knowledge": "Wissen",
       "audiencesTitle": "Für",
       "glossary": "Glossar",
-      "faq": "FAQ"
+      "faq": "FAQ",
+      "requirements": "Projektanforderungen"
     },
     "follow": "Folgen Sie uns",
     "phoneLead": "Anruf oder WhatsApp"
@@ -446,5 +447,16 @@
     "jumpTo": "Springen zu",
     "toPage": "Zur Seite",
     "footerLink": "FAQ"
+  },
+  "requirements": {
+    "title": "Projektanforderungen",
+    "intro": "Was wir für den Start einer Visualisierung brauchen: das Modell oder die Pläne, die Materialien, ein paar Referenzen und den Verwendungszweck der Bilder. Schicken Sie, was Sie haben — wir sagen Ihnen innerhalb eines Tages, ob etwas fehlt.",
+    "download": "Als PDF herunterladen",
+    "afterTitle": "Wie es weitergeht",
+    "afterIntro": "Vom ersten Upload bis zu den finalen Bildern, in vier Schritten.",
+    "faqTitle": "Fragen zum Start",
+    "ctaCopy": "Unterlagen bereit? Das Kontaktformular nimmt Pläne, Modelle und Referenzen bis 200 MB pro Datei.",
+    "cta": "Projekt senden",
+    "footerLink": "Projektanforderungen"
   }
 }

@@ -65,7 +65,7 @@ ${projects.map((p) => `- [${p.name}, ${p.city} (${p.country})](${SITE_URL}/en/pr
 ## Optional
 
 - [German version](${SITE_URL}/de)
-- [Project requirements PDF](${SITE_URL}/project-requirements.pdf): what to send to start a project
+- [Project requirements](${SITE_URL}/en/requirements): what to send to start a project — model or drawings, materials, references, output; PDF on the page
 `;
   return new Response(body, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
 }

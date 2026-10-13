@@ -65,23 +65,6 @@ export default function FAQ({ locale = "en", t }) {
     </div>
   );
 
-  // The requirements sheets are static files in /public, so the link points
-  // at the file itself; `download` makes the browser save it rather than
-  // open it. An API route used to stream it from disk, which made Next trace
-  // the whole /public folder — tours included, 1.8 GB — into the function.
-  const requirementsPdf =
-    locale === "de"
-      ? { href: "/projektanforderungen.pdf", name: "Projektanforderungen.pdf" }
-      : { href: "/project-requirements.pdf", name: "project requirements.pdf" };
-  const handleDownloadRequirements = () => {
-    const link = document.createElement("a");
-    link.href = requirementsPdf.href;
-    link.download = requirementsPdf.name;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
   const faqs = [
     {
       question: items.start?.q,
@@ -89,9 +72,11 @@ export default function FAQ({ locale = "en", t }) {
         <div>
           <p>{items.start?.p1}</p>
           <p className="mt-4">
+            {/* The list lives on its own page now, with the PDF to download
+                there — one link instead of a download that fired on the way
+                to the contact form. */}
             <Link
-              href={`/${locale}/contact`}
-              onClick={handleDownloadRequirements}
+              href={`/${locale}/requirements`}
               className="underline font-bold text-white hover:text-white/80 transition-colors duration-300"
             >
               {items.start?.linkText}
