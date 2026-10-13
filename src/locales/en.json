@@ -370,5 +370,22 @@
     "moreEyebrow": "More projects",
     "moreTitle": "Related work",
     "cta": "Start your project"
+  },
+  "regions": {
+    "titleTemplate": "3D visualisation {in}",
+    "specificsTitle": "How we work {in}",
+    "servicesTitle": "Services {for}",
+    "projectsTitle": "Projects {in}",
+    "allProjects": "All projects",
+    "faqTitle": "Questions from clients {from}",
+    "from": "from",
+    "alsoIn": "We also work in",
+    "cta": "Start a project",
+    "footerTitle": "Markets",
+    "nav": {
+      "switzerland": "Switzerland",
+      "germany": "Germany",
+      "austria": "Austria"
+    }
   }
 }

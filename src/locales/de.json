@@ -370,5 +370,22 @@
     "moreEyebrow": "Weitere Projekte",
     "moreTitle": "Ähnliche Arbeiten",
     "cta": "Projekt starten"
+  },
+  "regions": {
+    "titleTemplate": "3D-Visualisierung {in}",
+    "specificsTitle": "So arbeiten wir {in}",
+    "servicesTitle": "Leistungen {for}",
+    "projectsTitle": "Projekte {in}",
+    "allProjects": "Alle Projekte",
+    "faqTitle": "Fragen von Kunden {from}",
+    "from": "ab",
+    "alsoIn": "Wir arbeiten auch in",
+    "cta": "Projekt starten",
+    "footerTitle": "Märkte",
+    "nav": {
+      "switzerland": "Schweiz",
+      "germany": "Deutschland",
+      "austria": "Österreich"
+    }
   }
 }
