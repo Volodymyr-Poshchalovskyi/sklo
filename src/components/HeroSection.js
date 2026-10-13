@@ -1,5 +1,6 @@
 "use client";
-import { videoSrc, videoPoster, useVideoTier } from "@/lib/media";
+import {videoSrc, videoPoster} from "@/lib/media";
+import { useVideoTier } from "@/lib/videoTier";
 import { useEffect, useRef, useContext, useState } from "react";
 import { LoaderContext } from "@/context/LoaderContext";
 import { HERO_READY_EVENT } from "@/components/ClientWrapper";

@@ -4,7 +4,8 @@
     "services": "Services",
     "gallery": "Gallery",
     "contact": "Contact",
-    "about": "About"
+    "about": "About",
+    "projects": "Projects"
   },
   "header": {
     "cta": "Contact us",
@@ -163,7 +164,8 @@
       "services": "Services",
       "portfolio": "Gallery",
       "imprint": "Imprint",
-      "privacy": "Privacy"
+      "privacy": "Privacy",
+      "projects": "Projects"
     },
     "follow": "Follow us",
     "phoneLead": "Call or WhatsApp"
@@ -327,7 +329,8 @@
     "gallery": "Selected work by SKLO Studio: exterior and interior renderings, aerial views, animations, cinemagraphs and virtual staging for Swiss architecture and real estate.",
     "about": "The team behind SKLO Studio — 3D artists, animators and developers who turn architectural plans into images that sell a project before it is built.",
     "contact": "Tell us about your project in five short steps — services, scope, budget, materials — and receive a tailored quote from SKLO Studio. Plans and files can be attached directly.",
-    "servicesCrumb": "Services"
+    "servicesCrumb": "Services",
+    "projects": "Case studies from SKLO Studio: residential developments, conversions and competition entries in Switzerland, Germany and Austria — the brief, the renders, the sales result."
   },
   "consent": {
     "title": "Cookies for usage analysis",
@@ -347,5 +350,25 @@
     "phone": "Phone",
     "whatsapp": "WhatsApp",
     "reply": "We reply within 12 hours on working days."
+  },
+  "projects": {
+    "eyebrow": "Case studies",
+    "title": "Projects",
+    "intro": "Seven projects from Switzerland, Germany and Austria: what the client needed, what we delivered, what it did for the sale. Every image is studio work.",
+    "clientLabel": "Client",
+    "servicesLabel": "Services",
+    "challengeEyebrow": "Starting point",
+    "challengeTitle": "The challenge",
+    "approachEyebrow": "What we did",
+    "approachTitle": "The approach",
+    "resultEyebrow": "Outcome",
+    "resultTitle": "The result",
+    "galleryEyebrow": "Deliverables",
+    "galleryTitle": "The renders",
+    "tourEyebrow": "Live",
+    "tourTitle": "Walk through it",
+    "moreEyebrow": "More projects",
+    "moreTitle": "Related work",
+    "cta": "Start your project"
   }
 }

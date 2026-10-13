@@ -4,7 +4,8 @@
     "services": "Leistungen",
     "gallery": "Galerie",
     "contact": "Kontakt",
-    "about": "Team"
+    "about": "Team",
+    "projects": "Projekte"
   },
   "header": {
     "cta": "Anfragen",
@@ -163,7 +164,8 @@
       "services": "Leistungen",
       "portfolio": "Galerie",
       "imprint": "Impressum",
-      "privacy": "Datenschutz"
+      "privacy": "Datenschutz",
+      "projects": "Projekte"
     },
     "follow": "Folgen Sie uns",
     "phoneLead": "Anruf oder WhatsApp"
@@ -327,7 +329,8 @@
     "gallery": "Ausgewählte Arbeiten von SKLO Studio: Aussen- und Innenrenderings, Luftaufnahmen, Animationen, Cinemagraphs und Virtual Staging für Schweizer Architektur und Immobilien.",
     "about": "Das Team hinter SKLO Studio — 3D-Artists, Animatoren und Entwickler, die aus Architekturplänen Bilder machen, die ein Projekt verkaufen, bevor es gebaut ist.",
     "contact": "Beschreiben Sie Ihr Projekt in fünf kurzen Schritten — Leistungen, Umfang, Budget, Unterlagen — und erhalten Sie ein individuelles Angebot von SKLO Studio. Pläne und Dateien können direkt angehängt werden.",
-    "servicesCrumb": "Leistungen"
+    "servicesCrumb": "Leistungen",
+    "projects": "Referenzen von SKLO Studio: Wohnüberbauungen, Umbauten und Wettbewerbe in der Schweiz, Deutschland und Österreich — Aufgabe, Bilder, Verkaufsergebnis."
   },
   "consent": {
     "title": "Cookies zur Nutzungsanalyse",
@@ -347,5 +350,25 @@
     "phone": "Telefon",
     "whatsapp": "WhatsApp",
     "reply": "Wir antworten an Werktagen innerhalb von 12 Stunden."
+  },
+  "projects": {
+    "eyebrow": "Referenzen",
+    "title": "Projekte",
+    "intro": "Sieben Projekte aus der Schweiz, Deutschland und Österreich: was der Kunde brauchte, was wir geliefert haben, was es für den Verkauf gebracht hat. Jedes Bild ist Arbeit des Studios.",
+    "clientLabel": "Kunde",
+    "servicesLabel": "Leistungen",
+    "challengeEyebrow": "Ausgangslage",
+    "challengeTitle": "Die Aufgabe",
+    "approachEyebrow": "Vorgehen",
+    "approachTitle": "Die Umsetzung",
+    "resultEyebrow": "Ergebnis",
+    "resultTitle": "Das Resultat",
+    "galleryEyebrow": "Lieferumfang",
+    "galleryTitle": "Die Bilder",
+    "tourEyebrow": "Live",
+    "tourTitle": "Selbst durchgehen",
+    "moreEyebrow": "Weitere Projekte",
+    "moreTitle": "Ähnliche Arbeiten",
+    "cta": "Projekt starten"
   }
 }

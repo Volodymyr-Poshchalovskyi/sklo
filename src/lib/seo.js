@@ -17,7 +17,7 @@ export const LOCALES = ["en", "de"];
 // out of the repo; regenerate with any 1200×630 screenshot pipeline).
 export const DEFAULT_OG_IMAGE = { url: "/assets/og/home.jpg", width: 1200, height: 630, alt: "SKLO Studio" };
 
-export const STATIC_PATHS = ["", "/services", "/gallery", "/about", "/contact", "/imprint", "/privacy"];
+export const STATIC_PATHS = ["", "/services", "/projects", "/gallery", "/about", "/contact", "/imprint", "/privacy"];
 
 export function absoluteUrl(path = "") {
   return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
@@ -38,10 +38,12 @@ export function humanizeTitle(raw = "") {
     .split(/\s+/)
     .map((token) => {
       if (KEEP_LOWER[token]) return KEEP_LOWER[token];
-      if (/\d/.test(token) || ACRONYMS.has(token) || token === "|") return token;
+      if (token === "|") return token;
+      // Hyphenated parts are judged one by one, so "3D-GRUNDRISSE" keeps
+      // its "3D" and still gets a readable "Grundrisse".
       return token
         .split("-")
-        .map((part) => part.charAt(0) + part.slice(1).toLowerCase())
+        .map((part) => (/\d/.test(part) || ACRONYMS.has(part) ? part : part.charAt(0) + part.slice(1).toLowerCase()))
         .join("-");
     })
     .join(" ");

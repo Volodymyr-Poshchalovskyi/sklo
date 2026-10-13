@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { videoSrc, videoPoster, useVideoTier } from "@/lib/media";
+import {videoSrc, videoPoster} from "@/lib/media";
+import { useVideoTier } from "@/lib/videoTier";
 
 // The films are sold with their soundtrack, so the viewer gets it — but at
 // half volume, because a gallery is browsed, not attended, and landing on a

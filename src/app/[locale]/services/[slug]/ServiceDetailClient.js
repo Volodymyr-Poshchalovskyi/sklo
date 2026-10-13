@@ -11,7 +11,8 @@ import BeforeAfterSlider from "@/components/BeforeAfterSlider";
 import LightboxVideo from "@/components/LightboxVideo";
 import { miniGalleryFor, SERVICE_GALLERY, virtualStagingPairs, servicePosterFor, serviceTourFor } from "@/data/galleryData";
 import { useLenis } from "@/context/LenisContext";
-import { imageSrcSet, imageVariant, videoSrc, videoPoster, useVideoTier } from "@/lib/media";
+import {imageSrcSet, imageVariant, videoSrc, videoPoster} from "@/lib/media";
+import { useVideoTier } from "@/lib/videoTier";
 import { blurStyle, fadeInOnLoad } from "@/lib/blur";
 
 // Helper component to render step media dynamically

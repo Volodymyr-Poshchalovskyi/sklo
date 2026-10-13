@@ -1,4 +1,5 @@
 import { servicesData } from "@/data/servicesData";
+import { projects } from "@/data/projects";
 import { LOCALES, STATIC_PATHS, absoluteUrl, languageAlternates } from "@/lib/seo";
 
 // Every page in both languages, each entry carrying the other language as an
@@ -10,6 +11,7 @@ export default function sitemap() {
   const paths = [
     ...STATIC_PATHS.map((path) => ({ path, priority: path === "" ? 1 : 0.8, changeFrequency: "monthly" })),
     ...servicesData.map((s) => ({ path: `/services/${s.slug}`, priority: 0.7, changeFrequency: "monthly" })),
+    ...projects.map((p) => ({ path: `/projects/${p.slug}`, priority: 0.6, changeFrequency: "yearly" })),
   ];
 
   return paths.flatMap(({ path, priority, changeFrequency }) =>

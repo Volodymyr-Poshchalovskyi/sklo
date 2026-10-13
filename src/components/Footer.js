@@ -216,6 +216,9 @@ export default function Footer({ locale, t }) {
             <Link href={`/${locale}/services`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               {links.services}
             </Link>
+            <Link href={`/${locale}/projects`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
+              {links.projects}
+            </Link>
             <Link href={`/${locale}/gallery`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
               {links.portfolio}
             </Link>

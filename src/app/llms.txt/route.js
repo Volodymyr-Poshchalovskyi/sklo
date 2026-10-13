@@ -1,4 +1,5 @@
 import { servicesData, stripSoftHyphens } from "@/data/servicesData";
+import { projects } from "@/data/projects";
 import { SITE_URL, SITE_NAME } from "@/lib/seo";
 import { CONTACT_EMAIL, PHONE, SOCIALS, FOUNDED, TEAM_SIZE } from "@/data/studio";
 
@@ -29,10 +30,15 @@ Founded ${FOUNDED}, a team of ${TEAM_SIZE}, 70+ completed projects, around 35 pr
 
 ${services}
 
+## Projects
+
+${projects.map((p) => `- [${p.name}, ${p.city} (${p.country})](${SITE_URL}/en/projects/${p.slug}): ${p.type}, ${p.year}. ${p.summary}`).join("\n")}
+
 ## Pages
 
 - [Home](${SITE_URL}/en): studio overview, services carousel, FAQ
 - [Services](${SITE_URL}/en/services): all twelve services
+- [Projects](${SITE_URL}/en/projects): case studies with the brief, the renders and the result
 - [Gallery](${SITE_URL}/en/gallery): selected renderings, animations, cinemagraphs, virtual staging and 360° tours
 - [About](${SITE_URL}/en/about): the team
 - [Contact](${SITE_URL}/en/contact): five-step project enquiry with file upload

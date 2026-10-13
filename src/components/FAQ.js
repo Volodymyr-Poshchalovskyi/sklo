@@ -2,7 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Title3D from "@/components/Title3D";
-import { videoSrc, useVideoTier } from "@/lib/media";
+import {videoSrc} from "@/lib/media";
+import { useVideoTier } from "@/lib/videoTier";
 
 export default function FAQ({ locale = "en", t }) {
   const [openIndex, setOpenIndex] = useState(0);
