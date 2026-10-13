@@ -67,6 +67,20 @@ to a year (Caching → Purge Cache fixes the edge, not visitors' browsers).
 The originals and a copy of everything in the bucket are kept outside the
 repository in `~/Documents/SKLO-media-masters/` on the developer's machine.
 
+### Interactive exports: tours and navigators
+
+The Panotour exports live under `tours/` in the bucket and the apartment
+navigator (the "Luxe 17" demo, its own small Next.js app) under
+`navigators/luxe17/`. Both are embedded on sklo.studio in an iframe that
+points at `https://media.sklo.studio/...`, so they load from R2, not from the
+website's deployment. The navigator's source (with the SKLO branding, webp
+frames and the `basePath: /navigators/luxe17` export settings) is kept in
+`~/Documents/SKLO-media-masters/navigators/luxe17-src/`; to update it, edit
+there, run `npm run build`, copy `out/` to `public/navigators/luxe17/` and run
+`node scripts/media/upload-r2.mjs public/navigators`. A new navigator for
+another project follows the same path with its own folder name and an entry
+in `SERVICE_TOUR` in `src/data/galleryData.js`.
+
 ## What this costs
 
 | | Free allowance | Expected use |

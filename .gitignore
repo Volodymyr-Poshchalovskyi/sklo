@@ -53,3 +53,6 @@ images for gallery/
 public/assets/home/hero_video.webm
 public/assets/home/hero_video-sd.mp4
 public/assets/home/hero_video-poster.webp
+
+# Navigator exports live on R2 (see docs/CLOUDFLARE_R2_SETUP.md)
+public/navigators/

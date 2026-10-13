@@ -227,6 +227,8 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
   // Real 360 exports stand in for the mini gallery on the services that have
   // them: the archive has no still category behind those.
   const tours = serviceTourFor(service.slug);
+  // The navigator embeds through the same window as the tours but is not one.
+  const isNavigator = service.slug === "fly-around-navigator";
   const hasMiniGallery =
     isStagingService || miniItems.length > 0 || (tours?.length ?? 0) > 0;
 
@@ -702,10 +704,10 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
         <div className="w-full">
           <div className="mb-16">
             <span className="text-xs font-semibold tracking-widest uppercase text-accent mb-2 block">
-              {tours ? d.toursEyebrow : d.showcaseEyebrow}
+              {tours ? (isNavigator ? d.navigatorEyebrow : d.toursEyebrow) : d.showcaseEyebrow}
             </span>
             <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
-              {tours ? d.toursTitle : d.showcaseTitle}
+              {tours ? (isNavigator ? d.navigatorTitle : d.toursTitle) : d.showcaseTitle}
             </Title3D>
             <div className="h-[1px] bg-gradient-to-r from-text/10 to-transparent w-full mt-6" />
           </div>

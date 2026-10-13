@@ -240,7 +240,9 @@
       "faqTitle": "Fragen zu {service}",
       "projectsTitle": "{service} in der Praxis",
       "allProjects": "Alle Projekte",
-      "readingTitle": "Weiterlesen"
+      "readingTitle": "Weiterlesen",
+      "navigatorEyebrow": "Live-Demo",
+      "navigatorTitle": "360°-Navigator ausprobieren"
     }
   },
   "gallery": {
@@ -283,7 +285,7 @@
       },
       "360° Tours": {
         "label": "360°-Touren",
-        "desc": "Begehbare 360°-Rundgänge, gerendert aus denselben Szenen wie die Standbilder: zum Umsehen ziehen, über Hotspots oder den Grundriss von Raum zu Raum, auf Smartphone, Desktop oder VR-Brille. Die Musterwohnung für Projekte, die noch auf dem Papier stehen."
+        "desc": "Begehbare 360°-Rundgänge, gerendert aus denselben Szenen wie die Standbilder — zum Umsehen ziehen, über Hotspots oder den Grundriss von Raum zu Raum — und der 360°-Wohnungsnavigator: eine Umrundung der ganzen Überbauung mit jeder Wohnung anklickbar. Auf Smartphone, Desktop oder VR-Brille; die Musterwohnung für Projekte, die noch auf dem Papier stehen."
       },
       "Animation": {
         "label": "Animation",

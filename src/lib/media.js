@@ -16,7 +16,7 @@ export const IMAGE_WIDTHS = [640, 1280, 1920, 2560];
 // tours and the hero film. Everything else under /assets (service tiles, the
 // web-development mockups, team photos) still ships with the deploy — giving
 // those the R2 prefix sent the Web showcase to files that were never uploaded.
-const ON_R2 = /^\/(assets\/gallery\/|tours\/|assets\/home\/hero_video)/;
+const ON_R2 = /^\/(assets\/gallery\/|tours\/|navigators\/|assets\/home\/hero_video)/;
 
 export function mediaUrl(path = "") {
   if (!path || /^https?:/.test(path) || !ON_R2.test(path)) return path;

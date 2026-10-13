@@ -553,6 +553,19 @@ export const SERVICE_TOUR = {
       scenes: 24,
     },
   ],
+  // The apartment navigator: a 100-frame orbit of a development with every
+  // unit clickable. Its own static Next export, served from R2 under
+  // /navigators/ like the Panotour exports under /tours/.
+  "fly-around-navigator": [
+    {
+      id: "luxe17-navigator",
+      title: "Luxe 17",
+      label: { en: "360° navigator", de: "360°-Navigator" },
+      entry: "/navigators/luxe17/index.html",
+      poster: "/assets/tours/luxe17-poster.webp",
+      scenes: 100,
+    },
+  ],
 };
 
 export function serviceTourFor(slug) {

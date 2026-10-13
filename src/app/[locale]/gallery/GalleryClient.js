@@ -259,7 +259,9 @@ function GalleryPageContent() {
   // is the same one the 360° service page shows, so there is one source of
   // truth for which tours exist.
   const isTours = activeFilter === "360° Tours";
-  const tours = serviceTourFor("360-virtual-tour") ?? [];
+  // The navigator joins the tours here: same kind of window, same click to
+  // start, one more thing a visitor can walk through.
+  const tours = [...(serviceTourFor("360-virtual-tour") ?? []), ...(serviceTourFor("fly-around-navigator") ?? [])];
 
   // "All" gets the interleaved run (see galleryData.js) so the categories do
   // not read as consecutive blocks; a single category keeps its own order.

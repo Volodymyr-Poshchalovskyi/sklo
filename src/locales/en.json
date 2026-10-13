@@ -240,7 +240,9 @@
       "faqTitle": "Questions about {service}",
       "projectsTitle": "{service} in practice",
       "allProjects": "All projects",
-      "readingTitle": "Read more"
+      "readingTitle": "Read more",
+      "navigatorEyebrow": "Live demo",
+      "navigatorTitle": "Try the 360° navigator"
     }
   },
   "gallery": {
@@ -283,7 +285,7 @@
       },
       "360° Tours": {
         "label": "360° Tours",
-        "desc": "Walkable 360° tours rendered from the same scenes as the stills: drag to look around, follow the hotspots or the floor plan from room to room, on a phone, a desktop or a VR headset. The show apartment for projects that are still on paper."
+        "desc": "Walkable 360° tours rendered from the same scenes as the stills — drag to look around, follow the hotspots or the floor plan from room to room — and the 360° apartment navigator: an orbit of the whole development with every unit clickable. On a phone, a desktop or a VR headset; the show apartment for projects that are still on paper."
       },
       "Animation": {
         "label": "Animation",
