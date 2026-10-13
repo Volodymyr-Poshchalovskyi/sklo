@@ -285,7 +285,7 @@
       },
       "360° Tours": {
         "label": "360°-Touren",
-        "desc": "Begehbare 360°-Rundgänge, gerendert aus denselben Szenen wie die Standbilder — zum Umsehen ziehen, über Hotspots oder den Grundriss von Raum zu Raum — und der 360°-Wohnungsnavigator: eine Umrundung der ganzen Überbauung mit jeder Wohnung anklickbar. Auf Smartphone, Desktop oder VR-Brille; die Musterwohnung für Projekte, die noch auf dem Papier stehen."
+        "desc": "Begehbare 360°-Rundgänge, gerendert aus denselben Szenen wie die Standbilder: zum Umsehen ziehen, über Hotspots oder den Grundriss von Raum zu Raum, auf Smartphone, Desktop oder VR-Brille. Die Musterwohnung für Projekte, die noch auf dem Papier stehen."
       },
       "Animation": {
         "label": "Animation",
@@ -298,6 +298,10 @@
       "Web": {
         "label": "Web",
         "desc": "Projektwebsites, Portfolios und Landingpages, gebaut um die Renderings herum: Wohnungsspiegel, Grundrisse, eingebettete Rundgänge und Anfrageformulare, die die Wohnung nennen, auf Deutsch und Englisch — hier gezeigt als Geräte-Mockups von drei Beispielseiten."
+      },
+      "Navigator": {
+        "label": "360°-Navigator",
+        "desc": "Der Wohnungsnavigator: eine Umrundung der ganzen Überbauung, gerendert als hundert Bilder, mit jeder Wohnung anklickbar — Geschoss, Fläche, Status und Grundriss beim Antippen, Filter nach Zimmern und Preis. Ziehen zum Drehen, Wohnung auswählen, Details öffnen. Gebaut für Projektwebsites grösserer Überbauungen; das hier ist die Live-Demo."
       }
     },
     "shownOf": "{shown} von {total} sichtbar",

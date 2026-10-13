@@ -285,7 +285,7 @@
       },
       "360° Tours": {
         "label": "360° Tours",
-        "desc": "Walkable 360° tours rendered from the same scenes as the stills — drag to look around, follow the hotspots or the floor plan from room to room — and the 360° apartment navigator: an orbit of the whole development with every unit clickable. On a phone, a desktop or a VR headset; the show apartment for projects that are still on paper."
+        "desc": "Walkable 360° tours rendered from the same scenes as the stills: drag to look around, follow the hotspots or the floor plan from room to room, on a phone, a desktop or a VR headset. The show apartment for projects that are still on paper."
       },
       "Animation": {
         "label": "Animation",
@@ -298,6 +298,10 @@
       "Web": {
         "label": "Web",
         "desc": "Project websites, portfolios and landing pages built around the renderings: unit tables, floor plans, embedded tours and enquiry forms that name the unit, in German and English — shown here as device mockups of three example sites."
+      },
+      "Navigator": {
+        "label": "360° Navigator",
+        "desc": "The apartment navigator: an orbit of a whole development rendered as a hundred frames, with every unit clickable — floor, size, status and plan on tap, filters by rooms and price. Drag to turn the buildings, pick a unit, open its details. Built for project websites of larger developments; this is the live demo."
       }
     },
     "shownOf": "Showing {shown} of {total}",

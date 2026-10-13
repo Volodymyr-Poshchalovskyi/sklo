@@ -31,7 +31,7 @@ import { mediaUrl } from "@/lib/media";
  * delegates the sensors the VR/gyro mode in `graphics/webvr.js` asks for, and
  * `allowFullScreen` is what makes the tour's own fullscreen button work.
  */
-export default function TourEmbed({ tours, locale = "en", className = "", showPart = false }) {
+export default function TourEmbed({ tours, locale = "en", className = "", showPart = false, size = "default" }) {
   const list = Array.isArray(tours) ? tours : tours ? [tours] : [];
   // "Click to start" on a phone is an instruction nobody can follow. Read
   // through `useSyncExternalStore` rather than an effect, so the first client
@@ -109,11 +109,13 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
         className="relative w-full overflow-hidden rounded-2xl border border-white/10 bg-black"
         style={{
           aspectRatio: "16 / 9",
-          maxHeight: "78svh",
+          // "large" is the navigator's own tab: as tall as the viewport allows,
+          // so its sidebar and unit panel get the room a desktop would give.
+          maxHeight: size === "large" ? "88svh" : "78svh",
           // 16:9 of a phone's width is ~185px tall, which is too shallow to
           // look around in, so narrow screens fall back to a portrait-friendly
           // floor instead.
-          minHeight: "min(60svh, 460px)",
+          minHeight: size === "large" ? "min(80svh, 720px)" : "min(60svh, 460px)",
         }}
       >
         {started ? (

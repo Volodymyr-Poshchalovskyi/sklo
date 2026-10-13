@@ -151,6 +151,8 @@ const CATEGORIES = [
   // Sits next to Virtual Staging because the two are the same kind of tab: a
   // filter that swaps the tile grid for its own viewer rather than narrowing it.
   { key: "360° Tours", slug: "360-tours" },
+  // The apartment navigator: one interactive window, shown at desktop size.
+  { key: "Navigator", slug: "navigator" },
   { key: "Animation", slug: "animation" },
   { key: "Cinemagraph", slug: "cinemagraph" },
   { key: "Web", slug: "web" },
@@ -259,13 +261,15 @@ function GalleryPageContent() {
   // is the same one the 360° service page shows, so there is one source of
   // truth for which tours exist.
   const isTours = activeFilter === "360° Tours";
-  // The navigator joins the tours here: same kind of window, same click to
-  // start, one more thing a visitor can walk through.
-  const tours = [...(serviceTourFor("360-virtual-tour") ?? []), ...(serviceTourFor("fly-around-navigator") ?? [])];
+  const tours = serviceTourFor("360-virtual-tour") ?? [];
+  // The navigator has its own tab: one window as wide as the grid, because
+  // its sidebar and unit panel need desktop room to be used at all.
+  const isNavigator = activeFilter === "Navigator";
+  const navigators = serviceTourFor("fly-around-navigator") ?? [];
 
   // "All" gets the interleaved run (see galleryData.js) so the categories do
   // not read as consecutive blocks; a single category keeps its own order.
-  const filteredItems = isVirtualStaging || isTours
+  const filteredItems = isVirtualStaging || isTours || isNavigator
     ? []
     : activeFilter === ALL_FILTER
       ? allProjectsItems
@@ -457,10 +461,10 @@ function GalleryPageContent() {
   // Web). Numbering runs across both groups so a filter can be referred to
   // by its number ("filter 07") in a conversation.
   const mixCategories = CATEGORIES.filter(
-    ({ key }) => !ALL_PROJECTS_EXCLUDED.includes(key) && key !== "360° Tours"
+    ({ key }) => !ALL_PROJECTS_EXCLUDED.includes(key) && key !== "360° Tours" && key !== "Navigator"
   );
   const showcaseCategories = CATEGORIES.filter(
-    ({ key }) => ALL_PROJECTS_EXCLUDED.includes(key) || key === "360° Tours"
+    ({ key }) => ALL_PROJECTS_EXCLUDED.includes(key) || key === "360° Tours" || key === "Navigator"
   );
   const numberOf = (key) =>
     String([...mixCategories, ...showcaseCategories].findIndex((c) => c.key === key) + 1).padStart(2, "0");
@@ -625,6 +629,14 @@ function GalleryPageContent() {
               </div>
             ))}
           </div>
+        ) : isNavigator ? (
+          <div key={activeFilter} className="flex flex-col gap-8">
+            {navigators.map((nav) => (
+              <div key={nav.id} className="animate-fade-in-card opacity-0">
+                <TourEmbed tours={[nav]} locale={locale} size="large" />
+              </div>
+            ))}
+          </div>
         ) : isVirtualStaging ? (
           // Virtual Staging is comparisons, not tiles: two per row at most, so
           // each pair is wide enough to actually judge the difference.
@@ -681,7 +693,7 @@ function GalleryPageContent() {
         </div>
         )}
 
-        {!isTours && !isVirtualStaging && (
+        {!isTours && !isNavigator && !isVirtualStaging && (
           <div className="mt-12 flex flex-col items-center gap-4">
             <p className="text-[11px] font-mono uppercase tracking-widest text-white/40">
               {g.shownOf
