@@ -9,6 +9,7 @@ import { localizeServiceContent, formatPrice } from "@/data/serviceContent";
 import { pageMetadata, breadcrumbJsonLd, faqJsonLd, humanizeTitle, absoluteUrl, JsonLd, SITE_URL } from "@/lib/seo";
 import Title3D from "@/components/Title3D";
 import ProjectCard from "@/components/ProjectCard";
+import { AREA_SERVED } from "@/data/studio";
 
 const translations = { en, de };
 
@@ -58,7 +59,7 @@ export default async function AudiencePage({ params }) {
           url: absoluteUrl(`/${locale}/for/${slug}`),
           provider: { "@id": `${SITE_URL}/#organization` },
           audience: { "@type": "BusinessAudience", audienceType: a.name },
-          areaServed: ["CH", "DE", "AT"].map((c) => ({ "@type": "Country", name: c })),
+          areaServed: AREA_SERVED.map((name) => ({ "@type": "Place", name })),
           serviceType: "Architectural visualization",
           inLanguage: locale,
         }}

@@ -16,7 +16,7 @@
   },
   "hero": {
     "title": "Wir gestalten 3D-Erlebnisse",
-    "subtitle": "Studio für 3D-Visualisierung in Architektur und Immobilien — Schweiz, Deutschland, Österreich. Fotorealistische Renderings, Animationen, 360°-Rundgänge und Projektwebsites.",
+    "subtitle": "Studio für 3D-Visualisierung in Architektur und Immobilien — weltweit: Europa, Nordamerika, Naher Osten, Ozeanien und Lateinamerika. Fotorealistische Renderings, Animationen, 360°-Rundgänge und Projektwebsites.",
     "headlineLead": "3D-Visualisierung",
     "headlineAccent": "",
     "for": "für",
@@ -75,9 +75,11 @@
         "cooperatives": "Ehrliche Visualisierungen für Versammlungen, Mitwirkung und Vermietung"
       },
       "regions": {
-        "switzerland": "Baugesuchsansichten, Genossenschaften, Wettbewerbe — offeriert in CHF",
-        "germany": "Exposé-Bilder und Projektwebsites — offeriert in EUR",
-        "austria": "Dachgeschossausbau und Bauträgerwettbewerbe — offeriert in EUR"
+        "europe": "Baugesuchsansichten, Exposés und Wettbewerbe — offeriert in EUR oder CHF",
+        "north-america": "Presale- und Lease-up-Pakete, Lieferung über Nacht — offeriert in USD oder EUR",
+        "middle-east": "Off-Plan-Launches und Turm-Navigatoren — offeriert in USD oder EUR",
+        "oceania": "Off-the-plan-Pakete und Planungsansichten — offeriert in USD oder EUR",
+        "latin-america": "Preventa-Launch-Pakete und Verkaufsraum-Rundgänge — offeriert in USD oder EUR"
       }
     }
   },
@@ -261,7 +263,7 @@
     "categories": {
       "All": {
         "label": "Alle Projekte",
-        "desc": "Ein kuratierter Querschnitt der Architekturvisualisierung des Studios: Aussen- und Innenrenderings, Vogelperspektiven, Animationen und Cinemagraphs für Wohnüberbauungen, Umbauten und Wettbewerbe in der Schweiz, Deutschland und Österreich, nebeneinander gezeigt. Produktvisualisierung, Virtual Staging und die 360°-Rundgänge haben eigene Bereiche."
+        "desc": "Ein kuratierter Querschnitt der Architekturvisualisierung des Studios: Aussen- und Innenrenderings, Vogelperspektiven, Animationen und Cinemagraphs für Wohnüberbauungen, Umbauten und Wettbewerbe in Europa und Übersee, nebeneinander gezeigt. Produktvisualisierung, Virtual Staging und die 360°-Rundgänge haben eigene Bereiche."
       },
       "Exterior": {
         "label": "Aussen",
@@ -353,13 +355,13 @@
     "siteTypeHint": "Welche Art von Website?"
   },
   "seo": {
-    "home": "SKLO ist ein 3D-Visualisierungsstudio in der Schweiz für Architekten, Entwickler und Immobilien: fotorealistische Aussen- und Innenrenderings, Animationen, 360°-Rundgänge und Projektwebsites.",
+    "home": "SKLO ist ein 3D-Visualisierungsstudio für Architekten, Entwickler und Immobilien: fotorealistische Aussen- und Innenrenderings, Animationen, 360°-Rundgänge und Projektwebsites.",
     "services": "Zwölf Leistungen aus einem Studio: Aussen- und Innenvisualisierung, Vogelperspektiven, Animation, 360°-Rundgänge, Virtual Staging, 3D-Grundrisse, Produktbilder und Webentwicklung.",
-    "gallery": "Ausgewählte Arbeiten von SKLO Studio: Aussen- und Innenrenderings, Luftaufnahmen, Animationen, Cinemagraphs und Virtual Staging für Schweizer Architektur und Immobilien.",
+    "gallery": "Ausgewählte Arbeiten von SKLO Studio: Aussen- und Innenrenderings, Luftaufnahmen, Animationen, Cinemagraphs und Virtual Staging für Architektur und Immobilien.",
     "about": "Das Team hinter SKLO Studio — 3D-Artists, Animatoren und Entwickler, die aus Architekturplänen Bilder machen, die ein Projekt verkaufen, bevor es gebaut ist.",
     "contact": "Beschreiben Sie Ihr Projekt in fünf kurzen Schritten — Leistungen, Umfang, Budget, Unterlagen — und erhalten Sie ein individuelles Angebot von SKLO Studio. Pläne und Dateien können direkt angehängt werden.",
     "servicesCrumb": "Leistungen",
-    "projects": "Referenzen von SKLO Studio: Wohnüberbauungen, Umbauten und Wettbewerbe in der Schweiz, Deutschland und Österreich — Aufgabe, Bilder, Verkaufsergebnis."
+    "projects": "Referenzen von SKLO Studio: Wohnüberbauungen, Umbauten und Wettbewerbe in Europa und Übersee — Aufgabe, Bilder, Verkaufsergebnis."
   },
   "consent": {
     "title": "Cookies zur Nutzungsanalyse",
@@ -383,7 +385,7 @@
   "projects": {
     "eyebrow": "Referenzen",
     "title": "Projekte",
-    "intro": "Sieben Projekte aus der Schweiz, Deutschland und Österreich: was der Kunde brauchte, was wir geliefert haben, was es für den Verkauf gebracht hat. Jedes Bild ist Arbeit des Studios.",
+    "intro": "Sieben Projekte aus Europa und Übersee: was der Kunde brauchte, was wir geliefert haben, was es für den Verkauf gebracht hat. Jedes Bild ist Arbeit des Studios.",
     "clientLabel": "Kunde",
     "servicesLabel": "Leistungen",
     "challengeEyebrow": "Ausgangslage",
@@ -412,9 +414,11 @@
     "cta": "Projekt starten",
     "footerTitle": "Märkte",
     "nav": {
-      "switzerland": "Schweiz",
-      "germany": "Deutschland",
-      "austria": "Österreich"
+      "europe": "Europa",
+      "north-america": "Nordamerika",
+      "middle-east": "Naher Osten",
+      "oceania": "Ozeanien",
+      "latin-america": "Lateinamerika"
     }
   },
   "knowledge": {

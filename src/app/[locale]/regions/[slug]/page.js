@@ -45,7 +45,7 @@ export default async function RegionPage({ params }) {
   const r = localizeRegion(region, locale);
   const title = fill(g.titleTemplate, r);
   const serviceLabel = (s) => humanizeTitle(serviceTitleFor(s, locale));
-  const localProjects = projects.filter((p) => p.country === r.country).map((p) => localizeProject(p, locale));
+  const localProjects = projects.filter((p) => r.countries.includes(p.country)).map((p) => localizeProject(p, locale));
   const services = servicesData.map((s) => ({ ...localizeService(s, locale), ...localizeServiceContent(s.slug, locale) }));
   const otherRegions = regions.filter((x) => x.slug !== slug).map((x) => localizeRegion(x, locale));
 
@@ -59,7 +59,7 @@ export default async function RegionPage({ params }) {
           description: r.lead,
           url: absoluteUrl(`/${locale}/regions/${slug}`),
           provider: { "@id": `${SITE_URL}/#organization` },
-          areaServed: { "@type": "Country", name: r.country },
+          areaServed: { "@type": "Place", name: r.name },
           serviceType: "Architectural visualization",
           inLanguage: locale,
         }}

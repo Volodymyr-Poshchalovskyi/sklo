@@ -23,7 +23,7 @@ export const FOUNDED = "2025";
 export const TEAM_SIZE = 8;
 // Markets the studio sells into. The company itself is registered in
 // Lithuania; the work is for German-speaking Europe.
-export const AREA_SERVED = ["CH", "DE", "AT"];
+export const AREA_SERVED = ["Europe", "North America", "Middle East", "Oceania", "Latin America"];
 
 // The figures the trust strip shows. Labels come from the locale files
 // (`t.stats`); the values are facts, so they live here.

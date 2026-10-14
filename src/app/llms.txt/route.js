@@ -25,9 +25,9 @@ export function GET() {
 
   const body = `# ${SITE_NAME}
 
-> 3D visualisation studio for architects, property developers and real-estate marketing in Switzerland, Germany and Austria: photorealistic exterior and interior renderings, bird's-eye views, animations and mood films, 360° virtual tours, cinemagraphs, virtual staging, 3D floor plans, product visualisation, graphic design and project websites.
+> 3D visualisation studio for architects, property developers and real-estate marketing in Europe, North America, the Middle East, Oceania and Latin America: photorealistic exterior and interior renderings, bird's-eye views, animations and mood films, 360° virtual tours, cinemagraphs, virtual staging, 3D floor plans, product visualisation, graphic design and project websites.
 
-Founded ${FOUNDED}, a team of ${TEAM_SIZE}, 70+ completed projects, around 35 projects a year, replies within 12 hours on working days. The studio is based in Lithuania and works remotely with clients across the DACH region. The site is bilingual: English under /en, German under /de. Enquiries go through the contact form at ${SITE_URL}/en/contact, by email to ${CONTACT_EMAIL}, or by phone / WhatsApp on ${PHONE}. Profiles: ${SOCIALS.map((s) => `${s.label} ${s.href}`).join(", ")}. Every project starts from the client's plans or 3D model and a brief; first drafts usually arrive within days and smaller projects take about seven working days. Pricing is a custom offer per project; new clients receive a 30% discount on their first project.
+Founded ${FOUNDED}, a team of ${TEAM_SIZE}, 70+ completed projects, around 35 projects a year, replies within 12 hours on working days. The studio is based in Lithuania and works remotely with clients worldwide, with particular depth in the German-speaking markets (Switzerland, Germany, Austria). The site is bilingual: English under /en, German under /de. Enquiries go through the contact form at ${SITE_URL}/en/contact, by email to ${CONTACT_EMAIL}, or by phone / WhatsApp on ${PHONE}. Profiles: ${SOCIALS.map((s) => `${s.label} ${s.href}`).join(", ")}. Every project starts from the client's plans or 3D model and a brief; first drafts usually arrive within days and smaller projects take about seven working days. Pricing is a custom offer per project; new clients receive a 30% discount on their first project.
 
 ## Services
 

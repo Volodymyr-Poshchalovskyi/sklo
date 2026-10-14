@@ -16,7 +16,7 @@
   },
   "hero": {
     "title": "We craft 3D experiences",
-    "subtitle": "3D visualisation studio for architecture and real estate in Switzerland, Germany and Austria — photorealistic renderings, animations, 360° tours and project websites.",
+    "subtitle": "3D visualisation studio for architecture and real estate, worldwide — Europe, North America, the Middle East, Oceania and Latin America — photorealistic renderings, animations, 360° tours and project websites.",
     "headlineLead": "3D Visualization",
     "headlineAccent": "services",
     "for": "for",
@@ -75,9 +75,11 @@
         "cooperatives": "Honest visualisations for assemblies, consultations and letting"
       },
       "regions": {
-        "switzerland": "Baugesuch views, cooperatives, competitions — quoted in CHF",
-        "germany": "Exposé imagery and project websites — quoted in EUR",
-        "austria": "Attic conversions and developer competitions — quoted in EUR"
+        "europe": "Permit views, exposés and competitions — quoted in EUR or CHF",
+        "north-america": "Presale and lease-up sets, overnight turnaround — quoted in USD or EUR",
+        "middle-east": "Off-plan launches and tower navigators — quoted in USD or EUR",
+        "oceania": "Off-the-plan sets and planning views — quoted in USD or EUR",
+        "latin-america": "Preventa launch sets and sales-room tours — quoted in USD or EUR"
       }
     }
   },
@@ -261,7 +263,7 @@
     "categories": {
       "All": {
         "label": "All Projects",
-        "desc": "A curated cross-section of the studio's architectural visualisation: exterior and interior renderings, aerial views, animations and cinemagraphs for residential developments, conversions and competitions in Switzerland, Germany and Austria, shown side by side. Product visualisation, virtual staging and the 360° tours have their own sections."
+        "desc": "A curated cross-section of the studio's architectural visualisation: exterior and interior renderings, aerial views, animations and cinemagraphs for residential developments, conversions and competitions in Europe and overseas, shown side by side. Product visualisation, virtual staging and the 360° tours have their own sections."
       },
       "Exterior": {
         "label": "Exterior",
@@ -353,13 +355,13 @@
     "siteTypeHint": "Which kind of site is it?"
   },
   "seo": {
-    "home": "SKLO is a 3D visualisation studio in Switzerland for architects, developers and real estate: photorealistic exterior and interior renderings, animations, 360° tours and project websites.",
+    "home": "SKLO is a 3D visualisation studio for architects, developers and real estate: photorealistic exterior and interior renderings, animations, 360° tours and project websites.",
     "services": "Twelve services from one studio: exterior and interior visualisation, bird's-eye views, animation, 360° tours, virtual staging, 3D floor plans, product shots and web development.",
-    "gallery": "Selected work by SKLO Studio: exterior and interior renderings, aerial views, animations, cinemagraphs and virtual staging for Swiss architecture and real estate.",
+    "gallery": "Selected work by SKLO Studio: exterior and interior renderings, aerial views, animations, cinemagraphs and virtual staging for architecture and real estate.",
     "about": "The team behind SKLO Studio — 3D artists, animators and developers who turn architectural plans into images that sell a project before it is built.",
     "contact": "Tell us about your project in five short steps — services, scope, budget, materials — and receive a tailored quote from SKLO Studio. Plans and files can be attached directly.",
     "servicesCrumb": "Services",
-    "projects": "Case studies from SKLO Studio: residential developments, conversions and competition entries in Switzerland, Germany and Austria — the brief, the renders, the sales result."
+    "projects": "Case studies from SKLO Studio: residential developments, conversions and competition entries in Europe and overseas — the brief, the renders, the sales result."
   },
   "consent": {
     "title": "Cookies for usage analysis",
@@ -383,7 +385,7 @@
   "projects": {
     "eyebrow": "Case studies",
     "title": "Projects",
-    "intro": "Seven projects from Switzerland, Germany and Austria: what the client needed, what we delivered, what it did for the sale. Every image is studio work.",
+    "intro": "Seven projects from Europe and overseas: what the client needed, what we delivered, what it did for the sale. Every image is studio work.",
     "clientLabel": "Client",
     "servicesLabel": "Services",
     "challengeEyebrow": "Starting point",
@@ -412,9 +414,11 @@
     "cta": "Start a project",
     "footerTitle": "Markets",
     "nav": {
-      "switzerland": "Switzerland",
-      "germany": "Germany",
-      "austria": "Austria"
+      "europe": "Europe",
+      "north-america": "North America",
+      "middle-east": "Middle East",
+      "oceania": "Oceania",
+      "latin-america": "Latin America"
     }
   },
   "knowledge": {

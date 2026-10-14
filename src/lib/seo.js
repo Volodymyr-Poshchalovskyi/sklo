@@ -116,7 +116,7 @@ export function organizationJsonLd(locale) {
       telephone: PHONE.replace(/\s+/g, ""),
       availableLanguage: ["en", "de"],
     },
-    areaServed: AREA_SERVED.map((code) => ({ "@type": "Country", name: code })),
+    areaServed: AREA_SERVED.map((name) => ({ "@type": "Place", name })),
     knowsAbout: [
       "Architectural visualization",
       "3D rendering",
@@ -171,7 +171,7 @@ export function serviceJsonLd({ locale, service }) {
     url: absoluteUrl(`/${locale}/services/${service.slug}`),
     image: service.type === "image" ? absoluteUrl(service.src) : undefined,
     provider: { "@id": ORG_ID },
-    areaServed: AREA_SERVED.map((code) => ({ "@type": "Country", name: code })),
+    areaServed: AREA_SERVED.map((name) => ({ "@type": "Place", name })),
     inLanguage: locale === "de" ? "de" : "en",
     // "From" price as a minimum, the way the page states it.
     offers: service.investment

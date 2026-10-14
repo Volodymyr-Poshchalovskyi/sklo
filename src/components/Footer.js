@@ -237,7 +237,7 @@ export default function Footer({ locale, t }) {
             <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mt-6 mb-2">
               {t?.regions?.footerTitle}
             </span>
-            {["switzerland", "germany", "austria"].map((slug) => (
+            {["europe", "north-america", "middle-east", "oceania", "latin-america"].map((slug) => (
               <Link key={slug} href={`/${locale}/regions/${slug}`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
                 {t?.regions?.nav?.[slug]}
               </Link>

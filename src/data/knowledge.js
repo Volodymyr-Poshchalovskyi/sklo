@@ -30,8 +30,8 @@ export const knowledge = [
   {
     slug: "what-does-a-rendering-cost",
     kind: "explainer",
-    title: "What does a 3D rendering cost in Switzerland, Germany and Austria?",
-    titleDe: "Was kostet ein 3D-Rendering in der Schweiz, Deutschland und Österreich?",
+    title: "What does a 3D rendering cost?",
+    titleDe: "Was kostet ein 3D-Rendering?",
     definition: "A photorealistic exterior rendering costs from about CHF 690 per view, an interior from about CHF 590, a bird's-eye view from CHF 890; a sixty-second animation from CHF 4,900 and a 360° tour of one apartment from CHF 1,900. Prices in EUR for Germany and Austria follow the same ranges. The first view carries the model-building; every further view from the same model costs a fraction.",
     definitionDe: "Eine fotorealistische Aussenvisualisierung kostet ab etwa CHF 690 pro Ansicht, eine Innenvisualisierung ab etwa CHF 590, eine Vogelperspektive ab CHF 890; eine sechzigsekündige Animation ab CHF 4'900 und ein 360°-Rundgang einer Wohnung ab CHF 1'900. Preise in EUR für Deutschland und Österreich folgen denselben Spannen. Die erste Ansicht trägt den Modellbau; jede weitere aus demselben Modell kostet einen Bruchteil.",
     sections: [
