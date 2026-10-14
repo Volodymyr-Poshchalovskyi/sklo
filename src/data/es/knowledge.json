@@ -1,0 +1,268 @@
+{
+ "what-is-architectural-visualisation": {
+  "title": "¿Qué es la visualización arquitectónica?",
+  "definition": "La visualización arquitectónica es la producción de imágenes fotorrealistas, películas y recorridos interactivos de un edificio antes de que se construya, a partir de los planos o del modelo 3D del arquitecto. Se utiliza para vender apartamentos sobre planos, obtener permisos de construcción, ganar concursos y presentar un proyecto a inversores.",
+  "sections": [
+   {
+    "h": "Qué incluye",
+    "body": [
+     "Los renders exteriores muestran el edificio en su entorno real; los renders interiores muestran estancias amuebladas a la altura de los ojos; las vistas aéreas muestran todo el desarrollo y su contexto; las animaciones y las películas de ambiente añaden movimiento y hora del día; los recorridos virtuales 360° permiten al comprador pasar de una estancia a otra en el navegador; las plantas 3D hacen legible una distribución de un vistazo. El virtual staging amuebla fotografías de estancias existentes, y la visualización de producto genera el render de una cocina o de un mueble a partir de sus datos CAD."
+    ]
+   },
+   {
+    "h": "Cómo se realiza",
+    "body": [
+     "El estudio construye un modelo 3D a partir de los planos o importa el modelo del arquitecto, coloca las cámaras donde estaría un visitante, ajusta el sol para la fecha y la hora elegidas, asigna los materiales de la memoria de acabados, añade mobiliario, personas y vegetación, y genera el render con iluminación físicamente realista. Primero se aprueban los renders en gris, después las previsualizaciones en color y por último la imagen final en resolución de impresión. Una única vista exterior requiere de cinco a siete días laborables; una película, de tres a cinco semanas."
+    ]
+   },
+   {
+    "h": "Quién la encarga",
+    "body": [
+     "Promotores inmobiliarios y constructoras generales, que venden o alquilan apartamentos antes de la obra; estudios de arquitectura, para concursos y presentaciones a clientes; agentes inmobiliarios, para anuncios de edificios nuevos y reformados; municipios y cooperativas, para la consulta pública; y fabricantes, para catálogos de producto. En Suiza, Alemania y Austria, la mayoría de los nuevos proyectos residenciales se comercializan hoy con renders desde el día en que se concede el permiso."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Cuál es la diferencia entre un render y una visualización?",
+    "a": "Un render es la imagen calculada individual; la visualización es toda la disciplina: renders, animaciones, recorridos y plantas. En la práctica, ambos términos se usan indistintamente para una imagen fija fotorrealista."
+   },
+   {
+    "q": "¿Qué debe aportar el cliente?",
+    "a": "Planos en DWG o PDF, una memoria de acabados o imágenes de referencia para los materiales, y todo lo disponible sobre el entorno. Un modelo 3D acorta la primera fase, pero no es imprescindible."
+   },
+   {
+    "q": "¿Cuánto cuesta la visualización arquitectónica?",
+    "a": "Una única vista exterior o interior parte de unos pocos cientos de francos; una película de sesenta segundos, de unos pocos miles; un recorrido 360° de un apartamento, de menos de dos mil. Los rangos detallados figuran en nuestra guía de costes de renders."
+   }
+  ]
+ },
+ "what-does-a-rendering-cost": {
+  "title": "¿Cuánto cuesta un render 3D?",
+  "definition": "Un render exterior fotorrealista cuesta desde unos CHF 690 por vista, uno interior desde unos CHF 590 y una vista aérea desde CHF 890; una animación de sesenta segundos, desde CHF 4,900 y un recorrido 360° de un apartamento, desde CHF 1,900. Los precios en EUR para Alemania y Austria siguen los mismos rangos. La primera vista asume la construcción del modelo; cada vista adicional del mismo modelo cuesta una fracción.",
+  "sections": [
+   {
+    "h": "Qué determina el precio",
+    "body": [
+     "Cuatro factores: si existe un modelo 3D utilizable o hay que construirlo a partir de los planos; cuánto entorno real debe modelarse (una villa en un prado es más barata que un bloque en una calle de ciudad); cuántas vistas salen de la misma escena; y el plazo. Los materiales, el mobiliario y las personas están incluidos en un render profesional y no deberían aparecer como extras."
+    ]
+   },
+   {
+    "h": "Presupuestos habituales por proyecto",
+    "body": [
+     "Una vivienda unifamiliar para permiso y anuncio: dos vistas exteriores y dos interiores, alrededor de CHF 2,500. Un edificio plurifamiliar de 20 a 40 apartamentos vendido sobre planos: cuatro exteriores, seis interiores, una vista aérea y plantas 3D para cada tipo de unidad, entre CHF 9,000 y 14,000. Un desarrollo con una película, un recorrido 360° y un sitio web del proyecto: de CHF 25,000 a 40,000. Propuestas para concursos: de dos a tres vistas en tres semanas, de CHF 2,000 a 4,000."
+    ]
+   },
+   {
+    "h": "Cómo reducir el coste",
+    "body": [
+     "Encargue las vistas juntas, no una a una: el modelo se construye una sola vez. Envíe el modelo 3D del arquitecto si existe. Defina la memoria de acabados antes de la primera previsualización, porque un cambio de material tras la aprobación supone un render nuevo. Y reutilice las escenas: el interior que se convirtió en cuatro imágenes fijas también se convierte en el recorrido 360°, y el modelo exterior pasa a ser la vista aérea y el plano de apertura de la película."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Los precios son los mismos en EUR para Alemania y Austria?",
+    "a": "Los presupuestos para clientes alemanes y austriacos se emiten en EUR y siguen los mismos rangos; el IVA se aplica por inversión del sujeto pasivo dentro de la UE."
+   },
+   {
+    "q": "¿Por qué la primera vista es la más cara?",
+    "a": "Incluye la construcción del modelo y del entorno. Una vez que la escena existe, un segundo ángulo de cámara son unas pocas horas de trabajo, por lo que las vistas adicionales cuestan de dos a tres veces menos."
+   },
+   {
+    "q": "¿Hay una opción más económica que un render completo?",
+    "a": "Para un edificio existente, el virtual staging de una foto parte de CHF 190 por imagen. Para un permiso, un fotomontaje sobre una foto del terreno suele ser más barato que una escena totalmente modelada."
+   }
+  ]
+ },
+ "what-is-virtual-staging": {
+  "title": "¿Qué es el virtual staging?",
+  "definition": "El virtual staging es el amueblado digital de la fotografía de una estancia vacía: mobiliario, iluminación y decoración se colocan en la foto real con la escala y la perspectiva correctas, de modo que un anuncio muestre un hogar en lugar de paredes desnudas. Cuesta una fracción del home staging físico y se entrega en días.",
+  "sections": [
+   {
+    "h": "Cuándo se utiliza",
+    "body": [
+     "Para apartamentos y casas vacíos en venta o alquiler, para proyectos de reforma en los que hay que mostrar el estado final en la estancia existente, y para obra nueva cuyo apartamento piloto se ha fotografiado vacío. Los agentes inmobiliarios lo usan para que un anuncio destaque en los portales; los promotores, para mostrar dos estilos de amueblado a dos grupos de compradores a partir de una sola foto."
+    ]
+   },
+   {
+    "h": "Cómo es un buen virtual staging",
+    "body": [
+     "El mobiliario tiene el tamaño adecuado para la estancia, sus sombras caen donde cae la luz de la ventana, los reflejos aparecen en el suelo y nada flota. El estilo se ajusta al edificio y al comprador: un loft no se amuebla como un piso familiar. La foto original se entrega junto con la imagen y esta se etiqueta como amueblada virtualmente, algo que esperan los portales suizos, alemanes y austriacos."
+    ]
+   },
+   {
+    "h": "Coste y plazo",
+    "body": [
+     "Desde unos CHF 190 por foto, con un apartamento de seis a ocho fotos entregado en dos o tres días laborables. Retirar primero el mobiliario antiguo de una estancia ocupada cuesta un poco más. En comparación con el staging físico (muebles de alquiler, transporte, seguro, un estilista, durante cada mes en el mercado), suele ser de diez a veinte veces más barato."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Es legal el virtual staging en los anuncios inmobiliarios?",
+    "a": "Sí, siempre que se declare. Una nota como 'amueblado virtualmente' en la imagen o en el texto, junto con la foto original, mantiene el anuncio honesto y conforme a las normas de los portales."
+   },
+   {
+    "q": "¿También se pueden cambiar paredes, suelos o la cocina?",
+    "a": "Sí. En proyectos de reforma sustituimos suelos, repintamos paredes e insertamos una cocina nueva en la foto existente, y entregamos un par de imágenes de antes y después."
+   },
+   {
+    "q": "¿Qué fotos se necesitan?",
+    "a": "Las fotos del anuncio en resolución completa, rectas y bien iluminadas; las tomas gran angular de las estancias principales funcionan mejor."
+   }
+  ]
+ },
+ "what-is-a-360-virtual-tour": {
+  "title": "¿Qué es un recorrido virtual 360° de una obra nueva?",
+  "definition": "Un recorrido virtual 360° de una obra nueva es un conjunto de panoramas renderizados de un apartamento que todavía no existe, enlazados de estancia en estancia para que el comprador pueda mirar a su alrededor y recorrerlo en el navegador, en el móvil o con gafas de realidad virtual. Sustituye al apartamento piloto durante la venta sobre planos.",
+  "sections": [
+   {
+    "h": "Cómo funciona",
+    "body": [
+     "Cada estancia se renderiza como un panorama esférico completo a partir de la misma escena 3D que las imágenes fijas. Los panoramas se enlazan con puntos interactivos, una planta indica dónde se encuentra el visitante, las notas explican los materiales y cada estancia tiene su propio enlace. El recorrido funciona sin aplicación y se integra en el sitio web del proyecto o se envía como enlace en anuncios y correos electrónicos."
+    ]
+   },
+   {
+    "h": "Qué aporta a la venta",
+    "body": [
+     "Los compradores que han recorrido el tour llegan a la visita ya convencidos de la distribución y preguntan por el contrato. Las consultas llegan precalificadas, las visitas son menos y más breves, y el equipo comercial ve qué estancias reciben más atención. Con un panorama de dron a la altura prevista de la planta, el recorrido muestra además la vista real desde el balcón: el detalle que vende primero los áticos y plantas altas."
+    ]
+   },
+   {
+    "h": "Coste y plazo",
+    "body": [
+     "Desde unos CHF 1,900 por tipo de apartamento cuando las escenas interiores ya existen de los renders, ya que los panoramas salen del mismo modelo. Construido desde cero, un recorrido de cinco estancias parte normalmente de CHF 3,400. De dos a tres semanas de producción; el alojamiento durante el periodo de venta está incluido."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Un recorrido 360° necesita gafas de realidad virtual?",
+    "a": "No. Funciona en cualquier navegador, en el móvil o en el ordenador; las gafas son una opción a través del mismo enlace."
+   },
+   {
+    "q": "¿Cuántas estancias incluye un recorrido?",
+    "a": "Normalmente de cinco a seis estancias de un tipo de apartamento; más estancias o tipos adicionales se presupuestan según el alcance."
+   },
+   {
+    "q": "¿Se puede integrar el recorrido en nuestro sitio web?",
+    "a": "Sí, con un código de inserción o un enlace; cada estancia tiene su propia URL para los anuncios."
+   }
+  ]
+ },
+ "virtual-staging-vs-home-staging": {
+  "title": "Virtual staging o home staging: ¿qué vende el apartamento?",
+  "definition": "El home staging amuebla el apartamento real con muebles de alquiler para las visitas; el virtual staging amuebla las fotografías del anuncio. El virtual staging es de diez a veinte veces más barato y está listo en días; el home staging sigue importando cuando los compradores visitan en persona un apartamento vacío. La mayoría de los anuncios usan hoy virtual staging, y las propiedades premium combinan ambos.",
+  "sections": [
+   {
+    "h": "Coste",
+    "body": [
+     "El home staging de un apartamento de 3,5 habitaciones en Suiza supone miles de francos de montaje más un alquiler mensual mientras la propiedad esté en el mercado. El virtual staging del mismo apartamento (de seis a ocho fotos) cuesta unos cientos de francos, una sola vez. Para un promotor con veinte unidades, la diferencia es la que hay entre amueblar una unidad piloto y amueblar cada tipo de unidad."
+    ]
+   },
+   {
+    "h": "Efecto en el anuncio y en la visita",
+    "body": [
+     "En el anuncio gana el virtual staging: la primera imagen decide el clic, y una estancia amueblada se fotografía más grande, más luminosa y más cara que una vacía. En la visita gana el home staging: un comprador en una estancia vacía tiene que imaginar, y algunos no pueden. Una foto etiquetada como amueblada virtualmente, junto con el original vacío, permite al comprador hacer ambas cosas antes de visitar."
+    ]
+   },
+   {
+    "h": "Cuándo usar cada uno",
+    "body": [
+     "Virtual staging para cada anuncio de una propiedad vacía, para alquileres, para proyectos de reforma en los que debe mostrarse el estado final y para obra nueva cuyo apartamento piloto aún no está construido. Home staging para propiedades premium en las que las visitas deciden el precio y el presupuesto permite ambos. En una promoción nueva, el virtual staging de los renders lo sustituyen los propios renders: están amueblados desde el principio."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Los compradores se sienten engañados por el virtual staging?",
+    "a": "No cuando se declara y se muestra la foto original al lado. Los compradores entienden que el mobiliario es una sugerencia; lo que rechazan es una modificación oculta de la propia estancia."
+   },
+   {
+    "q": "¿Se pueden combinar ambos?",
+    "a": "Sí, y para propiedades de alto valor es el enfoque habitual: virtual staging para los portales y staging físico de las estancias clave para la visita."
+   },
+   {
+    "q": "¿Qué tan rápido es el virtual staging?",
+    "a": "De dos a tres días laborables para un apartamento de seis a ocho fotos; fotos individuales en 24 horas bajo petición."
+   }
+  ]
+ },
+ "360-tour-vs-show-apartment": {
+  "title": "Recorrido 360° o apartamento piloto: ¿qué debe construir primero un promotor?",
+  "definition": "Un apartamento piloto cuesta seis cifras, existe en un solo lugar y está listo tarde en la obra; un recorrido 360° cuesta menos de dos mil francos por tipo de apartamento, funciona en cualquier móvil y está listo el día en que empieza la venta. En la venta sobre planos, primero va el recorrido; el apartamento piloto, si acaso, llega cuando la estructura ya está levantada.",
+  "sections": [
+   {
+    "h": "Plazos",
+    "body": [
+     "Los promotores en Suiza, Alemania y Austria empiezan a vender cuando se concede el permiso, normalmente unos dieciocho meses antes de que pudiera existir un apartamento piloto. Un recorrido 360° se renderiza a partir de las mismas escenas interiores que las imágenes del folleto y está en línea de dos a tres semanas después del briefing. El recorrido vende la primera mitad de las unidades; el apartamento piloto, si se construye, vende las últimas."
+    ]
+   },
+   {
+    "h": "Alcance",
+    "body": [
+     "Un apartamento piloto lo visitan quienes ya viven cerca y tienen tiempo un sábado. Un recorrido lo camina un comprador en Múnich que mira un piso en Zúrich un domingo por la noche, el empleado que se traslada, el inversor que compara tres proyectos. Además informa de qué estancias reciben más tiempo, algo que ningún apartamento piloto puede hacer."
+    ]
+   },
+   {
+    "h": "Qué sigue aportando el apartamento piloto",
+    "body": [
+     "Los materiales en la mano, la vista real desde la ventana real, el sonido del suelo. Para las últimas unidades, para compradores premium y para la elección de acabados, el apartamento físico sigue siendo el argumento más fuerte. La secuencia económica es primero el recorrido y después una única unidad piloto, tarde, amueblada en el estilo que el recorrido ya había mostrado: los compradores lo reconocen."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Cuánto cuesta un recorrido 360° en comparación con un apartamento piloto?",
+    "a": "Un recorrido de un tipo de apartamento, desde unos CHF 1,900 cuando los renders ya existen; un apartamento piloto amueblado, normalmente CHF 100,000 o más, incluyendo los acabados, el mobiliario y los meses que queda inmovilizado."
+   },
+   {
+    "q": "¿Puede el recorrido mostrar la vista real?",
+    "a": "Sí, con un panorama de dron tomado a la altura prevista de la planta y compuesto detrás de las ventanas renderizadas."
+   },
+   {
+    "q": "¿El recorrido sustituye al folleto?",
+    "a": "No; lo complementa. Las imágenes fijas del folleto y los panoramas del recorrido salen de las mismas escenas, de modo que ambos coinciden."
+   }
+  ]
+ },
+ "rendering-vs-photomontage": {
+  "title": "Render o fotomontaje: ¿qué necesita un permiso de construcción?",
+  "definition": "Un fotomontaje inserta el edificio modelado en una fotografía real del terreno; un render completo modela también el entorno. Para permisos de construcción y consulta a los vecinos, el fotomontaje suele ser la opción adecuada porque el entorno es demostrablemente real; para la comercialización, lo es el render completo, porque se pueden elegir la luz, la estación del año y las personas.",
+  "sections": [
+   {
+    "h": "Para el permiso",
+    "body": [
+     "Las autoridades y los vecinos quieren ver el nuevo volumen donde se levantará, con su altura real y con los árboles existentes. Un fotomontaje sobre una foto tomada desde un punto de vista público lo resuelve sin margen de discusión: ajustamos objetivo, perspectiva y sol a la fotografía e insertamos el edificio. Muchos municipios suizos piden exactamente esto; las autoridades alemanas y austriacas lo aceptan para presentaciones ante el consejo municipal."
+    ]
+   },
+   {
+    "h": "Para la venta",
+    "body": [
+     "Una imagen de venta puede elegir: la luz del atardecer, el follaje de verano, la familia en el balcón. Eso requiere una escena modelada. El render completo también ofrece todas las demás vistas (el patio, la entrada, la vista aérea) a partir del mismo modelo, algo que un fotomontaje no puede. Los compradores comparan el edificio terminado con las imágenes, por lo que la arquitectura y los materiales se mantienen exactos; solo se elige la atmósfera."
+    ]
+   },
+   {
+    "h": "Coste y qué encargar",
+    "body": [
+     "Un fotomontaje suele ser más barato que una vista exterior completa porque el entorno se fotografía, no se modela; necesita una buena foto del terreno, idealmente tomada para este fin. Un proyecto que necesita ambos (permiso ahora, venta después) encarga el modelo una sola vez: el fotomontaje para la solicitud y las vistas completas del mismo modelo cuando empiece la comercialización."
+    ]
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Quién toma la foto del terreno para un fotomontaje?",
+    "a": "Puede hacerlo usted, desde el punto de vista que pida la autoridad, anotando la posición de la cámara y la distancia focal; o nosotros organizamos un fotógrafo o un dron a través de un socio local."
+   },
+   {
+    "q": "¿Se acepta un fotomontaje como prueba en las alegaciones?",
+    "a": "Es el formato estándar precisamente para eso, cuando los datos de cámara están documentados y el edificio se sitúa a partir de coordenadas topográficas. Entregamos ambos junto con la imagen."
+   },
+   {
+    "q": "¿Se puede usar un fotomontaje también para marketing?",
+    "a": "Para una vivienda unifamiliar o un edificio pequeño, a menudo sí: una buena foto del terreno con buena luz es una imagen de venta convincente. Para una promoción, el render completo compensa por las vistas adicionales que permite."
+   }
+  ]
+ }
+}

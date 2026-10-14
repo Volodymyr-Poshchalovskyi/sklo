@@ -16,6 +16,9 @@ import { galleryItems, SERVICE_TOUR } from "@/data/galleryData";
 // facts [{ label, labelDe, value, valueDe? }], metrics [{ value, label, labelDe }],
 // hero (gallery id), images (gallery ids), tour (SERVICE_TOUR id, optional).
 
+import { mergeOverlay } from "@/lib/i18n";
+import esOverlay from "@/data/es/projects.json";
+
 export const projects = [
   {
     slug: "waldpark-winterthur",
@@ -258,7 +261,7 @@ export const projects = [
 const byId = new Map(galleryItems.map((item) => [item.id, item]));
 const tourById = new Map(Object.values(SERVICE_TOUR).flat().map((tour) => [tour.id, tour]));
 
-export function localizeProject(project, locale) {
+function localizeProjectBase(project, locale) {
   const de = locale === "de";
   const pick = (en, deVal) => (de && deVal ? deVal : en);
   return {
@@ -288,3 +291,7 @@ export const COUNTRY_NAMES = {
   DE: { en: "Germany", de: "Deutschland" },
   AT: { en: "Austria", de: "Österreich" },
 };
+
+export function localizeProject(project, locale) {
+  return locale === "es" ? mergeOverlay(localizeProjectBase(project, "en"), esOverlay[project.slug]) : localizeProjectBase(project, locale);
+}

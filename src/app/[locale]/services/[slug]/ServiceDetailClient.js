@@ -16,6 +16,7 @@ import { useLenis } from "@/context/LenisContext";
 import {imageSrcSet, imageVariant, videoSrc, videoPoster} from "@/lib/media";
 import { useVideoTier } from "@/lib/videoTier";
 import { blurStyle, fadeInOnLoad } from "@/lib/blur";
+import { pickL } from "@/lib/i18n";
 
 // Helper component to render step media dynamically
 function StepMedia({ src, type, isActive, alt }) {
@@ -729,7 +730,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
                   />
                   <div className="flex items-baseline justify-between gap-4">
                     <h3 className="text-sm font-bold uppercase tracking-wider text-white">
-                      {locale === "de" && pair.titleDe ? pair.titleDe : pair.title}
+                      {pickL(locale, pair.title, pair.titleDe ?? pair.title, pair.title)}
                     </h3>
                     <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">
                       {g.dragToCompare}
@@ -753,9 +754,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
                 href={`/${locale}/gallery?filter=${galleryLink.slug}`}
                 className="group inline-flex items-center gap-3 border border-white/20 hover:border-white/50 bg-white/[0.03] hover:bg-white/[0.08] rounded-full px-8 py-4 text-xs font-semibold tracking-widest uppercase text-white/90 hover:text-white transition-all duration-300"
               >
-                {locale === "de"
-                  ? "Alle Arbeiten ansehen"
-                  : `Check all ${galleryLink.cta}`}
+                {pickL(locale, `Check all ${galleryLink.cta}`, "Alle Arbeiten ansehen", "Ver todos los trabajos")}
                 <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>

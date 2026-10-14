@@ -2,6 +2,7 @@ import GalleryClient from "./GalleryClient";
 import { galleryItems } from "@/data/galleryData";
 import { imageVariant, videoSrc, videoPoster } from "@/lib/media";
 import { absoluteUrl, JsonLd, SITE_URL } from "@/lib/seo";
+import { pickL } from "@/lib/i18n";
 
 // A server component on purpose: awaiting `searchParams` opts the route out
 // of prerendering, so `?filter=` is rendered on the server per request and
@@ -12,7 +13,8 @@ export default async function GalleryPage({ params, searchParams }) {
   await searchParams;
   // The renders that have a descriptive alt, as an ItemList of ImageObjects:
   // what Google Images and the AI engines read as "these are the works".
-  const described = galleryItems.filter((i) => (locale === "de" ? i.altDe : i.alt)).slice(0, 48);
+  const altOf = (i) => pickL(locale, i.alt, i.altDe, i.alt);
+  const described = galleryItems.filter((i) => altOf(i)).slice(0, 48);
   return (
     <>
       <JsonLd
@@ -29,8 +31,8 @@ export default async function GalleryPage({ params, searchParams }) {
               i.type === "video"
                 ? {
                     "@type": "VideoObject",
-                    name: locale === "de" ? i.altDe : i.alt,
-                    description: locale === "de" ? i.altDe : i.alt,
+                    name: altOf(i),
+                    description: altOf(i),
                     contentUrl: videoSrc(i.src, "hd"),
                     thumbnailUrl: videoPoster(i.src),
                     uploadDate: "2026-10-12",
@@ -40,8 +42,8 @@ export default async function GalleryPage({ params, searchParams }) {
                     "@type": "ImageObject",
                     contentUrl: imageVariant(i.src, 1920),
                     thumbnailUrl: imageVariant(i.src, 640),
-                    name: locale === "de" ? i.altDe : i.alt,
-                    description: locale === "de" ? i.altDe : i.alt,
+                    name: altOf(i),
+                    description: altOf(i),
                     creator: { "@id": `${SITE_URL}/#organization` },
                     copyrightNotice: "© SKLO Studio",
                     creditText: "SKLO Studio",

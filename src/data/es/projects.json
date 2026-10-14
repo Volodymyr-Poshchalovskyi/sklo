@@ -1,0 +1,449 @@
+{
+ "waldpark-winterthur": {
+  "type": "Urbanización residencial, 48 apartamentos",
+  "client": "Promotor inmobiliario",
+  "summary": "Cuatro edificios revestidos de madera en torno a un patio con parque infantil, vendidos sobre planos con un paquete visual completo: renders exteriores e interiores, una vista aérea, una película de sesenta segundos y el sitio web del proyecto.",
+  "challenge": [
+   "El promotor quería iniciar la venta dieciocho meses antes de la finalización, con folleto, sitio web y evento de ventas en el mismo mes. La arquitectura —fachadas de alerce que con el tiempo adquirirían un tono plateado, un patio sin coches— era el argumento principal, y los planos no la transmitían.",
+   "El calendario era ajustado: todas las imágenes debían estar finalizadas seis semanas después del briefing, y el solar seguía siendo un prado."
+  ],
+  "approach": [
+   "Construimos un modelo del entorno a partir de los datos altimétricos cantonales y de fotos del solar y lo utilizamos para todo: la vista del patio al atardecer que se convirtió en la imagen clave, las vistas de calle, la vista aérea y la trayectoria de cámara de la película. Los interiores se amueblaron para los dos grupos de compradores que nombró el promotor —familias jóvenes y parejas que reducen su vivienda— con la memoria de acabados real.",
+   "El sitio web del proyecto se publicó el mismo día en que se aprobaron las imágenes, con la tabla de unidades, las plantas y la película en la página de inicio."
+  ],
+  "result": [
+   "Veintiséis de los cuarenta y ocho apartamentos quedaron reservados en las primeras ocho semanas de venta, antes de que comenzara la excavación. El promotor usó la película en el evento de ventas y como imagen principal del sitio web; la vista aérea se convirtió en la lona de la valla de obra."
+  ],
+  "facts": [
+   {
+    "label": "Entregables",
+    "value": "6 vistas exteriores, 8 vistas interiores, 1 vista aérea, película de 60 s, sitio web del proyecto"
+   },
+   {
+    "label": "Plazo",
+    "value": "6 semanas desde el briefing hasta el lanzamiento"
+   },
+   {
+    "label": "Material de partida",
+    "value": "Planos DWG, memoria de acabados, fotos del solar"
+   }
+  ],
+  "metrics": [
+   {
+    "label": "unidades reservadas en 8 semanas"
+   },
+   {
+    "label": "semanas hasta el lanzamiento"
+   },
+   {
+    "label": "modelo para todas las imágenes"
+   }
+  ],
+  "heroItem": {
+   "alt": "Render exterior de un complejo de apartamentos revestido de madera con balcones y un parque infantil al anochecer"
+  },
+  "items": [
+   {
+    "alt": "Render exterior de un complejo de apartamentos revestido de madera con balcones y un parque infantil al anochecer"
+   },
+   {
+    "alt": "Render exterior de edificios de apartamentos revestidos de madera con balcones alrededor de un patio con una estructura escultórica de madera, árboles y personas"
+   },
+   {
+    "alt": "Vista aérea en render de un patio residencial con parque infantil entre nuevos bloques de apartamentos"
+   },
+   {
+    "alt": "Render interior de un luminoso espacio de sala y comedor con suelo de roble y marcos de ventana de madera"
+   },
+   {
+    "alt": "Render interior de una amplia sala-comedor con mesa ovalada, sillas negras, sofá en forma de nube, lámpara colgante y plantas"
+   },
+   {
+    "alt": "Animación: vuelo aéreo sobre un barrio residencial con un solar de nueva construcción"
+   }
+  ]
+ },
+ "lindenhof-duebendorf": {
+  "type": "Edificio de apartamentos, 32 unidades",
+  "client": "Contratista general",
+  "summary": "Un edificio de seis plantas con balcones de vidrio ajardinados, presentado mediante vistas de calle, un apartamento piloto amueblado como recorrido virtual 360° y plantas 3D de cada tipo de unidad.",
+  "challenge": [
+   "La identidad del edificio eran sus balcones: profundos, acristalados, ajardinados, una capa verde frente a la fachada. En los alzados se leían como una cuadrícula. Además, el contratista necesitaba una forma de mostrar el apartamento tipo sin construir un piso piloto en la obra."
+  ],
+  "approach": [
+   "Tres vistas a nivel de calle en distintos momentos del día muestran los balcones en uso: una mesa puesta para la cena, la bicicleta de un niño, la vegetación en verano. El apartamento piloto de 3,5 habitaciones se construyó como una única escena interior y se entregó dos veces: como cuatro imágenes fijas para el folleto y como un recorrido virtual 360° de seis estancias, renderizado desde el mismo modelo sin coste adicional de modelado.",
+   "Cada uno de los once tipos de unidad recibió una planta 3D con el mismo estilo, de modo que las páginas de unidades del folleto se leen como una serie."
+  ],
+  "result": [
+   "El recorrido se visualizó más de 4.000 veces en los primeros tres meses, sobre todo en teléfonos móviles, y el equipo de ventas informa de que la mayoría de las visitas ahora empiezan con un comprador que ya ha recorrido el apartamento en línea."
+  ],
+  "facts": [
+   {
+    "label": "Entregables",
+    "value": "3 vistas exteriores, 4 vistas interiores, recorrido virtual 360° (6 estancias), 11 plantas"
+   },
+   {
+    "label": "Plazo",
+    "value": "5 semanas"
+   },
+   {
+    "label": "Material de partida",
+    "value": "Modelo ArchiCAD, memoria de acabados, plano de plantación"
+   }
+  ],
+  "metrics": [
+   {
+    "label": "visualizaciones del recorrido en 3 meses"
+   },
+   {
+    "label": "tipos de unidad en plantas 3D"
+   },
+   {
+    "label": "pisos piloto construidos"
+   }
+  ],
+  "tourItem": {
+   "label": {
+    "es": "Interior"
+   }
+  },
+  "heroItem": {
+   "alt": "Render desde la calle de un edificio de apartamentos verde con balcones de vidrio y terrazas ajardinadas"
+  },
+  "items": [
+   {
+    "alt": "Render desde la calle de un edificio de apartamentos verde con balcones de vidrio y terrazas ajardinadas"
+   },
+   {
+    "alt": "Render exterior de un edificio de apartamentos de cinco plantas con pantallas verdes en los balcones y plantas, un patio ajardinado y un camino con pérgola"
+   },
+   {
+    "alt": "Render exterior de bloques de apartamentos con acentos verdes vistos desde un cruce de calles con carril bici, seto y árboles frondosos"
+   },
+   {
+    "alt": "Render interior de una cocina abierta con comedor, isla con lados de mármol, sillas ocre, parqué en espiga y grandes ventanales"
+   },
+   {
+    "alt": "Render interior de un comedor de apartamento con mesa de madera, sillas negras, lámpara de arco, placa de cocina y ventanas al exterior"
+   },
+   {
+    "alt": "Render interior de una sala espaciosa con sofá esquinero blanco, mesa de centro de vidrio, lámpara de pie de arco, escultura y comedor al fondo"
+   }
+  ]
+ },
+ "rietacker-thurgau": {
+  "type": "Reforma de casa de campo y nuevo granero, 9 apartamentos",
+  "client": "Propietario privado con arquitecto",
+  "summary": "Una casa de campo protegida y un nuevo granero de madera en un pueblo de Turgovia: visualizaciones primero para el permiso de construcción y los vecinos, y después para la venta de nueve apartamentos.",
+  "challenge": [
+   "Dos públicos con necesidades opuestas. El municipio y los vecinos debían ver que el nuevo granero respetaba el pueblo: altura, inclinación del tejado, materiales. Los compradores debían ver que un apartamento bajo un tejado de 200 años podía ser luminoso y moderno.",
+   "El propietario tenía un presupuesto reducido y pidió que cada imagen sirviera para ambos fines."
+  ],
+  "approach": [
+   "Una vista aérea neutra a partir del modelo altimétrico y un fotomontaje sobre una fotografía de la calle del pueblo se incluyeron en la documentación del permiso: un entorno demostrablemente real, sin luz de marketing. El mismo modelo produjo después las vistas de venta: el granero con luz de finales del verano, el patio de la casa de campo y dos apartamentos en buhardilla con las vigas antiguas a la vista.",
+   "Diseñamos el folleto de ventas de ocho páginas en torno a esas imágenes, de modo que el propietario tuvo un solo proveedor para las imágenes y la impresión."
+  ],
+  "result": [
+   "El permiso se aprobó sin objeciones. Siete de los nueve apartamentos se vendieron antes de colocar el tejado, cinco de ellos a compradores de fuera del pueblo que encontraron el proyecto a través de las imágenes del anuncio."
+  ],
+  "facts": [
+   {
+    "label": "Entregables",
+    "value": "4 vistas exteriores, 1 vista aérea, 1 fotomontaje, 4 vistas interiores, folleto de ventas"
+   },
+   {
+    "label": "Plazo",
+    "value": "4 semanas, en dos etapas"
+   },
+   {
+    "label": "Material de partida",
+    "value": "Planos en PDF, levantamiento topográfico, fotos del edificio existente"
+   }
+  ],
+  "metrics": [
+   {
+    "label": "objeciones al permiso"
+   },
+   {
+    "label": "vendidos antes del tejado"
+   },
+   {
+    "label": "públicos, un solo modelo"
+   }
+  ],
+  "heroItem": {
+   "alt": "Render de una casa de campo reformada con ampliación de madera y tejado a dos aguas en un pueblo"
+  },
+  "items": [
+   {
+    "alt": "Render de una casa de campo reformada con ampliación de madera y tejado a dos aguas en un pueblo"
+   },
+   {
+    "alt": "Render exterior de una casa nueva de entramado de madera con tejado a dos aguas de teja roja junto a una casa de campo antigua con contraventanas, sobre un césped verde"
+   },
+   {
+    "alt": "Vista aérea en render de una casa de campo renovada rodeada de campos al amanecer"
+   },
+   {
+    "alt": "Render exterior de una vivienda oscura de madera estilo granero con tejado de teja rojiza y balcón, vista a través de un césped soleado con árboles otoñales"
+   },
+   {
+    "alt": "Render interior de una sala en buhardilla con claraboyas, butaca negra, sofá gris, alfombra a cuadros e isla de cocina abierta"
+   },
+   {
+    "alt": "Render interior de una sala de lectura en buhardilla con ventana redonda, claraboyas, dos sillones, estantería de discos y altavoz de madera"
+   }
+  ]
+ },
+ "sonnenhalde-baar": {
+  "type": "Viviendas en terrazas sobre una ladera, 21 apartamentos",
+  "client": "Promotor inmobiliario",
+  "summary": "Edificios escalonados en una ladera orientada al sur sobre Baar, donde cada apartamento se vende por su propia vista: un navegador de apartamentos con órbita y el panorama real tras cada terraza, y cinemagraphs para la campaña de lanzamiento.",
+  "challenge": [
+   "En una ladera no hay dos apartamentos con la misma vista, y la vista es el precio. La lista de unidades del promotor no podía mostrarla, y un único render principal favorecía a una terraza frente a otras veinte."
+  ],
+  "approach": [
+   "Un vuelo de dron capturó panoramas a la altura de cada planta. Construimos el terreno y los tres edificios como un único modelo, renderizamos con él el conjunto de vistas exteriores y después la órbita 360° para el navegador de apartamentos: se gira el conjunto, se toca una unidad y se ve su planta y el panorama real desde su terraza.",
+   "Para el lanzamiento en redes sociales, tres cinemagraphs —la luz del lago en movimiento, una cortina con la brisa de la tarde, la piscina al anochecer— sirvieron como imágenes principales de la campaña."
+  ],
+  "result": [
+   "El navegador sostuvo la conversación de venta: el equipo informa de que los compradores llegan preguntando por una unidad concreta por su número. Los tres áticos, los más caros, fueron los primeros en venderse."
+  ],
+  "facts": [
+   {
+    "label": "Entregables",
+    "value": "5 vistas exteriores, 6 vistas interiores, navegador de apartamentos 360°, 3 cinemagraphs"
+   },
+   {
+    "label": "Plazo",
+    "value": "8 semanas, incluido el vuelo de dron"
+   },
+   {
+    "label": "Material de partida",
+    "value": "Modelo Revit, panoramas de dron, lista de unidades"
+   }
+  ],
+  "metrics": [
+   {
+    "label": "vistas, una por terraza"
+   },
+   {
+    "label": "áticos vendidos primero"
+   },
+   {
+    "label": "semanas hasta el lanzamiento"
+   }
+  ],
+  "heroItem": {
+   "alt": "Render exterior de un complejo de apartamentos en terrazas sobre una ladera con balcones escalonados sobre una pendiente de césped a plena luz del día"
+  },
+  "items": [
+   {
+    "alt": "Render exterior de un complejo de apartamentos en terrazas sobre una ladera con balcones escalonados sobre una pendiente de césped a plena luz del día"
+   },
+   {
+    "alt": "Render exterior de dos edificios de apartamentos modernos y blancos sobre una ladera de césped con una rampa de hormigón hacia un garaje subterráneo"
+   },
+   {
+    "alt": "Render de un edificio de apartamentos en ladera con terrazas escalonadas sobre un prado soleado"
+   },
+   {
+    "alt": "Render interior de un rincón comedor con sillas giratorias color crema, una barra con encimera de piedra, marcos de ventana de madera y vistas a la montaña"
+   },
+   {
+    "alt": "Render interior de una cocina y comedor de planta abierta con una alfombra estampada y vistas a la montaña"
+   },
+   {
+    "alt": "Cinemagraph: primer plano de un sofá beige con un cojín a cuadros junto a una ventana"
+   }
+  ]
+ },
+ "seehalle-rapperswil": {
+  "type": "Edificio cultural público, propuesta para un concurso",
+  "client": "Estudio de arquitectura",
+  "summary": "Imágenes de concurso para una sala de eventos junto al lago sobre un muelle: dos vistas exteriores y una película de cuarenta segundos que sitúa al jurado en la orilla al anochecer.",
+  "challenge": [
+   "Un concurso concede al jurado unos minutos por propuesta. El concepto del estudio —una sala acristalada en voladizo sobre el agua, iluminada desde dentro como una linterna— debía entenderse de un vistazo, y el ambiente de una tarde de verano en el lago era el argumento, no la superficie construida."
+  ],
+  "approach": [
+   "Dos vistas, ambas en la hora azul: desde el paseo, con la sala brillando sobre el agua y personas en el muelle, y desde el lago, donde se lee el voladizo. La película sigue a un bote que se acerca al muelle, cuarenta segundos, sin voz en off, con el edificio revelándose al girar la cámara.",
+   "Tres semanas desde el modelo SketchUp del estudio hasta la entrega, con avances diarios para que los arquitectos pudieran dirigir la atmósfera."
+  ],
+  "result": [
+   "La propuesta quedó en segundo lugar entre veintitrés y el estudio fue invitado al estudio de seguimiento. El informe del jurado destacó la claridad de la imagen junto al lago."
+  ],
+  "facts": [
+   {
+    "label": "Entregables",
+    "value": "2 vistas exteriores, película de 40 s"
+   },
+   {
+    "label": "Plazo",
+    "value": "3 semanas hasta la entrega"
+   },
+   {
+    "label": "Material de partida",
+    "value": "Modelo SketchUp, plano de situación, referencias de ambiente"
+   }
+  ],
+  "metrics": [
+   {
+    "value": "2.º",
+    "label": "de 23 propuestas"
+   },
+   {
+    "label": "semanas hasta la entrega"
+   },
+   {
+    "label": "película, sin voz en off"
+   }
+  ],
+  "heroItem": {
+   "alt": "Render exterior de un edificio amarillo dorado junto al agua sobre un muelle con botes de remo amarrados, gaviotas y un cielo azul"
+  },
+  "items": [
+   {
+    "alt": "Render exterior de un edificio amarillo dorado junto al agua sobre un muelle con botes de remo amarrados, gaviotas y un cielo azul"
+   },
+   {
+    "alt": "Render exterior de un edificio cultural a orillas del lago de noche, con agua brumosa, patos y un bote en primer plano"
+   },
+   {
+    "alt": "Render exterior nocturno de un edificio con fachada de vidrio junto al agua sobre un muelle, con agua iluminada cálidamente y dos nadadores en primer plano"
+   },
+   {
+    "alt": "Animación: edificio cultural a orillas del lago con una planta superior acristalada y un muelle"
+   }
+  ]
+ },
+ "hafenquartier-muenchen": {
+  "city": "Múnich",
+  "region": "Baviera",
+  "type": "Manzana urbana, 86 apartamentos y comercios en planta baja",
+  "client": "Promotor inmobiliario",
+  "summary": "Una manzana revestida de ladrillo en un antiguo patio ferroviario de Múnich: vistas de calle para el lanzamiento, una vista aérea que sitúa el proyecto en el barrio, interiores con virtual staging y un sitio web bilingüe del proyecto con tabla de unidades.",
+  "challenge": [
+   "Ochenta y seis apartamentos en un barrio que aún no existía. Los compradores conocían la dirección como un patio ferroviario; el promotor tenía que vender la calle antes que el edificio. Los materiales —ladrillo oscuro, marcos de ventana de bronce— debían verse exactamente como se habían especificado, porque los primeros compradores compararían la fachada terminada con las imágenes."
+  ],
+  "approach": [
+   "La vista aérea muestra todo el plan maestro con las manzanas vecinas en construcción, de modo que el comprador ve el barrio y no un vacío. Las vistas de calle se construyeron con las muestras reales de ladrillo del proveedor y los códigos de color de los marcos. Los interiores de los tres tipos principales de unidad se entregaron como renders y se reutilizaron para el amueblado virtual de la unidad piloto una vez construida.",
+   "El sitio web —en alemán e inglés, con la tabla de unidades de la hoja de cálculo del promotor y plantas por unidad— lo construimos nosotros en torno a las imágenes y se publicó con el primer comunicado de prensa."
+  ],
+  "result": [
+   "En el primer trimestre llegaron 1.900 consultas a través del formulario específico por unidad del sitio web; el equipo de ventas del promotor indicó que el ladrillo fue el detalle por el que más preguntaron, y que coincidía."
+  ],
+  "facts": [
+   {
+    "label": "Entregables",
+    "value": "5 vistas exteriores, 1 vista aérea, 9 vistas interiores, 12 fotos con virtual staging, sitio web del proyecto"
+   },
+   {
+    "label": "Plazo",
+    "value": "9 semanas en tres etapas"
+   },
+   {
+    "label": "Material de partida",
+    "value": "Modelo IFC, plan maestro, muestras de materiales"
+   }
+  ],
+  "metrics": [
+   {
+    "label": "consultas en el primer trimestre"
+   },
+   {
+    "label": "unidades, cada una con su propia página"
+   },
+   {
+    "label": "idiomas desde el primer día"
+   }
+  ],
+  "heroItem": {
+   "alt": "Render exterior de dos torres de apartamentos revestidas de ladrillo con balcones acristalados y arcadas en planta baja bajo un cielo nublado y dramático"
+  },
+  "items": [
+   {
+    "alt": "Render exterior de dos torres de apartamentos revestidas de ladrillo con balcones acristalados y arcadas en planta baja bajo un cielo nublado y dramático"
+   },
+   {
+    "alt": "Render exterior de torres de apartamentos de ladrillo con núcleos de escalera acristalados alrededor de un patio ajardinado por el que caminan dos personas, con suave luz de atardecer"
+   },
+   {
+    "alt": "Render exterior de un largo edificio de apartamentos de varias plantas con balcones de marco rojo en una ladera rodeada de árboles y prado"
+   },
+   {
+    "alt": "Vista aérea en render de un barrio de la ciudad con nuevos edificios de apartamentos blancos, tejados rojos, una grúa torre y colinas"
+   },
+   {
+    "alt": "Render interior de una luminosa sala abierta con sofá gris, mesa de centro ovalada, sillón beige, lámpara de pie de arco y comedor al fondo"
+   },
+   {
+    "alt": "Render interior de un dormitorio con una cama de cabecero de terciopelo burdeos, pared de ventanas curva, lámpara de pie azul y suelo en espiga"
+   }
+  ]
+ },
+ "hofgarten-wien": {
+  "city": "Viena",
+  "region": "Viena",
+  "type": "Reforma de buhardilla en un edificio de la época Gründerzeit (finales del siglo XIX), 6 apartamentos",
+  "client": "Agente inmobiliario",
+  "summary": "Seis apartamentos en buhardilla en un edificio con patio de Viena, vendidos sobre planos: interiores bajo el nuevo tejado, la fachada al patio con su planta añadida y plantas 3D para los anuncios.",
+  "challenge": [
+   "Las reformas de buhardilla se venden por la luz y la altura, y ambas son imposibles de leer en un dibujo de sección. Los anuncios del agente tenían planos y una foto del tejado existente. Los compradores del mercado de buhardillas de Viena esperan ver el espacio terminado."
+  ],
+  "approach": [
+   "Una escena interior por apartamento, con la cámara a la altura de los ojos bajo la cumbrera, ventanas de tejado abiertas al cielo, el suelo de roble estándar y las paredes blancas de la especificación. Dos de los seis se entregaron además como versiones con amueblado virtual de las fotos del estado en bruto una vez levantada la estructura, para que el anuncio pudiera mostrar el antes y el después.",
+   "Una vista del patio muestra la nueva planta frente a la fachada histórica, algo que la oficina de patrimonio del distrito había exigido ver; sirvió además como imagen de portada del anuncio."
+  ],
+  "result": [
+   "Los seis apartamentos estaban bajo contrato once semanas después de publicarse el anuncio. El agente ahora nos da el briefing en la fase de planificación de cada proyecto de buhardilla."
+  ],
+  "facts": [
+   {
+    "label": "Entregables",
+    "value": "6 vistas interiores, 1 vista del patio, 2 fotos con virtual staging, 6 plantas"
+   },
+   {
+    "label": "Plazo",
+    "value": "3 semanas"
+   },
+   {
+    "label": "Material de partida",
+    "value": "Planos y secciones en PDF, lista de acabados, fotos del solar"
+   }
+  ],
+  "metrics": [
+   {
+    "label": "bajo contrato en 11 semanas"
+   },
+   {
+    "label": "semanas de producción"
+   },
+   {
+    "label": "imagen para patrimonio y ventas"
+   }
+  ],
+  "heroItem": {
+   "alt": "Render interior de una sala en buhardilla con claraboyas, butaca negra, sofá gris, alfombra a cuadros e isla de cocina abierta"
+  },
+  "items": [
+   {
+    "alt": "Render interior de una sala en buhardilla con claraboyas, butaca negra, sofá gris, alfombra a cuadros e isla de cocina abierta"
+   },
+   {
+    "alt": "Render interior de una sala de lectura en buhardilla con ventana redonda, claraboyas, dos sillones, estantería de discos y altavoz de madera"
+   },
+   {
+    "alt": "Render interior de un dormitorio en buhardilla con ventana redonda, techo inclinado, cama deshecha, sillón y lámpara colgante en luz suave"
+   },
+   {
+    "alt": "Render exterior de un edificio de apartamentos beige de cuatro plantas con largos balcones y un último piso escalonado tras una vegetación frondosa"
+   },
+   {
+    "alt": "Render interior de un dormitorio minimalista con cama tapizada, lámpara colgante de cobre, paneles de pared en relieve y largas cortinas"
+   },
+   {
+    "alt": "Render interior de un apartamento de planta abierta con una isla de cocina blanca curva, armarios oscuros, mesa de comedor y zona de estar"
+   }
+  ]
+ }
+}

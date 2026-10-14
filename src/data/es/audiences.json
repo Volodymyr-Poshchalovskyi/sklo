@@ -1,0 +1,146 @@
+{
+ "developers": {
+  "name": "Promotores inmobiliarios",
+  "short": "Promotores",
+  "lead": "Usted vende apartamentos dieciocho meses antes de que existan. El folleto, el sitio web del proyecto, el evento de ventas y el anuncio en el portal necesitan lo mismo: imágenes en las que un comprador crea. Entregamos el conjunto completo a partir de un único modelo, y el sitio web que lo convierte en consultas.",
+  "needs": [
+   {
+    "situation": "Las ventas empiezan el día en que se concede el permiso",
+    "answer": "Un conjunto de lanzamiento completo en seis semanas",
+    "desc": "Vistas exteriores, interiores para cada tipo de unidad, una vista aérea, plantas 3D y un recorrido virtual 360° del apartamento piloto, producidos en paralelo a partir de un único modelo con una fecha de entrega fija acordada en el briefing."
+   },
+   {
+    "situation": "Cuarenta unidades, una sola imagen principal",
+    "answer": "Cada unidad se vende por su propia vista",
+    "desc": "El navegador 360° permite al comprador girar el edificio, tocar una unidad y ver su planta y su panorama real; el sitio web del proyecto indica la unidad en cada consulta. El equipo de ventas recibe contactos que ya saben lo que quieren."
+   },
+   {
+    "situation": "El edificio terminado se comparará con las imágenes",
+    "answer": "Materiales exactamente como se especificaron",
+    "desc": "Construimos fachadas e interiores a partir de la memoria de acabados real y de muestras de proveedores, y señalamos dónde un detalle sigue abierto en lugar de inventarlo. Los compradores que comparan encuentran lo que se les mostró."
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Cuánto cuesta un conjunto de lanzamiento completo para una promoción de 30 unidades?",
+    "a": "Cuatro vistas exteriores, seis interiores, una vista aérea y plantas 3D para cada tipo de unidad suelen costar entre CHF 9,000 y 14,000; una película, un recorrido virtual 360° y un sitio web de proyecto llevan una promoción a entre CHF 25,000 y 40,000. Precio fijo tras el briefing."
+   },
+   {
+    "q": "¿Con cuánta antelación podemos empezar?",
+    "a": "Desde los planos del permiso de construcción. El modelo que construimos para la visualización del permiso se convierte en el modelo de ventas, de modo que empezar pronto no cuesta dos veces."
+   },
+   {
+    "q": "¿También construyen el sitio web del proyecto?",
+    "a": "Sí, en torno a las imágenes: tabla de unidades, plantas, recorrido incrustado y un formulario de consulta que indica la unidad, en alemán e inglés, desde CHF 7,900."
+   }
+  ]
+ },
+ "architects": {
+  "name": "Estudios de arquitectura",
+  "short": "Arquitectos",
+  "lead": "Paneles de concurso, presentaciones a clientes, documentación de permisos: necesita imágenes arquitectónicamente exactas, en una fecha que no se mueva, de un estudio que lea su modelo sin glosario. Trabajamos a partir de su archivo de Rhino, ArchiCAD, Revit o SketchUp y enviamos previsualizaciones a diario.",
+  "needs": [
+   {
+    "situation": "Un plazo de concurso dentro de tres semanas",
+    "answer": "Dos vistas y una película breve, con previsualizaciones cada día",
+    "desc": "Cámara y ambiente se acuerdan el primer día, las previsualizaciones en gris llegan el segundo y los arquitectos dirigen la atmósfera hasta la entrega. La imagen dice lo que dice el concepto; no se añade nada que los planos no muestren."
+   },
+   {
+    "situation": "El ayuntamiento tiene que ver el volumen en la calle",
+    "answer": "Vistas neutras para el permiso",
+    "desc": "Fotomontaje sobre una fotografía tomada desde el punto de vista público, alturas reales, posición del sol para la fecha que indique la autoridad, datos de cámara documentados. El mismo modelo sirve después para el marketing del cliente."
+   },
+   {
+    "situation": "El portafolio del estudio no se parece a su trabajo",
+    "answer": "Imágenes y un sitio web construidos en torno a los proyectos",
+    "desc": "Renders coherentes en todo el portafolio, y un sitio web donde cada proyecto ocupa su propia proporción con los filtros que un cliente realmente usa: vivienda, edificios públicos, reformas."
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Qué formatos de archivo aceptan?",
+    "a": "Rhino, SketchUp, ArchiCAD, Revit, IFC, 3ds Max, además de planos en DWG y PDF. Trabajamos en las unidades de su modelo y conservamos su estructura de capas."
+   },
+   {
+    "q": "¿Se atribuirán las imágenes a nuestro estudio?",
+    "a": "Las imágenes son suyas para publicarlas como del estudio. Solo mostramos trabajos en nuestro propio portafolio con su permiso, y nunca indicamos el nombre de un cliente sin él."
+   },
+   {
+    "q": "¿Pueden cumplir un plazo de concurso?",
+    "a": "Sí. En el briefing le decimos si la fecha es realista para el alcance y, una vez que la aceptamos, la fecha queda fijada de nuestro lado."
+   }
+  ]
+ },
+ "estate-agents": {
+  "name": "Agentes inmobiliarios",
+  "short": "Agentes inmobiliarios",
+  "lead": "El anuncio se decide en la primera imagen y en el primer desplazamiento. Hacemos que los apartamentos vacíos parezcan habitados, mostramos una reforma antes de que ocurra y damos a una obra nueva la imagen principal y la planta 3D que detienen el pulgar en ImmoScout, Homegate y willhaben.",
+  "needs": [
+   {
+    "situation": "Un apartamento vacío se fotografía pequeño y frío",
+    "answer": "Amueblado virtualmente en dos días",
+    "desc": "Mobiliario a escala real en sus fotos, luz y sombras ajustadas, un estilo para el comprador que espera, y el original entregado junto con la nota de «virtual staging» que exigen los portales."
+   },
+   {
+    "situation": "Los compradores no saben leer la planta",
+    "answer": "Plantas 3D para cada anuncio",
+    "desc": "Amuebladas, en color y a escala, entregadas como la imagen en la que los compradores pasan más tiempo después de la principal. Una serie para todo un edificio se hace en una semana."
+   },
+   {
+    "situation": "Un inmueble a reformar tiene que venderse por su potencial",
+    "answer": "Antes y después en la estancia real",
+    "desc": "Suelos, cocina y paredes nuevos insertados en la foto existente, entregados como un par con un deslizador para su sitio web y dos imágenes para el portal."
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Cuánto cuesta el virtual staging por anuncio?",
+    "a": "Desde CHF 190 por foto; un apartamento de seis a ocho fotos suele costar menos de CHF 1,500, entregado en dos o tres días laborables."
+   },
+   {
+    "q": "¿Se permite el virtual staging en los portales?",
+    "a": "Sí, declarado como tal. Entregamos la nota y la foto original; ImmoScout24, Homegate y willhaben lo aceptan así."
+   },
+   {
+    "q": "¿Pueden trabajar a partir de las imágenes de nuestro fotógrafo?",
+    "a": "Sí, a resolución completa. Si la sesión aún no se ha realizado, indicamos al fotógrafo los ángulos que mejor se prestan al amueblado."
+   }
+  ]
+ },
+ "cooperatives": {
+  "name": "Cooperativas y clientes públicos",
+  "short": "Cooperativas",
+  "lead": "Los socios votan, los vecinos presentan alegaciones, el municipio decide, todo a partir de imágenes. Para cooperativas de vivienda, municipios y fundaciones hacemos visualizaciones honestas en cuanto a altura, luz y materiales, para que la votación sea sobre el proyecto y no sobre la imagen.",
+  "needs": [
+   {
+    "situation": "Una asamblea general tiene que aprobar el crédito",
+    "answer": "Imágenes que explican, no venden",
+    "desc": "El patio tal como se usará, el edificio nuevo junto al existente a escala real, las salas comunes, y una película breve para la asamblea que guía a los socios por su futura urbanización."
+   },
+   {
+    "situation": "Los vecinos leerán los documentos del permiso",
+    "answer": "Vistas neutras y verificables",
+    "desc": "Fotomontaje desde los puntos de vista públicos, alturas reales según los planos, posición del sol para las fechas que indique la autoridad, datos de cámara documentados junto con la imagen."
+   },
+   {
+    "situation": "El alquiler empieza antes de la finalización",
+    "answer": "Un recorrido y plantas para el portal de solicitudes",
+    "desc": "Recorridos virtuales 360° de los tipos de unidad estándar y plantas 3D de cada apartamento, para que los solicitantes elijan con confianza a partir de las plantas y la oficina de alquiler responda menos consultas."
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Pueden usarse las imágenes en la consulta pública?",
+    "a": "Sí. Las versiones neutras están hechas exactamente para eso (sin atmósfera, con datos de cámara documentados y alturas reales), y las entregamos etiquetadas como visualizaciones."
+   },
+   {
+    "q": "¿Trabajan dentro de los presupuestos de contratación pública?",
+    "a": "Presupuestamos un precio fijo por entregable antes del proyecto, lo que se ajusta a la mayoría de las normas de contratación; el presupuesto detalla por separado cada imagen, película y recorrido."
+   },
+   {
+    "q": "¿Puede proyectarse una película en la asamblea general?",
+    "a": "Sí. Un recorrido de cuarenta a sesenta segundos por la urbanización, montado para proyector y sin música con licencia si lo prefiere, entregado como MP4."
+   }
+  ]
+ }
+}

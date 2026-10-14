@@ -3,6 +3,9 @@
 // client is trying to do, which images do it, which services and cases
 // apply, and answers three questions they ask. Same slug in both languages.
 
+import { mergeOverlay } from "@/lib/i18n";
+import esOverlay from "@/data/es/audiences.json";
+
 export const audiences = [
   {
     slug: "developers",
@@ -94,7 +97,7 @@ export function audienceBySlug(slug) {
   return audiences.find((a) => a.slug === slug);
 }
 
-export function localizeAudience(a, locale) {
+function localizeAudienceBase(a, locale) {
   const de = locale === "de";
   const pick = (en, deVal) => (de && deVal ? deVal : en);
   return {
@@ -105,4 +108,8 @@ export function localizeAudience(a, locale) {
     needs: a.needs.map((n) => ({ situation: pick(n.situation, n.situationDe), answer: pick(n.answer, n.answerDe), desc: pick(n.desc, n.descDe) })),
     faq: a.faq.map((f) => ({ q: pick(f.q, f.qDe), a: pick(f.a, f.aDe) })),
   };
+}
+
+export function localizeAudience(a, locale) {
+  return locale === "es" ? mergeOverlay(localizeAudienceBase(a, "en"), esOverlay[a.slug]) : localizeAudienceBase(a, locale);
 }

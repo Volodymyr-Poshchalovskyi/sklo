@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 // Next 16 renamed the middleware convention to proxy; same job, same file
 // shape, no more deprecation notice on every dev start.
 
-const locales = ["en", "de"];
+const locales = ["en", "de", "es"];
 const defaultLocale = "en";
 
 // Only the production domain may be indexed. The site is served from a
@@ -41,8 +41,11 @@ export function proxy(request) {
     // of language is geo-based; every page is the same for everyone.
     const accept = request.headers.get("accept-language") ?? "";
     const country = request.headers.get("x-vercel-ip-country") ?? "";
+    // Spanish only on an explicit browser preference: no country maps to it
+    // as cleanly as Switzerland/Germany/Austria map to German.
+    const prefersEs = /^es\b|,\s*es\b/i.test(accept.split(";")[0] ?? "");
     const prefersDe = /^de\b|,\s*de\b/i.test(accept.split(";")[0] ?? "") || (!/^en\b/i.test(accept) && ["CH", "DE", "AT", "LI"].includes(country));
-    const locale = prefersDe ? "de" : defaultLocale;
+    const locale = prefersEs ? "es" : prefersDe ? "de" : defaultLocale;
     // "/" would become "/en/", which Next then 308s to "/en" — one hop, not
     // two. A 307: the answer depends on the visitor, so neither the browser
     // nor Google may cache it as permanent.

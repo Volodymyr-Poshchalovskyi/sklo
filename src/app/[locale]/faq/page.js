@@ -1,6 +1,5 @@
 import Link from "next/link";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { servicesData, localizeService, serviceTitleFor } from "@/data/servicesData";
 import { localizeServiceContent } from "@/data/serviceContent";
 import { regions, localizeRegion } from "@/data/regions";
@@ -8,7 +7,6 @@ import { audiences, localizeAudience } from "@/data/audiences";
 import { pageMetadata, breadcrumbJsonLd, faqJsonLd, humanizeTitle, JsonLd } from "@/lib/seo";
 import Title3D from "@/components/Title3D";
 
-const translations = { en, de };
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;

@@ -1,0 +1,284 @@
+{
+ "europe": {
+  "name": "Europa",
+  "phrases": {
+   "in": "en Europa",
+   "for": "para Europa",
+   "from": "desde Europa"
+  },
+  "cities": [
+   "Zúrich",
+   "Múnich",
+   "Viena",
+   "Berlín",
+   "París",
+   "Ámsterdam",
+   "Estocolmo",
+   "Vilna"
+  ],
+  "lead": "Visualización para promotores inmobiliarios, constructoras generales, cooperativas, agentes inmobiliarios y estudios de arquitectura de toda Europa: vistas para el permiso de construcción, imágenes de concurso, exposés para portales y sitios web de proyecto, entregados desde Vilna a una o dos horas del huso horario de la mayoría de los países europeos.",
+  "market": [
+   {
+    "label": "de los habitantes de la UE vive en una vivienda de su propiedad; en Alemania el 53 % vive de alquiler, y en Suiza cerca de dos de cada tres, por lo que los apartamentos nuevos se venden y se alquilan sobre planos a inversores e inquilinos tanto como a propietarios"
+   },
+   {
+    "label": "de propiedad de la vivienda en Europa, de Suiza a Rumanía: los mercados difieren tanto que el mismo conjunto de imágenes se adapta de forma distinta para cada uno"
+   },
+   {
+    "label": "los mercados de habla alemana trabajan con tres formatos (visualizaciones para el Baugesuch o solicitud de permiso de construcción, exposés para portales y concursos de promotores), que son también los tres que más entregamos"
+   }
+  ],
+  "specifics": [
+   {
+    "title": "Europa de habla alemana: permisos, exposés, concursos",
+    "desc": "Muchos municipios suizos piden una visualización del nuevo volumen en su entorno junto con el Baugesuch (solicitud de permiso de construcción), y los vecinos la leen antes que los planos: entregamos una versión neutra, con alturas reales y posición del sol, y otra atmosférica a partir del mismo modelo. En ImmoScout24, Homegate y willhaben la primera imagen decide el clic, por lo que la vista principal, los interiores y las plantas 3D se entregan en formatos listos para los portales. Para los concursos de promotores de Viena y los programas de vivienda de los Länder, los jurados necesitan imágenes coherentes y creíbles en una fecha fija."
+   },
+   {
+    "title": "Permisos y concursos en cualquier lugar de Europa",
+    "desc": "Un fotomontaje sobre una fotografía tomada desde el punto de vista público, con las alturas reales según los planos, el sol en la fecha que indique la autoridad y los datos de cámara documentados junto con la imagen. Para concursos: cámara y ambiente acordados el primer día, previsualizaciones en gris el segundo y previsualizaciones diarias hasta la entrega. Lo que cambia de un país a otro son los datos del entorno y las bases de la convocatoria, y leemos ambos."
+   },
+   {
+    "title": "El mismo día laborable, EUR o CHF, facturación UE",
+    "desc": "Vilna está a una o dos horas de Zúrich, París y Madrid y comparte huso horario con Helsinki, así que una consulta a las diez recibe respuesta antes del mediodía. Presupuestos en EUR o CHF a precio fijo tras el briefing; las facturas las emite nuestra empresa lituana, con el IVA tratado según las normas de inversión del sujeto pasivo cuando corresponda. Planos en DWG, PDF, ArchiCAD, Revit, Allplan o IFC."
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Trabajan in situ en Europa?",
+    "a": "De forma remota, con un único contacto directo por proyecto: los planos llegan por carga de archivos, las previsualizaciones por enlace, las aprobaciones por correo y, cuando el briefing lo requiere, hay una videollamada. Cuando el entorno importa (una vista al lago, una calle de pueblo), organizamos un vuelo de dron o un fotógrafo en el lugar a través de un socio local."
+   },
+   {
+    "q": "¿Cómo se presupuesta para clientes europeos?",
+    "a": "En EUR o CHF, a precio fijo tras el briefing. Las facturas las emite nuestra empresa lituana; para empresas de la UE se aplica la inversión del sujeto pasivo, de modo que el importe del presupuesto es el importe de la factura."
+   },
+   {
+    "q": "¿Pueden entregar para un plazo de permiso o de concurso?",
+    "a": "Sí. Una visualización para el permiso (una o dos vistas neutras en el entorno real) lleva de cinco a siete días laborables desde los planos completos; un conjunto para concurso con dos vistas y una película breve lleva tres semanas. Indíquenos la fecha y planificamos hacia atrás desde ella."
+   },
+   {
+    "q": "¿Pueden usarse las imágenes en portales inmobiliarios?",
+    "a": "Sí. Entregamos en las proporciones y tamaños de los portales, con la etiqueta de «visualización» cuando el portal la exige, y las mismas imágenes en resolución de impresión para el exposé o el folleto."
+   }
+  ]
+ },
+ "north-america": {
+  "name": "Norteamérica",
+  "phrases": {
+   "in": "en Norteamérica",
+   "for": "para Norteamérica",
+   "from": "desde Norteamérica"
+  },
+  "cities": [
+   "Nueva York",
+   "Los Ángeles",
+   "Miami",
+   "Austin",
+   "Toronto",
+   "Vancouver"
+  ],
+  "lead": "Visualización para promotores inmobiliarios, arquitectos y agentes en Estados Unidos y Canadá: conjuntos de marketing para preventa y lease-up, interiores de amenities, plantas y sitios web de proyecto, producidos mientras para usted es de noche y para nosotros es jornada laboral.",
+  "market": [
+   {
+    "label": "de los hogares estadounidenses es propietario de su vivienda (1T 2026); aproximadamente uno de cada tres alquila, y los edificios que los alojan se comercializan, preadquieren en alquiler o venden sobre planos mientras aún se construyen"
+   },
+   {
+    "value": "Preventa",
+    "label": "en los edificios de condominios de Toronto y Vancouver se vende años antes de la finalización con depósitos escalonados: el comprador se compromete con un render, una planta y una sala de ventas"
+   },
+   {
+    "label": "por detrás de Vilna, de Nueva York a Los Ángeles: las previsualizaciones se publican al final de nuestra jornada y le esperan por la mañana"
+   }
+  ],
+  "specifics": [
+   {
+    "title": "Planos en pies y pulgadas, convenciones estadounidenses",
+    "desc": "Modelamos tanto a partir de planos imperiales como métricos, conservamos la numeración de sus láminas y unidades, y nombramos los acabados con los términos del oficio que usa su equipo. Los exteriores se construyen con las convenciones de calle, vegetación y señalización del mercado, y los interiores con la escala de mobiliario que allí esperan los compradores. Funcionan archivos de Revit, ArchiCAD, SketchUp, Rhino y AutoCAD."
+   },
+   {
+    "title": "Preventa, prealquiler y marketing de amenities",
+    "desc": "Para la preventa de un condominio, el conjunto consta de la vista exterior principal, un interior por tipo de unidad, la planta de amenities y plantas 3D para la sala de ventas y el sitio web. Para un edificio de alquiler en lease-up, son el vestíbulo, los espacios de amenities y la unidad tipo, con una luz de atardecer coherente. A partir del mismo modelo se obtiene un sitio web de proyecto con la tabla de unidades y un formulario de consulta que indica la unidad."
+   },
+   {
+    "title": "Siete a diez horas por detrás: entrega de un día para otro",
+    "desc": "Publicamos las previsualizaciones del día antes de terminar, usted las revisa con el café de la mañana y sus comentarios ya están en el modelo cuando empezamos al día siguiente: una ronda de correcciones que en el papel cuesta un día aquí cuesta una noche. Las llamadas se ajustan al solapamiento de su mañana. Presupuestos en USD o EUR, facturados desde nuestra empresa lituana."
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Cómo funciona la diferencia horaria para clientes de Estados Unidos y Canadá?",
+    "a": "Apenas importa: el equipo está repartido en husos horarios opuestos, así que un mensaje se responde en menos de una hora sea cual sea su reloj. Además juega a su favor: las previsualizaciones se publican al final de nuestra jornada, que es su mañana; sus comentarios durante su día están en el modelo cuando empezamos al día siguiente. Las llamadas en directo se ajustan al solapamiento entre su mañana y nuestra tarde."
+   },
+   {
+    "q": "¿Trabajan con planos imperiales y formatos de archivo estadounidenses?",
+    "a": "Sí. Imperiales o métricos, DWG, PDF, Revit, ArchiCAD, SketchUp o Rhino. Conservamos sus unidades y la numeración de sus láminas para que las imágenes coincidan con el juego de planos."
+   },
+   {
+    "q": "¿Qué incluye un conjunto de marketing para preventa?",
+    "a": "Normalmente la vista exterior principal, un interior por tipo de unidad, los espacios de amenities, plantas 3D y un recorrido virtual 360° del apartamento piloto o un navegador de apartamentos para un edificio más grande. A petición se añaden un sitio web de proyecto y una película de lanzamiento. Precio fijo tras el briefing."
+   },
+   {
+    "q": "¿En qué moneda se dan los presupuestos?",
+    "a": "En USD o EUR, a precio fijo tras el briefing. Las facturas las emite nuestra empresa lituana; cualquier impuesto de su lado se trata como en cualquier servicio extranjero."
+   }
+  ]
+ },
+ "middle-east": {
+  "name": "Oriente Medio",
+  "phrases": {
+   "in": "en Oriente Medio",
+   "for": "para Oriente Medio",
+   "from": "desde Oriente Medio"
+  },
+  "lead": "Visualización para promotores inmobiliarios y agencias de marketing del Golfo: conjuntos de lanzamiento para ventas sobre planos, animaciones para galerías de ventas y eventos, y navegadores de apartamentos para grandes torres, entregados a una o dos horas de su huso horario.",
+  "market": [
+   {
+    "label": "de las ventas residenciales de Dubái en el primer semestre de 2025 fueron sobre planos: el comprador decide a partir de imágenes, un folleto y una galería de ventas"
+   },
+   {
+    "value": "Eventos de lanzamiento",
+    "label": "los proyectos sobre planos se abren con un lanzamiento: renders, una película y un modelo interactivo de la torre son el producto expuesto antes de que exista una sola planta"
+   },
+   {
+    "label": "por delante de Vilna: el Golfo y nuestro estudio comparten casi la misma jornada laboral"
+   }
+  ],
+  "specifics": [
+   {
+    "title": "Lanzamientos sobre planos",
+    "desc": "Un lanzamiento sobre planos necesita todo a la vez: la vista exterior principal, el vestíbulo y los niveles de amenities, un interior por tipo de unidad con una vista creíble, plantas 3D, una película y el sitio web. Producimos el conjunto en paralelo a partir de un único modelo para que todas las imágenes coincidan, con la fecha de entrega fijada en el briefing."
+   },
+   {
+    "title": "Torres: el navegador y la vista real",
+    "desc": "En una torre cada planta tiene su propia vista y su propio precio. El navegador 360° permite al comprador orbitar el edificio, elegir una unidad y ver su planta; los panoramas con dron a las alturas de planta previstas ponen el horizonte real tras las ventanas renderizadas."
+   },
+   {
+    "title": "Pantallas, galerías y grandes formatos",
+    "desc": "Las galerías de ventas funcionan con muros LED y grandes pantallas: las películas se entregan como másteres 4K (ProRes a petición), las imágenes fijas en resolución de impresión para vallas de obra y vallas publicitarias, y los archivos se preparan según las especificaciones de su impresor. Presupuestos en USD o EUR, facturados desde nuestra empresa lituana."
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Con qué rapidez puede estar listo un conjunto de lanzamiento sobre planos?",
+    "a": "Normalmente seis semanas desde el briefing para el conjunto completo (exterior, interiores, plantas, película y sitio web), producido en paralelo. Un conjunto principal más corto, con un exterior y una película, puede estar listo en tres semanas."
+   },
+   {
+    "q": "¿Qué necesitan de nosotros para empezar?",
+    "a": "Los planos y secciones más recientes (DWG o PDF), el modelo 3D si existe, la memoria de acabados, las directrices de marca y algunas imágenes de referencia del ambiente y del estilo interior. La lista completa está en nuestra página de requisitos."
+   },
+   {
+    "q": "¿Pueden las películas e imágenes proyectarse en las grandes pantallas de una galería de ventas?",
+    "a": "Sí. Las películas se entregan como másteres 4K, con ProRes a petición para muros LED y eventos, y las imágenes fijas en el tamaño que necesite para vallas y material impreso."
+   },
+   {
+    "q": "¿Cómo funciona la diferencia horaria?",
+    "a": "Los mensajes se responden en menos de una hora a cualquier hora, ya que el equipo está repartido en husos horarios opuestos. El Golfo está una o dos horas por delante de Vilna, así que compartimos casi toda la jornada laboral: las consultas se responden la misma mañana y las llamadas caben en cualquier momento del día."
+   }
+  ]
+ },
+ "oceania": {
+  "name": "Oceanía",
+  "phrases": {
+   "in": "en Oceanía",
+   "for": "para Oceanía",
+   "from": "desde Oceanía"
+  },
+  "lead": "Visualización para promotores inmobiliarios, arquitectos y agencias de marketing de proyectos en Australia y Nueva Zelanda: conjuntos para ventas sobre planos, vistas para la solicitud de permiso urbanístico y sitios web de proyecto, trabajados mientras su oficina duerme y esperándole en su bandeja de entrada a la hora del desayuno.",
+  "market": [
+   {
+    "label": "de los hogares australianos es propietario de su vivienda, el 31 % sin hipoteca y el 35 % con hipoteca, y los apartamentos nuevos de su entorno se venden en su mayoría sobre planos"
+   },
+   {
+    "value": "Venta sobre planos",
+    "label": "la mayoría de los apartamentos de alta densidad se vende sobre planos, porque los bancos exigen preventas antes de financiar la construcción: las imágenes tienen que existir antes de la primera venta"
+   },
+   {
+    "label": "por delante de Vilna, de Perth a Auckland: nuestra jornada termina cuando empieza la suya, así que las previsualizaciones están en su bandeja de entrada cada mañana"
+   }
+  ],
+  "specifics": [
+   {
+    "title": "Venta sobre planos: imágenes antes de la primera venta",
+    "desc": "Cuando las entidades financieras quieren una parte del edificio vendida antes de financiar la construcción, el conjunto visual está en la ruta crítica. Entregamos el conjunto de lanzamiento (exterior, interiores por tipo de apartamento, espacios de amenities, plantas) en una fecha fija acordada en el briefing, y un sitio web de proyecto con la tabla de unidades para recoger las consultas."
+   },
+   {
+    "title": "Vistas para la solicitud de permiso urbanístico y el ayuntamiento",
+    "desc": "Una solicitud de desarrollo o un permiso urbanístico suele requerir vistas neutras con alturas reales y sombras en las fechas que indique la autoridad, y un fotomontaje desde el punto de vista público. Las entregamos a partir del mismo modelo que luego se convierte en las imágenes de marketing."
+   },
+   {
+    "title": "Planos métricos, un ritmo de un día para otro",
+    "desc": "Los planos llegan en sistema métrico, como en Europa, desde Revit, ArchiCAD, SketchUp o DWG. Como estamos siete a once horas por detrás de usted, una ronda de correcciones cuesta una noche: envíe comentarios al final de su jornada y la siguiente versión le espera al desayuno. Presupuestos en USD o EUR, facturados desde nuestra empresa lituana."
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Cómo funciona la diferencia horaria para clientes de Australia y Nueva Zelanda?",
+    "a": "El equipo está repartido en husos horarios opuestos, así que alguien responde en menos de una hora a cualquier hora de su día. Más allá de eso, se convierte en un ritmo: usted envía comentarios al final de su jornada, nosotros trabajamos mientras usted duerme y la siguiente versión está en su bandeja de entrada cuando llega. Las llamadas en directo se ajustan al solapamiento entre su tarde y nuestra mañana."
+   },
+   {
+    "q": "¿Pueden producir vistas para una solicitud de desarrollo?",
+    "a": "Sí: vistas neutras con alturas reales y estudios de sombras en las fechas que indique la autoridad, o un fotomontaje sobre una fotografía tomada desde el punto de vista público, con los datos de cámara documentados. Después, el mismo modelo sirve para las imágenes de marketing."
+   },
+   {
+    "q": "¿Cuánto cuesta un conjunto de lanzamiento para venta sobre planos?",
+    "a": "Un conjunto completo para un edificio de tamaño medio (cuatro exteriores, seis interiores, una vista aérea y plantas 3D por tipo de unidad) cuesta normalmente el equivalente a entre CHF 9,000 y 14,000; al añadir una película, un recorrido virtual 360° y un sitio web, asciende a entre CHF 25,000 y 40,000. Se presupuesta en USD o EUR a precio fijo tras el briefing."
+   },
+   {
+    "q": "¿Trabajan con agencias locales de marketing de proyectos?",
+    "a": "Sí. Trabajamos directamente con promotores y con las agencias que comercializan sus proyectos; los entregables, los formatos y la fecha de entrega son los mismos en ambos casos."
+   }
+  ]
+ },
+ "latin-america": {
+  "name": "Latinoamérica",
+  "phrases": {
+   "in": "en Latinoamérica",
+   "for": "para Latinoamérica",
+   "from": "desde Latinoamérica"
+  },
+  "lead": "Visualización para promotores inmobiliarios y arquitectos en México, Colombia, Chile, Perú y Argentina: conjuntos de lanzamiento para preventa, material para la sala de ventas, plantas y sitios web de proyecto, con el sitio web disponible en español.",
+  "market": [
+   {
+    "label": "de la vivienda nueva en Colombia se vende sobre planos (en preventa) y el umbral de ventas que libera los fondos del promotor se alcanza gracias a las imágenes",
+    "source": "Camacol, vía Portafolio (sin fecha; verificar)"
+   },
+   {
+    "label": "comprar sobre planos es la forma en que se lanza buena parte del parque de apartamentos nuevos de la región: la sala de ventas, el folleto y los renders son el producto hasta que el edificio existe"
+   },
+   {
+    "label": "por detrás de Vilna: la mañana latinoamericana es nuestra tarde, así que las llamadas encajan con comodidad y las previsualizaciones le esperan de un día para otro"
+   }
+  ],
+  "specifics": [
+   {
+    "title": "Preventa: el conjunto de lanzamiento",
+    "desc": "Un lanzamiento en preventa necesita la vista exterior principal, el vestíbulo y las zonas comunes, un interior por tipo de unidad, plantas y una película para la sala de ventas, todo coherente entre sí y terminado antes de la primera reserva. Los producimos a partir de un único modelo con una fecha de entrega fija."
+   },
+   {
+    "title": "La sala de ventas y el apartamento piloto",
+    "desc": "Cuando el apartamento piloto físico no se construye hasta tarde, un recorrido virtual 360° en una pantalla de la sala de ventas lo sustituye: los compradores recorren el tipo de apartamento que están considerando y el equipo de ventas ve qué estancias retienen la atención. En proyectos más grandes, un navegador de apartamentos les permite elegir la unidad en el edificio."
+   },
+   {
+    "title": "El sitio web en español, los planos en cualquier idioma",
+    "desc": "El sitio web del estudio y el sitio web de proyecto que construimos para usted pueden funcionar en español; los planos y el modelo 3D no necesitan traducción, y las cotas y los símbolos son universales. La comunicación del proyecto es en inglés. Presupuestos en USD o EUR, facturados desde nuestra empresa lituana."
+   }
+  ],
+  "faq": [
+   {
+    "q": "¿Están el sitio web y el presupuesto disponibles en español?",
+    "a": "El sitio web se está poniendo a disposición en español. La comunicación del proyecto y el presupuesto son en inglés; los planos y el modelo 3D pueden llegar en cualquier idioma, y un briefing en español es bienvenido junto con ellos."
+   },
+   {
+    "q": "¿Qué imágenes necesita una preventa?",
+    "a": "Como mínimo, la vista exterior principal, un interior por tipo de unidad y las plantas; para la sala de ventas, una película y un recorrido virtual 360° del tipo de apartamento piloto. Para el sitio web, las mismas imágenes más una tabla de unidades."
+   },
+   {
+    "q": "¿Cómo funciona la diferencia horaria?",
+    "a": "El equipo está repartido en husos horarios opuestos, así que los mensajes se responden en menos de una hora a cualquier hora de su día. Latinoamérica está entre cinco y nueve horas por detrás de Vilna: las llamadas encajan con su mañana y nuestra tarde, y las previsualizaciones publicadas al final de nuestra jornada le esperan cuando empieza la suya."
+   },
+   {
+    "q": "¿En qué moneda se dan los presupuestos?",
+    "a": "En USD o EUR, a precio fijo tras el briefing. Las facturas las emite nuestra empresa lituana."
+   }
+  ]
+ }
+}

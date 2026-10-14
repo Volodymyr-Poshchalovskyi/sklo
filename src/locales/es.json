@@ -1,0 +1,472 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "gallery": "Galería",
+    "contact": "Contacto",
+    "about": "Nosotros",
+    "projects": "Proyectos"
+  },
+  "header": {
+    "cta": "Contáctenos",
+    "preview": "Vista previa de servicios SKLO",
+    "toggleTheme": "Cambiar tema",
+    "toggleMenu": "Abrir o cerrar menú",
+    "skipToContent": "Saltar al contenido"
+  },
+  "hero": {
+    "title": "Creamos experiencias 3D",
+    "subtitle": "Estudio de visualización 3D para arquitectura e inmobiliaria, en todo el mundo — Europa, Norteamérica, Oriente Medio, Oceanía y Latinoamérica — renders fotorrealistas, animaciones, recorridos virtuales 360° y sitios web de proyecto.",
+    "headlineLead": "Servicios de",
+    "headlineAccent": "visualización 3D",
+    "for": "para",
+    "words": [
+      "arquitectos",
+      "promotores",
+      "inmobiliarias"
+    ],
+    "cta": "Servicios",
+    "contact": "Contáctenos"
+  },
+  "home": {
+    "services": {
+      "eyebrow": "Qué hacemos",
+      "title": "NUESTROS SERVICIOS",
+      "viewAll": "Ver todos los servicios"
+    },
+    "values": {
+      "eyebrow": "El estudio",
+      "title": "NUESTROS VALORES",
+      "intro": "Ayudamos a arquitectos, diseñadores y promotores a hacer realidad sus ideas. Desde una sola imagen hasta una animación completa, nuestro objetivo es crear un trabajo que no solo sea eficaz, sino también inspirador e inolvidable.",
+      "items": {
+        "communication": {
+          "title": "COMUNICACIÓN CLARA",
+          "desc": "Una comunicación fluida y un feedback iterativo garantizan que nunca se quede con dudas. Mantenemos el proceso transparente de principio a fin."
+        },
+        "discounts": {
+          "title": "DESCUENTOS Y BONIFICACIONES",
+          "desc": "Ofrecemos condiciones exclusivas tanto para clientes nuevos como recurrentes."
+        },
+        "workflow": {
+          "title": "FLUJO DE TRABAJO FLUIDO",
+          "desc": "Nuestro proceso es ágil y transparente: le guía desde el concepto hasta el render final con etapas claras y actualizaciones puntuales."
+        },
+        "precision": {
+          "title": "PRECISIÓN DE DISEÑO",
+          "desc": "Con una sólida formación en diseño y arquitectura, traducimos los planos en imágenes fieles a su visión que además refuerzan el impacto de la presentación."
+        },
+        "quality": {
+          "title": "CALIDAD DE IMAGEN EXCEPCIONAL",
+          "desc": "Creamos imágenes de un realismo impresionante, con detalle preciso e iluminación perfecta, pensadas para mostrar su proyecto en su mejor versión y dejar una impresión duradera."
+        },
+        "speed": {
+          "title": "RAPIDEZ Y FIABILIDAD",
+          "desc": "Sabemos que los plazos siempre son ajustados. Nuestro flujo de trabajo está optimizado para entregar con rapidez sin sacrificar la calidad."
+        }
+      }
+    },
+    "links": {
+      "forTitle": "Para quién trabajamos",
+      "whereTitle": "Dónde trabajamos",
+      "audiences": {
+        "developers": "Venda sobre planos con un conjunto completo de imágenes y un sitio web de proyecto",
+        "architects": "Imágenes para concursos y vistas para permisos a partir de su modelo, con avances diarios",
+        "estate-agents": "Virtual staging, plantas 3D e imágenes principales para sus anuncios",
+        "cooperatives": "Visualizaciones honestas para asambleas, consultas y comercialización"
+      },
+      "regions": {
+        "europe": "Vistas para permisos, exposés y concursos — presupuesto en EUR o CHF",
+        "north-america": "Conjuntos para preventa y lease-up, entrega de un día para otro — presupuesto en USD o EUR",
+        "middle-east": "Lanzamientos sobre planos y navegadores de torres — presupuesto en USD o EUR",
+        "oceania": "Conjuntos para venta sobre planos y vistas de planificación — presupuesto en USD o EUR",
+        "latin-america": "Conjuntos para lanzamientos de preventa y recorridos para salas de ventas — presupuesto en USD o EUR"
+      }
+    }
+  },
+  "faq": {
+    "eyebrow": "Conviene saber",
+    "title": "PREGUNTAS FRECUENTES",
+    "intro": "Las preguntas que más nos hacen — sobre materiales, plazos, precios y cómo se desarrolla realmente un proyecto, desde el inicio hasta los renders finales.",
+    "askCopy": "¿Aún tiene dudas? Cuéntenos sobre el proyecto y le responderemos con detalles concretos.",
+    "askCta": "Pregúntenos directamente",
+    "items": {
+      "start": {
+        "q": "¿Qué necesitamos para iniciar un proyecto?",
+        "p1": "Comenzamos con su modelo 3D o sus planos y un briefing que describa el ambiente, los materiales y los objetivos de su proyecto. Con nuestro sistema de incorporación estructurado, nuestro equipo perfecciona su modelo y traduce toda la información en imágenes de primer nivel.",
+        "linkText": "Consulte la lista completa de lo que necesitamos",
+        "linkTail": "",
+        "note": ""
+      },
+      "workflow": {
+        "q": "¿Cómo es el flujo de trabajo del proyecto?",
+        "intro": "Cada proyecto pasa por las siguientes etapas clave:",
+        "steps": [
+          {
+            "title": "Etapa de descubrimiento",
+            "desc": "El cliente aporta todos los materiales necesarios. En esta etapa también preparamos un presupuesto y un calendario del proyecto."
+          },
+          {
+            "title": "Modelado y optimización",
+            "desc": "Creamos o perfeccionamos el modelo 3D a partir de todos los planos y referencias proporcionados, garantizando precisión y eficiencia para el proceso de visualización."
+          },
+          {
+            "title": "Configuración de cámaras y atmósfera",
+            "desc": "Producimos renders en gris para definir y aprobar los mejores ángulos de cámara y la atmósfera general de su proyecto."
+          },
+          {
+            "title": "Previsualizaciones en color",
+            "desc": "El cliente recibe renders completamente texturizados y en color con las vistas y la atmósfera seleccionadas. Recogemos todos los comentarios en esta etapa y preparamos las imágenes para el render final."
+          },
+          {
+            "title": "Imágenes finales de alta gama",
+            "desc": "El cliente recibe visualizaciones finales en alta resolución, listas para presentaciones, marketing y publicaciones."
+          }
+        ]
+      },
+      "duration": {
+        "q": "¿Cuánto dura un proyecto?",
+        "paragraphs": [
+          "El plazo del proyecto siempre es individual y depende de su complejidad, objetivos, escala, calidad del material de partida, rapidez de respuesta y muchos otros factores.",
+          "Los proyectos pequeños suelen llevar unos 7 días laborables, aunque los primeros borradores normalmente se entregan en los primeros días tras el inicio.",
+          "Entendemos que los plazos suelen ser ajustados, por eso organizamos a nuestro equipo con eficiencia para entregar lo antes posible, manteniendo todo el proceso transparente y bien comunicado con actualizaciones diarias.",
+          "Antes de empezar, cada cliente recibe un calendario preliminar con todas las etapas clave y lo seguimos estrictamente durante toda la colaboración."
+        ]
+      },
+      "pricing": {
+        "q": "¿Cómo se calcula el precio?",
+        "paragraphs": [
+          "Nuestro precio depende del tipo de proyecto (visualizaciones exteriores o interiores, animaciones, recorridos virtuales 360°, etc.), sus objetivos, escala y plazos. Ofrecemos precios flexibles y preparamos una oferta personalizada para cada proyecto antes de empezar.",
+          "Además, contamos con un programa de descuentos por colaboración, claro y transparente, para clientes nuevos y recurrentes, pensado para crear una relación a largo plazo y beneficiosa para ambas partes."
+        ]
+      },
+      "partnership": {
+        "q": "¿Tienen programas de colaboración?",
+        "p1": "Sí, contamos con un sistema permanente de descuentos, ofertas y bonificaciones para clientes nuevos y recurrentes.",
+        "p2": {
+          "before": "Cada cliente nuevo recibe un ",
+          "strong": "30 % de descuento",
+          "after": " — así puede conocer nuestros servicios y nuestra forma de trabajar sin gastar demasiado en su primer proyecto."
+        },
+        "p3": {
+          "before": "Para futuras colaboraciones, ofrecemos un programa de recomendación sencillo y transparente: si recomienda nuestros servicios a colegas, amigos o socios y esto da lugar a un nuevo proyecto, ambos reciben un ",
+          "strong": "15 % de descuento",
+          "after": " en el siguiente. No hay límites y puede beneficiarse de nuestro programa de socios tantas veces como quiera."
+        },
+        "p4": "Además, cada cliente recibe bonificaciones gratuitas exclusivas al finalizar el proyecto: materiales que le ayudan a presentar su proyecto de forma aún más eficaz."
+      }
+    },
+    "bandTitle": "¿Aún tiene dudas?",
+    "bandCopy": "Cuéntenos sobre el proyecto y le responderemos con detalles concretos: plazos, entregables y precio.",
+    "bandEmail": "Escribir un correo"
+  },
+  "footer": {
+    "eyebrow": "Póngase en contacto",
+    "heading": "¿QUIERE INICIAR SU PRÓXIMO PROYECTO?",
+    "copy": "Complete unos datos y nos pondremos en contacto en breve. ¡Estamos deseando saber de usted!",
+    "emailLead": "…o escríbanos a",
+    "form": {
+      "nameLabel": "Nombre",
+      "firstName": "Nombre (obligatorio)",
+      "lastName": "Apellidos (obligatorio)",
+      "emailLabel": "Correo electrónico",
+      "email": "Correo electrónico (obligatorio)",
+      "messageLabel": "Su mensaje",
+      "message": "Mensaje (obligatorio)",
+      "submit": "Enviar"
+    },
+    "explore": "Explorar",
+    "links": {
+      "about": "Sobre nosotros",
+      "contact": "Contacto",
+      "services": "Servicios",
+      "portfolio": "Galería",
+      "imprint": "Aviso legal",
+      "privacy": "Privacidad",
+      "projects": "Proyectos",
+      "knowledge": "Conocimiento",
+      "audiencesTitle": "Para",
+      "glossary": "Glosario",
+      "faq": "Preguntas frecuentes",
+      "requirements": "Requisitos del proyecto"
+    },
+    "follow": "Síganos",
+    "phoneLead": "Llame o escriba por WhatsApp"
+  },
+  "about": {
+    "eyebrow": "El estudio",
+    "title": "Nuestro equipo",
+    "roles": {
+      "founder": "FUNDADOR / DIRECTOR DE ARTE",
+      "leadArtist": "ARTISTA PRINCIPAL",
+      "seniorArtist": "ARTISTA SÉNIOR",
+      "graphicDesigner": "DISEÑADOR GRÁFICO",
+      "talentManager": "RESPONSABLE DE TALENTO",
+      "financialManager": "RESPONSABLE FINANCIERO"
+    }
+  },
+  "contact": {
+    "title": "CONTÁCTENOS",
+    "intro": "Responda unas preguntas rápidas sobre su proyecto y le enviaremos un presupuesto a medida."
+  },
+  "services": {
+    "eyebrow": "Qué ofrecemos",
+    "title": "Todos los servicios",
+    "detail": {
+      "requestPricing": "Solicitar precios",
+      "scroll": "Desplazar",
+      "workflowEyebrow": "Flujo de trabajo",
+      "workflowTitle": "Nuestro proceso",
+      "pipeline": "PROCESO",
+      "showcaseEyebrow": "Muestra visual",
+      "showcaseTitle": "Trabajos seleccionados",
+      "toursEyebrow": "Demo en vivo",
+      "toursTitle": "Explore los recorridos virtuales 360°",
+      "exploreEyebrow": "Descubra más",
+      "exploreTitle": "Otros servicios",
+      "viewAll": "TODOS LOS SERVICIOS",
+      "lightboxHint": "Flechas para navegar | ESC para cerrar",
+      "stepAlt": "Imagen de la etapa del flujo de trabajo",
+      "lightboxAlt": "Elemento de la galería a pantalla completa",
+      "problemsEyebrow": "El desafío",
+      "problemsTitle": "Por qué {service}",
+      "deliverablesTitle": "Qué recibe",
+      "investmentEyebrow": "Inversión",
+      "investmentTitle": "Cuánto cuesta {service}",
+      "from": "desde",
+      "includesTitle": "Incluido",
+      "turnaroundTitle": "Plazo de entrega",
+      "revisionsTitle": "Rondas de correcciones",
+      "priceNote": "Los precios no incluyen IVA. Cada proyecto recibe un presupuesto vinculante tras el briefing.",
+      "quoteCta": "Solicitar presupuesto",
+      "faqEyebrow": "Antes de empezar",
+      "faqTitle": "Preguntas sobre {service}",
+      "projectsTitle": "{service} en la práctica",
+      "allProjects": "Todos los proyectos",
+      "readingTitle": "Leer más",
+      "navigatorEyebrow": "Demo en vivo",
+      "navigatorTitle": "Pruebe el navegador de apartamentos 360°"
+    }
+  },
+  "gallery": {
+    "title": "Galería",
+    "all": "Todos los proyectos",
+    "categoryInfo": "Información de la categoría",
+    "dragToCompare": "Arrastre para comparar",
+    "before": "Antes",
+    "after": "Después",
+    "comparison": "comparación",
+    "closeLightbox": "Cerrar visor",
+    "prevItem": "Elemento anterior",
+    "nextItem": "Elemento siguiente",
+    "prevSlide": "Diapositiva anterior",
+    "nextSlide": "Diapositiva siguiente",
+    "categories": {
+      "All": {
+        "label": "Todos los proyectos",
+        "desc": "Una selección representativa de la visualización arquitectónica del estudio: renders exteriores e interiores, vistas aéreas, animaciones y cinemagraphs para promociones residenciales, reformas y concursos en Europa y otros continentes, mostrados juntos. La visualización de producto, el virtual staging y los recorridos virtuales 360° tienen sus propias secciones."
+      },
+      "Exterior": {
+        "label": "Exterior",
+        "desc": "Visualizaciones exteriores fotorrealistas de edificios de apartamentos, villas, reformas y edificios públicos en su entorno real — vistas de calle, patios y ambientes nocturnos para folletos de venta, sitios web de proyecto y permisos de construcción. Cada imagen se renderiza a partir de los planos o del modelo del arquitecto con los materiales de fachada especificados."
+      },
+      "Interior": {
+        "label": "Interior",
+        "desc": "Renders de vistas interiores de salones, cocinas, dormitorios y baños a la altura de los ojos, amueblados para el comprador al que se dirige el proyecto y elaborados a partir de la memoria de acabados — el apartamento piloto de las promociones vendidas sobre planos y la base de los recorridos virtuales 360° de esas mismas estancias."
+      },
+      "Bird's-Eye View": {
+        "label": "Vista aérea",
+        "desc": "Renders aéreos y con perspectiva de dron que sitúan una promoción en su barrio: terreno a partir de datos de elevación, edificios vecinos a partir de imágenes de satélite y dron, y el propio proyecto a su altura real. Se utilizan como portadas de folletos, lonas de obra y vistas neutrales para permisos."
+      },
+      "Product": {
+        "label": "Producto",
+        "desc": "Visualización de producto con calidad de estudio de cocinas, mobiliario, herrajes y materiales a partir de datos CAD — packshots sobre fondo blanco y escenas lifestyle en interiores ambientados, con cada variante de color y material renderizada desde una misma configuración para catálogos, tiendas online y ferias."
+      },
+      "Virtual Staging": {
+        "label": "Virtual staging",
+        "desc": "Fotografías reales de estancias vacías amuebladas digitalmente con la escala y la luz correctas, entregadas con el original y la indicación de «amueblado virtual» que exigen los portales — y variantes de reforma que muestran suelos, cocinas y paredes nuevos en la estancia existente, como pares de antes y después."
+      },
+      "360° Tours": {
+        "label": "Recorridos virtuales 360°",
+        "desc": "Recorridos virtuales 360° renderizados a partir de las mismas escenas que las imágenes fijas: arrastre para mirar a su alrededor, siga los puntos de interés o la planta de una estancia a otra, en un móvil, un ordenador o unas gafas de realidad virtual. El apartamento piloto para proyectos que aún están sobre planos."
+      },
+      "Animation": {
+        "label": "Animación",
+        "desc": "Animaciones arquitectónicas y películas de ambiente: vuelos de cámara desde el barrio hasta el apartamento, personas, tráfico y la luz de una hora concreta, editadas para sitios web, eventos de venta y redes sociales. Cada película parte del mismo modelo que los renders del proyecto."
+      },
+      "Cinemagraph": {
+        "label": "Cinemagraph",
+        "desc": "Renders fijos con un detalle en movimiento en un bucle continuo — una chimenea, lluvia en la ventana, cortinas con la brisa — que detienen el scroll en un feed y sustituyen un vídeo principal con una décima parte del tamaño de archivo."
+      },
+      "Web": {
+        "label": "Web",
+        "desc": "Sitios web de proyecto, portafolios y landing pages construidos en torno a los renders: tablas de unidades, plantas, recorridos integrados y formularios de consulta que indican la unidad, en alemán e inglés — mostrados aquí como maquetas en dispositivos de tres sitios de ejemplo."
+      },
+      "Navigator": {
+        "label": "Navegador de apartamentos 360°",
+        "desc": "El navegador de apartamentos: una órbita de toda una promoción renderizada en cien fotogramas, con cada unidad seleccionable — planta, superficie, estado y plano con un toque, filtros por habitaciones y precio. Arrastre para girar los edificios, elija una unidad y abra sus detalles. Pensado para sitios web de proyecto de promociones de mayor tamaño; esta es la demo en vivo."
+      }
+    },
+    "shownOf": "Mostrando {shown} de {total}",
+    "loadMore": "Cargar más",
+    "backToTop": "Volver arriba",
+    "groups": {
+      "mix": "En la mezcla",
+      "showcases": "Muestras independientes"
+    },
+    "ctaHeading": "¿Quiere iniciar su próximo proyecto?"
+  },
+  "wizard": {
+    "steps": {
+      "type": "Servicios",
+      "scope": "Alcance",
+      "budget": "Presupuesto y plazo",
+      "materials": "Materiales",
+      "details": "Datos"
+    },
+    "budget": {
+      "b1": "Hasta CHF 1'000",
+      "b2": "CHF 1'000 – 5'000",
+      "b3": "CHF 5'000 – 15'000",
+      "b4": "CHF 15'000+"
+    },
+    "timeline": {
+      "asap": "Lo antes posible",
+      "2weeks": "1–2 semanas",
+      "1month": "En un mes",
+      "flexible": "Flexible"
+    },
+    "materials": {
+      "model": "Modelo 3D / archivos CAD",
+      "drawings": "Planos arquitectónicos",
+      "photos": "Fotos de referencia",
+      "scratch": "Partimos de cero",
+      "brand": "Logotipo / manual de marca",
+      "website": "Sitio web existente"
+    },
+    "quantityTbd": "cantidad por definir",
+    "decrease": "Disminuir",
+    "increase": "Aumentar",
+    "siteType": {
+      "landing": "Landing page — un proyecto, un objetivo",
+      "project": "Sitio de proyecto — unidades, plantas, recorrido",
+      "portfolio": "Portafolio — sitio de estudio u oficina",
+      "other": "Otra cosa"
+    },
+    "siteTypeHint": "¿Qué tipo de sitio es?"
+  },
+  "seo": {
+    "home": "SKLO es un estudio de visualización 3D para arquitectos, promotores e inmobiliarias: renders exteriores e interiores fotorrealistas, animaciones, recorridos virtuales 360° y sitios web de proyecto.",
+    "services": "Doce servicios de un solo estudio: visualización exterior e interior, vistas aéreas, animación, recorridos virtuales 360°, virtual staging, plantas 3D, imágenes de producto y desarrollo web.",
+    "gallery": "Trabajos seleccionados de SKLO Studio: renders exteriores e interiores, vistas aéreas, animaciones, cinemagraphs y virtual staging para arquitectura e inmobiliaria.",
+    "about": "El equipo de SKLO Studio — artistas 3D, animadores y desarrolladores que convierten los planos arquitectónicos en imágenes que venden un proyecto antes de que se construya.",
+    "contact": "Cuéntenos sobre su proyecto en cinco breves pasos — servicios, alcance, presupuesto, materiales — y reciba un presupuesto a medida de SKLO Studio. Puede adjuntar planos y archivos directamente.",
+    "servicesCrumb": "Servicios",
+    "projects": "Casos de estudio de SKLO Studio: promociones residenciales, reformas y propuestas de concursos en Europa y otros continentes — el briefing, los renders, el resultado de ventas."
+  },
+  "consent": {
+    "title": "Cookies para el análisis de uso",
+    "text": "Con su consentimiento utilizamos Microsoft Clarity para ver cómo los visitantes usan este sitio (clics, desplazamiento, grabaciones de sesión). Instala cookies. Sin consentimiento no se carga.",
+    "more": "Política de privacidad",
+    "accept": "Aceptar",
+    "decline": "Rechazar",
+    "settings": "Configuración de cookies"
+  },
+  "stats": {
+    "projects": "proyectos completados",
+    "team": "especialistas en el equipo",
+    "perYear": "proyectos al año",
+    "reply": "tiempo medio de respuesta"
+  },
+  "contactLine": {
+    "phone": "Teléfono",
+    "whatsapp": "WhatsApp",
+    "reply": "Respondemos en un plazo de 12 horas en días laborables."
+  },
+  "projects": {
+    "eyebrow": "Casos de estudio",
+    "title": "Proyectos",
+    "intro": "Siete proyectos de Europa y otros continentes: lo que el cliente necesitaba, lo que entregamos y lo que aportó a la venta. Cada imagen es trabajo del estudio.",
+    "clientLabel": "Cliente",
+    "servicesLabel": "Servicios",
+    "challengeEyebrow": "Punto de partida",
+    "challengeTitle": "El desafío",
+    "approachEyebrow": "Qué hicimos",
+    "approachTitle": "El enfoque",
+    "resultEyebrow": "Resultado",
+    "resultTitle": "El resultado",
+    "galleryEyebrow": "Entregables",
+    "galleryTitle": "Los renders",
+    "tourEyebrow": "En vivo",
+    "tourTitle": "Recórralo",
+    "moreEyebrow": "Más proyectos",
+    "moreTitle": "Trabajos relacionados",
+    "cta": "Inicie su proyecto"
+  },
+  "regions": {
+    "titleTemplate": "Visualización 3D {in}",
+    "specificsTitle": "Cómo trabajamos {in}",
+    "servicesTitle": "Servicios {for}",
+    "projectsTitle": "Proyectos {in}",
+    "allProjects": "Todos los proyectos",
+    "faqTitle": "Preguntas de clientes {from}",
+    "from": "desde",
+    "alsoIn": "También trabajamos en",
+    "cta": "Iniciar un proyecto",
+    "footerTitle": "Mercados",
+    "nav": {
+      "europe": "Europa",
+      "north-america": "Norteamérica",
+      "middle-east": "Oriente Medio",
+      "oceania": "Oceanía",
+      "latin-america": "Latinoamérica"
+    }
+  },
+  "knowledge": {
+    "title": "Conocimiento",
+    "intro": "Respuestas breves a las preguntas que los clientes nos hacen antes de un proyecto de visualización: en qué consisten los servicios, cuánto cuestan y cuál de dos opciones conviene más.",
+    "faqTitle": "Preguntas relacionadas",
+    "related": "Siguiente lectura",
+    "from": "desde",
+    "footerLink": "Conocimiento"
+  },
+  "audiences": {
+    "titleTemplate": "Visualización 3D para {audience}",
+    "needsTitle": "Lo que necesita",
+    "servicesTitle": "Servicios para {audience}",
+    "projectsTitle": "Proyectos para {audience}",
+    "allProjects": "Todos los proyectos",
+    "faqTitle": "Preguntas de {audience}",
+    "from": "desde",
+    "alsoFor": "También para",
+    "cta": "Iniciar un proyecto",
+    "nav": {
+      "developers": "Promotores inmobiliarios",
+      "architects": "Arquitectos",
+      "estate-agents": "Agentes inmobiliarios",
+      "cooperatives": "Cooperativas"
+    }
+  },
+  "glossary": {
+    "title": "Glosario",
+    "intro": "Los términos que encontrará en un presupuesto de visualización — render, fotomontaje, styleframe, memoria de acabados, venta sobre planos — cada uno explicado en dos frases.",
+    "footerLink": "Glosario"
+  },
+  "faqHub": {
+    "title": "Preguntas y respuestas",
+    "intro": "{count} preguntas que los clientes hacen sobre nuestros servicios, nuestros mercados y nuestra forma de trabajar, con las respuestas en un solo lugar. Cada grupo enlaza con su página.",
+    "jumpTo": "Ir a",
+    "toPage": "A la página",
+    "footerLink": "Preguntas frecuentes"
+  },
+  "requirements": {
+    "title": "Requisitos del proyecto",
+    "intro": "Lo que necesitamos para iniciar una visualización: el modelo o los planos, los materiales, algunas referencias y para qué se usarán las imágenes. Envíe lo que tenga — en un día le indicamos si falta algo.",
+    "download": "Descargar en PDF",
+    "afterTitle": "Qué sucede después",
+    "afterIntro": "Desde la primera carga hasta las imágenes finales, en cuatro pasos.",
+    "faqTitle": "Preguntas sobre el inicio",
+    "ctaCopy": "¿Tiene los documentos listos? El formulario de contacto admite planos, modelos y referencias de hasta 200 MB cada uno.",
+    "cta": "Envíe su proyecto",
+    "footerLink": "Requisitos del proyecto"
+  }
+}

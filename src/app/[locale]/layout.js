@@ -6,11 +6,9 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ClientWrapper from "@/components/ClientWrapper";
 import CookieConsent from "@/components/CookieConsent";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { pageMetadata, organizationJsonLd, websiteJsonLd, JsonLd, LOCALES } from "@/lib/seo";
 
-const translations = { en, de };
 
 // Space Grotesk is the only typeface the site uses: globals.css points
 // --font-sans at --font-display. Self-hosted from the repo (variable font,
@@ -26,7 +24,7 @@ const spaceGrotesk = localFont({
 });
 
 export async function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "de" }];
+  return [{ locale: "en" }, { locale: "de" }, { locale: "es" }];
 }
 
 export async function generateMetadata({ params }) {
@@ -41,8 +39,10 @@ export async function generateMetadata({ params }) {
       locale,
       path: "",
       title: isDe
-        ? "3D-Visualisierung für Architektur & Immobilien in der Schweiz"
-        : "3D Visualisation for Architecture & Real Estate in Switzerland",
+        ? "3D-Visualisierung für Architektur & Immobilien"
+        : locale === "es"
+          ? "Visualización 3D para arquitectura e inmobiliaria"
+          : "3D Visualisation for Architecture & Real Estate",
       description: t.seo.home,
     }),
     icons: {

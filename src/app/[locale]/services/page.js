@@ -4,10 +4,8 @@ import Link from "next/link";
 import { localizedServices } from "@/data/servicesData";
 import { servicePosterFor } from "@/data/galleryData";
 import Title3D from "@/components/Title3D";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 
-const translations = { en, de };
 
 function ServiceMedia({ service }) {
   const videoRef = useRef(null);

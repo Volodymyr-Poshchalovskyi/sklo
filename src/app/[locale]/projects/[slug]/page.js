@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { projects, projectBySlug, localizeProject, COUNTRY_NAMES } from "@/data/projects";
 import { serviceTitleFor } from "@/data/servicesData";
 import { pageMetadata, breadcrumbJsonLd, humanizeTitle, absoluteUrl, JsonLd, SITE_URL } from "@/lib/seo";
@@ -10,8 +9,8 @@ import { blurStyle } from "@/lib/blur";
 import Title3D from "@/components/Title3D";
 import TourEmbed from "@/components/TourEmbed";
 import ProjectCard from "@/components/ProjectCard";
+import { pickL } from "@/lib/i18n";
 
-const translations = { en, de };
 
 export async function generateStaticParams() {
   return projects.map((p) => ({ slug: p.slug }));
@@ -186,7 +185,7 @@ export default async function ProjectPage({ params }) {
                   src={imageVariant(item.src, 1920)}
                   srcSet={imageSrcSet(item.src)}
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  alt={(locale === "de" ? item.altDe : item.alt) ?? `${d.name}, ${d.city}`}
+                  alt={pickL(locale, item.alt, item.altDe, item.alt) ?? `${d.name}, ${d.city}`}
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-cover"

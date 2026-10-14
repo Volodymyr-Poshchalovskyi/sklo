@@ -1,11 +1,9 @@
 import Link from "next/link";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { localizeRequirements } from "@/data/requirements";
 import { pageMetadata, breadcrumbJsonLd, faqJsonLd, absoluteUrl, JsonLd, SITE_URL } from "@/lib/seo";
 import Title3D from "@/components/Title3D";
 
-const translations = { en, de };
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;

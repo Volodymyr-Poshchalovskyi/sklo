@@ -2,10 +2,8 @@
 import { use } from "react";
 import ContactWizard from "@/components/ContactWizard";
 import { CONTACT_EMAIL, PHONE, PHONE_HREF, WHATSAPP_HREF } from "@/data/studio";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 
-const translations = { en, de };
 
 export default function ContactPage({ params }) {
   const { locale } = use(params);

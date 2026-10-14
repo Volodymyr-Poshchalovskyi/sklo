@@ -3,6 +3,9 @@
 // sending. The PDF stays downloadable from the page; this is the same
 // list, searchable and linkable.
 
+import { mergeOverlay } from "@/lib/i18n";
+import esOverlay from "@/data/es/requirements.json";
+
 export const REQUIREMENTS_PDF = {
   en: { href: "/project-requirements.pdf", name: "SKLO-project-requirements.pdf" },
   de: { href: "/projektanforderungen.pdf", name: "SKLO-Projektanforderungen.pdf" },
@@ -90,7 +93,7 @@ export const requirementsFaq = [
   { q: "Do you sign an NDA?", qDe: "Unterschreiben Sie eine Geheimhaltungsvereinbarung?", a: "Yes, yours or ours, before any file is sent. Projects under NDA are never shown in our portfolio and never named.", aDe: "Ja, Ihre oder unsere, bevor eine Datei verschickt wird. Projekte unter NDA zeigen wir nie im Portfolio und nennen sie nie." },
 ];
 
-export function localizeRequirements(locale) {
+function localizeRequirementsBase(locale) {
   const de = locale === "de";
   const pick = (en, deVal) => (de && deVal ? deVal : en);
   return {
@@ -99,4 +102,8 @@ export function localizeRequirements(locale) {
     faq: requirementsFaq.map((f) => ({ q: pick(f.q, f.qDe), a: pick(f.a, f.aDe) })),
     pdf: REQUIREMENTS_PDF[de ? "de" : "en"],
   };
+}
+
+export function localizeRequirements(locale) {
+  return locale === "es" ? mergeOverlay(localizeRequirementsBase("en"), esOverlay) : localizeRequirementsBase(locale);
 }

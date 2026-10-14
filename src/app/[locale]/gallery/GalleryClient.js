@@ -11,10 +11,9 @@ import Title3D from "@/components/Title3D";
 import {imageSrcSet, imageVariant, videoSrc, videoPoster} from "@/lib/media";
 import { useVideoTier } from "@/lib/videoTier";
 import { blurStyle, fadeInOnLoad } from "@/lib/blur";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
+import { pickL } from "@/lib/i18n";
 
-const translations = { en, de };
 
 function GalleryCard({ item, onClick, label, alt, showCategory = true }) {
   const tier = useVideoTier();
@@ -204,14 +203,15 @@ function GalleryPageContent() {
   const activeFilter = keyForSlug(searchParams.get(FILTER_PARAM));
   // The tour switcher labels its own buttons per language; this page takes no
   // `t`, so the locale comes off the route segment.
-  const locale = useParams()?.locale === "de" ? "de" : "en";
+  const routeLocale = useParams()?.locale;
+  const locale = routeLocale === "de" || routeLocale === "es" ? routeLocale : "en";
   const t = translations[locale];
   const g = t.gallery;
   // Every visible category string is looked up from the English key the
   // archive rows and the filter already agree on.
   const labelFor = (key) => g.categories[key]?.label ?? key;
   // Descriptive alt where the data has one, the category name otherwise.
-  const altFor = (item) => (locale === "de" ? item.altDe : item.alt) ?? labelFor(item.category);
+  const altFor = (item) => pickL(locale, item.alt, item.altDe, item.alt) ?? labelFor(item.category);
 
   // The chip rail scrolls sideways, so an active filter near its end starts
   // out of sight — on a reload of `?filter=cinemagraph` nothing on screen said
@@ -658,7 +658,7 @@ function GalleryPageContent() {
                 />
                 <div className="flex items-baseline justify-between gap-4">
                   <h3 className="text-sm font-bold uppercase tracking-wider text-white">
-                    {locale === "de" && pair.titleDe ? pair.titleDe : pair.title}
+                    {pickL(locale, pair.title, pair.titleDe ?? pair.title, pair.title)}
                   </h3>
                   <span className="text-[10px] font-mono uppercase tracking-widest text-white/40">
                     {g.dragToCompare}

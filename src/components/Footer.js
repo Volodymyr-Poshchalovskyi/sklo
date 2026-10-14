@@ -5,6 +5,7 @@ import Link from "next/link";
 import { OPEN_EVENT as CONSENT_OPEN_EVENT } from "@/components/CookieConsent";
 import { usePathname } from "next/navigation";
 import Title3D from "@/components/Title3D";
+import { pickL } from "@/lib/i18n";
 import { CONTACT_EMAIL, PHONE, PHONE_HREF, WHATSAPP_HREF, SOCIALS } from "@/data/studio";
 
 const FIELD_CLASS =
@@ -13,7 +14,7 @@ const FIELD_CLASS =
 // The short form on every page. It posts to the same endpoint as the wizard
 // with `kind: "quick"`, so the studio gets one inbox and one email layout for
 // both; what differs is only how much the visitor had to fill in.
-function QuickContactForm({ locale, form, isDe }) {
+function QuickContactForm({ locale, form }) {
   const [state, setState] = useState("idle"); // idle | sending | sent | error
   const startedAt = useRef(0);
   const formRef = useRef(null);
@@ -56,9 +57,9 @@ function QuickContactForm({ locale, form, isDe }) {
             <path d="M20 6L9 17l-5-5" />
           </svg>
         </div>
-        <p className="text-lg font-semibold text-white">{isDe ? "Nachricht gesendet" : "Message sent"}</p>
+        <p className="text-lg font-semibold text-white">{pickL(locale, "Message sent", "Nachricht gesendet", "Mensaje enviado")}</p>
         <p className="text-sm text-white/60 max-w-xs">
-          {isDe ? "Wir melden uns in Kürze bei Ihnen." : "We'll be in touch with you shortly."}
+          {pickL(locale, "We'll be in touch with you shortly.", "Wir melden uns in Kürze bei Ihnen.", "Nos pondremos en contacto con usted en breve.")}
         </p>
         <button
           type="button"
@@ -68,7 +69,7 @@ function QuickContactForm({ locale, form, isDe }) {
           }}
           className="mt-2 text-xs font-semibold tracking-widest uppercase text-white/60 hover:text-white transition-colors cursor-pointer"
         >
-          {isDe ? "Weitere Nachricht" : "Send another"}
+          {pickL(locale, "Send another", "Weitere Nachricht", "Enviar otro mensaje")}
         </button>
       </div>
     );
@@ -105,9 +106,9 @@ function QuickContactForm({ locale, form, isDe }) {
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2">
         <p className="text-xs text-white/50">
-          {isDe ? "Mit Dateien? " : "Have files to share? "}
+          {pickL(locale, "Have files to share? ", "Mit Dateien? ", "¿Tiene archivos que compartir? ")}
           <Link href={`/${locale}/contact`} className="underline underline-offset-4 text-white/80 hover:text-white">
-            {isDe ? "Zur ausführlichen Anfrage" : "Use the detailed form"}
+            {pickL(locale, "Use the detailed form", "Zur ausführlichen Anfrage", "Use el formulario detallado")}
           </Link>
         </p>
         <button
@@ -116,7 +117,7 @@ function QuickContactForm({ locale, form, isDe }) {
           className="footer-submit-btn white-shimmer group inline-flex items-center justify-center gap-2 font-semibold text-sm px-8 py-3.5 rounded-full transition-all duration-300 hover:scale-[1.03] cursor-pointer border border-white/15 disabled:opacity-60 disabled:cursor-wait"
           style={{ backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
         >
-          {state === "sending" ? (isDe ? "Wird gesendet…" : "Sending…") : form.submit}
+          {state === "sending" ? pickL(locale, "Sending…", "Wird gesendet…", "Enviando…") : form.submit}
           <svg
             className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
             fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"
@@ -127,9 +128,9 @@ function QuickContactForm({ locale, form, isDe }) {
       </div>
       {state === "error" && (
         <p role="alert" className="text-xs text-accent">
-          {isDe ? "Senden fehlgeschlagen. Bitte erneut versuchen oder an " : "Sending failed. Please try again or write to "}
+          {pickL(locale, "Sending failed. Please try again or write to ", "Senden fehlgeschlagen. Bitte erneut versuchen oder an ", "No se pudo enviar. Inténtelo de nuevo o escriba a ")}
           <a href="mailto:sklo.rendering@gmail.com" className="underline">sklo.rendering@gmail.com</a>
-          {isDe ? " schreiben." : "."}
+          {pickL(locale, ".", " schreiben.", ".")}
         </p>
       )}
     </form>
@@ -142,7 +143,6 @@ export default function Footer({ locale, t }) {
   const links = f.links ?? {};
   const pathname = usePathname();
   const isContactPage = pathname?.endsWith("/contact");
-  const isDe = locale === "de";
 
   return (
     <footer className="section-shell hairline-top w-full text-white pt-24 pb-16 px-6 md:px-16 lg:px-28 xl:px-40">
@@ -169,7 +169,7 @@ export default function Footer({ locale, t }) {
             {/* Subtle background glow effect */}
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-white/5 rounded-full blur-3xl pointer-events-none" />
             
-            <QuickContactForm locale={locale} form={form} isDe={isDe} />
+            <QuickContactForm locale={locale} form={form} />
           </div>
         </div>
       )}

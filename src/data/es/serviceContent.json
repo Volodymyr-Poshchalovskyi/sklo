@@ -1,0 +1,733 @@
+{
+ "exterior-visualization": {
+  "intro": "Un comprador no puede imaginar una fachada a partir de un alzado, y un ayuntamiento no aprobará un edificio que no puede ver en su calle. Una sola vista exterior fotorrealista responde a ambas cosas: el proyecto en su entorno real, a la hora del día que mejor lo favorece, antes de que llegue la primera excavadora.",
+  "problems": [
+   {
+    "problem": "El folleto vende hormigón por metro cuadrado",
+    "title": "Un hogar que el comprador reconoce",
+    "desc": "Los planos convencen a los ingenieros. Los compradores deciden por la imagen del edificio al que volverían a casa: el balcón, la entrada, la luz a las seis de la tarde. Colocamos la cámara donde estaría un futuro residente y construimos la atmósfera en torno a ese momento."
+   },
+   {
+    "problem": "Falta el contexto del terreno",
+    "title": "Integrado en la calle real",
+    "desc": "Un render sobre fondo blanco no demuestra nada. Modelamos los edificios vecinos, el terreno y los árboles existentes a partir de datos topográficos y fotos del solar, de modo que el nuevo volumen se asienta exactamente donde se levantará: la imagen en la que confían las oficinas de planificación y los ayuntamientos."
+   },
+   {
+    "problem": "Los materiales cambian durante la planificación",
+    "title": "Un modelo, todas las variantes",
+    "desc": "Madera o enlucido, marcos de ventana oscuros o claros: una vez creada la escena, un estudio de materiales es cuestión de horas, no un nuevo encargo. El mismo modelo alimenta después la vista aérea, la animación y el recorrido virtual 360°."
+   }
+  ],
+  "deliverables": [
+   "Vistas exteriores fotorrealistas en 4K o mayor, listas para impresión y web",
+   "Propuestas de cámara y ambiente como renders en gris antes del render final",
+   "Entorno real a partir de su levantamiento topográfico, fotos del solar o datos satelitales",
+   "Dos rondas de correcciones sobre la imagen final",
+   "Archivos por capas bajo petición para su equipo gráfico"
+  ],
+  "investment": {
+   "unit": "por vista",
+   "includes": [
+    "Montaje de la escena a partir de sus planos o modelo",
+    "Estudio de cámara en gris para su aprobación",
+    "Dos rondas de correcciones",
+    "Entrega en 4K para impresión y web"
+   ],
+   "turnaround": "5–7 días laborables para la primera vista, 2–3 días para cada vista adicional del mismo modelo"
+  },
+  "faq": [
+   {
+    "q": "¿Qué necesitan para empezar una visualización exterior?",
+    "a": "Planos en DWG o PDF (plano de situación, plantas, alzados, secciones), una lista de materiales o fotos de referencia, y todo lo que tenga sobre el entorno: levantamiento topográfico, fotos del solar, tomas de dron. Un modelo 3D (SketchUp, Revit, ArchiCAD, IFC) acorta la primera etapa, pero no es imprescindible."
+   },
+   {
+    "q": "¿Cuánto tarda un render exterior?",
+    "a": "De cinco a siete días laborables desde la documentación completa hasta la imagen final: estudio de cámara en gris el segundo día, vista previa en color hacia el cuarto día y versión final tras sus comentarios. Las vistas adicionales del mismo modelo tardan de dos a tres días cada una."
+   },
+   {
+    "q": "¿Cuántas rondas de correcciones incluye un render exterior?",
+    "a": "Dos sobre la imagen final, además de la aprobación de cámara y ambiente previa. Los cambios en la propia arquitectura tras la aprobación se presupuestan por separado, porque implican reconstruir el modelo."
+   },
+   {
+    "q": "¿Se puede montar una visualización exterior sobre una foto del solar?",
+    "a": "Sí. El fotomontaje sobre una fotografía real suele ser la mejor opción para los permisos de construcción: el entorno es demostrablemente real. Ajustamos la perspectiva, el objetivo y la luz a la foto e insertamos el edificio."
+   },
+   {
+    "q": "¿En qué formatos se entregan los renders exteriores?",
+    "a": "JPEG y PNG en 4K o en el tamaño que necesite para impresión, sRGB para web y CMYK bajo petición. Los archivos PSD por capas para su equipo gráfico están disponibles con un pequeño recargo."
+   },
+   {
+    "q": "¿Trabajan directamente con nuestro arquitecto en la visualización exterior?",
+    "a": "Normalmente sí. Las dudas sobre detalles, materiales y dimensiones van directamente al estudio; usted recibe las vistas previas y da la aprobación final. Así se ahorra una ronda de reenvíos en cada consulta."
+   }
+  ]
+ },
+ "interior-visualization": {
+  "intro": "Una planta vacía es un rectángulo con un número. Un render interior es la tarde que el comprador imagina allí: la isla de la cocina, el suelo de roble, la vista desde el sofá. Para un piso piloto que no existirá en dos años, es el piso piloto.",
+  "problems": [
+   {
+    "problem": "Los compradores no saben leer plantas",
+    "title": "Estancias con sentido de la escala",
+    "desc": "Cámaras a la altura de los ojos, dimensiones reales del mobiliario y luz natural según la orientación real de las ventanas. El comprador ve que la mesa del comedor cabe, que el sol de la mañana llega a la cocina y que el dormitorio queda tranquilo en la parte trasera."
+   },
+   {
+    "problem": "El acabado estándar se parece al de cualquier otro proyecto",
+    "title": "Sus materiales, con el estilo de su comprador",
+    "desc": "Construimos el interior a partir de su memoria de acabados —el parqué real, los frentes de cocina reales— y lo amueblamos para quienes van a comprar: una familia joven en Winterthur no es una pareja jubilada en Zug. El mobiliario es un argumento de venta, no decoración."
+   },
+   {
+    "problem": "Cada tipo de vivienda necesita su propia imagen",
+    "title": "Una serie, no una sola imagen",
+    "desc": "Salón, cocina, baño y dormitorio principal de cada tipo, con una luz y un estilo coherentes, de modo que el folleto y la web del proyecto se lean como un único proyecto. Las vistas adicionales de una escena terminada cuestan una fracción de la primera."
+   }
+  ],
+  "deliverables": [
+   "Vistas interiores fotorrealistas en 4K, listas para impresión y web",
+   "Mobiliario y estilismo adaptados a su comprador objetivo",
+   "Materiales de su memoria de acabados, con alternativas bajo petición",
+   "Dos rondas de correcciones sobre la imagen final",
+   "Panorámicas 360° coherentes de la misma escena, si necesita un recorrido virtual"
+  ],
+  "investment": {
+   "unit": "por vista",
+   "includes": [
+    "Escena a partir de sus planos y memoria de acabados",
+    "Mobiliario y estilismo",
+    "Dos rondas de correcciones",
+    "Entrega en 4K para impresión y web"
+   ],
+   "turnaround": "5–7 días laborables para la primera vista, 2–3 días para cada vista adicional del mismo apartamento"
+  },
+  "faq": [
+   {
+    "q": "¿Qué necesitan para una visualización interior?",
+    "a": "Plantas con la posición de las ventanas, la memoria de acabados (suelos, cocina, azulejos del baño, puertas) y unas palabras sobre quién es el comprador. Las imágenes de referencia de interiores que le gusten nos ayudan a acertar con el estilo en la primera vista previa."
+   },
+   {
+    "q": "¿Puede el render interior mostrar los productos reales de cocina y baño?",
+    "a": "Sí. Si el proveedor facilita datos 3D o fotos del producto, modelamos los frentes, la grifería y los sanitarios especificados, de modo que el render también sirve como vista previa fiable para la elección de acabados del comprador."
+   },
+   {
+    "q": "¿Cuánto tarda un render interior?",
+    "a": "De cinco a siete días laborables para la primera vista de un apartamento, incluidas la vista previa de la distribución en gris y una vista previa en color. Cada vista adicional de la misma escena tarda de dos a tres días."
+   },
+   {
+    "q": "¿Se puede entregar una visualización interior con luz de día y de noche?",
+    "a": "Una segunda atmósfera lumínica a partir de una escena aprobada —atardecer, crepúsculo, cielo nublado— es una opción con tarifa reducida, porque la escena ya existe."
+   },
+   {
+    "q": "¿Qué grado de realismo tienen los renders interiores?",
+    "a": "Fotorrealista. Nuestros interiores se utilizan en documentación de venta, en webs de proyectos y en anuncios. Cuando un detalle aún no está decidido, lo decimos y mostramos la variante estándar en lugar de inventar una."
+   },
+   {
+    "q": "¿Puede la visualización interior convertirse en un recorrido virtual 360°?",
+    "a": "Sí, y es la forma más económica de conseguirlo: las panorámicas se renderizan a partir de la escena ya existente, de modo que un recorrido de cinco estancias cuesta una fracción de lo que costaría construirlo por separado."
+   }
+  ]
+ },
+ "animation-mood-film": {
+  "intro": "Una imagen fija muestra un edificio. Una película muestra una mañana en él: la luz recorriendo la fachada, alguien abriendo la puerta del balcón, la calle que despierta. Para el lanzamiento de un proyecto, un evento de ventas o una campaña en redes, sesenta segundos de eso logran lo que ningún folleto puede.",
+  "problems": [
+   {
+    "problem": "El lanzamiento necesita atención, no información",
+    "title": "Una historia en sesenta segundos",
+    "desc": "Primero escribimos un storyboard breve —llegada, fachada, salón, vista— y acordamos el ambiente y la música antes de renderizar un solo fotograma. La película se monta según dónde se proyectará: el hero de la web, la pantalla de un evento de ventas, un vertical de 15 segundos para Instagram."
+   },
+   {
+    "problem": "Ya existen renders, pero nada se mueve",
+    "title": "Movimiento a partir de sus escenas existentes",
+    "desc": "Si creamos sus imágenes fijas, las escenas ya están listas y la película empieza en la trayectoria de cámara. Si las hizo otro estudio, podemos animar las imágenes entregadas con parallax, luz y personas en movimiento: el camino económico hacia un vídeo hero."
+   },
+   {
+    "problem": "Los inversores quieren verlo todo",
+    "title": "Del barrio a la cocina",
+    "desc": "Un único vuelo continuo desde el contexto aéreo hasta el interior del apartamento le cuenta al inversor lo que veinte diapositivas no pueden: cómo se sitúa el proyecto en su ciudad, cómo se conectan las viviendas con el patio, cómo es el estándar por dentro."
+   }
+  ],
+  "deliverables": [
+   "Storyboard y frames de estilo para su aprobación antes de renderizar",
+   "Película en 4K, más versiones para web, redes sociales y pantallas de eventos",
+   "Música y diseño de sonido, con licencia para sus canales",
+   "Dos rondas de correcciones sobre el montaje",
+   "Imágenes fijas de la película como material de marketing adicional sin coste"
+  ],
+  "investment": {
+   "unit": "por película de 60 segundos",
+   "includes": [
+    "Storyboard y frames de estilo",
+    "Animación de cámara a partir de escenas existentes o nuevas",
+    "Música, sonido y etalonaje",
+    "Máster en 4K más versiones para redes sociales"
+   ],
+   "turnaround": "3–5 semanas según la duración; 2 semanas cuando las escenas ya existen a partir de sus renders"
+  },
+  "faq": [
+   {
+    "q": "¿Cuánto debe durar una animación arquitectónica?",
+    "a": "De cuarenta y cinco a noventa segundos para una web o un evento de ventas; de quince a treinta segundos para redes sociales. Normalmente entregamos un máster y versiones más cortas derivadas de él, para que no pague por una segunda película."
+   },
+   {
+    "q": "¿Cuánto cuesta una animación arquitectónica en Suiza?",
+    "a": "Desde CHF 4,900 por una película de sesenta segundos cuando las escenas ya existen a partir de nuestros renders. Una película creada desde cero, con escenas nuevas, se presupuesta según el storyboard, normalmente desde CHF 9,000. Precio cerrado tras el briefing."
+   },
+   {
+    "q": "¿La animación incluye personas y tráfico animados?",
+    "a": "Sí. Personas animadas, tráfico, pájaros y vegetación movida por el viento forman parte de cada película; son lo que hace que una escena se sienta habitada en lugar de modelada."
+   },
+   {
+    "q": "¿Podemos usar nuestra propia música en la película de ambiente?",
+    "a": "Si dispone de la licencia, sí. En caso contrario, licenciamos una pista para sus canales —web, redes sociales, eventos— y la licencia está incluida en el precio."
+   },
+   {
+    "q": "¿Cómo funcionan las correcciones en una animación arquitectónica?",
+    "a": "Primero aprueba el storyboard y los frames de estilo, y después una vista previa en baja resolución del montaje completo. Sobre esa vista previa se incluyen dos rondas. Los cambios posteriores al render final —otra trayectoria de cámara, arquitectura nueva— se presupuestan por separado."
+   },
+   {
+    "q": "¿En qué formatos se entrega la animación?",
+    "a": "MP4 (H.264) en 4K y Full HD para el máster, versiones 16:9, 9:16 y 1:1 para redes sociales, y una versión WebM para una carga rápida en su web. ProRes bajo petición para televisión o eventos."
+   }
+  ]
+ },
+ "bird-eye-visualization": {
+  "intro": "Un desarrollo se compra tanto por su ubicación como por sus apartamentos: el colegio, la estación, el lago tras los árboles. La vista aérea es la única imagen que lo muestra todo —el proyecto, sus vecinos y el camino hasta el tranvía— de un solo vistazo.",
+  "problems": [
+   {
+    "problem": "El plano de situación no le explica nada al comprador",
+    "title": "Todo el proyecto en una sola imagen",
+    "desc": "Edificios, patios, accesos de aparcamiento, el parque infantil: una vista aérea muestra cómo funciona el conjunto y dónde está cada vivienda. Se convierte en la imagen principal del folleto y en la imagen de navegación de la web del proyecto."
+   },
+   {
+    "problem": "El entorno es el argumento de venta",
+    "title": "Contexto real a partir de datos reales",
+    "desc": "Construimos el terreno a partir del modelo de elevación cantonal y el vecindario a partir de imágenes satelitales y fotos de dron, de modo que el lago, el borde del bosque y la autopista estén exactamente donde están, y no donde al folleto le gustaría que estuvieran."
+   },
+   {
+    "problem": "El ayuntamiento necesita ver el impacto",
+    "title": "Una imagen para la audiencia pública",
+    "desc": "Para un permiso de construcción o un concurso de diseño, una vista aérea neutral —alturas correctas, sombras correctas, sin brillo publicitario— muestra con honestidad el nuevo volumen en su ciudad. Entregamos esa versión y la atmosférica a partir del mismo modelo."
+   }
+  ],
+  "deliverables": [
+   "Vistas aéreas en 6K o mayor, para portadas de folletos y vallas publicitarias",
+   "Terreno y entorno a partir de datos de elevación, satelitales y de dron",
+   "Versión neutral para permisos y versión atmosférica para marketing",
+   "Dos rondas de correcciones",
+   "El modelo de contexto reutilizado para la animación y el navegador de vuelo"
+  ],
+  "investment": {
+   "unit": "por vista",
+   "includes": [
+    "Modelo del terreno y del vecindario",
+    "Estudio de cámara para su aprobación",
+    "Dos rondas de correcciones",
+    "Entrega en 6K para impresión en gran formato"
+   ],
+   "turnaround": "7–10 días laborables para la primera vista, 3 días para cada ángulo adicional"
+  },
+  "faq": [
+   {
+    "q": "¿Una visualización aérea necesita un vuelo de dron?",
+    "a": "No necesariamente. Podemos construir el entorno a partir de imágenes satelitales y del modelo de elevación cantonal. Una foto de dron desde la posición de cámara prevista hace el resultado más preciso y es la mejor opción cuando el entorno sostiene la venta; podemos organizar una."
+   },
+   {
+    "q": "¿Qué tamaño de impresión admite un render aéreo?",
+    "a": "Renderizamos las vistas aéreas por defecto a 6.000 píxeles en el lado largo, suficiente para una valla publicitaria de obra. Los formatos mayores se renderizan bajo petición."
+   },
+   {
+    "q": "¿Se puede reutilizar el modelo de la vista aérea para la animación y el navegador?",
+    "a": "Sí. El modelo de terreno y contexto es la base del vuelo inicial de la animación y del navegador de vuelo 360°. Encargarlos juntos ahorra hacer dos veces el trabajo de contexto."
+   },
+   {
+    "q": "¿Cuánto tarda una visualización aérea?",
+    "a": "De siete a diez días laborables para la primera vista aérea, porque el entorno lleva más tiempo que el edificio. Cada ángulo adicional del mismo modelo tarda unos tres días."
+   },
+   {
+    "q": "¿Puede la vista aérea mostrar números de vivienda y rótulos del entorno?",
+    "a": "Sí. Entregamos una imagen limpia y una versión rotulada con números de vivienda, nombres de edificios o puntos de interés en capas separadas, para que su equipo gráfico pueda adaptarlos."
+   },
+   {
+    "q": "¿Se aceptan los renders aéreos para permisos de construcción en Suiza?",
+    "a": "La versión neutral —alturas reales según sus planos, posición solar correcta para la fecha, sin efectos atmosféricos— se prepara precisamente para eso. Varios municipios suizos han aceptado nuestras vistas aéreas en la documentación del permiso."
+   }
+  ]
+ },
+ "360-virtual-tour": {
+  "intro": "Un piso piloto cuesta seis cifras y existe en un solo lugar. Un recorrido virtual 360° cuesta una fracción, funciona en cualquier teléfono y permite que un comprador en Múnich recorra un piso en Zúrich un domingo por la noche —de la cocina al balcón y al dormitorio, a su propio ritmo— antes de llamarle.",
+  "problems": [
+   {
+    "problem": "Sin piso piloto durante dos años",
+    "title": "Recórralo antes de que esté construido",
+    "desc": "De cinco a seis estancias conectadas por tipo de vivienda, renderizadas a partir de las mismas escenas que las imágenes fijas. Los puntos de acceso llevan de una estancia a otra, una planta indica dónde se encuentra y cada estancia tiene su propio enlace para anuncios y correos."
+   },
+   {
+    "problem": "Las visitas cuestan tiempo de ventas",
+    "title": "Consultas ya cualificadas",
+    "desc": "Quienes han recorrido el tour llegan a la visita ya convencidos de la distribución y preguntan por el contrato. El recorrido funciona en el navegador sin aplicación, en la web del proyecto o por separado, e informa de qué estancias reciben más tiempo."
+   },
+   {
+    "problem": "El folleto no puede mostrar la vista",
+    "title": "La vista real desde la ventana real",
+    "desc": "Con una panorámica de dron a la altura de planta prevista, el recorrido muestra la vista real desde el balcón de la cuarta planta —el lago, los Alpes, el tejado del vecino—, el detalle que vende primero las viviendas más altas."
+   }
+  ],
+  "deliverables": [
+   "Recorrido en el navegador, para teléfono y escritorio, sin aplicación ni plugin",
+   "5–6 panorámicas renderizadas por tipo de vivienda en 8K",
+   "Navegación por planta, puntos de acceso, notas por estancia y la identidad de su proyecto",
+   "Un enlace por estancia y un código de inserción para su web",
+   "Alojamiento incluido durante el periodo de ventas"
+  ],
+  "investment": {
+   "unit": "por tipo de vivienda",
+   "includes": [
+    "5–6 panorámicas a partir de las escenas interiores",
+    "Construcción del recorrido con navegación e identidad de marca",
+    "Dos rondas de correcciones",
+    "Alojamiento durante 24 meses"
+   ],
+   "turnaround": "2–3 semanas; 1 semana cuando las escenas interiores ya existen"
+  },
+  "faq": [
+   {
+    "q": "¿Funciona un recorrido virtual 360° en el teléfono?",
+    "a": "Sí. El recorrido funciona en el navegador de cualquier teléfono, tableta u ordenador; en el teléfono se mira alrededor con el tacto o moviendo el dispositivo. Sin aplicación ni descarga. Los visores de realidad virtual son compatibles a través del mismo enlace."
+   },
+   {
+    "q": "¿Se puede insertar el recorrido 360° en nuestra propia web?",
+    "a": "Sí, con un código de inserción o un enlace. Cada estancia tiene su propia URL, de modo que un anuncio puede enlazar directamente con la cocina. También construimos webs de proyecto en torno al recorrido si no dispone de una."
+   },
+   {
+    "q": "¿Cuánto cuesta un recorrido virtual 360°?",
+    "a": "Desde CHF 1,900 por tipo de vivienda cuando ya hemos renderizado sus interiores: las panorámicas salen de las mismas escenas. Creado desde cero, un recorrido de cinco estancias parte normalmente de CHF 3,400. El alojamiento durante el periodo de ventas está incluido."
+   },
+   {
+    "q": "¿Cuánto tiempo se aloja el recorrido virtual?",
+    "a": "Se incluyen veinticuatro meses, lo que cubre la mayoría de los periodos de venta. Después, el alojamiento cuesta CHF 30 al mes o le entregamos los archivos para que los aloje usted mismo."
+   },
+   {
+    "q": "¿Podemos saber quién visualiza el recorrido 360°?",
+    "a": "El recorrido informa de las visualizaciones, el tiempo por estancia y los puntos de acceso utilizados, sin cookies. Si necesita captar contactos, se puede abrir un formulario desde dentro del recorrido."
+   },
+   {
+    "q": "¿Puede el recorrido virtual mostrar la vista real desde la ventana?",
+    "a": "Sí, con una panorámica de dron tomada a la altura de planta prevista, que componemos detrás de las ventanas renderizadas. Organizamos el vuelo con un piloto con licencia en Suiza, Alemania y Austria."
+   }
+  ]
+ },
+ "cinemagraph-live-shot": {
+  "intro": "En un feed de imágenes fijas, aquella en la que se mueve la cortina hace que el pulgar se detenga. Un cinemagraph es un render terminado con un único detalle vivo —fuego, agua, hojas, una nube que pasa— en bucle para que nunca acabe. Cuesta una fracción de una película y funciona allí donde funciona una imagen fija.",
+  "problems": [
+   {
+    "problem": "Las publicaciones con renders se pasan de largo",
+    "title": "Movimiento que detiene el scroll",
+    "desc": "Una chimenea encendida en el salón, lluvia en la ventana, vapor del café. Un solo elemento en movimiento en una imagen por lo demás quieta se percibe como vida, y las plataformas lo clasifican como vídeo: más alcance con la misma imagen."
+   },
+   {
+    "problem": "Una película excede el presupuesto de un solo anuncio",
+    "title": "Efecto película al coste de una imagen fija",
+    "desc": "Como el cinemagraph se construye sobre un render que ya existe, el trabajo es la capa en movimiento, no una escena nueva. Un set de tres para el lanzamiento de un proyecto se completa en una semana."
+   },
+   {
+    "problem": "El hero de la web resulta estático",
+    "title": "Un hero que respira",
+    "desc": "Entregado como un bucle ligero y continuo, un cinemagraph sustituye a un vídeo hero con una décima parte del tamaño de archivo: carga al instante en el teléfono y nunca muestra un indicador de carga."
+   }
+  ],
+  "deliverables": [
+   "Bucle continuo de 6–12 segundos, a partir de un render existente o nuevo",
+   "MP4 y WebM para web, además de GIF y versiones verticales para redes sociales",
+   "Un elemento en movimiento por imagen, más bajo petición",
+   "Una ronda de correcciones sobre el movimiento",
+   "La imagen fija incluida en resolución completa"
+  ],
+  "investment": {
+   "unit": "por bucle",
+   "includes": [
+    "Capa de movimiento sobre su render",
+    "Edición del bucle continuo",
+    "Formatos para web y redes sociales",
+    "Una ronda de correcciones"
+   ],
+   "turnaround": "3–5 días laborables por bucle a partir de un render existente"
+  },
+  "faq": [
+   {
+    "q": "¿Un cinemagraph necesita un render existente?",
+    "a": "Un cinemagraph se construye sobre una imagen terminada. Si hicimos sus renders, no se necesita nada más. Si se hicieron en otro sitio, envíe el archivo en resolución completa; la mayoría de los renders se pueden animar. Si no existe ninguna imagen, presupuestamos la imagen fija y el bucle juntos."
+   },
+   {
+    "q": "¿Qué puede moverse en un cinemagraph arquitectónico?",
+    "a": "Fuego, agua, vapor, nubes, hojas, cortinas, luz, personas a lo lejos, un coche que pasa. La regla es uno o dos elementos: la quietud que los rodea es lo que hace notable el movimiento."
+   },
+   {
+    "q": "¿Dónde se puede usar un cinemagraph en el marketing inmobiliario?",
+    "a": "En publicaciones e historias de Instagram, LinkedIn y Facebook, en el hero de una web, en una pantalla publicitaria digital, en la cabecera de un correo. Entregamos los formatos para cada uno; el bucle se reproduce sin sonido."
+   },
+   {
+    "q": "¿Cuánto dura el bucle de un cinemagraph?",
+    "a": "De seis a doce segundos, cortado de modo que el final enlace con el principio sin un salto visible. Las plataformas que limitan la duración del vídeo reproducen igualmente el bucle completo."
+   },
+   {
+    "q": "¿Cuánto cuesta un cinemagraph?",
+    "a": "Desde CHF 490 por bucle sobre un render existente. Un set de tres para un lanzamiento cuesta CHF 1,300. Si primero hay que renderizar la imagen fija, se aplica además la tarifa de vista exterior o interior."
+   },
+   {
+    "q": "¿En cuánto se entrega un cinemagraph?",
+    "a": "De tres a cinco días laborables por bucle. Un set de tres suele estar listo en una semana."
+   }
+  ]
+ },
+ "product-visualization": {
+  "intro": "Una sesión de fotos necesita que el producto exista, un estudio, un día y un fotógrafo. Un render necesita el archivo CAD. Para una cocina en doce frentes, un grifo en tres acabados o una silla que aún es un prototipo, el render es más rápido, más barato e idéntico de una imagen a otra.",
+  "problems": [
+   {
+    "problem": "El catálogo necesita todas las variantes",
+    "title": "Doce acabados a partir de una escena",
+    "desc": "Una vez construidos el producto y el set, cada color, material y configuración es una pasada de render, no una nueva sesión. La luz, el ángulo y la sombra permanecen idénticos en toda la gama, algo que una sesión de fotos no puede prometer."
+   },
+   {
+    "problem": "El producto aún no existe",
+    "title": "Imágenes de lanzamiento antes de la producción",
+    "desc": "A partir de los datos CAD del fabricante renderizamos el producto tal como se fabricará, hasta la veta de la chapa y el cepillado del acero. Las preventas, los stands de las ferias y la tienda online están listos el día en que la primera unidad sale de la fábrica."
+   },
+   {
+    "problem": "Los productos necesitan una estancia, no una caja blanca",
+    "title": "Mostrado donde va a vivir",
+    "desc": "Packshots sobre blanco para la tienda, y el mismo producto en una cocina, un baño o un salón con estilismo para la campaña. Construimos el interior en torno al producto para que el material y la escala se lean correctamente."
+   }
+  ],
+  "deliverables": [
+   "Packshots sobre fondo blanco o transparente en 6K",
+   "Escenas lifestyle con el producto en un interior con estilismo",
+   "Variantes de color y material a partir del mismo montaje",
+   "Dos rondas de correcciones",
+   "Archivos preparados para tienda online, catálogo impreso y feria"
+  ],
+  "investment": {
+   "unit": "por toma",
+   "includes": [
+    "Modelado del producto o importación CAD",
+    "Set de estudio o interior",
+    "Dos rondas de correcciones",
+    "Entrega en 6K, web e impresión"
+   ],
+   "turnaround": "3–5 días laborables para la primera toma, 1 día por variante del mismo montaje"
+  },
+  "faq": [
+   {
+    "q": "¿Qué datos necesitan para una visualización de producto?",
+    "a": "Los archivos CAD (STEP, IGES, SolidWorks, Rhino) son lo ideal; también sirven planos con dimensiones y fotos, con el modelado presupuestado por separado. Muestras de materiales o referencias del proveedor para acabados y tejidos."
+   },
+   {
+    "q": "¿Cuánto cuesta una variante de render de producto?",
+    "a": "La primera toma de un producto parte de CHF 390; cada variante de color o material con la misma cámara y el mismo set parte de CHF 90, porque solo cambia el material."
+   },
+   {
+    "q": "¿Pueden los renders de producto coincidir con nuestra fotografía existente?",
+    "a": "Sí. Envíenos algunas fotos de su catálogo actual y ajustamos la iluminación, el fondo y la cámara, de modo que renders y fotos queden juntos sin una diferencia visible."
+   },
+   {
+    "q": "¿También hacen animaciones de producto?",
+    "a": "Sí: giros de 360°, vistas despiezadas y clips breves de características para la página de la tienda o la pantalla de una feria, a partir del mismo modelo que las imágenes fijas."
+   },
+   {
+    "q": "¿Cómo se compara la visualización de producto con la fotografía?",
+    "a": "Indistinguible a escala de catálogo cuando los datos de material son buenos. Para tejidos y madera natural trabajamos a partir de muestras físicas o escaneos de alta resolución, que es donde los renders se delatan con más frecuencia."
+   },
+   {
+    "q": "¿En cuánto tiempo se puede renderizar una gama completa de productos?",
+    "a": "Tras la primera toma aprobada, una gama de veinte variantes suele entregarse en una semana. Indíquenos la fecha límite del catálogo y planificamos hacia atrás desde ella."
+   }
+  ]
+ },
+ "virtual-staging": {
+  "intro": "Un apartamento vacío se fotografía pequeño, frío y difícil de valorar. La misma foto con un sofá, una mesa de comedor y una lámpara en la esquina se lee como un hogar, y un anuncio con fotos amuebladas recibe más consultas a mejor precio. El virtual staging lo logra a partir de la foto, sin camión ni decorador.",
+  "problems": [
+   {
+    "problem": "Las estancias vacías no se venden",
+    "title": "Amueblado a partir de la foto",
+    "desc": "Colocamos mobiliario a escala real en su fotografía, ajustando la perspectiva, la luz y las sombras, de modo que el resultado parezca fotografiado y no pegado. Los compradores ven cómo se usa la estancia y qué tamaño tiene realmente."
+   },
+   {
+    "problem": "El amueblado físico cuesta miles al mes",
+    "title": "Una fracción del coste, entregado en días",
+    "desc": "Sin muebles de alquiler, sin transporte, sin seguro. Un apartamento completo se amuebla en dos o tres días, y un segundo estilo para otro grupo de compradores cuesta poco más."
+   },
+   {
+    "problem": "El edificio existente necesita un antes y un después",
+    "title": "La reforma mostrada, no prometida",
+    "desc": "En las reformas vamos más allá del mobiliario: suelos nuevos, una cocina nueva, paredes repintadas, sobre la foto real de la estancia existente. El control deslizante de antes y después se convierte en el elemento más fuerte del anuncio."
+   }
+  ],
+  "deliverables": [
+   "Foto amueblada en la resolución original, lista para el anuncio",
+   "Estilo de mobiliario adaptado al comprador objetivo, dos estilos bajo petición",
+   "Variantes de reforma: suelos, cocina, paredes, iluminación",
+   "Pares de antes y después para su web",
+   "Una ronda de correcciones por foto"
+  ],
+  "investment": {
+   "unit": "por foto",
+   "includes": [
+    "Mobiliario y decoración en su foto",
+    "Ajuste de perspectiva y luz",
+    "Entrega lista para el anuncio",
+    "Una ronda de correcciones"
+   ],
+   "turnaround": "2–3 días laborables para un apartamento de 6–8 fotos"
+  },
+  "faq": [
+   {
+    "q": "¿Qué fotos necesitan para el virtual staging?",
+    "a": "Las fotos del anuncio tal como las publicaría: rectas, bien iluminadas, a resolución completa. Las tomas con gran angular de las estancias principales funcionan mejor. Si las fotos aún no se han hecho, podemos dar instrucciones a su fotógrafo."
+   },
+   {
+    "q": "¿Está permitido el virtual staging en anuncios suizos, alemanes y austriacos?",
+    "a": "Sí, siempre que se declare. Recomendamos la nota «amueblado virtualmente» en la imagen o en el texto del anuncio y entregamos la foto original junto a ella, que es lo que esperan los portales suizos, alemanes y austriacos."
+   },
+   {
+    "q": "¿Puede el virtual staging retirar primero el mobiliario existente?",
+    "a": "Sí. Vaciar una estancia ocupada —muebles, objetos, cables— cuesta CHF 60 adicionales por foto, y después se amuebla como una vacía."
+   },
+   {
+    "q": "¿Qué estilos de mobiliario ofrece el virtual staging?",
+    "a": "Escandinavo, contemporáneo, clásico, loft y familiar son las peticiones habituales; también adaptamos un estilo al folleto de su proyecto. Díganos quién es el comprador y le proponemos uno."
+   },
+   {
+    "q": "¿En cuánto se entrega el virtual staging?",
+    "a": "De dos a tres días laborables para un apartamento de seis a ocho fotos. Fotos sueltas en 24 horas bajo petición."
+   },
+   {
+    "q": "¿Se puede aplicar el virtual staging a un render en lugar de a una foto?",
+    "a": "En obra nueva, sí, aunque entonces suele ser mejor renderizar el interior por completo, porque la escena se puede reutilizar para otras vistas y el recorrido virtual 360°. Le aconsejamos qué vía resulta más económica en su caso."
+   }
+  ]
+ },
+ "graphic-design": {
+  "intro": "Los renders están hechos; ahora tienen que llegar al comprador. El folleto sobre la mesa de ventas, la lona en la valla de obra, el logotipo en el cartel de la entrada del solar: diseñados por quienes hicieron las imágenes, para que el proyecto se vea como un único proyecto allí donde aparezca.",
+  "problems": [
+   {
+    "problem": "El folleto se arma con lo que hubiera a mano",
+    "title": "Un dossier de ventas con maquetación",
+    "desc": "Portada, historia del proyecto, plano de situación, páginas de viviendas con plantas y renders, memoria de acabados, contacto: diseñado como una secuencia que el comprador lee en orden. PDF listo para imprimir y versión interactiva para el correo."
+   },
+   {
+    "problem": "El proyecto no tiene nombre ni rostro",
+    "title": "Naming, logotipo y sistema visual",
+    "desc": "Un nombre que funcione en alemán e inglés, un logotipo tipográfico, un sistema de color y tipografía: lo bastante pequeño para aplicarlo en una tarde y lo bastante coherente para que la lona de la valla, la web y el folleto se reconozcan como el mismo proyecto."
+   },
+   {
+    "problem": "La obra es la mejor valla publicitaria y está vacía",
+    "title": "Lonas de valla, carteles y panel de obra",
+    "desc": "Archivos de gran formato preparados para la imprenta —sangrado, resolución, perfil de color— con el render al tamaño que merece y el número de teléfono legible desde el tranvía que pasa."
+   }
+  ],
+  "deliverables": [
+   "Folleto de ventas, PDF listo para imprimir e interactivo",
+   "Naming del proyecto, logotipo y una breve guía de estilo",
+   "Archivos de lonas de valla de obra, panel de obra y señalética",
+   "Plantillas para redes sociales con el estilo de su proyecto",
+   "Archivos abiertos y tipografías entregados para su propio uso"
+  ],
+  "investment": {
+   "unit": "por folleto (8 páginas)",
+   "includes": [
+    "Concepto de maquetación y dos líneas de diseño",
+    "Composición de sus textos y planos",
+    "Dos rondas de correcciones",
+    "PDF listo para imprimir y para pantalla"
+   ],
+   "turnaround": "1–2 semanas para un folleto; logotipo y guía de estilo 2 semanas"
+  },
+  "faq": [
+   {
+    "q": "¿También redactan los textos del folleto de ventas?",
+    "a": "Componemos los textos que usted aporta y los editamos en extensión y tono. La redacción desde cero —historia del proyecto, descripción de la ubicación— está disponible en alemán e inglés con tarifa por hora."
+   },
+   {
+    "q": "¿Puede la marca del proyecto inmobiliario seguir nuestro diseño corporativo?",
+    "a": "Sí. Envíe el manual de marca y las tipografías y diseñamos dentro de él. Si el proyecto debe tener identidad propia junto a la marca de la empresa, proponemos cómo relacionarlas."
+   },
+   {
+    "q": "¿Se encargan de la impresión de los folletos y las lonas de obra?",
+    "a": "Preparamos los archivos según las especificaciones de su imprenta y revisamos la prueba. La impresión en sí la factura la imprenta; podemos recomendarle algunas en Suiza, Alemania y Austria."
+   },
+   {
+    "q": "¿Cuánto cuesta un folleto de ventas inmobiliario?",
+    "a": "Desde CHF 1,400 por un folleto de ventas de ocho páginas con sus textos y nuestros renders. Los dosieres más largos se presupuestan por página; un libro de proyecto de 32 páginas cuesta normalmente entre CHF 3,200 y 4,500."
+   },
+   {
+    "q": "¿Recibimos los archivos de diseño abiertos?",
+    "a": "Sí. Al final se entregan los archivos de InDesign o Figma, las tipografías (donde lo permita la licencia) y todos los recursos de imagen, para que su equipo u otra agencia pueda actualizar el material más adelante."
+   },
+   {
+    "q": "¿Cuánto tarda un folleto o un logotipo?",
+    "a": "De una a dos semanas para un folleto una vez que los textos y planos están cerrados. El naming y el logotipo llevan unas dos semanas, con dos rondas de presentación."
+   }
+  ]
+ },
+ "3d-floorplans": {
+  "intro": "Una planta en 2D la leen los arquitectos. Una planta 3D la lee todo el mundo: el mobiliario muestra la escala, los colores muestran las estancias y el balcón es obviamente el balcón. En un anuncio es la imagen en la que los compradores pasan más tiempo después de la imagen principal.",
+  "problems": [
+   {
+    "problem": "Los compradores preguntan si cabrá el sofá",
+    "title": "Una escala que no necesita explicación",
+    "desc": "Mobiliario a dimensiones reales, apertura de puertas, electrodomésticos de cocina y la lavadora donde la sitúa el plano. La pregunta sobre el sofá se responde sola y la visita empieza un paso más adelante."
+   },
+   {
+    "problem": "Veinte tipos de vivienda, un solo plazo",
+    "title": "Una serie coherente, rápido",
+    "desc": "El mismo ángulo, la misma familia de mobiliario, el mismo código de color en cada planta del proyecto, de modo que las páginas de vivienda del folleto y de la web se lean como un conjunto. Una serie de veinte se completa en una semana."
+   },
+   {
+    "problem": "La planta tiene que funcionar en el folleto y en la web",
+    "title": "Una planta, todos los formatos",
+    "desc": "Entregada como imagen de alta resolución para impresión y como archivo ligero para la web, con una versión limpia y otra rotulada (nombres de estancias, superficies, flecha del norte) en capas separadas."
+   }
+  ],
+  "deliverables": [
+   "Planta 3D por tipo de vivienda, amueblada y coloreada",
+   "Versiones limpia y rotulada, en resolución de impresión y web",
+   "Estilo coherente en todo el proyecto",
+   "Vistas generales de planta completa y de edificio completo bajo petición",
+   "Una ronda de correcciones por planta"
+  ],
+  "investment": {
+   "unit": "por planta",
+   "includes": [
+    "Modelado a partir de su planta 2D",
+    "Mobiliario y acabados",
+    "Versiones limpia y rotulada",
+    "Una ronda de correcciones"
+   ],
+   "turnaround": "3–5 días laborables para la primera planta, después 1 día por planta con el mismo estilo"
+  },
+  "faq": [
+   {
+    "q": "¿Qué necesitan para una planta 3D?",
+    "a": "La planta 2D en DWG o PDF con cotas, la memoria de acabados si los suelos y la cocina deben coincidir con el proyecto, y una nota sobre el estilo: claro y escandinavo, o más oscuro y urbano."
+   },
+   {
+    "q": "¿Las plantas 3D están a escala?",
+    "a": "Sí. Se modelan a partir de su plano acotado, de modo que muros, huecos y mobiliario tienen sus proporciones reales. A efectos legales, la planta 2D sigue siendo la referencia, y lo indicamos en el pie si lo desea."
+   },
+   {
+    "q": "¿Cuánto cuesta una serie de plantas 3D?",
+    "a": "Desde CHF 290 por planta para las primeras; a partir de diez plantas en un mismo proyecto la tarifa baja a CHF 220 por planta, porque la biblioteca de mobiliario y el estilo ya están definidos."
+   },
+   {
+    "q": "¿Pueden las plantas 3D mostrar toda la planta o todo el edificio?",
+    "a": "Sí: vistas generales de planta con todas las viviendas y una vista despiezada del edificio que muestra todas las plantas apiladas, útil en la web del proyecto como punto de entrada a la lista de viviendas."
+   },
+   {
+    "q": "¿En cuánto se entregan las plantas 3D?",
+    "a": "De tres a cinco días laborables para la primera planta, que define el estilo. Tras la aprobación, aproximadamente una planta por día; una serie de veinte se entrega en una semana."
+   },
+   {
+    "q": "¿Se pueden actualizar las plantas 3D más adelante?",
+    "a": "Sí. Un muro modificado o una cocina distinta en una planta existente es una pequeña corrección a tarifa por hora, porque el modelo se conserva mientras dure el proyecto."
+   }
+  ]
+ },
+ "fly-around-navigator": {
+  "intro": "En un desarrollo de cuarenta apartamentos, la pregunta no es «¿es bonito?» sino «¿cuál es el mío?». El navegador de apartamentos es el edificio que se puede girar entre las manos: orbítelo, deténgase en cualquier lado, toque una vivienda y vea su planta, tamaño, orientación y plano: la vista y las cifras en un solo lugar.",
+  "problems": [
+   {
+    "problem": "La lista de viviendas es una hoja de cálculo",
+    "title": "Elija el apartamento sobre el edificio",
+    "desc": "Cada vivienda es un volumen clicable sobre el edificio renderizado. El estado (disponible, reservado, vendido), el precio, la superficie y la planta aparecen al tocar; los filtros reducen el edificio a «3,5 habitaciones, orientación sur, por encima de la tercera planta»."
+   },
+   {
+    "problem": "Los compradores quieren ver su lado del edificio",
+    "title": "360° alrededor del conjunto",
+    "desc": "La órbita se renderiza como una secuencia de fotogramas a partir del modelo de contexto completo, de modo que el comprador gira el edificio real en su entorno real: el patio, la calle, la vista que tiene cada fachada."
+   },
+   {
+    "problem": "Los datos de ventas cambian cada semana",
+    "title": "Estado en vivo desde su lista",
+    "desc": "El navegador lee una hoja de cálculo o su CRM: marque una vivienda como vendida en la lista y se atenúa en el edificio en cuestión de minutos. No hace falta un desarrollador para las actualizaciones diarias."
+   }
+  ],
+  "deliverables": [
+   "Órbita interactiva de 360° del edificio con viviendas clicables",
+   "Datos de viviendas, estado y plantas desde su hoja de cálculo o CRM",
+   "Filtros por habitaciones, planta, orientación, precio y estado",
+   "Inserción para la web de su proyecto, teléfono y escritorio",
+   "Alojamiento y actualizaciones de estado durante el periodo de ventas"
+  ],
+  "investment": {
+   "unit": "por edificio",
+   "includes": [
+    "Render de la órbita a partir del modelo de contexto",
+    "Asignación de viviendas y conexión de datos",
+    "Filtros y panel de detalle de vivienda",
+    "Alojamiento durante 24 meses"
+   ],
+   "turnaround": "4–6 semanas; 3 semanas cuando el modelo exterior ya existe"
+  },
+  "faq": [
+   {
+    "q": "¿Cuántos apartamentos puede gestionar el navegador 360°?",
+    "a": "Desde un único edificio con ocho viviendas hasta un barrio con varios cientos. Para conjuntos mayores, el navegador parte del nivel del solar y hace zoom en cada edificio."
+   },
+   {
+    "q": "¿De dónde proceden los datos de viviendas del navegador?",
+    "a": "De una hoja de cálculo compartida, de su CRM o de una sencilla página de administración que facilitamos. Usted cambia allí un estado o un precio y el navegador se actualiza solo en cuestión de minutos."
+   },
+   {
+    "q": "¿Funciona el navegador de apartamentos en teléfonos?",
+    "a": "Sí. La órbita es una secuencia de fotogramas prerrenderizados, por lo que funciona con fluidez en cualquier teléfono sin motor 3D, y el panel de la vivienda está diseñado para el tacto."
+   },
+   {
+    "q": "¿Cuánto cuesta un navegador de apartamentos 360°?",
+    "a": "Desde CHF 6,900 por un edificio cuando el modelo exterior existe a partir de nuestros renders; desde CHF 9,900 creado desde cero. Varios edificios en un mismo solar se presupuestan juntos, compartiendo el trabajo de contexto."
+   },
+   {
+    "q": "¿Se puede combinar el navegador con el recorrido 360° y las plantas 3D?",
+    "a": "Ese es el planteamiento previsto: toque una vivienda en el edificio, vea su planta 3D, abra su recorrido. Los tres proceden del mismo modelo, por lo que encargarlos juntos es la vía económica."
+   },
+   {
+    "q": "¿Quién aloja el navegador y durante cuánto tiempo?",
+    "a": "Lo alojamos durante 24 meses, incluido. Después, CHF 50 al mes o la entrega de los archivos para su propio alojamiento."
+   }
+  ]
+ },
+ "web-development": {
+  "investment": {
+   "unit": "por web de proyecto",
+   "includes": [
+    "Diseño y desarrollo, escritorio y móvil",
+    "Renders, recorridos y películas integrados",
+    "Tabla de viviendas, plantas y formulario de consulta",
+    "Alemán e inglés, alojamiento y analítica"
+   ],
+   "turnaround": "4–6 semanas desde el briefing hasta el lanzamiento"
+  },
+  "faq": [
+   {
+    "q": "¿Cuánto cuesta una web para un proyecto inmobiliario?",
+    "a": "Desde CHF 7,900 por una web de promoción con tabla de viviendas, plantas, galería, recorrido insertado y formulario de consulta en dos idiomas. Una landing page para una sola propiedad parte de CHF 3,900; un portfolio de estudio, de CHF 5,900. Precio cerrado tras el briefing."
+   },
+   {
+    "q": "¿Cuánto tarda en construirse la web de un proyecto?",
+    "a": "De cuatro a seis semanas desde el briefing hasta el lanzamiento: estructura en la primera semana, diseño en las semanas dos y tres, desarrollo y contenido en las semanas cuatro y cinco, pruebas y lanzamiento en la semana seis. Más rápido si los renders y los textos están listos desde el principio."
+   },
+   {
+    "q": "¿Podemos actualizar nosotros mismos la web del proyecto?",
+    "a": "Sí. El estado de las viviendas, los precios y los textos se editan en una sencilla administración o en una hoja de cálculo; no hace falta un desarrollador para los cambios semanales. También ofrecemos mantenimiento durante el periodo de ventas si prefiere no encargarse."
+   },
+   {
+    "q": "¿De quién es la web del proyecto y el dominio?",
+    "a": "Suyos. El dominio se registra a su nombre, el código y el contenido se entregan en el lanzamiento y la cuenta de alojamiento es suya. Nada queda ligado a nosotros."
+   },
+   {
+    "q": "¿Se encontrará la web del proyecto en Google?",
+    "a": "La web se lanza con la base técnica preparada: carga rápida, ambos idiomas, datos estructurados, sitemap y Search Console. Se posicionará por el nombre del proyecto en cuestión de días. El posicionamiento para términos genéricos como «apartamento Winterthur» depende del contenido y del tiempo, y le asesoramos al respecto."
+   },
+   {
+    "q": "¿Qué ocurre con la web del proyecto cuando la promoción se agota?",
+    "a": "La web puede pasar a una página de «vendido» que conserve los renders y dirija a su siguiente proyecto, o archivarse. El alojamiento cuesta unos pocos francos al mes, por lo que la mayoría de los clientes la conservan como referencia."
+   }
+  ]
+ }
+}

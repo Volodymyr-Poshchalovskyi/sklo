@@ -6,6 +6,9 @@
 // PRICES quoted here are the same sample figures as serviceContent.js and
 // must be replaced together with them.
 
+import { mergeOverlay } from "@/lib/i18n";
+import esOverlay from "@/data/es/knowledge.json";
+
 export const knowledge = [
   {
     slug: "what-is-architectural-visualisation",
@@ -153,7 +156,7 @@ export function knowledgeBySlug(slug) {
   return knowledge.find((k) => k.slug === slug);
 }
 
-export function localizeKnowledge(article, locale) {
+function localizeKnowledgeBase(article, locale) {
   const de = locale === "de";
   const pick = (en, deVal) => (de && deVal ? deVal : en);
   return {
@@ -163,4 +166,8 @@ export function localizeKnowledge(article, locale) {
     sections: article.sections.map((s) => ({ h: pick(s.h, s.hDe), body: pick(s.body, s.bodyDe) })),
     faq: article.faq.map((f) => ({ q: pick(f.q, f.qDe), a: pick(f.a, f.aDe) })),
   };
+}
+
+export function localizeKnowledge(article, locale) {
+  return locale === "es" ? mergeOverlay(localizeKnowledgeBase(article, "en"), esOverlay[article.slug]) : localizeKnowledgeBase(article, locale);
 }

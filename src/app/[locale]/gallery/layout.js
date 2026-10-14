@@ -1,8 +1,6 @@
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { pageMetadata } from "@/lib/seo";
 
-const translations = { en, de };
 
 // The route's own <title> and description. The page itself is a client
 // component, so the metadata lives in the segment's layout — one page per

@@ -17,7 +17,7 @@ const useIsomorphicLayoutEffect =
 // is actually loading. HeroSection reports readiness through this event (and
 // the flag, in case it fires before the listener below is attached).
 export const HERO_READY_EVENT = "sklo-hero-ready";
-const isHomePath = (p) => /^\/(en|de)\/?$/.test(p);
+const isHomePath = (p) => /^\/(en|de|es)\/?$/.test(p);
 
 export default function ClientWrapper({ children, locale, t }) {
   const pathname = usePathname();

@@ -1,0 +1,98 @@
+[
+ {
+  "term": "Render",
+  "def": "La imagen calculada de una escena 3D: geometría, materiales y luz convertidos en una imagen similar a una fotografía. En arquitectura suele referirse a una única imagen fija fotorrealista de un edificio o de una estancia."
+ },
+ {
+  "term": "Visualización arquitectónica",
+  "def": "La disciplina de producir imágenes, películas y recorridos interactivos de arquitectura aún no construida a partir de planos o de un modelo 3D. Renders, animaciones, recorridos virtuales 360° y plantas 3D son sus entregables."
+ },
+ {
+  "term": "Vista exterior",
+  "def": "Un render de un edificio visto desde fuera, en su entorno real, a la hora del día elegida. La imagen estándar para folletos de venta, anuncios y permisos de construcción."
+ },
+ {
+  "term": "Vista interior",
+  "def": "Un render de una estancia amueblada a la altura de los ojos, elaborado a partir de la planta y la memoria de acabados. Muestra la escala, la luz y los materiales que un plano no puede mostrar."
+ },
+ {
+  "term": "Vista aérea",
+  "def": "Un render aéreo de una promoción y su entorno visto desde arriba, elaborado a partir de datos de elevación, imágenes de satélite o fotos de dron. Muestra el conjunto, los accesos y el contexto en una sola imagen."
+ },
+ {
+  "term": "Fotomontaje",
+  "def": "Un edificio modelado insertado en una fotografía real del terreno, con cámara, perspectiva y luz ajustadas. El formato habitual para permisos de construcción, porque el entorno es demostrablemente real."
+ },
+ {
+  "term": "Animación arquitectónica",
+  "def": "Una película renderizada a partir de la escena 3D siguiendo un recorrido de cámara: un paseo o un vuelo por el proyecto, normalmente de cuarenta a noventa segundos, con personas, tráfico y música. También se denomina película de ambiente."
+ },
+ {
+  "term": "Cinemagraph",
+  "def": "Un render fijo con un único elemento en movimiento en bucle: fuego, agua, hojas, una cortina. Se reproduce como un vídeo corto y continuo y detiene el scroll en una red social a una fracción del coste de una película."
+ },
+ {
+  "term": "Recorrido virtual 360°",
+  "def": "Panoramas esféricos renderizados de varias estancias, enlazados para que el espectador pueda mirar a su alrededor y pasar de una estancia a otra en un navegador o con gafas de realidad virtual. En obra nueva sustituye al apartamento piloto."
+ },
+ {
+  "term": "Panorama (equirectangular)",
+  "def": "Una única imagen que cubre la esfera completa alrededor de un punto de vista, almacenada como un rectángulo 2:1. La materia prima de todo recorrido 360°; se renderiza a partir de la escena 3D o se toma con una cámara 360°."
+ },
+ {
+  "term": "Navegador de apartamentos",
+  "def": "Una órbita interactiva alrededor de un edificio renderizado en la que cada unidad es clicable: estado, precio, superficie y planta aparecen al tocar, con filtros por habitaciones, planta y orientación. Se usa en sitios web de proyectos para promociones de mayor tamaño."
+ },
+ {
+  "term": "Virtual staging",
+  "def": "Amueblado digital de la fotografía de una estancia vacía con la escala y la luz correctas, para que un anuncio muestre un hogar. Se declara como tal y se entrega junto con el original."
+ },
+ {
+  "term": "Planta 3D",
+  "def": "Una planta modelada en tres dimensiones y mostrada desde arriba en ángulo, con mobiliario, acabados y estancias codificadas por colores. Legible para compradores que no saben leer una planta en 2D."
+ },
+ {
+  "term": "Render en gris (clay render)",
+  "def": "Una previsualización de la escena sin materiales, con todo en un gris neutro, que se utiliza para aprobar ángulos de cámara, composición y luz antes de producir la imagen final. El primer punto de control de todo proyecto."
+ },
+ {
+  "term": "Styleframe",
+  "def": "Una única imagen fija terminada de una animación planificada, que muestra el ambiente, el color y el aspecto que tendrá la película, aprobada antes de renderizar la secuencia completa."
+ },
+ {
+  "term": "Storyboard",
+  "def": "La secuencia planificada de planos de una animación, dibujada o escrita: qué vistas, en qué orden, de qué duración, con qué movimiento de cámara. Se acuerda antes del renderizado, porque cambiarlo después implica renderizar de nuevo."
+ },
+ {
+  "term": "Memoria de acabados",
+  "def": "La lista de materiales y productos especificados para un edificio: suelos, fachadas, frentes de cocina, azulejos, carpinterías de ventana. La fuente de cada material de un render; sin ella, el estudio tiene que suponer."
+ },
+ {
+  "term": "BIM / IFC",
+  "def": "Building Information Modelling: un modelo 3D de un edificio que incorpora sus datos; IFC es el formato de intercambio abierto. Un modelo BIM del arquitecto es la mejor entrada posible para la visualización."
+ },
+ {
+  "term": "DWG",
+  "def": "El formato de dibujo nativo de AutoCAD y el formato de intercambio habitual para planos en 2D. Plantas, alzados y secciones en DWG permiten al estudio modelar al milímetro."
+ },
+ {
+  "term": "Ronda de correcciones",
+  "def": "Un conjunto reunido de solicitudes de cambio sobre una previsualización, atendido en una única versión actualizada. Los presupuestos indican cuántas rondas están incluidas; los cambios en la propia arquitectura tras la aprobación son un nuevo encargo."
+ },
+ {
+  "term": "Imagen principal (hero image)",
+  "def": "La vista que encabeza el folleto, el sitio web y el anuncio: la imagen elegida para vender el proyecto a primera vista. Normalmente un exterior a la hora que más favorece al edificio."
+ },
+ {
+  "term": "Exposé",
+  "def": "El documento de venta de una propiedad en Alemania y Austria: imágenes, planos, descripción, ubicación y precio, en PDF y en los portales. Los renders y las plantas 3D son su núcleo en obra nueva."
+ },
+ {
+  "term": "Baugesuch (solicitud de permiso de construcción)",
+  "def": "La solicitud suiza de permiso para un edificio, presentada al municipio y expuesta públicamente para alegaciones. Muchos municipios piden con ella una visualización del nuevo volumen en su entorno."
+ },
+ {
+  "term": "Venta sobre planos (preventa)",
+  "def": "Vender o alquilar apartamentos antes de que se construyan, a partir de planos y visualizaciones. La forma habitual de financiar las nuevas promociones residenciales en Suiza, Alemania y Austria."
+ }
+]

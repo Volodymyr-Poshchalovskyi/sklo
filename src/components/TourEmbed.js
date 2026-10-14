@@ -12,6 +12,11 @@ function subscribeToPointer(onChange) {
 }
 import Image from "next/image";
 import { mediaUrl } from "@/lib/media";
+import { pickL } from "@/lib/i18n";
+
+// Tour labels carry en/de only; Spanish is looked up from the English label.
+const ES_LABELS = { Interior: "Interior", Exterior: "Exterior" };
+const labelFor = (label, locale) => pickL(locale, label.en, label.de, label.es ?? ES_LABELS[label.en]);
 
 /**
  * Click-to-start embed for the Panotour 360° exports.
@@ -47,7 +52,6 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
 
   if (list.length === 0) return null;
 
-  const de = locale === "de";
   const tour = list[Math.min(activeIndex, list.length - 1)];
   // The list used to be one property shown twice, so the buttons could just
   // say Interior and Exterior. It now spans several properties, and a button
@@ -62,7 +66,7 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
   // list this embed sees is one item long, so it cannot tell on its own that
   // two of the windows are the same property seen inside and out.
   const switcherLabel = (item) => {
-    const part = de ? item.label.de : item.label.en;
+    const part = labelFor(item.label, locale);
     return titleCounts[item.title] > 1 ? `${item.title} · ${part}` : item.title;
   };
 
@@ -123,7 +127,7 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
             key={tour.id}
             ref={frameRef}
             src={mediaUrl(tour.entry)}
-            title={`${tour.title} — ${de ? tour.label.de : tour.label.en}`}
+            title={`${tour.title} — ${labelFor(tour.label, locale)}`}
             className="absolute inset-0 h-full w-full border-0"
             allow="gyroscope; accelerometer; magnetometer; xr-spatial-tracking; fullscreen"
             allowFullScreen
@@ -133,7 +137,7 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
             type="button"
             onClick={() => setStarted(true)}
             className="group absolute inset-0 h-full w-full cursor-pointer"
-            aria-label={de ? "360°-Tour starten" : "Start the 360° tour"}
+            aria-label={pickL(locale, "Start the 360° tour", "360°-Tour starten", "Iniciar el recorrido virtual 360°")}
           >
             <Image
               key={tour.id}
@@ -164,7 +168,7 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
                 >
                   {tour.title}
                   {(showPart || titleCounts[tour.title] > 1) && (
-                    <> · {de ? tour.label.de : tour.label.en}</>
+                    <> · {labelFor(tour.label, locale)}</>
                   )}
                 </span>
                 {/* Inline colour, not `text-white/70`: the light theme remaps
@@ -176,12 +180,18 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
                   style={{ color: "rgba(255,255,255,0.8)", textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
                 >
                   {tour.kind === "navigator"
-                    ? de
-                      ? `${tour.scenes} Ansichten · Klicken zum Starten`
-                      : `${tour.scenes} views · ${coarsePointer ? "Tap" : "Click"} to start`
-                    : de
-                      ? `${tour.scenes} Szenen · Klicken zum Starten`
-                      : `${tour.scenes} scenes · ${coarsePointer ? "Tap" : "Click"} to start`}
+                    ? pickL(
+                        locale,
+                        `${tour.scenes} views · ${coarsePointer ? "Tap" : "Click"} to start`,
+                        `${tour.scenes} Ansichten · Klicken zum Starten`,
+                        `${tour.scenes} vistas · ${coarsePointer ? "Toque" : "Haga clic"} para iniciar`
+                      )
+                    : pickL(
+                        locale,
+                        `${tour.scenes} scenes · ${coarsePointer ? "Tap" : "Click"} to start`,
+                        `${tour.scenes} Szenen · Klicken zum Starten`,
+                        `${tour.scenes} escenas · ${coarsePointer ? "Toque" : "Haga clic"} para iniciar`
+                      )}
                 </span>
               </span>
             </span>
@@ -192,12 +202,18 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <span className="text-[11px] font-mono uppercase tracking-widest text-text-muted">
           {tour.kind === "navigator"
-            ? de
-              ? "Ziehen zum Drehen · Wohnung antippen für Details"
-              : "Drag to orbit · Tap a unit for details"
-            : de
-              ? "Ziehen zum Umsehen · Grundriss zum Standortwechsel"
-              : "Drag to look around · Floorplan to move"}
+            ? pickL(
+                locale,
+                "Drag to orbit · Tap a unit for details",
+                "Ziehen zum Drehen · Wohnung antippen für Details",
+                "Arrastre para girar · Toque una vivienda para ver los detalles"
+              )
+            : pickL(
+                locale,
+                "Drag to look around · Floorplan to move",
+                "Ziehen zum Umsehen · Grundriss zum Standortwechsel",
+                "Arrastre para mirar alrededor · Use el plano para desplazarse"
+              )}
         </span>
         <div className="flex items-center gap-4">
           {started && (
@@ -206,7 +222,7 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
               onClick={openFullscreen}
               className="text-[11px] font-mono uppercase tracking-widest text-accent hover:underline"
             >
-              {de ? "Vollbild" : "Fullscreen"}
+              {pickL(locale, "Fullscreen", "Vollbild", "Pantalla completa")}
             </button>
           )}
           <a
@@ -215,7 +231,7 @@ export default function TourEmbed({ tours, locale = "en", className = "", showPa
             rel="noopener noreferrer"
             className="text-[11px] font-mono uppercase tracking-widest text-accent hover:underline"
           >
-            {de ? "In neuem Tab öffnen" : "Open in a new tab"}
+            {pickL(locale, "Open in a new tab", "In neuem Tab öffnen", "Abrir en una pestaña nueva")}
           </a>
         </div>
       </div>

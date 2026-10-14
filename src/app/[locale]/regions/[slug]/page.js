@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { regions, regionBySlug, localizeRegion } from "@/data/regions";
 import { projects, localizeProject } from "@/data/projects";
 import { servicesData, localizeService, serviceTitleFor } from "@/data/servicesData";
@@ -10,7 +9,6 @@ import { pageMetadata, breadcrumbJsonLd, faqJsonLd, humanizeTitle, absoluteUrl, 
 import Title3D from "@/components/Title3D";
 import ProjectCard from "@/components/ProjectCard";
 
-const translations = { en, de };
 
 // "{in}" → "in der Schweiz" / "in Deutschland": the German preposition and
 // article depend on the country, so they live in the region data.

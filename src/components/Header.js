@@ -116,6 +116,7 @@ function LangDropdown({ locale, theme, inline = false, onPick }) {
   const langs = [
     { code: "en", label: "English" },
     { code: "de", label: "Deutsch" },
+    { code: "es", label: "Español" },
   ];
 
   const current = langs.find((l) => l.code === locale) ?? langs[0];

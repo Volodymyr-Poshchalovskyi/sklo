@@ -100,7 +100,7 @@ export function validateInquiry(body) {
 
   const data = {
     kind,
-    locale: body.locale === "de" ? "de" : "en",
+    locale: body.locale === "de" || body.locale === "es" ? body.locale : "en",
     name,
     email,
     company: clip(body.company, 160),

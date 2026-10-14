@@ -1,12 +1,10 @@
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { projects, localizeProject } from "@/data/projects";
 import { serviceTitleFor } from "@/data/servicesData";
 import { pageMetadata, breadcrumbJsonLd, humanizeTitle, JsonLd } from "@/lib/seo";
 import ProjectCard from "@/components/ProjectCard";
 import Title3D from "@/components/Title3D";
 
-const translations = { en, de };
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;

@@ -1,0 +1,303 @@
+{
+ "exterior-visualization": {
+  "cardDesc": "Su edificio, fotorrealista.",
+  "title": "VISUALIZACIÓN EXTERIOR",
+  "desc": "Muestre su proyecto desde su mejor ángulo con renders exteriores fotorrealistas. Imprescindibles para campañas de marketing exitosas y para atraer inversores.",
+  "pipeline": [
+   {
+    "title": "Briefing y modelado base",
+    "desc": "Estudiamos sus planos de arquitectura, modelos BIM y fotografías de referencia para construir la geometría 3D precisa del edificio."
+   },
+   {
+    "title": "Composición de cámara",
+    "desc": "Seleccionamos los ángulos más impactantes, las direcciones de luz y los encuadres del paisaje para su aprobación."
+   },
+   {
+    "title": "Texturizado y entorno",
+    "desc": "Aplicamos texturas de alta fidelidad, shaders de madera, piedra y hormigón, y construimos la vegetación, las calles y los cielos del entorno."
+   },
+   {
+    "title": "Render final y posproducción",
+    "desc": "Ejecutamos el render en bruto en alta resolución y realizamos la corrección de color, los refuerzos atmosféricos y el trabajo de detalle en Photoshop."
+   }
+  ]
+ },
+ "interior-visualization": {
+  "cardDesc": "Interiores con atmósfera.",
+  "title": "VISUALIZACIÓN INTERIOR",
+  "desc": "Muestre los interiores con atmósfera y detalle. Visualizaciones que ayudan a los clientes potenciales a imaginar la vida dentro de su proyecto incluso en fase de obra.",
+  "pipeline": [
+   {
+    "title": "Concepto y blockout",
+    "desc": "Comprendemos la intención del diseño, la distribución del mobiliario y los moodboards, y colocamos geometrías provisionales en bruto."
+   },
+   {
+    "title": "Mobiliario a medida e iluminación",
+    "desc": "Afinamos los modelos de mobiliario a medida, colocamos la decoración y configuramos la luz natural de día o una iluminación nocturna acogedora."
+   },
+   {
+    "title": "Shading y textiles",
+    "desc": "Desarrollamos texturas textiles realistas, arrugas de cuero, reflejos de vidrio y vetas de madera."
+   },
+   {
+    "title": "Toques finales",
+    "desc": "Render final con un alto número de muestras, corrección de color y microdetalles como polvo, vapor y destellos de lente."
+   }
+  ]
+ },
+ "animation-mood-film": {
+  "cardDesc": "Una película cinematográfica de su proyecto.",
+  "title": "ANIMACIÓN | PELÍCULA DE AMBIENTE",
+  "desc": "Una historia cinematográfica que capta la atención y despierta entusiasmo por su proyecto. Viva el ambiente, la historia y la vida de su proyecto a través de la pantalla.",
+  "pipeline": [
+   {
+    "title": "Storyboard y styleframe",
+    "desc": "Redactamos la lista de planos, maquetamos los fotogramas clave y definimos la dirección del diseño de sonido y el ritmo del vídeo."
+   },
+   {
+    "title": "Animatic y trayectoria de cámara",
+    "desc": "Preparamos pruebas de render en baja resolución con movimientos básicos de cámara para ajustar el ritmo a los compases de la música."
+   },
+   {
+    "title": "Render por secuencias",
+    "desc": "Render de fotograma completo en servidores de una granja de render para producir miles de imágenes de alta fidelidad."
+   },
+   {
+    "title": "VFX y edición de sonido",
+    "desc": "Composición de los clips, con sonidos ambientales cinematográficos, locuciones profesionales y transiciones."
+   }
+  ]
+ },
+ "bird-eye-visualization": {
+  "cardDesc": "Su proyecto en todo su contexto.",
+  "title": "VISUALIZACIÓN AÉREA",
+  "desc": "Destaque la escala del proyecto y su entorno. La mejor manera de mostrar el contexto, la infraestructura y el atractivo global en un solo render.",
+  "pipeline": [
+   {
+    "title": "Briefing SIG y dron",
+    "desc": "Procesamos mapas topográficos, datos satelitales o fotografías de dron para reconstruir la topografía del barrio."
+   },
+   {
+    "title": "Integración del contexto",
+    "desc": "Modelado 3D del entorno inmediato y del edificio o conjunto principal."
+   },
+   {
+    "title": "Atmósfera y escala",
+    "desc": "Añadimos miles de árboles, coches, caminos, una bruma atmosférica realista y la orientación solar."
+   },
+   {
+    "title": "Render y matte painting",
+    "desc": "Fusionamos el render 3D con fondos reales de dron mediante herramientas avanzadas de composición en Photoshop."
+   }
+  ]
+ },
+ "360-virtual-tour": {
+  "cardDesc": "Recorra el espacio antes de que exista.",
+  "title": "RECORRIDO VIRTUAL 360° | VR",
+  "desc": "Permita que sus clientes entren antes de que sea real. Recorridos inmersivos que aumentan el interés y la confianza, y convierten el interés en compra.",
+  "pipeline": [
+   {
+    "title": "Plano de hotspots",
+    "desc": "Trazamos los puntos de transición (nodos) dentro de la distribución arquitectónica para diseñar el recorrido a pie."
+   },
+   {
+    "title": "Render equirectangular",
+    "desc": "Renderizamos imágenes esféricas completas de 360° (panorámicas) para cada nodo de cámara definido."
+   },
+   {
+    "title": "Interfaz web VR",
+    "desc": "Integramos los nodos en un motor interactivo basado en navegador, enlazando hotspots, radares de mapa y ventanas emergentes."
+   },
+   {
+    "title": "Pruebas y alojamiento",
+    "desc": "Optimizamos los archivos de código para una carga ultrarrápida en móvil, escritorio y visores de VR."
+   }
+  ]
+ },
+ "cinemagraph-live-shot": {
+  "cardDesc": "Imágenes fijas con un bucle sutil.",
+  "title": "CINEMAGRAPH | LIVE SHOT",
+  "desc": "Dé vida a las imágenes estáticas para lograr un efecto WOW que no pasa desapercibido. Animaciones sutiles que captan la atención al instante.",
+  "pipeline": [
+   {
+    "title": "Render base",
+    "desc": "Generamos un render base en alta resolución del espacio exterior o interior."
+   },
+   {
+    "title": "Capas cinematográficas",
+    "desc": "Aislamos los elementos del bucle, como agua que fluye, humo a la deriva, sombras en movimiento o las llamas de una chimenea."
+   },
+   {
+    "title": "Suavizado del bucle",
+    "desc": "Enmascaramos y aplicamos chroma a los elementos aislados para crear animaciones en bucle infinito sin cortes."
+   },
+   {
+    "title": "Compresión y entrega",
+    "desc": "Exportamos en archivos MP4/WebM optimizados para redes sociales y cabeceras de sitios web."
+   }
+  ]
+ },
+ "product-visualization": {
+  "cardDesc": "Imágenes de producto con calidad de estudio.",
+  "title": "VISUALIZACIÓN DE PRODUCTO",
+  "desc": "Visuales de alta gama para mobiliario, electrodomésticos, materiales o cualquier objeto relacionado con la vivienda y la arquitectura. Perfectos para catálogos, marketing y presentaciones.",
+  "pipeline": [
+   {
+    "title": "Importación y limpieza de CAD",
+    "desc": "Importamos archivos CAD/STEP de fabricación y reconstruimos superficies de subdivisión limpias para el texturizado."
+   },
+   {
+    "title": "Iluminación de estudio",
+    "desc": "Colocamos softboxes, paneles de rebote y luces de acento para resaltar los contornos y los materiales del producto."
+   },
+   {
+    "title": "Shaders de microtextura",
+    "desc": "Desarrollamos metal cepillado, costuras de tela, plásticos y logotipos de marca con un realismo extremo."
+   },
+   {
+    "title": "Ángulos y PNG transparente",
+    "desc": "Renderizamos ángulos principales limpios, detalles en primer plano e imágenes con canal alfa transparente para catálogos."
+   }
+  ]
+ },
+ "virtual-staging": {
+  "cardDesc": "Habitaciones vacías, amuebladas digitalmente.",
+  "title": "VIRTUAL STAGING",
+  "desc": "Convierta los espacios vacíos en hogares de ensueño. Un amueblado virtual realista y económico que aumenta el potencial de venta. Ideal para vender sin los costes de un amueblado físico.",
+  "pipeline": [
+   {
+    "title": "Ajuste a la foto",
+    "desc": "Alineamos la perspectiva de la cámara virtual y los ajustes de lente con la fotografía de la habitación vacía."
+   },
+   {
+    "title": "Selección de estilo",
+    "desc": "Elegimos la dirección de diseño (moderno, industrial, escandinavo) y disponemos mobiliario 3D de alta gama."
+   },
+   {
+    "title": "Ajuste de sombras y luz",
+    "desc": "Reconstruimos la luz solar de las ventanas y las fuentes de luz artificial para proyectar sombras realistas de los objetos 3D."
+   },
+   {
+    "title": "Fusión sin costuras",
+    "desc": "Componemos el render con la foto original, igualando el grano, el ruido y los detalles nítidos."
+   }
+  ]
+ },
+ "graphic-design": {
+  "cardDesc": "Folletos, banners e identidad de marca.",
+  "title": "DISEÑO GRÁFICO",
+  "desc": "Desde vallas publicitarias, cerramientos de obra y folletos hasta logotipos, esquemas y más: todo lo que necesita para reforzar la identidad de marca, impresionar y atraer clientes.",
+  "pipeline": [
+   {
+    "title": "Auditoría de marca y briefing",
+    "desc": "Analizamos su público objetivo, las directrices existentes, las limitaciones de formato y los objetivos de diseño."
+   },
+   {
+    "title": "Maquetación de wireframes",
+    "desc": "Esbozamos las jerarquías tipográficas, las alineaciones de la retícula y las paletas de color."
+   },
+   {
+    "title": "Preparación de vectores e imágenes",
+    "desc": "Dibujamos ilustraciones a medida, iconos vectoriales y planos, y retocamos las imágenes de los renders."
+   },
+   {
+    "title": "Pruebas de impresión y digital",
+    "desc": "Exportamos archivos vectoriales listos para producción (CMYK para impresión, RGB para web) con marcas de corte."
+   }
+  ]
+ },
+ "3d-floorplans": {
+  "cardDesc": "Distribuciones que cualquiera entiende de un vistazo.",
+  "title": "PLANTAS 3D",
+  "desc": "Haga que las distribuciones sean fáciles de entender. Una herramienta visual clara que acelera la decisión de los compradores.",
+  "pipeline": [
+   {
+    "title": "Importación de CAD",
+    "desc": "Importamos los planos de planta 2D de AutoCAD y extruimos la geometría de los muros interiores y exteriores."
+   },
+   {
+    "title": "Asignación de materiales",
+    "desc": "Configuramos los materiales de los suelos (parqué, baldosas, moqueta), los colores de pintura de las paredes y el deck del balcón."
+   },
+   {
+    "title": "Distribución del mobiliario",
+    "desc": "Amueblamos la planta con muebles de cocina, sanitarios y mobiliario de salón a medida y en proporción."
+   },
+   {
+    "title": "Render aéreo",
+    "desc": "Renderizamos desde una cámara cenital isométrica u ortográfica con suaves sombras de oclusión ambiental."
+   }
+  ]
+ },
+ "fly-around-navigator": {
+  "cardDesc": "Una órbita que el comprador dirige por sí mismo.",
+  "title": "VUELO 360° | NAVEGADOR",
+  "desc": "Una órbita de todo el edificio que el comprador puede dirigir. Deténgase donde quiera, abra un apartamento y consulte su planta, su superficie y su distribución: la vista y el plano en un solo lugar.",
+  "pipeline": [
+   {
+    "title": "Órbita y cobertura",
+    "desc": "Definimos la trayectoria de la cámara alrededor del edificio, su altura y las paradas en las que puede detenerse el comprador."
+   },
+   {
+    "title": "Render del anillo",
+    "desc": "Renderizamos toda la órbita como una única secuencia continua, de modo que cada ángulo coincida en luz y estación del año."
+   },
+   {
+    "title": "Asignación de unidades",
+    "desc": "Vinculamos cada apartamento con su posición en cada fotograma, con su planta, superficie y número de habitaciones asociados."
+   },
+   {
+    "title": "Desarrollo interactivo",
+    "desc": "Montamos el navegador para que se desplace con fluidez y lo entregamos listo para integrar."
+   }
+  ]
+ },
+ "web-development": {
+  "cardDesc": "Sitios web construidos en torno a sus renders.",
+  "title": "DESARROLLO WEB",
+  "desc": "Sus renders son el argumento de venta. Construimos el sitio web que los pone primero ante el comprador, carga en un segundo en el móvil y convierte la visita en una consulta: sitios de proyecto, landing pages y portfolios, diseñados en torno a las imágenes, no a partir de una plantilla.",
+  "intro": "Una promoción de doce apartamentos sin sitio web se vende con un PDF y un número de teléfono. La misma promoción con un sitio de proyecto vende desde el primer render en pantalla: el comprador recorre el recorrido virtual 360° desde casa, elige una unidad en la tabla y solicita el dossier. El sitio existe para que eso ocurra, y para que se lo encuentre cuando alguien busque el proyecto.",
+  "problems": [
+   {
+    "problem": "Los renders viven en un PDF",
+    "title": "Un sitio de ventas que arranca con las imágenes",
+    "desc": "Los compradores deciden en los tres primeros segundos. Ponemos el render principal a pantalla completa, mantenemos el texto breve y colocamos la tabla de unidades, las plantas y el recorrido virtual 360° un scroll más abajo, de modo que el sitio haga lo que el folleto no puede: permitir recorrer el apartamento antes de que exista."
+   },
+   {
+    "problem": "El sitio web del estudio no está a la altura de su trabajo",
+    "title": "Un portfolio construido en torno a los proyectos",
+    "desc": "Un estudio de arquitectura se juzga por sus edificios, no por sus párrafos. Diseñamos una cuadrícula de proyectos en la que cada imagen conserva su propia proporción, los filtros reflejan cómo buscan realmente los clientes (vivienda, edificios públicos, reformas) y la página del estudio resume en dos frases lo que representa la práctica."
+   },
+   {
+    "problem": "Nadie encuentra el proyecto en internet",
+    "title": "Rápido, localizable y que llena su bandeja de entrada",
+    "desc": "Un sitio que carga en un segundo en el móvil, lleva el nombre del proyecto en cada título, está en alemán e inglés desde el primer día y tiene un formulario que escribe directamente al equipo de ventas, con la planta que el comprador estaba viendo adjunta. Las analíticas le muestran qué unidad recibe más clics."
+   }
+  ],
+  "deliverables": [
+   "Diseño y desarrollo del sitio completo, en escritorio y móvil",
+   "Sus renders, recorridos y películas integrados y optimizados",
+   "Tabla de unidades, plantas y formulario de consulta conectados a su bandeja de entrada",
+   "Alemán e inglés, dominio, alojamiento y analíticas configurados",
+   "Entrega que usted mismo puede editar, o la mantenemos nosotros por usted"
+  ],
+  "pipeline": [
+   {
+    "title": "Alcance y estructura",
+    "desc": "Empezamos por la pregunta que el sitio debe responder (vender una promoción, presentar un estudio, captar consultas) y organizamos las páginas en torno a ella en forma de wireframe: qué ve primero el visitante, dónde están las unidades, dónde se sitúa el formulario. Usted aprueba la estructura antes de diseñar un solo píxel."
+   },
+   {
+    "title": "Diseño y maquetación",
+    "desc": "El diseño se construye desde sus imágenes hacia fuera: la tipografía, el color y el espaciado se eligen para que los renders sostengan la página, no compitan con ella. Verá la página de inicio completa y una página interior como pantallas reales, en escritorio y en móvil, y iteramos hasta que sea exactamente lo que busca."
+   },
+   {
+    "title": "Desarrollo e integración",
+    "desc": "Lo construimos para que cargue rápido en cualquier móvil, integramos los recorridos 360°, los bucles de vídeo y las galerías a plena calidad, conectamos la tabla de unidades con su hoja de cálculo o CRM y enlazamos el formulario de consulta directamente con su bandeja de ventas, con archivos adjuntos."
+   },
+   {
+    "title": "Lanzamiento y entrega",
+    "desc": "Conectamos su dominio, configuramos las analíticas y la indexación en buscadores en ambos idiomas, probamos cada unidad y cada formulario en dispositivos reales y le entregamos un sitio que puede actualizar usted mismo, o seguimos manteniéndolo mientras el proyecto se vende."
+   }
+  ]
+ }
+}

@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { knowledge, knowledgeBySlug, localizeKnowledge } from "@/data/knowledge";
 import { serviceTitleFor } from "@/data/servicesData";
 import { localizeServiceContent, formatPrice } from "@/data/serviceContent";
 import { pageMetadata, breadcrumbJsonLd, faqJsonLd, humanizeTitle, absoluteUrl, JsonLd, SITE_URL } from "@/lib/seo";
 import Title3D from "@/components/Title3D";
 
-const translations = { en, de };
 
 export async function generateStaticParams() {
   return knowledge.map((a) => ({ slug: a.slug }));

@@ -2,6 +2,9 @@
 // sentences. Rendered at /glossary with DefinedTermSet structured data —
 // the format AI assistants and Google's "what is" results read best.
 
+import { mergeOverlay } from "@/lib/i18n";
+import esOverlay from "@/data/es/glossary.json";
+
 export const glossary = [
   { slug: "rendering", term: "Rendering", termDe: "Rendering", def: "The computed image of a 3D scene: geometry, materials and light turned into a photograph-like picture. In architecture it usually means a single photorealistic still of a building or room.", defDe: "Das berechnete Bild einer 3D-Szene: Geometrie, Materialien und Licht werden zu einem fotoähnlichen Bild. In der Architektur meist ein einzelnes fotorealistisches Standbild eines Gebäudes oder Raums." },
   { slug: "architectural-visualisation", term: "Architectural visualisation", termDe: "Architekturvisualisierung", def: "The discipline of producing images, films and interactive tours of unbuilt architecture from plans or a 3D model. Renderings, animations, 360° tours and 3D floor plans are its deliverables.", defDe: "Die Disziplin, aus Plänen oder einem 3D-Modell Bilder, Filme und interaktive Rundgänge ungebauter Architektur herzustellen. Renderings, Animationen, 360°-Rundgänge und 3D-Grundrisse sind ihre Lieferobjekte." },
@@ -29,7 +32,11 @@ export const glossary = [
   { slug: "off-plan", term: "Off-plan sale", termDe: "Verkauf ab Plan", def: "Selling or letting apartments before they are built, from plans and visualisations. The normal way new residential developments are financed in Switzerland, Germany and Austria.", defDe: "Verkauf oder Vermietung von Wohnungen vor dem Bau, ab Plänen und Visualisierungen. Der normale Weg, wie neue Wohnüberbauungen in der Schweiz, Deutschland und Österreich finanziert werden." },
 ];
 
-export function localizeGlossary(locale) {
+function localizeGlossaryBase(locale) {
   const de = locale === "de";
   return glossary.map((g) => ({ slug: g.slug, term: de ? g.termDe : g.term, def: de ? g.defDe : g.def }));
+}
+
+export function localizeGlossary(locale) {
+  return locale === "es" ? localizeGlossaryBase("en").map((g, i) => mergeOverlay(g, esOverlay[i])) : localizeGlossaryBase(locale);
 }

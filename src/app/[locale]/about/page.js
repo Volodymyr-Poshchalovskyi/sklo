@@ -1,11 +1,9 @@
 import Title3D from "@/components/Title3D";
 import TeamCard from "@/components/TeamCard";
 import StatsStrip from "@/components/StatsStrip";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { pageMetadata } from "@/lib/seo";
 
-const translations = { en, de };
 
 export async function generateMetadata({ params }) {
   const { locale } = await params;

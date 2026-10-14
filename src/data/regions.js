@@ -14,6 +14,9 @@
 // Prices on these pages are the CHF sample figures from serviceContent.js;
 // the region says which currency a quote comes in, nothing is converted.
 
+import { mergeOverlay } from "@/lib/i18n";
+import esOverlay from "@/data/es/regions.json";
+
 export const regions = [
   {
     slug: "europe",
@@ -171,7 +174,7 @@ export function regionBySlug(slug) {
   return regions.find((r) => r.slug === slug);
 }
 
-export function localizeRegion(region, locale) {
+function localizeRegionBase(region, locale) {
   const de = locale === "de";
   const pick = (en, deVal) => (de && deVal ? deVal : en);
   return {
@@ -183,4 +186,8 @@ export function localizeRegion(region, locale) {
     specifics: region.specifics.map((s) => ({ title: pick(s.title, s.titleDe), desc: pick(s.desc, s.descDe) })),
     faq: region.faq.map((f) => ({ q: pick(f.q, f.qDe), a: pick(f.a, f.aDe) })),
   };
+}
+
+export function localizeRegion(region, locale) {
+  return locale === "es" ? mergeOverlay(localizeRegionBase(region, "en"), esOverlay[region.slug]) : localizeRegionBase(region, locale);
 }

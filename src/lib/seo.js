@@ -12,7 +12,7 @@ import { CONTACT_EMAIL, PHONE, SOCIALS, FOUNDED, TEAM_SIZE, AREA_SERVED } from "
 // canonical on vercel.app would tell Google the preview is the original.
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://sklo.studio").replace(/\/$/, "");
 export const SITE_NAME = "SKLO Studio";
-export const LOCALES = ["en", "de"];
+export const LOCALES = ["en", "de", "es"];
 // 1200×630 cards rendered from the studio's own work (scratch template kept
 // out of the repo; regenerate with any 1200×630 screenshot pipeline).
 export const DEFAULT_OG_IMAGE = { url: "/assets/og/home.jpg", width: 1200, height: 630, alt: "SKLO Studio" };
@@ -56,6 +56,7 @@ export function languageAlternates(path = "") {
     // the same for all three, so a single `de` rather than three regional
     // tags that would point at identical pages.
     de: `/de${path}`,
+    es: `/es${path}`,
     "x-default": `/en${path}`,
   };
 }
@@ -79,7 +80,7 @@ export function pageMetadata({ locale, path = "", title, description, image, typ
       description,
       url,
       siteName: SITE_NAME,
-      locale: locale === "de" ? "de_CH" : "en_GB",
+      locale: locale === "de" ? "de_CH" : locale === "es" ? "es_ES" : "en_GB",
       type,
       images: [og],
     },
@@ -114,7 +115,7 @@ export function organizationJsonLd(locale) {
       contactType: "sales",
       email: CONTACT_EMAIL,
       telephone: PHONE.replace(/\s+/g, ""),
-      availableLanguage: ["en", "de"],
+      availableLanguage: ["en", "de", "es"],
     },
     areaServed: AREA_SERVED.map((name) => ({ "@type": "Place", name })),
     knowsAbout: [
@@ -132,6 +133,8 @@ export function organizationJsonLd(locale) {
     description:
       locale === "de"
         ? "3D-Visualisierungsstudio für Architektur, Immobilien und Produkte: Renderings, Animationen, 360°-Rundgänge und Projektwebsites."
+        : locale === "es"
+        ? "Estudio de visualización 3D para arquitectura, inmobiliaria y producto: renders, animaciones, recorridos virtuales 360° y sitios web de proyecto."
         : "3D visualisation studio for architecture, real estate and products: renderings, animations, 360° tours and project websites.",
   };
 }
@@ -143,7 +146,7 @@ export function websiteJsonLd(locale) {
     "@id": `${SITE_URL}/#website`,
     url: absoluteUrl(`/${locale}`),
     name: SITE_NAME,
-    inLanguage: locale === "de" ? "de" : "en",
+    inLanguage: locale === "de" ? "de" : locale === "es" ? "es" : "en",
     publisher: { "@id": ORG_ID },
   };
 }

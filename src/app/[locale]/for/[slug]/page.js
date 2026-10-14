@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { audiences, audienceBySlug, localizeAudience } from "@/data/audiences";
 import { projects, localizeProject } from "@/data/projects";
 import { servicesData, localizeService, serviceTitleFor } from "@/data/servicesData";
@@ -11,7 +10,6 @@ import Title3D from "@/components/Title3D";
 import ProjectCard from "@/components/ProjectCard";
 import { AREA_SERVED } from "@/data/studio";
 
-const translations = { en, de };
 
 export async function generateStaticParams() {
   return audiences.map((a) => ({ slug: a.slug }));

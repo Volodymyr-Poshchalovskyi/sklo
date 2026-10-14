@@ -12,10 +12,9 @@ import {
   formatBytes,
   isAllowedFile,
 } from "@/lib/contact/validate";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
+import { pickL } from "@/lib/i18n";
 
-const translations = { en, de };
 
 // Only the ids and the date offsets are structural; every label is looked up
 // in the locale file, so the service list has to be built per render rather
@@ -160,9 +159,10 @@ function Chip({ label, selected, onClick }) {
 const CONSULT_COPY = {
   en: "I don't know — I'd like a consultation",
   de: "Ich weiss es nicht — ich möchte eine Beratung",
+  es: "No lo sé — me gustaría recibir asesoramiento",
 };
 
-function ConsultToggle({ selected, onClick, isDe }) {
+function ConsultToggle({ selected, onClick, locale }) {
   return (
     <TiltCard
       onClick={onClick}
@@ -188,7 +188,7 @@ function ConsultToggle({ selected, onClick, isDe }) {
           </svg>
         )}
       </span>
-      {isDe ? CONSULT_COPY.de : CONSULT_COPY.en}
+      {CONSULT_COPY[locale] ?? CONSULT_COPY.en}
     </TiltCard>
   );
 }
@@ -258,7 +258,7 @@ function formatDate(value, locale) {
   if (!value) return "—";
   const date = new Date(`${value}T00:00:00`);
   if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString(locale === "de" ? "de-CH" : "en-GB", {
+  return date.toLocaleDateString(locale === "de" ? "de-CH" : locale === "es" ? "es-ES" : "en-GB", {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -275,7 +275,7 @@ const stepVariants = {
 
 function ContactWizardInner({ locale }) {
   const searchParams = useSearchParams();
-  const isDe = locale === "de";
+  const L = (en, de, es) => pickL(locale, en, de, es);
   const t = translations[locale] ?? translations.en;
   const w = t.wizard;
   const SERVICE_OPTIONS = localizedServices(locale).map((s) => ({
@@ -388,17 +388,13 @@ function ContactWizardInner({ locale }) {
       };
       if (!isAllowedFile(file.name)) {
         entry.status = "error";
-        entry.error = isDe ? "Dateityp nicht unterstützt" : "File type not supported";
+        entry.error = L("File type not supported", "Dateityp nicht unterstützt", "Tipo de archivo no admitido");
       } else if (file.size > MAX_FILE_BYTES) {
         entry.status = "error";
-        entry.error = isDe
-          ? `Grösser als ${formatBytes(MAX_FILE_BYTES)}`
-          : `Larger than ${formatBytes(MAX_FILE_BYTES)}`;
+        entry.error = L(`Larger than ${formatBytes(MAX_FILE_BYTES)}`, `Grösser als ${formatBytes(MAX_FILE_BYTES)}`, `Supera los ${formatBytes(MAX_FILE_BYTES)}`);
       } else if (total + file.size > MAX_TOTAL_BYTES) {
         entry.status = "error";
-        entry.error = isDe
-          ? `Gesamtlimit ${formatBytes(MAX_TOTAL_BYTES)} überschritten`
-          : `Exceeds the ${formatBytes(MAX_TOTAL_BYTES)} total`;
+        entry.error = L(`Exceeds the ${formatBytes(MAX_TOTAL_BYTES)} total`, `Gesamtlimit ${formatBytes(MAX_TOTAL_BYTES)} überschritten`, `Supera el límite total de ${formatBytes(MAX_TOTAL_BYTES)}`);
       } else {
         total += file.size;
       }
@@ -421,7 +417,7 @@ function ContactWizardInner({ locale }) {
         .catch(() =>
           patchFile(entry.id, {
             status: "error",
-            error: isDe ? "Upload fehlgeschlagen" : "Upload failed",
+            error: L("Upload failed", "Upload fehlgeschlagen", "Error al subir el archivo"),
           })
         );
     }
@@ -532,7 +528,7 @@ function ContactWizardInner({ locale }) {
   ).map((s) => s.label);
   const budgetLabel =
     BUDGET_OPTIONS.find((b) => b.id === data.budget)?.label ||
-    (data.consult.budget ? (isDe ? "Beratung gewünscht" : "To be discussed") : "—");
+    (data.consult.budget ? (L("To be discussed", "Beratung gewünscht", "A tratar")) : "—");
   const materialsLabels = data.materials.map(
     (id) => MATERIAL_OPTIONS.find((m) => m.id === id)?.label
   );
@@ -540,10 +536,10 @@ function ContactWizardInner({ locale }) {
   // have to travel with the request — otherwise the studio sees a half-empty
   // form and cannot tell an unanswered question from a deliberate "not sure".
   const consultAreas = [
-    data.consult.services && (isDe ? "Leistungen" : "services"),
-    data.consult.scope && (isDe ? "Umfang" : "scope"),
-    data.consult.budget && (isDe ? "Budget" : "budget"),
-    data.consult.materials && (isDe ? "Material" : "materials"),
+    data.consult.services && (L("services", "Leistungen", "servicios")),
+    data.consult.scope && (L("scope", "Umfang", "alcance")),
+    data.consult.budget && (L("budget", "Budget", "presupuesto")),
+    data.consult.materials && (L("materials", "Material", "materiales")),
   ].filter(Boolean);
 
   // "1x / 2x" reads as a count of deliverables; "pcs." read like stock units.
@@ -597,7 +593,7 @@ function ContactWizardInner({ locale }) {
     projectName: data.projectName,
     message: data.additionalInfo,
     services: serviceLines,
-    budget: data.consult.budget ? (isDe ? "Beratung gewünscht" : "consultation requested") : budgetLabel,
+    budget: data.consult.budget ? (L("consultation requested", "Beratung gewünscht", "consulta solicitada")) : budgetLabel,
     startDate: data.startDate,
     endDate: data.endDate,
     materials: materialsLabels.map((m) => stripSoftHyphens(m || "")),
@@ -669,19 +665,17 @@ function ContactWizardInner({ locale }) {
           </svg>
         </motion.div>
         <h2 className="text-2xl md:text-3xl font-bold uppercase tracking-wider text-white">
-          {isDe ? "Vielen Dank!" : "Request Sent"}
+          {L("Request Sent", "Vielen Dank!", "Solicitud enviada")}
         </h2>
         <p className="text-sm text-white/60 max-w-md">
-          {isDe
-            ? "Ihre Anfrage ist bei uns eingegangen. Wir melden uns in Kürze bei Ihnen."
-            : "Your request has been sent. We'll be in touch with you shortly."}
+          {L("Your request has been sent. We'll be in touch with you shortly.", "Ihre Anfrage ist bei uns eingegangen. Wir melden uns in Kürze bei Ihnen.", "Hemos recibido su solicitud. Nos pondremos en contacto con usted en breve.")}
         </p>
         <button
           type="button"
           onClick={resetForm}
           className="mt-2 text-xs font-bold uppercase tracking-widest px-8 py-4 border border-white/20 rounded-full hover:border-white/50 transition-colors cursor-pointer text-white"
         >
-          {isDe ? "Neue Anfrage" : "Send Another Request"}
+          {L("Send Another Request", "Neue Anfrage", "Enviar otra solicitud")}
         </button>
       </motion.div>
     );
@@ -752,12 +746,10 @@ function ContactWizardInner({ locale }) {
             {STEPS[step] === "type" && (
               <div className="flex flex-col h-full" style={{ gap: "clamp(0.4rem, min(1.8svh, 2.34vw), 1.5rem)" }}>
                 <StepHeading className="font-bold uppercase tracking-wider">
-                  {isDe ? "Welche Leistungen brauchen Sie?" : "Which services do you need?"}
+                  {L("Which services do you need?", "Welche Leistungen brauchen Sie?", "¿Qué servicios necesita?")}
                 </StepHeading>
                 <p className="text-xs text-white/50 -mt-2">
-                  {isDe
-                    ? "Sie können mehrere Leistungen auswählen."
-                    : "You can select multiple services."}
+                  {L("You can select multiple services.", "Sie können mehrere Leistungen auswählen.", "Puede seleccionar varios servicios.")}
                 </p>
                 {/* Three columns at every width. One column meant twelve rows
                     and two meant six, neither of which a phone fits; the
@@ -777,7 +769,7 @@ function ContactWizardInner({ locale }) {
                   ))}
                 </div>
                 <ConsultToggle
-                  isDe={isDe}
+                  locale={locale}
                   selected={data.consult.services}
                   onClick={() => toggleConsult("services")}
                 />
@@ -787,12 +779,10 @@ function ContactWizardInner({ locale }) {
             {STEPS[step] === "scope" && (
               <div className="flex flex-col" style={{ gap: "clamp(0.5rem, min(2.2svh, 2.86vw), 1.5rem)" }}>
                 <StepHeading className="font-bold uppercase tracking-wider">
-                  {isDe ? "Wie gross ist der Umfang?" : "What's the scope?"}
+                  {L("What's the scope?", "Wie gross ist der Umfang?", "¿Cuál es el alcance?")}
                 </StepHeading>
                 <p className="text-xs text-white/50 -mt-3">
-                  {isDe
-                    ? "Eine grobe Schätzung reicht — mindestens eine Position wird benötigt."
-                    : "A rough estimate is fine — at least one item is needed."}
+                  {L("A rough estimate is fine — at least one item is needed.", "Eine grobe Schätzung reicht — mindestens eine Position wird benötigt.", "Basta con una estimación aproximada; se necesita al menos un elemento.")}
                 </p>
                 {selectedServices.length > 0 ? (
                   <div
@@ -818,9 +808,7 @@ function ContactWizardInner({ locale }) {
                   </div>
                 ) : (
                   <p className="text-xs text-white/40">
-                    {isDe
-                      ? "Keine Leistung ausgewählt — wir klären den Umfang im Gespräch."
-                      : "No service selected — we'll work out the scope together."}
+                    {L("No service selected — we'll work out the scope together.", "Keine Leistung ausgewählt — wir klären den Umfang im Gespräch.", "Ningún servicio seleccionado: definiremos el alcance juntos.")}
                   </p>
                 )}
                 {siteTypeService && (
@@ -847,13 +835,11 @@ function ContactWizardInner({ locale }) {
                 )}
                 {servicesMissingQuantity.length > 0 && !data.consult.scope && (
                   <p className="text-xs text-accent">
-                    {isDe
-                      ? `Bitte Anzahl angeben für: ${missingQuantityLabels.join(", ")}`
-                      : `Add a quantity for: ${missingQuantityLabels.join(", ")}`}
+                    {L(`Add a quantity for: ${missingQuantityLabels.join(", ")}`, `Bitte Anzahl angeben für: ${missingQuantityLabels.join(", ")}`, `Indique la cantidad para: ${missingQuantityLabels.join(", ")}`)}
                   </p>
                 )}
                 <ConsultToggle
-                  isDe={isDe}
+                  locale={locale}
                   selected={data.consult.scope}
                   onClick={() => toggleConsult("scope")}
                 />
@@ -866,7 +852,7 @@ function ContactWizardInner({ locale }) {
                   {/* "Optional" used to be its own line under the heading; as a
                       suffix it costs no row at all. */}
                   <StepHeading className="font-bold uppercase tracking-wider">
-                    {isDe ? "Budgetrahmen (optional)" : "Budget Range (optional)"}
+                    {L("Budget Range (optional)", "Budgetrahmen (optional)", "Rango de presupuesto (opcional)")}
                   </StepHeading>
                   <div className="flex flex-wrap" style={{ gap: "clamp(0.25rem, min(0.8svh, 1.04vw), 0.75rem)" }}>
                     {BUDGET_OPTIONS.map((b) => (
@@ -881,7 +867,7 @@ function ContactWizardInner({ locale }) {
                     ))}
                   </div>
                   <ConsultToggle
-                    isDe={isDe}
+                    locale={locale}
                     selected={data.consult.budget}
                     onClick={() => toggleConsult("budget")}
                   />
@@ -892,7 +878,7 @@ function ContactWizardInner({ locale }) {
                     style={{ fontSize: "clamp(0.6875rem, min(1.8svh, 2.34vw), 0.875rem)" }}
                     className="font-bold uppercase tracking-wider text-white/80 leading-tight"
                   >
-                    {isDe ? "Zeitplan" : "Timeline"}
+                    {L("Timeline", "Zeitplan", "Plazo")}
                   </h3>
                   <div className="flex flex-wrap" style={{ gap: "clamp(0.25rem, min(0.8svh, 1.04vw), 0.75rem)" }}>
                     {TIMELINE_PRESETS.map((p) => (
@@ -909,14 +895,14 @@ function ContactWizardInner({ locale }) {
                     style={{ gap: "clamp(0.4rem, min(1.5svh, 1.95vw), 1.5rem)" }}
                   >
                     <TextField
-                      label={isDe ? "Startdatum" : "Preferred Start Date"}
+                      label={L("Preferred Start Date", "Startdatum", "Fecha de inicio preferida")}
                       required
                       type="date"
                       value={data.startDate}
                       onChange={(e) => set({ startDate: e.target.value, timelinePreset: "" })}
                     />
                     <TextField
-                      label={isDe ? "Enddatum" : "Preferred End Date"}
+                      label={L("Preferred End Date", "Enddatum", "Fecha de finalización preferida")}
                       type="date"
                       value={data.endDate}
                       onChange={(e) => set({ endDate: e.target.value, timelinePreset: "" })}
@@ -924,9 +910,7 @@ function ContactWizardInner({ locale }) {
                   </div>
                   {!data.startDate && (
                     <p className="text-xs text-accent">
-                      {isDe
-                        ? "Bitte ein Startdatum wählen — oder einen der Zeitrahmen oben."
-                        : "Pick a start date — or one of the timeframes above."}
+                      {L("Pick a start date — or one of the timeframes above.", "Bitte ein Startdatum wählen — oder einen der Zeitrahmen oben.", "Elija una fecha de inicio o uno de los plazos indicados arriba.")}
                     </p>
                   )}
                 </div>
@@ -936,7 +920,7 @@ function ContactWizardInner({ locale }) {
             {STEPS[step] === "materials" && (
               <div className="flex flex-col" style={{ gap: "clamp(0.25rem, min(1.3svh, 1.69vw), 1.5rem)" }}>
                 <StepHeading className="font-bold uppercase tracking-wider">
-                  {isDe ? "Welches Material haben Sie bereits?" : "What materials do you already have?"}
+                  {L("What materials do you already have?", "Welches Material haben Sie bereits?", "¿Qué material tiene ya?")}
                 </StepHeading>
                 <div className="flex flex-wrap" style={{ gap: "clamp(0.25rem, min(0.8svh, 1.04vw), 0.75rem)" }}>
                   {MATERIAL_OPTIONS.map((m) => (
@@ -949,13 +933,13 @@ function ContactWizardInner({ locale }) {
                   ))}
                 </div>
                 <ConsultToggle
-                  isDe={isDe}
+                  locale={locale}
                   selected={data.consult.materials}
                   onClick={() => toggleConsult("materials")}
                 />
                 <label className="flex flex-col" style={{ gap: "clamp(0.125rem, min(0.6svh, 0.78vw), 0.5rem)" }}>
                   <span className="text-xs text-white/60 uppercase tracking-widest font-semibold">
-                    {isDe ? "Zusätzliche Informationen" : "Additional Information"}
+                    {L("Additional Information", "Zusätzliche Informationen", "Información adicional")}
                   </span>
                   {/* The rows attribute is a floor, not a height: the box is
                       sized in svh so a short screen gets two lines and a tall
@@ -966,7 +950,7 @@ function ContactWizardInner({ locale }) {
                     onChange={(e) => set({ additionalInfo: e.target.value })}
                     style={{ height: "clamp(2.25rem, min(5.5svh, 7.15vw), 6rem)", paddingTop: "clamp(0.4rem, min(1.2svh, 1.56vw), 0.75rem)" }}
                     className="wizard-field w-full bg-white/[0.03] border border-white/10 focus:border-white/40 focus:bg-white/[0.06] rounded-lg px-3.5 text-sm text-white placeholder-white/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent transition-all duration-300 resize-none"
-                    placeholder={isDe ? "Erzählen Sie uns mehr..." : "Tell us more about the project..."}
+                    placeholder={L("Tell us more about the project...", "Erzählen Sie uns mehr...", "Cuéntenos más sobre el proyecto...")}
                   />
                 </label>
 
@@ -984,7 +968,7 @@ function ContactWizardInner({ locale }) {
                         if (e.dataTransfer.files?.length) addFiles(e.dataTransfer.files);
                       }}
                     >
-                      {isDe ? "Dateien anhängen (PDF, Bilder, CAD)" : "Attach Files (PDF, Images, CAD)"}
+                      {L("Attach Files (PDF, Images, CAD)", "Dateien anhängen (PDF, Bilder, CAD)", "Adjuntar archivos (PDF, imágenes, CAD)")}
                       <input
                         type="file"
                         multiple
@@ -1029,7 +1013,7 @@ function ContactWizardInner({ locale }) {
                           <button
                             type="button"
                             onClick={() => removeFile(f.id)}
-                            aria-label={isDe ? "Entfernen" : "Remove"}
+                            aria-label={L("Remove", "Entfernen", "Eliminar")}
                             className="relative text-white/40 hover:text-white cursor-pointer"
                           >
                             ×
@@ -1043,12 +1027,16 @@ function ContactWizardInner({ locale }) {
                     className="text-white/50"
                   >
                     {uploadsEnabled === false
-                      ? isDe
-                        ? "Der Datei-Upload ist derzeit nicht verfügbar. Schicken Sie uns Unterlagen gern per E-Mail nach."
-                        : "File upload is currently unavailable. Feel free to email us your documents afterwards."
-                      : isDe
-                      ? `Bis zu ${MAX_FILES} Dateien, je max. ${formatBytes(MAX_FILE_BYTES)}. Die Dateien werden sofort hochgeladen und uns mit Ihrer Anfrage zugestellt.`
-                      : `Up to ${MAX_FILES} files, ${formatBytes(MAX_FILE_BYTES)} each. Files upload right away and reach us together with your request.`}
+                      ? L(
+                          "File upload is currently unavailable. Feel free to email us your documents afterwards.",
+                          "Der Datei-Upload ist derzeit nicht verfügbar. Schicken Sie uns Unterlagen gern per E-Mail nach.",
+                          "La subida de archivos no está disponible en este momento. Puede enviarnos sus documentos después por correo electrónico."
+                        )
+                      : L(
+                          `Up to ${MAX_FILES} files, ${formatBytes(MAX_FILE_BYTES)} each. Files upload right away and reach us together with your request.`,
+                          `Bis zu ${MAX_FILES} Dateien, je max. ${formatBytes(MAX_FILE_BYTES)}. Die Dateien werden sofort hochgeladen und uns mit Ihrer Anfrage zugestellt.`,
+                          `Hasta ${MAX_FILES} archivos, máx. ${formatBytes(MAX_FILE_BYTES)} cada uno. Los archivos se suben de inmediato y nos llegan junto con su solicitud.`
+                        )}
                   </p>
                 </div>
               </div>
@@ -1057,14 +1045,14 @@ function ContactWizardInner({ locale }) {
             {STEPS[step] === "details" && (
               <div className="flex flex-col" style={{ gap: "clamp(0.4rem, min(1.8svh, 2.34vw), 2rem)" }}>
                 <StepHeading className="font-bold uppercase tracking-wider">
-                  {isDe ? "Ihre Kontaktdaten" : "Your Details"}
+                  {L("Your Details", "Ihre Kontaktdaten", "Sus datos de contacto")}
                 </StepHeading>
                 <div
                   className="grid grid-cols-2"
                   style={{ gap: "clamp(0.4rem, min(1.6svh, 2.08vw), 1.5rem)" }}
                 >
                   <TextField
-                    label={isDe ? "Name" : "Name"}
+                    label={L("Name", "Name", "Nombre")}
                     required
                     type="text"
                     autoComplete="name"
@@ -1072,7 +1060,7 @@ function ContactWizardInner({ locale }) {
                     onChange={(e) => set({ name: e.target.value })}
                   />
                   <TextField
-                    label={isDe ? "Firmenname" : "Company Name"}
+                    label={L("Company Name", "Firmenname", "Nombre de la empresa")}
                     required
                     type="text"
                     autoComplete="organization"
@@ -1080,7 +1068,7 @@ function ContactWizardInner({ locale }) {
                     onChange={(e) => set({ company: e.target.value })}
                   />
                   <TextField
-                    label={isDe ? "E-Mail-Adresse" : "E-mail Address"}
+                    label={L("E-mail Address", "E-Mail-Adresse", "Correo electrónico")}
                     required
                     type="email"
                     autoComplete="email"
@@ -1090,7 +1078,7 @@ function ContactWizardInner({ locale }) {
                     onChange={(e) => set({ email: e.target.value })}
                   />
                   <TextField
-                    label={isDe ? "Telefon" : "Phone"}
+                    label={L("Phone", "Telefon", "Teléfono")}
                     type="tel"
                     autoComplete="tel"
                     inputMode="tel"
@@ -1101,7 +1089,7 @@ function ContactWizardInner({ locale }) {
                   />
                   <div className="col-span-2">
                     <TextField
-                      label={isDe ? "Projektname" : "Project Name"}
+                      label={L("Project Name", "Projektname", "Nombre del proyecto")}
                       required
                       type="text"
                       value={data.projectName}
@@ -1121,7 +1109,7 @@ function ContactWizardInner({ locale }) {
                   className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] text-white/60"
                 >
                   <span className="text-[10px] font-bold uppercase tracking-widest text-accent">
-                    {isDe ? "Angeforderte Leistungen" : "Requested Products"}
+                    {L("Requested Products", "Angeforderte Leistungen", "Servicios solicitados")}
                   </span>
                   <span>
                     {selectedServices.map((s) => s.label).join(", ") || "—"} · {budgetLabel} ·{" "}
@@ -1130,15 +1118,13 @@ function ContactWizardInner({ locale }) {
                   {serviceLines.length > 0 && <span>{serviceLines.join(" · ")}</span>}
                   {consultAreas.length > 0 && (
                     <span className="text-accent">
-                      {isDe
-                        ? `Beratung gewünscht zu: ${consultAreas.join(", ")}`
-                        : `Consultation requested for: ${consultAreas.join(", ")}`}
+                      {L(`Consultation requested for: ${consultAreas.join(", ")}`, `Beratung gewünscht zu: ${consultAreas.join(", ")}`, `Consulta solicitada sobre: ${consultAreas.join(", ")}`)}
                     </span>
                   )}
                   {materialsLabels.length > 0 && <span>{materialsLabels.join(", ")}</span>}
                   {data.files.length > 0 && (
                     <span>
-                      {isDe ? "Dateien: " : "Files: "}
+                      {L("Files: ", "Dateien: ", "Archivos: ")}
                       {data.files.map((f) => f.name).join(", ")}
                     </span>
                   )}
@@ -1161,7 +1147,7 @@ function ContactWizardInner({ locale }) {
           style={{ paddingTop: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)", paddingBottom: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)" }}
           className="text-xs font-bold uppercase tracking-widest text-white/60 hover:text-white transition-colors disabled:opacity-0 disabled:pointer-events-none cursor-pointer px-5 -ml-5 rounded-full"
         >
-          {isDe ? "Zurück" : "Back"}
+          {L("Back", "Zurück", "Atrás")}
         </button>
 
         {step < STEPS.length - 1 ? (
@@ -1172,7 +1158,7 @@ function ContactWizardInner({ locale }) {
             style={{ paddingTop: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)", paddingBottom: "clamp(0.6rem, min(1.8svh, 2.34vw), 1rem)" }}
             className="bg-white text-black text-xs font-bold uppercase tracking-widest px-10 rounded-full hover:bg-white/80 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
           >
-            {isDe ? "Weiter" : "Next"}
+            {L("Next", "Weiter", "Siguiente")}
           </button>
         ) : (
           <button
@@ -1183,20 +1169,18 @@ function ContactWizardInner({ locale }) {
             className="bg-white text-black text-xs font-bold uppercase tracking-widest px-10 rounded-full hover:bg-white/80 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
           >
             {sendState === "sending"
-              ? isDe ? "Wird gesendet…" : "Sending…"
+              ? L("Sending…", "Wird gesendet…", "Enviando…")
               : filesUploading
-              ? isDe ? "Dateien laden…" : "Uploading files…"
-              : isDe ? "Senden" : "Send Request"}
+              ? L("Uploading files…", "Dateien laden…", "Subiendo archivos…")
+              : L("Send Request", "Senden", "Enviar solicitud")}
           </button>
         )}
       </div>
       {sendState === "error" && (
         <p role="alert" className="text-xs text-accent mt-3 text-right">
-          {isDe
-            ? "Senden fehlgeschlagen. Bitte erneut versuchen oder "
-            : "Sending failed. Please try again or "}
+          {L("Sending failed. Please try again or ", "Senden fehlgeschlagen. Bitte erneut versuchen oder ", "No se pudo enviar. Inténtelo de nuevo o ")}
           <a href={buildMailto()} className="underline">
-            {isDe ? "per E-Mail schicken" : "send it by email"}
+            {L("send it by email", "per E-Mail schicken", "enviarla por correo electrónico")}
           </a>
           .
         </p>

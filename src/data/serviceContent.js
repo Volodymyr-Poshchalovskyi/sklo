@@ -19,6 +19,9 @@
 // web-development keeps intro/problems/deliverables in servicesData.js and
 // only takes investment + faq from here.
 
+import { mergeOverlay } from "@/lib/i18n";
+import esOverlay from "@/data/es/serviceContent.json";
+
 export const PRICE_CURRENCY = "CHF";
 
 export const serviceContent = {
@@ -268,7 +271,7 @@ export const serviceContent = {
 
 // Flattens the De siblings to the requested language, same rule as
 // localizeService: anything without a German string falls back to English.
-export function localizeServiceContent(slug, locale) {
+function localizeServiceContentBase(slug, locale) {
   const c = serviceContent[slug];
   if (!c) return {};
   const de = locale === "de";
@@ -301,4 +304,8 @@ export function localizeServiceContent(slug, locale) {
 // Swiss number formatting for prices: CHF 4'900.
 export function formatPrice(amount, currency = PRICE_CURRENCY) {
   return `${currency} ${amount.toLocaleString("de-CH").replace(/’|’|'/g, "'")}`;
+}
+
+export function localizeServiceContent(slug, locale) {
+  return locale === "es" ? mergeOverlay(localizeServiceContentBase(slug, "en"), esOverlay[slug]) : localizeServiceContentBase(slug, locale);
 }

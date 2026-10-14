@@ -1,0 +1,114 @@
+{
+ "groups": [
+  {
+   "title": "Modelo 3D",
+   "lead": "El modelo del proyecto en cualquiera de estos formatos:",
+   "items": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   "note": "¿No tiene modelo 3D? Lo construimos a partir de los planos: lleva algo más de tiempo y se presupuesta una sola vez."
+  },
+  {
+   "title": "Planos arquitectónicos",
+   "lead": "El conjunto más reciente disponible, en PDF o DWG:",
+   "items": [
+    "Plantas",
+    "Alzados",
+    "Secciones",
+    "Plano de situación / master plan",
+    "Plano de cubierta",
+    "Planos de cocina",
+    "Planos eléctricos (para la posición de la iluminación)"
+   ],
+   "note": "Las cotas de los planos importan más que el formato del archivo: un PDF acotado vale más que un DWG sin escala."
+  },
+  {
+   "title": "Materiales y acabados",
+   "lead": "Todo lo que exista sobre las superficies, en interior y exterior:",
+   "items": [
+    "Materiales exteriores (fachada, cubierta, balcones)",
+    "Acabados interiores",
+    "Suelos",
+    "Paredes y techos",
+    "Ventanas y puertas",
+    "Mobiliario y equipamiento",
+    "Colores y códigos RAL",
+    "Referencias de producto y enlaces"
+   ],
+   "note": "Muestras de materiales, enlaces de proveedores o fotos de acabados similares sirven por igual. Una memoria de acabados (Baubeschrieb) cubre la mayor parte de esto en un solo documento."
+  },
+  {
+   "title": "Briefing y referencias",
+   "lead": "Qué sensación deben transmitir las imágenes:",
+   "items": [
+    "Imágenes de referencia que le gusten",
+    "Ambiente y atmósfera",
+    "Hora del día y estación del año",
+    "Estilo de interiorismo preferido",
+    "Ángulos de cámara deseados"
+   ],
+   "note": "Cuantas más referencias visuales, más cerca queda la primera previsualización. Tres o cuatro imágenes dicen más que una página de texto."
+  },
+  {
+   "title": "Material de marketing",
+   "lead": "Si las imágenes se integrarán en material de marca:",
+   "items": [
+    "Logotipo",
+    "Tipografías",
+    "Colores de marca",
+    "Folletos o maquetaciones existentes"
+   ],
+   "note": "Opcional. Necesario cuando diseñamos para usted el folleto, los banners web o el sitio web del proyecto."
+  },
+  {
+   "title": "Entrega final",
+   "lead": "Lo que necesita al final:",
+   "items": [
+    "Número de imágenes",
+    "Resolución",
+    "Formato, horizontal o vertical",
+    "Formato de archivo",
+    "Uso: impresión, web, redes sociales"
+   ],
+   "note": "¿Aún no lo tiene claro? Entregamos por defecto tamaños para impresión y web, y recortes para redes sociales bajo petición."
+  }
+ ],
+ "after": [
+  {
+   "title": "Revisamos lo que nos envía",
+   "desc": "En un día laborable le indicamos qué es suficiente y qué falta; normalmente nada que impida empezar."
+  },
+  {
+   "title": "Presupuesto y calendario cerrados",
+   "desc": "Alcance, precio y fecha de entrega por escrito, con los puntos de control de las previsualizaciones señalados."
+  },
+  {
+   "title": "Previsualizaciones en gris",
+   "desc": "Ángulos de cámara y composición para su aprobación antes de definir cualquier material o luz."
+  },
+  {
+   "title": "Previsualizaciones en color y después las finales",
+   "desc": "Dos rondas de correcciones sobre la previsualización en color y, a continuación, las imágenes finales en resolución completa."
+  }
+ ],
+ "faq": [
+  {
+   "q": "¿Y si solo tenemos un boceto?",
+   "a": "Envíelo. En un proyecto en fase inicial trabajamos a partir de un boceto y un plano de situación, construimos un modelo volumétrico y lo afinamos a medida que se concretan los planos; el primer estudio de cámara suele ayudar en las decisiones de diseño."
+  },
+  {
+   "q": "¿Cómo enviamos archivos grandes?",
+   "a": "A través del formulario de contacto, que admite hasta 10 archivos de 200 MB cada uno, o mediante cualquier enlace de transferencia: WeTransfer, Dropbox, una unidad compartida. Los modelos y planos permanecen en nuestro almacenamiento de proyecto y se eliminan bajo petición tras la entrega."
+  },
+  {
+   "q": "¿Firman un acuerdo de confidencialidad (NDA)?",
+   "a": "Sí, el suyo o el nuestro, antes de enviar cualquier archivo. Los proyectos bajo NDA nunca se muestran en nuestro portafolio y nunca se nombran."
+  }
+ ]
+}

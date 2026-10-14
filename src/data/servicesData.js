@@ -8,6 +8,9 @@
 // `localizedServices()` below, which hand back a plain flat service whose
 // `title`, `desc` and `pipeline[].title|desc` are already in the right
 // language — everything downstream keeps working with flat fields.
+import { mergeOverlay } from "@/lib/i18n";
+import esOverlay from "@/data/es/services.json";
+
 export const servicesData = [
   {
     id: 0,
@@ -350,7 +353,7 @@ export const servicesData = [
 // object: `title`, `desc` and each `pipeline[].title|desc` are plain strings, so
 // every consumer keeps reading the same field names it always did. Anything
 // without a German string falls back to the English one.
-export function localizeService(service, locale) {
+function localizeServiceBase(service, locale) {
   if (!service || locale !== "de") return service;
   return {
     ...service,
@@ -393,5 +396,10 @@ export function localizedServices(locale) {
 export function serviceTitleFor(slug, locale, fallback) {
   const service = servicesData.find((s) => s.slug === slug);
   if (locale === "de" && service?.titleDe) return service.titleDe;
+  if (locale === "es" && esOverlay[slug]?.title) return esOverlay[slug].title;
   return fallback ?? service?.title ?? "";
+}
+
+export function localizeService(service, locale) {
+  return locale === "es" && service ? mergeOverlay(service, esOverlay[service.slug]) : localizeServiceBase(service, locale);
 }

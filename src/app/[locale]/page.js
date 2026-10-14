@@ -3,15 +3,14 @@ import HeroSection from "@/components/HeroSection";
 import WhoWeAre from "@/components/WhoWeAre";
 import FAQ from "@/components/FAQ";
 import { use } from "react";
-import en from "@/locales/en.json";
-import de from "@/locales/de.json";
+import { translations } from "@/locales";
 import { faqJsonLd, JsonLd, absoluteUrl, SITE_URL } from "@/lib/seo";
 import { videoSrc, videoPoster } from "@/lib/media";
 import HomeLinks from "@/components/HomeLinks";
 import { audiences, localizeAudience } from "@/data/audiences";
 import { regions, localizeRegion } from "@/data/regions";
+import { pickL } from "@/lib/i18n";
 
-const translations = { en, de };
 
 export default function Home({ params }) {
   const { locale } = use(params);
@@ -24,7 +23,7 @@ export default function Home({ params }) {
         data={{
           "@context": "https://schema.org",
           "@type": "VideoObject",
-          name: locale === "de" ? "SKLO Studio — Showreel Architekturvisualisierung" : "SKLO Studio — architectural visualisation showreel",
+          name: pickL(locale, "SKLO Studio — architectural visualisation showreel", "SKLO Studio — Showreel Architekturvisualisierung", "SKLO Studio — showreel de visualización arquitectónica"),
           description: t.hero.subtitle,
           contentUrl: videoSrc("/assets/home/hero_video.webm", "hd"),
           thumbnailUrl: videoPoster("/assets/home/hero_video.webm"),
