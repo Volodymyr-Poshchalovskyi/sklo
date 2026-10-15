@@ -1071,3 +1071,16 @@ details[open]::details-content {
 @media (prefers-reduced-motion: reduce) {
   details::details-content { transition: none; }
 }
+
+/* ---- Services bento (src/app/[locale]/services/page.js) ---------------- */
+@media (min-width: 1024px) {
+  .service-bento > .service-bento-tile { grid-area: var(--area); }
+}
+.service-bento-tile {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.02);
+  transition: border-color 300ms ease;
+}
+.service-bento-tile:hover { border-color: rgba(255, 255, 255, 0.4); }
+:root[data-theme="light"] .service-bento-tile { border-color: rgba(18, 18, 20, 0.1) !important; }
+:root[data-theme="light"] .service-bento-tile:hover { border-color: rgba(18, 18, 20, 0.4) !important; }
