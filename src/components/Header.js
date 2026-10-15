@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
-function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick, onFocus, onKeyDown, ariaExpanded }) {
+function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick, onFocus, onKeyDown, ariaExpanded, index = 0, entered = true }) {
   const lettersRef = useRef([]);
   const timeoutsRef = useRef([]);
 
@@ -54,6 +54,14 @@ function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick, o
         perspective: "600px",
         background: "transparent",
         color: isActive ? "#ffffff" : "rgba(255,255,255,0.6)",
+        // One-off entrance, staggered behind the capsule's own: an animation,
+        // not a transition, so the delay never lingers on later hovers.
+        animationName: entered ? "navItemIn" : "none",
+        animationDuration: "700ms",
+        animationTimingFunction: "cubic-bezier(.165, .84, .44, 1)",
+        animationFillMode: "both",
+        animationDelay: `${180 + index * 55}ms`,
+        opacity: entered ? undefined : 0,
       }}
     >
       {label.split("").map((char, i) => (
@@ -72,6 +80,10 @@ function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick, o
       ))}
 
       <style>{`
+        @keyframes navItemIn {
+          from { opacity: 0; transform: translateY(-6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
         @keyframes spinLetter {
           0%   { transform: rotateY(0deg);   opacity: 1; }
           50%  { transform: rotateY(180deg); opacity: 0.4; }
@@ -523,8 +535,8 @@ export default function Header({ t, locale, visible }) {
         // belongs to the page, so a hero button under the gap stays clickable.
         pointerEvents: "none",
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(-12px)",
-        transition: "opacity 0.7s ease, transform 0.7s ease",
+        transform: visible ? "translateY(0) scale(1)" : "translateY(-14px) scale(0.985)",
+        transition: "opacity 0.8s cubic-bezier(.165, .84, .44, 1), transform 0.8s cubic-bezier(.165, .84, .44, 1)",
       }}
     >
       <div
@@ -573,7 +585,7 @@ export default function Header({ t, locale, visible }) {
             a bar holding nothing but a logo and a hamburger. The links alone
             fit with room to spare. */}
         <div className="hidden md:flex items-center gap-2.5">
-          {navItems.map(({ key, label, href }) => {
+          {navItems.map(({ key, label, href }, navIndex) => {
             const hasMenu = key === "services" || key === "gallery" || key === "projects";
             const isActive = checkIsActive(href) || menu === key;
             return (
@@ -582,6 +594,8 @@ export default function Header({ t, locale, visible }) {
                 href={href}
                 label={label}
                 isActive={isActive}
+                index={navIndex}
+                entered={visible}
                 ariaExpanded={hasMenu ? menu === key : undefined}
                 onMouseEnter={hasMenu ? () => openMenu(key) : closeMenu}
                 onMouseLeave={hasMenu ? handleMouseLeave : undefined}

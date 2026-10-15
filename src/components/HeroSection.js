@@ -126,6 +126,9 @@ export default function HeroSection({ t, locale }) {
   const subRef = useRef(null);
   const btnsRef = useRef(null);
   const videoRef = useRef(null);
+  const forRef = useRef(null);
+  const mediaRef = useRef(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
     const videoEl = videoRef.current;
@@ -187,16 +190,41 @@ export default function HeroSection({ t, locale }) {
 
 
   // Heading + buttons fade-in
+  // Entrance, in one sequence (ease-out-expo, the motion-design skill's
+  // marketing-hero curve): the headline's words rise out of their own masks
+  // (in the markup below), then the FOR line, the description and the
+  // buttons follow.
   useEffect(() => {
     if (!ready) return;
-    const els = [headRef.current, subRef.current, btnsRef.current];
+    const els = [forRef.current, subRef.current, btnsRef.current];
     els.forEach((el, i) => {
       if (!el) return;
-      el.style.transition = `opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 150}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${i * 150}ms`;
+      const delay = 420 + i * 140;
+      el.style.transition = `opacity 1s cubic-bezier(.19,1,.22,1) ${delay}ms, transform 1s cubic-bezier(.19,1,.22,1) ${delay}ms`;
       el.style.opacity = "1";
       el.style.transform = "translateY(0)";
     });
   }, [ready]);
+
+  // Scroll: the film drifts down at a third of the scroll speed while the
+  // text lifts away and fades, so leaving the hero has depth. Listens to the
+  // app's one scroll broadcast (see ClientWrapper), writes transforms only.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const media = mediaRef.current;
+    const content = contentRef.current;
+    if (!media || !content) return;
+    const onScroll = (e) => {
+      const y = e.detail?.scrollY ?? window.scrollY;
+      const h = window.innerHeight;
+      if (y > h * 1.2) return;
+      media.style.transform = `translate3d(0, ${y * 0.33}px, 0)`;
+      content.style.transform = `translate3d(0, ${-y * 0.12}px, 0)`;
+      content.style.opacity = String(Math.max(0, 1 - y / (h * 0.75)));
+    };
+    window.addEventListener("sklo-scroll", onScroll);
+    return () => window.removeEventListener("sklo-scroll", onScroll);
+  }, []);
 
 
 
@@ -207,6 +235,9 @@ export default function HeroSection({ t, locale }) {
       {/* Autoplay is decided in an effect, not by the attribute: a reader who
           asked for reduced motion, or whose browser reports a metered
           connection, gets the first frame and nothing else. */}
+      {/* The film and its veils move together for the scroll parallax; the
+          film itself settles from a slight zoom once, on arrival. */}
+      <div ref={mediaRef} className="absolute inset-0 will-change-transform">
       <video
         ref={videoRef}
         loop
@@ -217,7 +248,7 @@ export default function HeroSection({ t, locale }) {
         // play, so the page has its largest element on screen within the
         // first second instead of after the loader lets the heading in.
         poster={videoPoster("/assets/home/hero_video.webm")}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="hero-film absolute inset-0 w-full h-full object-cover"
         style={{ pointerEvents: "none" }}
       >
         {/* One tier per connection; see src/lib/media.js. The VP9 webm is
@@ -226,8 +257,9 @@ export default function HeroSection({ t, locale }) {
       </video>
       <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/35 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+      </div>
 
-      <div className="relative z-10 w-full px-6 md:px-16 lg:px-28 xl:px-40 pt-24 pb-24">
+      <div ref={contentRef} className="relative z-10 w-full px-6 md:px-16 lg:px-28 xl:px-40 pt-24 pb-24">
         {/* The film is the point of the hero, so the text keeps to the
             edges: headline and buttons bottom-left, the descriptive sentence
             small in the bottom-right corner on desktop (under the headline
@@ -239,25 +271,39 @@ export default function HeroSection({ t, locale }) {
               below it — the service, the market, the deliverables. */}
           <p
             ref={headRef}
-            style={hidden}
             className="font-bold leading-[1.05] tracking-tight text-white mb-6 lg:col-span-2"
           >
             {/* `whitespace-nowrap` waits for `lg`: at the md size the headline
                 is 72px, which is 804px of unbreakable text in a 768px window —
                 the whole page scrolled sideways on a tablet. */}
             <span className="block text-4xl sm:text-6xl md:text-7xl lg:whitespace-nowrap">
-              {t?.hero?.headlineLead ?? "Visualization"}
-              {/* The second, lighter word is optional: German says the whole
-                  thing in one noun, and an empty span would leave a stray
-                  space in the middle of the headline. */}
-              {t?.hero?.headlineAccent ? (
-                <>
-                  {" "}
-                  <span className="text-white/90 font-bold">{t.hero.headlineAccent}</span>
-                </>
-              ) : null}
+              {/* Each word rises out of its own mask. The second, lighter
+                  word is optional: German says the whole thing in one noun. */}
+              {[
+                ...(t?.hero?.headlineLead ?? "Visualization").split(" ").map((w) => ({ w, accent: false })),
+                ...(t?.hero?.headlineAccent ? t.hero.headlineAccent.split(" ").map((w) => ({ w, accent: true })) : []),
+              ].map(({ w, accent }, i, all) => (
+                <span key={i}>
+                  <span className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em]">
+                    <span
+                      className={`inline-block ${accent ? "text-white/90" : ""}`}
+                      style={{
+                        transform: "translateY(110%)",
+                        animationName: ready ? "heroWordIn" : "none",
+                        animationDuration: "1.1s",
+                        animationTimingFunction: "cubic-bezier(.19,1,.22,1)",
+                        animationFillMode: "both",
+                        animationDelay: `${i * 90}ms`,
+                      }}
+                    >
+                      {w}
+                    </span>
+                  </span>
+                  {i < all.length - 1 ? " " : null}
+                </span>
+              ))}
             </span>
-            <span className="flex items-center gap-2 text-base sm:text-lg md:text-xl font-medium text-white/40 tracking-[0.2em] uppercase mt-4">
+            <span ref={forRef} style={hidden} className="flex items-center gap-2 text-base sm:text-lg md:text-xl font-medium text-white/40 tracking-[0.2em] uppercase mt-4">
               {t?.hero?.for ?? "for"}
               <RotatingWord words={t?.hero?.words?.length ? t.hero.words : ROTATING_WORDS} />
             </span>
@@ -336,6 +382,20 @@ export default function HeroSection({ t, locale }) {
         @keyframes blackShimmer {
           0%   { background-position: 200% 0; }
           100% { background-position: -200% 0; }
+        }
+        @keyframes heroWordIn {
+          from { transform: translateY(110%) rotate(2deg); }
+          to   { transform: translateY(0) rotate(0); }
+        }
+        @keyframes heroFilmSettle {
+          from { transform: scale(1.08); }
+          to   { transform: scale(1); }
+        }
+        .hero-film {
+          animation: heroFilmSettle 2.6s cubic-bezier(.19,1,.22,1) both;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-film { animation: none; }
         }
         @keyframes letterFlipOut {
           0%   { transform: translateY(0) rotateX(0deg);           opacity: 1; filter: blur(0); }
