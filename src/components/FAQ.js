@@ -102,7 +102,7 @@ export default function FAQ({ locale = "en", t }) {
       question: items.workflow?.q,
       answer: (
         <div className="flex flex-col gap-4">
-          <p>{items.workflow?.intro}</p>
+          {items.workflow?.intro && <p>{items.workflow.intro}</p>}
           <ol className="list-decimal pl-5 flex flex-col gap-4 mt-2">
             {(items.workflow?.steps ?? []).map((step) => (
               <li key={step.title}>
@@ -126,18 +126,12 @@ export default function FAQ({ locale = "en", t }) {
       question: items.partnership?.q,
       answer: (
         <div className="flex flex-col gap-4">
-          <p>{items.partnership?.p1}</p>
           <p>
-            {items.partnership?.p2?.before}
-            <strong className="text-white">{items.partnership?.p2?.strong}</strong>
-            {items.partnership?.p2?.after}
+            {items.partnership?.p1?.before}
+            <strong className="text-white">{items.partnership?.p1?.strong}</strong>
+            {items.partnership?.p1?.after}
           </p>
-          <p>
-            {items.partnership?.p3?.before}
-            <strong className="text-white">{items.partnership?.p3?.strong}</strong>
-            {items.partnership?.p3?.after}
-          </p>
-          <p>{items.partnership?.p4}</p>
+          {items.partnership?.p2 && <p>{items.partnership.p2}</p>}
         </div>
       ),
     },

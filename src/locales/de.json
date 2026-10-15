@@ -91,68 +91,61 @@
     "askCta": "Direkt nachfragen",
     "items": {
       "start": {
-        "q": "Was brauchen wir für den Projektstart?",
-        "p1": "Wir starten mit Ihrem 3D-Modell oder Ihren Plänen und einem Briefing zu Stimmung, Materialien und Zielen des Projekts. Über unser strukturiertes Onboarding bereitet unser Team Ihr Modell auf und übersetzt alle Vorgaben in hochwertige Visualisierungen.",
-        "linkText": "Zur vollständigen Liste der benötigten Unterlagen",
+        "q": "Was brauchen wir, um ein Projekt zu starten?",
+        "p1": "Wir beginnen mit Ihrem 3D-Modell oder Ihren Plänen, den Materialien und den Zielen des Projekts. Unser Team prüft alle Unterlagen und macht daraus hochwertige Visualisierungen.",
+        "linkText": "Die vollständige Liste der benötigten Unterlagen ansehen",
         "linkTail": "",
         "note": ""
       },
       "workflow": {
         "q": "Wie läuft ein Projekt ab?",
-        "intro": "Jedes Projekt durchläuft die folgenden Etappen:",
+        "intro": "",
         "steps": [
           {
-            "title": "Briefing",
-            "desc": "Sie stellen alle nötigen Unterlagen bereit. In dieser Phase erstellen wir auch eine Kostenschätzung und einen Terminplan."
+            "title": "Projektaufnahme",
+            "desc": "Sobald alle nötigen Unterlagen vorliegen, prüfen wir das Projekt, erstellen eine Kostenschätzung und bestätigen den Terminplan."
           },
           {
             "title": "Modellierung & Optimierung",
-            "desc": "Wir erstellen oder überarbeiten das 3D-Modell auf Basis aller Pläne und Referenzen — präzise und effizient für die weitere Visualisierung."
+            "desc": "Wir erstellen das 3D-Modell oder überarbeiten das bestehende anhand der Pläne und Referenzen."
           },
           {
-            "title": "Kameras & Atmosphäre",
-            "desc": "Wir liefern Graustufen-Renderings, um die besten Kamerawinkel und die Gesamtatmosphäre abzustimmen und freizugeben."
+            "title": "Kameras & Stimmung",
+            "desc": "Wir erstellen Grau-Renderings, um Kamerawinkel und Gesamtstimmung freizugeben."
           },
           {
-            "title": "Farbige Previews",
-            "desc": "Sie erhalten vollständig texturierte und farbige Renderings mit den gewählten Ansichten und der abgestimmten Atmosphäre. Wir sammeln Ihr Feedback und bereiten die Bilder für das finale Rendering vor."
+            "title": "Farbvorschauen",
+            "desc": "Sie erhalten texturierte, farbige Renderings der gewählten Ansichten. In dieser Phase sammeln wir Ihr Feedback und bereiten die Bilder für das finale Rendering vor."
           },
           {
             "title": "Finale Bilder",
-            "desc": "Sie erhalten die finalen Visualisierungen in hoher Auflösung — bereit für Präsentationen, Marketing und Publikationen."
+            "desc": "Sie erhalten hochauflösende Visualisierungen, bereit für Präsentationen, Marketing und Publikationen."
           }
         ]
       },
       "duration": {
         "q": "Wie lange dauert ein Projekt?",
         "paragraphs": [
-          "Der Zeitplan ist immer individuell und hängt von Komplexität, Zielen, Umfang, Qualität der Unterlagen, Reaktionszeiten und vielen weiteren Faktoren ab.",
-          "Kleinere Projekte dauern in der Regel rund 7 Arbeitstage, erste Entwürfe liefern wir meist schon in den ersten Tagen nach dem Start.",
-          "Uns ist bewusst, dass Termine oft knapp sind. Wir organisieren unser Team so, dass wir schnellstmöglich liefern — bei durchgehend transparenter Kommunikation und täglichen Updates.",
-          "Vor dem Start erhält jeder Kunde einen vorläufigen Terminplan mit allen wichtigen Etappen, an den wir uns während der gesamten Zusammenarbeit konsequent halten."
+          "Die Dauer hängt von Komplexität und Umfang des Projekts sowie von den gelieferten Unterlagen ab.",
+          "Kleinere Projekte dauern meist rund 7 Arbeitstage; erste Entwürfe liegen in den ersten Tagen nach dem Start vor.",
+          "Vor dem Start erstellen wir einen Terminplan mit allen wichtigen Etappen und halten ihn während des ganzen Projekts ein."
         ]
       },
       "pricing": {
-        "q": "Wie setzt sich der Preis zusammen?",
+        "q": "Wie wird der Preis berechnet?",
         "paragraphs": [
-          "Unsere Preise richten sich nach Projektart (Aussen- oder Innenvisualisierung, Animation, 360°-Tour usw.), Zielsetzung, Umfang und Terminen. Wir kalkulieren flexibel und erstellen vor Projektbeginn für jedes Vorhaben ein individuelles Angebot.",
-          "Zusätzlich haben wir ein klares Partnerschafts-Rabattprogramm für Neu- und Bestandskunden — ausgelegt auf eine langfristige, beidseitig lohnende Zusammenarbeit."
+          "Da jedes Projekt einzigartig ist, erstellen wir eine individuelle Offerte – abhängig von der Art der Visualisierung, dem Umfang, den Unterlagen und den Terminen.",
+          "Nach Prüfung Ihrer Unterlagen erhalten Sie ein Angebot mit Fixpreis und Terminplan."
         ]
       },
       "partnership": {
-        "q": "Gibt es Partnerprogramme?",
-        "p1": "Ja, wir haben ein laufendes System aus Rabatten, Angeboten und Boni für Neu- und Bestandskunden.",
-        "p2": {
-          "before": "Jeder Neukunde erhält ",
-          "strong": "30 % Rabatt",
-          "after": " — so lernen Sie unsere Leistungen und unseren Ablauf kennen, ohne beim ersten Projekt zu viel zu investieren."
-        },
-        "p3": {
-          "before": "Für die weitere Zusammenarbeit haben wir ein einfaches, transparentes Empfehlungsprogramm: Wenn Sie uns an Kollegen, Freunde oder Partner weiterempfehlen und daraus ein Projekt entsteht, erhalten Sie beide ",
+        "q": "Gibt es ein Partnerprogramm?",
+        "p1": {
+          "before": "Ja. Wir haben ein einfaches Empfehlungsprogramm: Wenn Sie uns weiterempfehlen und daraus ein neues Projekt entsteht, erhalten Sie und die empfohlene Person je ",
           "strong": "15 % Rabatt",
-          "after": " auf das nächste Projekt. Es gibt keine Obergrenze — Sie können das Partnerprogramm so oft nutzen, wie Sie möchten."
+          "after": " auf das nächste Projekt. Ohne Limit – so oft Sie möchten."
         },
-        "p4": "Zusätzlich erhält jeder Kunde nach Projektabschluss exklusive Gratis-Boni — Material, mit dem Sie Ihr Projekt noch wirkungsvoller präsentieren."
+        "p2": "Nach jedem Projekt senden wir Ihnen zudem einige kostenlose Bonusmaterialien, mit denen Sie die Ergebnisse noch wirkungsvoller präsentieren."
       }
     },
     "bandTitle": "Noch etwas offen?",

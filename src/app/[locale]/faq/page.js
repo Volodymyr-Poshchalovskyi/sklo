@@ -24,7 +24,7 @@ function generalFaq(items = {}) {
     items.workflow && { q: items.workflow.q, a: join([items.workflow.intro, ...(items.workflow.steps ?? []).map((s) => `${s.title}: ${s.desc}`)]) },
     items.duration && { q: items.duration.q, a: join(items.duration.paragraphs ?? []) },
     items.pricing && { q: items.pricing.q, a: join(items.pricing.paragraphs ?? []) },
-    items.partnership && { q: items.partnership.q, a: join([items.partnership.p1, items.partnership.p2, items.partnership.p3, items.partnership.p4]) },
+    items.partnership && { q: items.partnership.q, a: join([items.partnership.p1, items.partnership.p2].map((p) => (typeof p === "object" && p ? `${p.before ?? ""}${p.strong ?? ""}${p.after ?? ""}` : p))) },
   ].filter((f) => f && f.q && f.a);
 }
 

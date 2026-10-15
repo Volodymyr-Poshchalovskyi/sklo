@@ -91,68 +91,61 @@
     "askCta": "Pregúntenos directamente",
     "items": {
       "start": {
-        "q": "¿Qué necesitamos para iniciar un proyecto?",
-        "p1": "Comenzamos con su modelo 3D o sus planos y un briefing que describa el ambiente, los materiales y los objetivos de su proyecto. Con nuestro sistema de incorporación estructurado, nuestro equipo perfecciona su modelo y traduce toda la información en imágenes de primer nivel.",
-        "linkText": "Consulte la lista completa de lo que necesitamos",
+        "q": "¿Qué necesitamos para empezar un proyecto?",
+        "p1": "Empezamos con su modelo 3D o sus planos, los materiales y los objetivos del proyecto. Nuestro equipo revisa toda la información que nos envía y la convierte en visualizaciones de alta calidad.",
+        "linkText": "Ver la lista completa de materiales que necesitamos",
         "linkTail": "",
         "note": ""
       },
       "workflow": {
-        "q": "¿Cómo es el flujo de trabajo del proyecto?",
-        "intro": "Cada proyecto pasa por las siguientes etapas clave:",
+        "q": "¿Cómo es el proceso de un proyecto?",
+        "intro": "",
         "steps": [
           {
-            "title": "Etapa de descubrimiento",
-            "desc": "El cliente aporta todos los materiales necesarios. En esta etapa también preparamos un presupuesto y un calendario del proyecto."
+            "title": "Análisis inicial",
+            "desc": "Tras recibir todos los materiales necesarios, revisamos el proyecto, preparamos un presupuesto y confirmamos el calendario."
           },
           {
             "title": "Modelado y optimización",
-            "desc": "Creamos o perfeccionamos el modelo 3D a partir de todos los planos y referencias proporcionados, garantizando precisión y eficiencia para el proceso de visualización."
+            "desc": "Creamos el modelo 3D o ajustamos el existente a partir de los planos y referencias recibidos."
           },
           {
-            "title": "Configuración de cámaras y atmósfera",
-            "desc": "Producimos renders en gris para definir y aprobar los mejores ángulos de cámara y la atmósfera general de su proyecto."
+            "title": "Cámaras y ambiente",
+            "desc": "Preparamos renders en gris para aprobar los ángulos de cámara y el ambiente general."
           },
           {
             "title": "Previsualizaciones en color",
-            "desc": "El cliente recibe renders completamente texturizados y en color con las vistas y la atmósfera seleccionadas. Recogemos todos los comentarios en esta etapa y preparamos las imágenes para el render final."
+            "desc": "Recibe renders texturizados y en color de las vistas elegidas. En esta fase recogemos sus comentarios y preparamos las imágenes para el render final."
           },
           {
-            "title": "Imágenes finales de alta gama",
-            "desc": "El cliente recibe visualizaciones finales en alta resolución, listas para presentaciones, marketing y publicaciones."
+            "title": "Imágenes finales",
+            "desc": "Recibe visualizaciones en alta resolución, listas para presentaciones, marketing y publicaciones."
           }
         ]
       },
       "duration": {
         "q": "¿Cuánto dura un proyecto?",
         "paragraphs": [
-          "El plazo del proyecto siempre es individual y depende de su complejidad, objetivos, escala, calidad del material de partida, rapidez de respuesta y muchos otros factores.",
-          "Los proyectos pequeños suelen llevar unos 7 días laborables, aunque los primeros borradores normalmente se entregan en los primeros días tras el inicio.",
-          "Entendemos que los plazos suelen ser ajustados, por eso organizamos a nuestro equipo con eficiencia para entregar lo antes posible, manteniendo todo el proceso transparente y bien comunicado con actualizaciones diarias.",
-          "Antes de empezar, cada cliente recibe un calendario preliminar con todas las etapas clave y lo seguimos estrictamente durante toda la colaboración."
+          "El plazo depende de la complejidad y la escala del proyecto, y de los materiales que nos envíe.",
+          "Los proyectos más pequeños suelen tardar unos 7 días laborables; los primeros borradores están listos en los primeros días tras el inicio.",
+          "Antes de empezar preparamos un calendario con todas las etapas clave y lo cumplimos durante todo el proyecto."
         ]
       },
       "pricing": {
         "q": "¿Cómo se calcula el precio?",
         "paragraphs": [
-          "Nuestro precio depende del tipo de proyecto (visualizaciones exteriores o interiores, animaciones, recorridos virtuales 360°, etc.), sus objetivos, escala y plazos. Ofrecemos precios flexibles y preparamos una oferta personalizada para cada proyecto antes de empezar.",
-          "Además, contamos con un programa de descuentos por colaboración, claro y transparente, para clientes nuevos y recurrentes, pensado para crear una relación a largo plazo y beneficiosa para ambas partes."
+          "Como cada proyecto es único, preparamos un presupuesto individual según el tipo de visualización, el alcance del trabajo, los materiales y los plazos.",
+          "Tras revisar sus materiales, le enviamos una oferta a medida con precio fijo y calendario."
         ]
       },
       "partnership": {
-        "q": "¿Tienen programas de colaboración?",
-        "p1": "Sí, contamos con un sistema permanente de descuentos, ofertas y bonificaciones para clientes nuevos y recurrentes.",
-        "p2": {
-          "before": "Cada cliente nuevo recibe un ",
-          "strong": "30 % de descuento",
-          "after": " — así puede conocer nuestros servicios y nuestra forma de trabajar sin gastar demasiado en su primer proyecto."
-        },
-        "p3": {
-          "before": "Para futuras colaboraciones, ofrecemos un programa de recomendación sencillo y transparente: si recomienda nuestros servicios a colegas, amigos o socios y esto da lugar a un nuevo proyecto, ambos reciben un ",
+        "q": "¿Tienen algún programa de colaboración?",
+        "p1": {
+          "before": "Sí. Tenemos un programa de recomendación sencillo: si nos recomienda y eso da lugar a un nuevo proyecto, tanto usted como la persona recomendada reciben un ",
           "strong": "15 % de descuento",
-          "after": " en el siguiente. No hay límites y puede beneficiarse de nuestro programa de socios tantas veces como quiera."
+          "after": " en su próximo proyecto. Sin límites: puede usarlo tantas veces como quiera."
         },
-        "p4": "Además, cada cliente recibe bonificaciones gratuitas exclusivas al finalizar el proyecto: materiales que le ayudan a presentar su proyecto de forma aún más eficaz."
+        "p2": "Después de cada proyecto también le enviamos algunos materiales extra gratuitos para presentar los resultados de forma más eficaz."
       }
     },
     "bandTitle": "¿Aún tiene dudas?",

@@ -228,10 +228,10 @@ export function faqJsonLd(t) {
   };
   const entries = [
     [items.start?.q, [items.start?.p1].map(text).join(" ")],
-    [items.workflow?.q, [items.workflow?.intro, ...(items.workflow?.steps ?? []).map((st) => `${st.title}: ${st.desc}`)].join(" ")],
+    [items.workflow?.q, [items.workflow?.intro, ...(items.workflow?.steps ?? []).map((st) => `${st.title}: ${st.desc}`)].filter(Boolean).join(" ")],
     [items.duration?.q, text(items.duration?.paragraphs)],
     [items.pricing?.q, text(items.pricing?.paragraphs)],
-    [items.partnership?.q, [items.partnership?.p1, text(items.partnership?.p2), text(items.partnership?.p3), items.partnership?.p4].filter(Boolean).join(" ")],
+    [items.partnership?.q, [text(items.partnership?.p1), text(items.partnership?.p2)].filter(Boolean).join(" ")],
   ].filter(([q, a]) => q && a);
   return {
     "@context": "https://schema.org",
