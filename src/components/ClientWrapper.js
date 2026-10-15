@@ -5,7 +5,7 @@ import Lenis from "lenis";
 import Header from "@/components/Header";
 import Loader from "@/components/Loader";
 import RouteCurtain from "@/components/RouteCurtain";
-import GlassCursor from "@/components/GlassCursor";
+import Cursor from "@/components/Cursor";
 import { LoaderContext } from "@/context/LoaderContext";
 import { LenisContext } from "@/context/LenisContext";
 
@@ -180,7 +180,7 @@ export default function ClientWrapper({ children, locale, t }) {
         {showLoader && !ready && <Loader onComplete={() => setReady(true)} />}
         <Header t={t} locale={locale} visible={ready} />
         <RouteCurtain />
-        <GlassCursor />
+        <Cursor />
         <div id="main">{children}</div>
       </LoaderContext.Provider>
     </LenisContext.Provider>
