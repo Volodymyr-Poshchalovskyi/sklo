@@ -154,7 +154,7 @@ export default function GalleryMenu({ open, mounted, data, theme, skin, surface,
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element -- R2 variants, sized already */}
-                  <img src={i === 0 ? tile.big : tile.small} alt={tile.alt} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out hover:scale-[1.04]" />
+                  <img src={i === 0 ? tile.big : tile.small} alt={tile.alt} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03]" />
                   {i === 0 && (
                     <>
                       <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.1) 45%, transparent)" }} />
