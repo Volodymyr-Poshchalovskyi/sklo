@@ -680,54 +680,42 @@ html {
   opacity: 0.5;
 }
 
-/* Route glass — see RouteCurtain.js. Above the header so the whole screen
-   clears as one; below the lightbox. */
-.route-glass {
+/* Route curtain — see RouteCurtain.js. It sits above the header so a page
+   change reads as one movement rather than a bar that stays while the page
+   under it swaps. Below the lightbox, which is only ever open within a page. */
+.route-curtain {
   position: fixed;
   inset: 0;
   z-index: 95;
   pointer-events: none;
-  overflow: hidden;
-  visibility: hidden;
-  --glass-tint: color-mix(in srgb, var(--shell-base) 28%, transparent);
-  --glass-edge: rgba(255, 255, 255, 0.35);
+  background-color: var(--shell-base);
+  opacity: 0;
+  /* Parked out of the way until a navigation puts it back. */
+  clip-path: inset(0 0 100% 0);
 }
-:root[data-theme="light"] .route-glass {
-  --glass-tint: rgba(255, 255, 255, 0.35);
-  --glass-edge: rgba(255, 255, 255, 0.95);
+.route-curtain.is-lifting {
+  animation: routeCurtainLift 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.route-glass.is-sliding { visibility: visible; }
-/* The pane: wider and taller than the screen and leaned, so its leading
-   edge crosses as a diagonal. */
-.route-glass-pane {
-  position: absolute;
-  top: -15%;
-  bottom: -15%;
-  left: -40%;
-  width: 180%;
-  transform: translateX(0) skewX(-14deg);
-  /* Unprefixed only: given both, the CSS build kept just the -webkit- one,
-     which Chrome ignores. It adds the prefix itself. */
-  backdrop-filter: blur(18px) saturate(1.2);
-  background:
-    linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 60%, rgba(255,255,255,0.12) 99.4%, transparent 99.4%),
-    var(--glass-tint);
-  /* The lit leading edge: a hairline plus a soft glow just inside it. */
-  box-shadow:
-    inset -1px 0 0 var(--glass-edge),
-    inset -24px 0 40px -24px var(--glass-edge);
-}
-.route-glass.is-sliding .route-glass-pane {
-  animation: routeGlassSlide 1.05s cubic-bezier(.77, 0, .175, 1) both;
-}
-@keyframes routeGlassSlide {
-  0%   { transform: translateX(0) skewX(-14deg); }
-  /* A beat with the glass in place, so it is seen as glass. */
-  12%  { transform: translateX(0) skewX(-14deg); }
-  100% { transform: translateX(78%) skewX(-14deg); }
+@keyframes routeCurtainLift {
+  0% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  /* Holds solid for a beat so the new page has a frame to settle, then peels
+     from the bottom up — the same direction the reader is about to scroll. */
+  22% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    opacity: 1;
+    clip-path: inset(0 0 100% 0);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .route-glass.is-sliding .route-glass-pane { animation: none; }
+  .route-curtain.is-lifting {
+    animation: none;
+  }
 }
 
 /* Gallery tiles on a touch device. There is no hover there, so the caption
