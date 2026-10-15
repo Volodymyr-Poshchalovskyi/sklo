@@ -8,13 +8,12 @@ import {
   CompassTool,
   Key,
   UsersFour,
-  GlobeHemisphereEast,
-  GlobeHemisphereWest,
   ArrowUpRight,
 } from "@phosphor-icons/react/dist/ssr";
 import Title3D from "@/components/Title3D";
 import RollingNumber from "@/components/RollingNumber";
 import { STATS } from "@/data/studio";
+import { WORLD, REGIONS, VIEWBOX } from "@/data/regionMaps";
 
 // The home page's studio section: the four figures that answer "how big,
 // how fast", then who we work for and where, each linking to its own page.
@@ -23,13 +22,28 @@ import { STATS } from "@/data/studio";
 
 const STAT_ICONS = { projects: Buildings, team: UsersThree, perYear: CalendarCheck, reply: ChatCircleText };
 const AUDIENCE_ICONS = { developers: BuildingApartment, architects: CompassTool, "estate-agents": Key, cooperatives: UsersFour };
-const REGION_ICONS = {
-  europe: GlobeHemisphereEast,
-  "north-america": GlobeHemisphereWest,
-  "middle-east": GlobeHemisphereEast,
-  oceania: GlobeHemisphereEast,
-  "latin-america": GlobeHemisphereWest,
-};
+// A small map per market, zoomed onto it: the market filled, the land
+// around it faint: you see where it is at a glance, which neither a generic globe nor a
+// lone continent outline managed at this size. Real outlines (Natural Earth,
+// see scripts/maps/build_region_maps.py); the world path is defined once in
+// the section and reused by every row.
+function RegionMap({ slug, className = "" }) {
+  return (
+    <svg
+      viewBox={VIEWBOX[slug]}
+      aria-hidden="true"
+      className={className}
+      fill="currentColor"
+      overflow="hidden"
+      // The crop would cut the land in a hard rectangle; the edges fade out
+      // instead, so the map reads as a detail of a bigger one.
+      style={{ maskImage: "radial-gradient(ellipse 62% 62% at 50% 50%, #000 62%, transparent 100%)", WebkitMaskImage: "radial-gradient(ellipse 62% 62% at 50% 50%, #000 62%, transparent 100%)" }}
+    >
+      <use href="#sklo-world-land" opacity="0.25" />
+      <path d={REGIONS[slug]} />
+    </svg>
+  );
+}
 
 function Stats({ labels }) {
   return (
@@ -67,6 +81,12 @@ export default function HomeLinks({ locale, t, audiences, regions }) {
   const h = t?.home?.links ?? {};
   return (
     <section className="section-shell section-band hairline-top w-full text-white py-20 md:py-32 px-6 md:px-16 lg:px-28 xl:px-40 flex flex-col gap-20 md:gap-28">
+      {/* The world outline, defined once for every market row's map. */}
+      <svg width="0" height="0" className="absolute" aria-hidden="true">
+        <defs>
+          <path id="sklo-world-land" d={WORLD} />
+        </defs>
+      </svg>
       <Stats labels={t?.stats ?? {}} />
 
       {/* Who we work for: four open tiles on hairlines, not boxed cards —
@@ -101,11 +121,10 @@ export default function HomeLinks({ locale, t, audiences, regions }) {
         <SectionTitle>{h.whereTitle}</SectionTitle>
         <ul className="lg:col-span-8 flex flex-col border-b border-white/10">
           {regions.map((r) => {
-            const Icon = REGION_ICONS[r.slug];
             return (
               <li key={r.slug} className="border-t border-white/10">
                 <Link href={`/${locale}/regions/${r.slug}`} className="group grid grid-cols-[auto_1fr_auto] items-center gap-x-4 md:gap-x-6 gap-y-1 py-5 md:py-6">
-                  {Icon && <Icon weight="light" aria-hidden="true" className="w-7 h-7 md:w-8 md:h-8 text-white/70 transition-colors duration-300 group-hover:text-accent" />}
+                  <RegionMap slug={r.slug} className="w-20 md:w-24 aspect-[1.6] h-auto text-white/80 transition-colors duration-300 group-hover:text-accent" />
                   <div className="flex flex-col gap-1 min-w-0">
                     <span className="text-lg md:text-xl font-semibold text-white">{r.name}</span>
                     <span className="text-sm text-white/55">{r.hint}</span>
