@@ -103,7 +103,12 @@ function RotatingWord({ words = ROTATING_WORDS, hold = 1800 }) {
             animationTimingFunction: isOut
               ? "cubic-bezier(0.55,0,1,0.45)"
               : "cubic-bezier(0.16,1,0.3,1)",
-            animationFillMode: "forwards",
+            // "both", not "forwards": a letter waiting out its stagger delay
+            // must already sit in the first keyframe (hidden). With
+            // "forwards" every letter of the new word showed at full opacity
+            // for its delay and only then flipped — the visible jolt between
+            // words.
+            animationFillMode: "both",
             animationDelay: `${i * LETTER_STAGGER}ms`,
           }}
         >
@@ -328,12 +333,12 @@ export default function HeroSection({ t, locale }) {
           100% { background-position: -200% 0; }
         }
         @keyframes letterFlipOut {
-          0%   { transform: rotateX(0deg);  opacity: 1; }
-          100% { transform: rotateX(90deg); opacity: 0; }
+          0%   { transform: translateY(0) rotateX(0deg);           opacity: 1; filter: blur(0); }
+          100% { transform: translateY(-0.25em) rotateX(75deg);    opacity: 0; filter: blur(3px); }
         }
         @keyframes letterFlipIn {
-          0%   { transform: rotateX(-90deg); opacity: 0; }
-          100% { transform: rotateX(0deg);   opacity: 1; }
+          0%   { transform: translateY(0.25em) rotateX(-75deg);    opacity: 0; filter: blur(3px); }
+          100% { transform: translateY(0) rotateX(0deg);           opacity: 1; filter: blur(0); }
         }
       `}</style>
     </section>
