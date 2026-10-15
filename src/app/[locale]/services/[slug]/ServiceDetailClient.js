@@ -8,6 +8,7 @@ import Title3D from "@/components/Title3D";
 import TourEmbed from "@/components/TourEmbed";
 import { formatPrice } from "@/data/serviceContent";
 import { Check } from "@phosphor-icons/react";
+import { deliverableIcons } from "@/lib/deliverableIcons";
 import { humanizeTitle } from "@/lib/seo";
 import ProjectCard from "@/components/ProjectCard";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
@@ -217,6 +218,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
   const named = (template = "") => template.replace("{service}", serviceName);
   const g = t?.gallery ?? {};
   const hasPipeline = PIPELINE_SERVICE_SLUGS.includes(service.slug);
+  const deliverableIconList = deliverableIcons(service.slug);
 
   // The mini gallery is fed from the real gallery archive rather than from the
   // handful of placeholders in servicesData, so a service page shows its own
@@ -481,62 +483,60 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
           servicesData). Said before the pipeline, because a developer
           decides on the outcome, not on how the render is made. */}
       {service.problems?.length > 0 && (
-      <section className="section-shell hairline-top w-full py-24 md:py-32 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
-        {/* An argument, not a card grid: the lead paragraph says why the
-            service exists, then three rows set the client's problem against
-            what the studio answers it with — the way a proposal reads, left
-            column "you said", right column "we do". Hairlines carry the
-            structure; nothing is boxed. */}
-        <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
-          <div className="lg:col-span-4 flex flex-col gap-8 lg:sticky lg:top-32">
-            <Title3D className="text-3xl md:text-4xl font-bold uppercase tracking-wider">
-              {named(d.problemsTitle)}
-            </Title3D>
-            {service.intro && (
-              <p className="text-xl md:text-2xl text-white/90 leading-snug tracking-[-0.01em] max-w-[30ch] text-balance">
-                {service.intro}
-              </p>
-            )}
-          </div>
-
-          <div className="lg:col-span-7 lg:col-start-6 flex flex-col">
-            <ol className="flex flex-col border-b border-white/10">
-              {service.problems.map((item, idx) => (
-                <li key={idx} className="grid grid-cols-1 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-x-10 gap-y-3 py-8 md:py-9 border-t border-white/10">
-                  <p className="text-base md:text-[17px] text-white/50 leading-snug max-w-[26ch]">
-                    {item.problem}
-                  </p>
-                  <div className="flex flex-col gap-3">
-                    <h3 className="text-lg md:text-xl font-semibold text-white leading-snug tracking-[-0.01em] text-balance">
-                      {item.title}
-                    </h3>
-                    <p className="text-[15px] md:text-base text-white/70 leading-relaxed max-w-[58ch]">
-                      {item.desc}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-
-            {service.deliverables?.length > 0 && (
-              <div className="mt-14 md:mt-16 grid grid-cols-1 md:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] gap-x-10 gap-y-4">
-                <h3 className="text-base md:text-[17px] font-semibold text-white leading-snug">
-                  {d.deliverablesTitle}
-                </h3>
-                <ul className="flex flex-col">
-                  {service.deliverables.map((item) => (
-                    <li key={item} className="flex items-start gap-4 py-3 border-b border-white/10 last:border-b-0 text-[15px] md:text-base text-white/80 leading-relaxed">
-                      <svg aria-hidden="true" viewBox="0 0 16 16" className="mt-[7px] w-3.5 h-3.5 shrink-0 text-accent" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M2.5 8.5l3.5 3.5 7.5-8" />
-                      </svg>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+      <section className="section-shell hairline-top w-full py-14 md:py-16 lg:[@media(max-height:940px)]:py-8 px-6 md:px-16 lg:px-28 xl:px-40 overflow-hidden">
+        {/* Three bands that fit one screen: why the service exists, the
+            client's problems answered, and — given the weight — what the
+            client receives, each line with its emblem (Phosphor light, the
+            same family as the home page). */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start mb-8 md:mb-9 lg:[@media(max-height:940px)]:mb-6">
+          <Title3D className="lg:col-span-5 text-3xl md:text-4xl font-bold uppercase tracking-wider">
+            {named(d.problemsTitle)}
+          </Title3D>
+          {service.intro && (
+            <p className="lg:col-span-7 text-base lg:[@media(max-height:940px)]:text-[15px] text-white/80 leading-relaxed lg:[@media(max-height:940px)]:leading-normal max-w-[72ch] lg:pt-1">
+              {service.intro}
+            </p>
+          )}
         </div>
+
+        {/* The client's three problems, side by side and quiet: what they
+            said, then what we do about it. */}
+        <ol className="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-6 mb-8 md:mb-9 lg:[@media(max-height:940px)]:mb-5">
+          {service.problems.map((item, idx) => (
+            <li key={idx} className="flex flex-col gap-1.5 pt-4 border-t border-white/10">
+              <p className="text-xs md:text-[13px] text-white/45">{item.problem}</p>
+              <h3 className="text-base md:text-[17px] font-semibold text-white leading-snug">
+                {item.title}
+              </h3>
+              <p className="text-sm lg:[@media(max-height:940px)]:text-[13px] text-white/60 leading-relaxed lg:[@media(max-height:940px)]:leading-normal">
+                {item.desc}
+              </p>
+            </li>
+          ))}
+        </ol>
+
+        {/* What the client receives carries the weight: its own surface,
+            the largest heading in the section, and an emblem per line. */}
+        {service.deliverables?.length > 0 && (
+          <div className="tile no-lift rounded-3xl p-7 md:p-8 lg:[@media(max-height:940px)]:p-6 flex flex-col gap-6 md:gap-7 lg:[@media(max-height:940px)]:gap-4">
+            <h3 className="text-3xl md:text-[2.5rem] lg:[@media(max-height:940px)]:text-3xl font-bold tracking-tight text-white leading-none">
+              {d.deliverablesTitle}
+            </h3>
+            <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-6">
+              {service.deliverables.map((item, idx) => {
+                const Icon = deliverableIconList[idx];
+                return (
+                  <li key={item} className="flex sm:flex-col items-start gap-4 lg:[@media(max-height:940px)]:gap-3">
+                    <span className="shrink-0 w-12 h-12 lg:[@media(max-height:940px)]:w-10 lg:[@media(max-height:940px)]:h-10 rounded-2xl border border-white/15 flex items-center justify-center">
+                      {Icon && <Icon weight="light" aria-hidden="true" className="w-6 h-6 lg:[@media(max-height:940px)]:w-5 lg:[@media(max-height:940px)]:h-5 text-white" />}
+                    </span>
+                    <span className="text-[15px] text-white/85 leading-snug">{item}</span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        )}
       </section>
       )}
 

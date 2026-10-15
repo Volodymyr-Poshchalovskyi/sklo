@@ -388,8 +388,8 @@ export default function Header({ t, locale, visible }) {
   const navItems = [
     { key: "home",     label: t?.nav?.home     ?? "Home",     href: `/${locale}` },
     { key: "services", label: t?.nav?.services ?? "Services", href: `/${locale}/services` },
-    { key: "projects", label: t?.nav?.projects ?? "Projects", href: `/${locale}/projects` },
     { key: "gallery",  label: t?.nav?.gallery  ?? "Gallery",  href: `/${locale}/gallery`  },
+    { key: "projects", label: t?.nav?.projects ?? "Projects", href: `/${locale}/projects` },
     { key: "contact",  label: t?.nav?.contact  ?? "Contact",  href: `/${locale}/contact`  },
     { key: "about",    label: t?.nav?.about    ?? "About",    href: `/${locale}/about`    },
   ];
