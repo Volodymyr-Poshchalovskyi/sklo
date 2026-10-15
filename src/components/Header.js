@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { serviceWideFor } from "@/data/galleryData";
 import GalleryMenu, { useGalleryMenuData } from "@/components/GalleryMenu";
+import ProjectsMenu, { useProjectsMenuData } from "@/components/ProjectsMenu";
 import { serviceTitleFor } from "@/data/servicesData";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
@@ -338,9 +339,11 @@ export default function Header({ t, locale, visible }) {
   const [menu, setMenu] = useState(null);
   const servicesMenuOpen = menu === "services";
   const galleryMenuOpen = menu === "gallery";
-  // The gallery panel's images load on its first opening, not with every page.
-  const [galleryVisited, setGalleryVisited] = useState(false);
+  // The image panels (gallery, projects) load their pictures on their first
+  // opening, not with every page.
+  const [visited, setVisited] = useState({});
   const galleryMenuData = useGalleryMenuData(locale, t);
+  const projectsMenuData = useProjectsMenuData(locale, t);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const [theme, setTheme] = useState("light");
   const pathname = usePathname();
@@ -447,7 +450,7 @@ export default function Header({ t, locale, visible }) {
 
   const openMenu = (name) => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    if (name === "gallery") setGalleryVisited(true);
+    setVisited((v) => (v[name] ? v : { ...v, [name]: true }));
     setMenu(name);
   };
   // Over a panel: keep whichever menu is open.
@@ -571,7 +574,7 @@ export default function Header({ t, locale, visible }) {
             fit with room to spare. */}
         <div className="hidden md:flex items-center gap-2.5">
           {navItems.map(({ key, label, href }) => {
-            const hasMenu = key === "services" || key === "gallery";
+            const hasMenu = key === "services" || key === "gallery" || key === "projects";
             const isActive = checkIsActive(href) || menu === key;
             return (
               <NavLink
@@ -823,8 +826,21 @@ export default function Header({ t, locale, visible }) {
 
       <GalleryMenu
         open={galleryMenuOpen}
-        mounted={galleryVisited}
+        mounted={!!visited.gallery}
         data={galleryMenuData}
+        theme={theme}
+        skin={skin}
+        surface={surface}
+        blur={blur}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onNavigate={closeMenu}
+      />
+
+      <ProjectsMenu
+        open={menu === "projects"}
+        mounted={!!visited.projects}
+        data={projectsMenuData}
         theme={theme}
         skin={skin}
         surface={surface}

@@ -18,6 +18,11 @@
       "motion": "Motion & interactive",
       "all": "All works",
       "works": "works"
+    },
+    "projectsMenu": {
+      "all": "All projects",
+      "services": "Services",
+      "open": "Open the case"
     }
   },
   "hero": {

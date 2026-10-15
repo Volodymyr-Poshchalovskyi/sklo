@@ -18,6 +18,11 @@
       "motion": "Movimiento e interactivo",
       "all": "Todos los trabajos",
       "works": "trabajos"
+    },
+    "projectsMenu": {
+      "all": "Todos los proyectos",
+      "services": "Servicios",
+      "open": "Ver el proyecto"
     }
   },
   "hero": {
