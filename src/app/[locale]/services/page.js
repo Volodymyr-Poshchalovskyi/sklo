@@ -123,7 +123,7 @@ function ServiceTile({ service, index, locale }) {
         <h3 className="text-lg md:text-xl font-bold uppercase tracking-wide text-white/90 group-hover:text-white leading-snug transition-colors duration-300">
           {service.title}
         </h3>
-        <p className="mt-1.5 text-xs md:text-sm text-white/50 group-hover:text-white/75 leading-relaxed line-clamp-2 transition-colors duration-300">
+        <p className="mt-1.5 text-xs md:text-sm text-white/50 group-hover:text-white/75 leading-relaxed line-clamp-3 transition-colors duration-300">
           {service.cardDesc ?? service.desc}
         </p>
       </div>

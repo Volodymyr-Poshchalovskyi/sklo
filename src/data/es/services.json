@@ -1,6 +1,6 @@
 {
  "exterior-visualization": {
-  "cardDesc": "Su edificio, fotorrealista.",
+  "cardDesc": "Vistas fotorrealistas de su edificio en su entorno real: para folletos de venta, anuncios, inversores y solicitudes de permiso.",
   "title": "VISUALIZACIÓN EXTERIOR",
   "desc": "Muestre su proyecto desde su mejor ángulo con renders exteriores fotorrealistas. Imprescindibles para campañas de marketing exitosas y para atraer inversores.",
   "pipeline": [
@@ -23,7 +23,7 @@
   ]
  },
  "interior-visualization": {
-  "cardDesc": "Interiores con atmósfera.",
+  "cardDesc": "Interiores amueblados y con luz natural que permiten al comprador imaginarse viviendo allí mucho antes de que exista el piso piloto.",
   "title": "VISUALIZACIÓN INTERIOR",
   "desc": "Muestre los interiores con atmósfera y detalle. Visualizaciones que ayudan a los clientes potenciales a imaginar la vida dentro de su proyecto incluso en fase de obra.",
   "pipeline": [
@@ -46,7 +46,7 @@
   ]
  },
  "animation-mood-film": {
-  "cardDesc": "Una película cinematográfica de su proyecto.",
+  "cardDesc": "Una película de 40 a 90 segundos que recorre o sobrevuela su proyecto, con música: para lanzamientos, sitios web y redes sociales.",
   "title": "ANIMACIÓN | PELÍCULA DE AMBIENTE",
   "desc": "Una historia cinematográfica que capta la atención y despierta entusiasmo por su proyecto. Viva el ambiente, la historia y la vida de su proyecto a través de la pantalla.",
   "pipeline": [
@@ -69,7 +69,7 @@
   ]
  },
  "bird-eye-visualization": {
-  "cardDesc": "Su proyecto en todo su contexto.",
+  "cardDesc": "Una vista aérea de todo el desarrollo en su entorno: escala, accesos, infraestructura y contexto en una sola imagen.",
   "title": "VISUALIZACIÓN AÉREA",
   "desc": "Destaque la escala del proyecto y su entorno. La mejor manera de mostrar el contexto, la infraestructura y el atractivo global en un solo render.",
   "pipeline": [
@@ -92,7 +92,7 @@
   ]
  },
  "360-virtual-tour": {
-  "cardDesc": "Recorra el espacio antes de que exista.",
+  "cardDesc": "Panorámicas renderizadas unidas en un recorrido que se abre en el navegador: el piso piloto antes de que empiece la obra.",
   "title": "RECORRIDO VIRTUAL 360° | VR",
   "desc": "Permita que sus clientes entren antes de que sea real. Recorridos inmersivos que aumentan el interés y la confianza, y convierten el interés en compra.",
   "pipeline": [
@@ -115,7 +115,7 @@
   ]
  },
  "cinemagraph-live-shot": {
-  "cardDesc": "Imágenes fijas con un bucle sutil.",
+  "cardDesc": "Un render fijo con un único elemento en movimiento suave —agua, fuego, hojas— que detiene el scroll en redes sociales.",
   "title": "CINEMAGRAPH | LIVE SHOT",
   "desc": "Dé vida a las imágenes estáticas para lograr un efecto WOW que no pasa desapercibido. Animaciones sutiles que captan la atención al instante.",
   "pipeline": [
@@ -138,7 +138,7 @@
   ]
  },
  "product-visualization": {
-  "cardDesc": "Imágenes de producto con calidad de estudio.",
+  "cardDesc": "Packshots y escenas ambientadas para muebles, griferías y materiales, listos para tienda online, catálogo y feria.",
   "title": "VISUALIZACIÓN DE PRODUCTO",
   "desc": "Visuales de alta gama para mobiliario, electrodomésticos, materiales o cualquier objeto relacionado con la vivienda y la arquitectura. Perfectos para catálogos, marketing y presentaciones.",
   "pipeline": [
@@ -161,7 +161,7 @@
   ]
  },
  "virtual-staging": {
-  "cardDesc": "Habitaciones vacías, amuebladas digitalmente.",
+  "cardDesc": "Fotos de espacios vacíos amueblados digitalmente, a escala y con la luz correcta: anuncios que venden sin home staging físico.",
   "title": "VIRTUAL STAGING",
   "desc": "Convierta los espacios vacíos en hogares de ensueño. Un amueblado virtual realista y económico que aumenta el potencial de venta. Ideal para vender sin los costes de un amueblado físico.",
   "pipeline": [
@@ -184,7 +184,7 @@
   ]
  },
  "graphic-design": {
-  "cardDesc": "Folletos, banners e identidad de marca.",
+  "cardDesc": "Folletos, lonas de obra, carteles, nombre y logotipo: todo el material impreso y digital alrededor de su proyecto.",
   "title": "DISEÑO GRÁFICO",
   "desc": "Desde vallas publicitarias, cerramientos de obra y folletos hasta logotipos, esquemas y más: todo lo que necesita para reforzar la identidad de marca, impresionar y atraer clientes.",
   "pipeline": [
@@ -207,7 +207,7 @@
   ]
  },
  "3d-floorplans": {
-  "cardDesc": "Distribuciones que cualquiera entiende de un vistazo.",
+  "cardDesc": "Plantas 3D amuebladas y con colores por estancia que cualquier comprador entiende de un vistazo, con un estilo único para todo el proyecto.",
   "title": "PLANTAS 3D",
   "desc": "Haga que las distribuciones sean fáciles de entender. Una herramienta visual clara que acelera la decisión de los compradores.",
   "pipeline": [
@@ -230,7 +230,7 @@
   ]
  },
  "fly-around-navigator": {
-  "cardDesc": "Una órbita que el comprador dirige por sí mismo.",
+  "cardDesc": "Una vuelta interactiva al edificio en la que el comprador elige un apartamento y ve su estado, precio y planta.",
   "title": "VUELO 360° | NAVEGADOR",
   "desc": "Una órbita de todo el edificio que el comprador puede dirigir. Deténgase donde quiera, abra un apartamento y consulte su planta, su superficie y su distribución: la vista y el plano en un solo lugar.",
   "pipeline": [
@@ -253,7 +253,7 @@
   ]
  },
  "web-development": {
-  "cardDesc": "Sitios web construidos en torno a sus renders.",
+  "cardDesc": "Sitios web de proyecto construidos en torno a sus renders: rápidos en el móvil, con tabla de unidades y un formulario que le llega directamente.",
   "title": "DESARROLLO WEB",
   "desc": "Sus renders son el argumento de venta. Construimos el sitio web que los pone primero ante el comprador, carga en un segundo en el móvil y convierte la visita en una consulta: sitios de proyecto, landing pages y portfolios, diseñados en torno a las imágenes, no a partir de una plantilla.",
   "intro": "Una promoción de doce apartamentos sin sitio web se vende con un PDF y un número de teléfono. La misma promoción con un sitio de proyecto vende desde el primer render en pantalla: el comprador recorre el recorrido virtual 360° desde casa, elige una unidad en la tabla y solicita el dossier. El sitio existe para que eso ocurra, y para que se lo encuentre cuando alguien busque el proyecto.",
