@@ -988,3 +988,29 @@ html.has-cursor-disc .cursor-disc {
   will-change: transform;
 }
 html.has-cursor-disc .cursor-disc.is-visible { opacity: 1; }
+
+/* ---- Rolling figures (src/components/RollingNumber.js) ----------------- */
+.rolling-digit {
+  display: inline-block;
+  height: 1em;
+  line-height: 1;
+  overflow: hidden;
+  /* Digits of the face are not all one width; tabular figures keep the
+     column from wobbling as it spins. */
+  font-variant-numeric: tabular-nums;
+}
+.rolling-strip {
+  display: flex;
+  flex-direction: column;
+  transition: transform 1.8s cubic-bezier(.165, .84, .44, 1);
+}
+.rolling-strip > span {
+  display: block;
+  height: 1em;
+  line-height: 1;
+}
+/* Reduced motion: the strip sits on its last figure from the start. */
+.rolling-number[data-still="true"] .rolling-strip {
+  transition: none;
+  transform: translateY(calc(-100% + 1em)) !important;
+}

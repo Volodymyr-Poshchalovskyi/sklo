@@ -13,6 +13,7 @@ import {
   ArrowUpRight,
 } from "@phosphor-icons/react/dist/ssr";
 import Title3D from "@/components/Title3D";
+import RollingNumber from "@/components/RollingNumber";
 import { STATS } from "@/data/studio";
 
 // The home page's studio section: the four figures that answer "how big,
@@ -44,7 +45,7 @@ function Stats({ labels }) {
           >
             {Icon && <Icon weight="light" aria-hidden="true" className="w-8 h-8 md:w-10 md:h-10 text-accent" />}
             <div className="flex flex-col gap-2">
-              <dd className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight tabular-nums text-white leading-none">{s.value}</dd>
+              <dd className="text-5xl md:text-6xl xl:text-7xl font-bold tracking-tight tabular-nums text-white leading-none"><RollingNumber value={s.value} /></dd>
               <dt className="text-[11px] md:text-xs font-mono uppercase tracking-widest text-white/60">{labels[s.key]}</dt>
             </div>
           </div>
