@@ -957,7 +957,10 @@ html {
    faded in over the blurred placeholder painted behind them. The transition
    list keeps the hover zoom the tiles already had. */
 img.fade-in {
-  transition-property: opacity, transform;
+  /* Tailwind v4's scale and translate utilities set the individual `scale` /
+     `translate` properties, not `transform` — leaving them out made the
+     gallery's hover zoom jump instead of animate. */
+  transition-property: opacity, transform, scale, translate;
 }
 img.fade-in[data-loading] {
   opacity: 0;
