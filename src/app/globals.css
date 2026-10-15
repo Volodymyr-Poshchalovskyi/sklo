@@ -569,12 +569,14 @@ html {
    repaint these near-black (`.text-white` override) on top of an 80%-black
    gradient, and the category label dropped to a dark olive — both effectively
    invisible. They stay light-on-dark in both themes. */
-.media-caption,
-.media-caption h3,
-.media-caption span {
+/* Prefixed with :root[data-theme] so they outrank the light theme's
+   `:root[data-theme="light"] .text-white` (both !important — the more
+   specific one wins, and it used to be the override). */
+:root[data-theme] .media-caption,
+:root[data-theme] .media-caption :is(h3, span, p) {
   color: #ffffff !important;
 }
-.media-caption .media-caption-accent {
+:root[data-theme] .media-caption .media-caption-accent {
   color: #f7f5f0 !important;
 }
 
