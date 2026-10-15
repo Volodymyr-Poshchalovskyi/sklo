@@ -199,8 +199,8 @@ export default function HeroSection({ t, locale }) {
     const els = [forRef.current, subRef.current, btnsRef.current];
     els.forEach((el, i) => {
       if (!el) return;
-      const delay = 420 + i * 140;
-      el.style.transition = `opacity 1s cubic-bezier(.19,1,.22,1) ${delay}ms, transform 1s cubic-bezier(.19,1,.22,1) ${delay}ms`;
+      const delay = 1250 + i * 150;
+      el.style.transition = `opacity 1.1s cubic-bezier(.165,.84,.44,1) ${delay}ms, transform 1.1s cubic-bezier(.165,.84,.44,1) ${delay}ms`;
       el.style.opacity = "1";
       el.style.transform = "translateY(0)";
     });
@@ -218,9 +218,9 @@ export default function HeroSection({ t, locale }) {
       const y = e.detail?.scrollY ?? window.scrollY;
       const h = window.innerHeight;
       if (y > h * 1.2) return;
-      media.style.transform = `translate3d(0, ${y * 0.33}px, 0)`;
-      content.style.transform = `translate3d(0, ${-y * 0.12}px, 0)`;
-      content.style.opacity = String(Math.max(0, 1 - y / (h * 0.75)));
+      media.style.transform = `translate3d(0, ${y * 0.25}px, 0)`;
+      content.style.transform = `translate3d(0, ${-y * 0.06}px, 0)`;
+      content.style.opacity = String(Math.max(0, 1 - y / (h * 0.9)));
     };
     window.addEventListener("sklo-scroll", onScroll);
     return () => window.removeEventListener("sklo-scroll", onScroll);
@@ -228,7 +228,7 @@ export default function HeroSection({ t, locale }) {
 
 
 
-  const hidden = { opacity: 0, transform: "translateY(28px)" };
+  const hidden = { opacity: 0, transform: "translateY(16px)" };
 
   return (
     <section className="hero-section relative min-h-[100svh] flex items-end">
@@ -237,7 +237,7 @@ export default function HeroSection({ t, locale }) {
           connection, gets the first frame and nothing else. */}
       {/* The film and its veils move together for the scroll parallax; the
           film itself settles from a slight zoom once, on arrival. */}
-      <div ref={mediaRef} className="absolute inset-0 will-change-transform">
+      <div ref={mediaRef} className={`hero-media absolute inset-0 will-change-transform ${ready ? "is-in" : ""}`}>
       <video
         ref={videoRef}
         loop
@@ -248,7 +248,7 @@ export default function HeroSection({ t, locale }) {
         // play, so the page has its largest element on screen within the
         // first second instead of after the loader lets the heading in.
         poster={videoPoster("/assets/home/hero_video.webm")}
-        className="hero-film absolute inset-0 w-full h-full object-cover"
+        className={`hero-film absolute inset-0 w-full h-full object-cover ${ready ? "is-in" : ""}`}
         style={{ pointerEvents: "none" }}
       >
         {/* One tier per connection; see src/lib/media.js. The VP9 webm is
@@ -284,20 +284,18 @@ export default function HeroSection({ t, locale }) {
                 ...(t?.hero?.headlineAccent ? t.hero.headlineAccent.split(" ").map((w) => ({ w, accent: true })) : []),
               ].map(({ w, accent }, i, all) => (
                 <span key={i}>
-                  <span className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em]">
-                    <span
-                      className={`inline-block ${accent ? "text-white/90" : ""}`}
-                      style={{
-                        transform: "translateY(110%)",
-                        animationName: ready ? "heroWordIn" : "none",
-                        animationDuration: "1.1s",
-                        animationTimingFunction: "cubic-bezier(.19,1,.22,1)",
-                        animationFillMode: "both",
-                        animationDelay: `${i * 90}ms`,
-                      }}
-                    >
-                      {w}
-                    </span>
+                  <span
+                    className={`inline-block ${accent ? "text-white/90" : ""}`}
+                    style={{
+                      opacity: 0,
+                      animationName: ready ? "heroWordIn" : "none",
+                      animationDuration: "1.3s",
+                      animationTimingFunction: "cubic-bezier(.165,.84,.44,1)",
+                      animationFillMode: "both",
+                      animationDelay: `${650 + i * 120}ms`,
+                    }}
+                  >
+                    {w}
                   </span>
                   {i < all.length - 1 ? " " : null}
                 </span>
@@ -383,19 +381,38 @@ export default function HeroSection({ t, locale }) {
           0%   { background-position: 200% 0; }
           100% { background-position: -200% 0; }
         }
-        @keyframes heroWordIn {
-          from { transform: translateY(110%) rotate(2deg); }
-          to   { transform: translateY(0) rotate(0); }
+        /* Arrival, in one calm sequence (motion-design skill: ease-in-out
+           for the frame that is already on screen and changes shape,
+           ease-out-quart for what enters):
+           1. the film opens like a window — a rounded frame widening to the
+              full bleed while the picture settles from a slight zoom;
+           2. the headline's words surface out of a soft blur, one by one;
+           3. the FOR line, the description and the buttons follow. */
+        .hero-media {
+          clip-path: inset(13% 9% 13% 9% round 28px);
+        }
+        .hero-media.is-in {
+          animation: heroFrameOpen 1.7s cubic-bezier(.77,0,.175,1) 0.1s both;
+        }
+        @keyframes heroFrameOpen {
+          from { clip-path: inset(13% 9% 13% 9% round 28px); }
+          to   { clip-path: inset(0% 0% 0% 0% round 0px); }
+        }
+        .hero-film { transform: scale(1.14); }
+        .hero-film.is-in {
+          animation: heroFilmSettle 2.6s cubic-bezier(.165,.84,.44,1) 0.1s both;
         }
         @keyframes heroFilmSettle {
-          from { transform: scale(1.08); }
+          from { transform: scale(1.14); }
           to   { transform: scale(1); }
         }
-        .hero-film {
-          animation: heroFilmSettle 2.6s cubic-bezier(.19,1,.22,1) both;
+        @keyframes heroWordIn {
+          from { opacity: 0; transform: translateY(0.3em); filter: blur(10px); }
+          to   { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hero-film { animation: none; }
+          .hero-media, .hero-media.is-in { clip-path: none; animation: none; }
+          .hero-film, .hero-film.is-in { transform: none; animation: none; }
         }
         @keyframes letterFlipOut {
           0%   { transform: translateY(0) rotateX(0deg);           opacity: 1; filter: blur(0); }
