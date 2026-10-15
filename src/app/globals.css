@@ -680,41 +680,23 @@ html {
   opacity: 0.5;
 }
 
-/* Route curtain — see RouteCurtain.js. It sits above the header so a page
-   change reads as one movement rather than a bar that stays while the page
-   under it swaps. Below the lightbox, which is only ever open within a page. */
-.route-curtain {
-  position: fixed;
-  inset: 0;
-  z-index: 95;
-  pointer-events: none;
-  background-color: var(--shell-base);
-  opacity: 0;
-  /* Parked out of the way until a navigation puts it back. */
-  clip-path: inset(0 0 100% 0);
+/* Page transitions: a plain crossfade through the View Transitions API
+   (ClientWrapper wraps the page in React's <ViewTransition>). Short and on
+   the built-in ease, so it reads as the page settling, not as an effect.
+   The old page leaves a touch faster than the new one arrives. */
+::view-transition-old(*) {
+  animation-duration: 220ms;
+  animation-timing-function: ease;
 }
-.route-curtain.is-lifting {
-  animation: routeCurtainLift 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-@keyframes routeCurtainLift {
-  0% {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-  /* Holds solid for a beat so the new page has a frame to settle, then peels
-     from the bottom up — the same direction the reader is about to scroll. */
-  22% {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-  100% {
-    opacity: 1;
-    clip-path: inset(0 0 100% 0);
-  }
+::view-transition-new(*) {
+  animation-duration: 320ms;
+  animation-timing-function: ease;
 }
 @media (prefers-reduced-motion: reduce) {
-  .route-curtain.is-lifting {
-    animation: none;
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }
 

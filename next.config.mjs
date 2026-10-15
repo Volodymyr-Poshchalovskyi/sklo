@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactCompiler: false,
+  // Page changes crossfade through the browser's View Transitions API
+  // (React's <ViewTransition>, wired into navigation by this flag). Browsers
+  // without it simply swap pages, as before.
+  experimental: {
+    viewTransition: true,
+  },
   // Hardening headers the audits look for. HSTS comes from Vercel itself.
   // No frame-ancestors restriction: the 360° tours embed from
   // media.sklo.studio, and that is the other direction anyway.
