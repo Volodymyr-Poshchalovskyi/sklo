@@ -7,6 +7,7 @@ import ServicesCarousel from "@/components/ServicesCarousel";
 import Title3D from "@/components/Title3D";
 import TourEmbed from "@/components/TourEmbed";
 import { formatPrice } from "@/data/serviceContent";
+import { Check } from "@phosphor-icons/react";
 import { humanizeTitle } from "@/lib/seo";
 import ProjectCard from "@/components/ProjectCard";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
@@ -781,46 +782,48 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
             <p className="text-sm text-white/50 max-w-md leading-relaxed">{d.priceNote}</p>
           </div>
 
-          <div className="tile no-lift p-6 md:p-8 flex flex-col gap-6">
-            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-              <span className="text-xs font-mono uppercase tracking-widest text-white/50">{d.from}</span>
-              <span className="text-4xl md:text-5xl font-bold tracking-tight text-white">
-                {formatPrice(service.investment.from, service.investment.currency)}
-              </span>
-              <span className="text-sm text-white/60">{service.investment.unit}</span>
+          {/* What the price buys leads; the figure itself sits small at the
+              foot, next to the button that turns it into a real quote. */}
+          <div className="tile no-lift p-6 md:p-8 flex flex-col gap-8">
+            <div className="flex flex-col gap-5">
+              <h3 className="text-xl md:text-2xl font-semibold text-white">{d.includesTitle}</h3>
+              <ul className="flex flex-col gap-3.5">
+                {service.investment.includes.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-base md:text-lg text-white/85 leading-snug">
+                    <Check weight="light" aria-hidden="true" className="mt-0.5 w-5 h-5 md:w-6 md:h-6 text-accent shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-6 border-t border-white/10">
-              <div className="flex flex-col gap-3">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">{d.includesTitle}</span>
-                <ul className="flex flex-col gap-2">
-                  {service.investment.includes.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm text-white/70 leading-relaxed">
-                      <span aria-hidden="true" className="mt-[7px] w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-6 border-t border-white/10">
+              <div className="flex flex-col gap-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/50">{d.turnaroundTitle}</span>
+                <p className="text-sm text-white/70 leading-relaxed">{service.investment.turnaround}</p>
               </div>
-              <div className="flex flex-col gap-5">
-                <div className="flex flex-col gap-1.5">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-accent">{d.turnaroundTitle}</span>
-                  <p className="text-sm text-white/70 leading-relaxed">{service.investment.turnaround}</p>
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-accent">{d.revisionsTitle}</span>
-                  <p className="text-sm text-white/70 leading-relaxed">{service.investment.revisions}</p>
-                </div>
+              <div className="flex flex-col gap-1.5">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-white/50">{d.revisionsTitle}</span>
+                <p className="text-sm text-white/70 leading-relaxed">{service.investment.revisions}</p>
               </div>
             </div>
 
-            <Link
-              href={`/${locale}/contact?service=${service.slug}`}
-              className="self-start inline-flex items-center gap-2 rounded-full bg-text text-bg px-6 py-3 text-sm font-semibold transition-all duration-300 hover:opacity-90 hover:scale-[1.03]"
-            >
-              {d.quoteCta}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-            </Link>
+            <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 pt-6 border-t border-white/10">
+              <Link
+                href={`/${locale}/contact?service=${service.slug}`}
+                className="inline-flex items-center gap-2 rounded-full bg-text text-bg px-6 py-3 text-sm font-semibold transition-all duration-300 hover:opacity-90 hover:scale-[1.03]"
+              >
+                {d.quoteCta}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
+              </Link>
+              <p className="flex items-baseline gap-x-2 text-white/60">
+                <span className="text-xs font-mono uppercase tracking-widest">{d.from}</span>
+                <span className="text-lg md:text-xl font-semibold tracking-tight text-white tabular-nums">
+                  {formatPrice(service.investment.from, service.investment.currency)}
+                </span>
+                <span className="text-sm">{service.investment.unit}</span>
+              </p>
+            </div>
           </div>
         </div>
       </section>
