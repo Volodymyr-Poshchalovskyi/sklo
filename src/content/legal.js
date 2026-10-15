@@ -12,7 +12,7 @@ export const LEGAL_ENTITY = {
   legalForm: "[Rechtsform]",
   // TODO(client): street, postcode, town.
   address: ["[Strasse Nr.]", "[PLZ Ort]", "Schweiz"],
-  email: "sklo.rendering@gmail.com",
+  email: "info@sklo.studio",
   // TODO(client): CHE-123.456.789 from zefix.ch; leave empty if not registered.
   uid: "[CHE-xxx.xxx.xxx]",
   // TODO(client): the person responsible for the site's content.

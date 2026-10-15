@@ -6,7 +6,7 @@
 // src/content/legal.js and are still placeholders — on purpose, until the
 // client supplies them.
 
-export const CONTACT_EMAIL = "sklo.rendering@gmail.com";
+export const CONTACT_EMAIL = "info@sklo.studio";
 export const PHONE = "+370 616 95 055";
 export const PHONE_HREF = "tel:+37061695055";
 export const WHATSAPP_HREF = "https://wa.me/37061695055";

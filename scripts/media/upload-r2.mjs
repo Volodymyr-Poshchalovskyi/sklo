@@ -58,7 +58,10 @@ async function uploadOne(file) {
     Body: fs.createReadStream(file),
     ContentLength: size,
     ContentType: type,
-    CacheControl: "public, max-age=31536000, immutable",
+    // HTML entry pages keep their name across rebuilds (index.html of a tour
+    // or navigator), so they must not be cached as immutable — only the
+    // hashed assets and media are.
+    CacheControl: file.endsWith(".html") ? "public, max-age=300" : "public, max-age=31536000, immutable",
   }));
   sent += size;
 }

@@ -129,7 +129,7 @@ function QuickContactForm({ locale, form }) {
       {state === "error" && (
         <p role="alert" className="text-xs text-accent">
           {pickL(locale, "Sending failed. Please try again or write to ", "Senden fehlgeschlagen. Bitte erneut versuchen oder an ", "No se pudo enviar. Inténtelo de nuevo o escriba a ")}
-          <a href="mailto:sklo.rendering@gmail.com" className="underline">sklo.rendering@gmail.com</a>
+          <a href={`mailto:${CONTACT_EMAIL}`} className="underline">{CONTACT_EMAIL}</a>
           {pickL(locale, ".", " schreiben.", ".")}
         </p>
       )}
@@ -158,10 +158,10 @@ export default function Footer({ locale, t }) {
               {f.copy}
             </p>
             <a
-              href="mailto:sklo.rendering@gmail.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="text-sm sm:text-base text-white/50 hover:text-white transition-colors duration-300 w-fit"
             >
-              {f.emailLead} <span className="underline underline-offset-4 text-white">sklo.rendering@gmail.com</span>
+              {f.emailLead} <span className="underline underline-offset-4 text-white">{CONTACT_EMAIL}</span>
             </a>
           </div>
 

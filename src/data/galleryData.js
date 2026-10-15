@@ -562,7 +562,7 @@ export const SERVICE_TOUR = {
       kind: "navigator",
       title: "Luxe 17",
       label: { en: "360° navigator", de: "360°-Navigator" },
-      entry: "/navigators/luxe17/index.html",
+      entry: "/navigators/luxe17-v2/index.html",
       poster: "/assets/tours/luxe17-poster.webp",
       scenes: 100,
     },

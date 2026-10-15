@@ -14,6 +14,7 @@ import {
 } from "@/lib/contact/validate";
 import { translations } from "@/locales";
 import { pickL } from "@/lib/i18n";
+import { CONTACT_EMAIL } from "@/data/studio";
 
 
 // Only the ids and the date offsets are structural; every label is looked up
@@ -578,7 +579,7 @@ function ContactWizardInner({ locale }) {
       `New Project Inquiry — ${data.projectName || data.company || "SKLO"}`
     );
     const body = encodeURIComponent(lines.join("\n"));
-    return `mailto:sklo.rendering@gmail.com?subject=${subject}&body=${body}`;
+    return `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
   };
 
   const buildPayload = () => ({

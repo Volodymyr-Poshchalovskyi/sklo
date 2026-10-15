@@ -76,8 +76,14 @@ points at `https://media.sklo.studio/...`, so they load from R2, not from the
 website's deployment. The navigator's source (with the SKLO branding, webp
 frames and the `basePath: /navigators/luxe17` export settings) is kept in
 `~/Documents/SKLO-media-masters/navigators/luxe17-src/`; to update it, edit
-there, run `npm run build`, copy `out/` to `public/navigators/luxe17/` and run
-`node scripts/media/upload-r2.mjs public/navigators`. A new navigator for
+there, run `npm run build`, copy `out/` to `public/navigators/<folder>/` and run
+`node scripts/media/upload-r2.mjs public/navigators/<folder>`. The live
+build is `navigators/luxe17-v2/` (basePath in its `next.config.mjs`); its
+frames still load from the first upload at `navigators/luxe17/oblit/`. HTML
+files are uploaded with a five-minute cache, everything else as immutable —
+so a rebuild under the same folder is picked up, but bumping the folder name
+(and the `entry` in `SERVICE_TOUR`) is the safe way to replace an app whose
+old index.html was uploaded before that rule (2026-10-15). A new navigator for
 another project follows the same path with its own folder name and an entry
 in `SERVICE_TOUR` in `src/data/galleryData.js`.
 
