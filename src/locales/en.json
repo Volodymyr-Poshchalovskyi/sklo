@@ -12,7 +12,13 @@
     "preview": "SKLO Service Preview",
     "toggleTheme": "Toggle theme",
     "toggleMenu": "Toggle menu",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "galleryMenu": {
+      "stills": "Stills",
+      "motion": "Motion & interactive",
+      "all": "All works",
+      "works": "works"
+    }
   },
   "hero": {
     "title": "We craft 3D experiences",

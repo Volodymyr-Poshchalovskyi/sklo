@@ -12,7 +12,13 @@
     "preview": "Vista previa de servicios SKLO",
     "toggleTheme": "Cambiar tema",
     "toggleMenu": "Abrir o cerrar menú",
-    "skipToContent": "Saltar al contenido"
+    "skipToContent": "Saltar al contenido",
+    "galleryMenu": {
+      "stills": "Imágenes",
+      "motion": "Movimiento e interactivo",
+      "all": "Todos los trabajos",
+      "works": "trabajos"
+    }
   },
   "hero": {
     "title": "Creamos experiencias 3D",

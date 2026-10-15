@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { serviceWideFor } from "@/data/galleryData";
+import GalleryMenu, { useGalleryMenuData } from "@/components/GalleryMenu";
 import { serviceTitleFor } from "@/data/servicesData";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
@@ -331,7 +332,15 @@ function MenuPreviewItem({ service, isActive, previewLabel }) {
 export default function Header({ t, locale, visible }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [servicesMenuOpen, setServicesMenuOpen] = useState(false);
+  // Which mega menu hangs under the capsule: "services", "gallery" or null.
+  // One value, so hovering from one trigger to the other swaps the panels
+  // instead of briefly showing both.
+  const [menu, setMenu] = useState(null);
+  const servicesMenuOpen = menu === "services";
+  const galleryMenuOpen = menu === "gallery";
+  // The gallery panel's images load on its first opening, not with every page.
+  const [galleryVisited, setGalleryVisited] = useState(false);
+  const galleryMenuData = useGalleryMenuData(locale, t);
   const [activeServiceIndex, setActiveServiceIndex] = useState(0);
   const [theme, setTheme] = useState("light");
   const pathname = usePathname();
@@ -433,18 +442,27 @@ export default function Header({ t, locale, visible }) {
   }, []);
 
   useEffect(() => {
-    setServicesMenuOpen(false);
+    setMenu(null);
   }, [pathname]);
 
+  const openMenu = (name) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (name === "gallery") setGalleryVisited(true);
+    setMenu(name);
+  };
+  // Over a panel: keep whichever menu is open.
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setServicesMenuOpen(true);
   };
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
-      setServicesMenuOpen(false);
+      setMenu(null);
     }, 150);
+  };
+  const closeMenu = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setMenu(null);
   };
 
   const checkIsActive = (href) => {
@@ -471,7 +489,7 @@ export default function Header({ t, locale, visible }) {
         active: { bg: "rgba(12,13,17,0.74)", border: "rgba(255,255,255,0.14)", shadow: "0 16px 40px rgba(0,0,0,0.45)" },
         panel:  "rgba(10,10,12,0.94)",
       });
-  const solid = scrolled || servicesMenuOpen;
+  const solid = scrolled || menu !== null;
   const surface = solid ? skin.active : skin.rest;
   const blur = `blur(${solid ? 24 : 18}px) saturate(160%)`;
   const barColor = theme === "light" ? "#15161a" : "#eceae6";
@@ -553,32 +571,26 @@ export default function Header({ t, locale, visible }) {
             fit with room to spare. */}
         <div className="hidden md:flex items-center gap-2.5">
           {navItems.map(({ key, label, href }) => {
-            const isServices = key === "services";
-            const isActive = checkIsActive(href) || (isServices && servicesMenuOpen);
+            const hasMenu = key === "services" || key === "gallery";
+            const isActive = checkIsActive(href) || menu === key;
             return (
               <NavLink
                 key={key}
                 href={href}
                 label={label}
                 isActive={isActive}
-                ariaExpanded={isServices ? servicesMenuOpen : undefined}
-                onMouseEnter={isServices ? handleMouseEnter : () => {
-                  if (timeoutRef.current) clearTimeout(timeoutRef.current);
-                  setServicesMenuOpen(false);
-                }}
-                onMouseLeave={isServices ? handleMouseLeave : undefined}
+                ariaExpanded={hasMenu ? menu === key : undefined}
+                onMouseEnter={hasMenu ? () => openMenu(key) : closeMenu}
+                onMouseLeave={hasMenu ? handleMouseLeave : undefined}
                 // Focus opens the curtain the way hover does, and Escape shuts
                 // it: the menu used to be hover-only, so its twelve links were
                 // in the tab order but the panel holding them could never be
                 // opened from the keyboard.
-                onFocus={isServices ? handleMouseEnter : () => setServicesMenuOpen(false)}
+                onFocus={hasMenu ? () => openMenu(key) : closeMenu}
                 onKeyDown={(event) => {
-                  if (event.key === "Escape") setServicesMenuOpen(false);
+                  if (event.key === "Escape") closeMenu();
                 }}
-                onClick={() => {
-                  if (timeoutRef.current) clearTimeout(timeoutRef.current);
-                  setServicesMenuOpen(false);
-                }}
+                onClick={closeMenu}
               />
             );
           })}
@@ -734,7 +746,7 @@ export default function Header({ t, locale, visible }) {
                   key={service.id}
                   href={service.href}
                   onMouseEnter={() => setActiveServiceIndex(idx)}
-                  onClick={() => setServicesMenuOpen(false)}
+                  onClick={closeMenu}
                   className="group flex items-center py-2 px-3 rounded-lg border border-transparent transition-all duration-300 relative overflow-hidden"
                   style={{
                     background: isActive
@@ -808,6 +820,19 @@ export default function Header({ t, locale, visible }) {
           }
         `}</style>
       </div>
+
+      <GalleryMenu
+        open={galleryMenuOpen}
+        mounted={galleryVisited}
+        data={galleryMenuData}
+        theme={theme}
+        skin={skin}
+        surface={surface}
+        blur={blur}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onNavigate={closeMenu}
+      />
 
       <div
         className="md:hidden absolute left-0 right-0 overflow-hidden rounded-[20px]"

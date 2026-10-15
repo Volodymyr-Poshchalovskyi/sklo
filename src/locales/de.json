@@ -12,7 +12,13 @@
     "preview": "SKLO Leistungsvorschau",
     "toggleTheme": "Design wechseln",
     "toggleMenu": "Menü umschalten",
-    "skipToContent": "Zum Inhalt springen"
+    "skipToContent": "Zum Inhalt springen",
+    "galleryMenu": {
+      "stills": "Standbilder",
+      "motion": "Bewegt & interaktiv",
+      "all": "Alle Arbeiten",
+      "works": "Arbeiten"
+    }
   },
   "hero": {
     "title": "Wir gestalten 3D-Erlebnisse",
