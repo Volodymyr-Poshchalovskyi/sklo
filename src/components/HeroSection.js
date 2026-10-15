@@ -228,19 +228,24 @@ export default function HeroSection({ t, locale }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
 
       <div className="relative z-10 w-full px-6 md:px-16 lg:px-28 xl:px-40 pt-24 pb-24">
-        <div className="flex flex-col items-start justify-center max-w-4xl">
+        {/* The film is the point of the hero, so the text keeps to the
+            edges: headline and buttons bottom-left, the descriptive sentence
+            small in the bottom-right corner on desktop (under the headline
+            on phones). Grid areas rather than DOM order, so the <h1> stays
+            where it is for readers and crawlers. */}
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] xl:grid-cols-[minmax(0,1fr)_minmax(0,25rem)] lg:items-end gap-x-16">
           {/* The big animated line is the visual headline, not the document
               heading: its last word rotates. The <h1> is the static sentence
               below it — the service, the market, the deliverables. */}
           <p
             ref={headRef}
             style={hidden}
-            className="font-bold leading-[1.05] tracking-tight text-white mb-6"
+            className="font-bold leading-[1.05] tracking-tight text-white mb-6 lg:col-span-2"
           >
             {/* `whitespace-nowrap` waits for `lg`: at the md size the headline
                 is 72px, which is 804px of unbreakable text in a 768px window —
                 the whole page scrolled sideways on a tablet. */}
-            <span className="block text-4xl sm:text-6xl md:text-7xl xl:text-8xl lg:whitespace-nowrap">
+            <span className="block text-4xl sm:text-6xl md:text-7xl lg:whitespace-nowrap">
               {t?.hero?.headlineLead ?? "Visualization"}
               {/* The second, lighter word is optional: German says the whole
                   thing in one noun, and an empty span would leave a stray
@@ -252,7 +257,7 @@ export default function HeroSection({ t, locale }) {
                 </>
               ) : null}
             </span>
-            <span className="flex items-center gap-2 text-lg sm:text-xl md:text-2xl font-medium text-white/40 tracking-[0.2em] uppercase mt-5">
+            <span className="flex items-center gap-2 text-base sm:text-lg md:text-xl font-medium text-white/40 tracking-[0.2em] uppercase mt-4">
               {t?.hero?.for ?? "for"}
               <RotatingWord words={t?.hero?.words?.length ? t.hero.words : ROTATING_WORDS} />
             </span>
@@ -261,15 +266,15 @@ export default function HeroSection({ t, locale }) {
           <h1
             ref={subRef}
             style={hidden}
-            className="text-base sm:text-lg md:text-xl font-normal text-white/80 leading-relaxed max-w-[56ch] mb-10 text-balance"
+            className="text-sm md:text-[15px] font-normal text-white/80 leading-relaxed max-w-[44ch] [text-shadow:0_1px_14px_rgba(0,0,0,0.55)] mb-8 lg:mb-0 lg:col-start-2 lg:row-start-2 lg:pl-6 lg:border-l lg:border-white/25"
           >
             {t?.hero?.subtitle}
           </h1>
 
-          <div ref={btnsRef} style={hidden} className="flex flex-wrap gap-4">
+          <div ref={btnsRef} style={hidden} className="flex flex-wrap gap-3 lg:col-start-1 lg:row-start-2">
             <Link
               href={`/${locale}/services`}
-              className="black-shimmer hero-cta-primary group inline-flex items-center gap-2 font-semibold text-base px-8 py-4 rounded-full transition-all duration-300 hover:scale-[1.03]"
+              className="black-shimmer hero-cta-primary group inline-flex items-center gap-2 font-semibold text-[15px] px-7 py-3.5 rounded-full transition-all duration-300 hover:scale-[1.03]"
               style={{ background: "rgba(255, 255, 255, 0.12)", color: "#ffffff", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}
               onMouseEnter={e => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.22)")}
               onMouseLeave={e => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.12)")}
@@ -285,7 +290,7 @@ export default function HeroSection({ t, locale }) {
 
             <Link
               href={`/${locale}/contact`}
-              className="hero-cta-secondary group inline-flex items-center gap-2 border border-white/50 bg-black/30 text-white font-medium text-base px-8 py-4 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-black/50 hover:border-white/80 hover:scale-[1.03]"
+              className="hero-cta-secondary group inline-flex items-center gap-2 border border-white/50 bg-black/30 text-white font-medium text-[15px] px-7 py-3.5 rounded-full backdrop-blur-md transition-all duration-300 hover:bg-black/50 hover:border-white/80 hover:scale-[1.03]"
             >
               {t.hero.contact}
               <svg
