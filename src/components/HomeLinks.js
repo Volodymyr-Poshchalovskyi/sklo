@@ -4,7 +4,7 @@ import {
   UsersThree,
   CalendarCheck,
   ChatCircleText,
-  Crane,
+  BuildingApartment,
   CompassTool,
   Key,
   UsersFour,
@@ -21,7 +21,7 @@ import { STATS } from "@/data/studio";
 // lime only where the eye should land first (the figures) and on hover.
 
 const STAT_ICONS = { projects: Buildings, team: UsersThree, perYear: CalendarCheck, reply: ChatCircleText };
-const AUDIENCE_ICONS = { developers: Crane, architects: CompassTool, "estate-agents": Key, cooperatives: UsersFour };
+const AUDIENCE_ICONS = { developers: BuildingApartment, architects: CompassTool, "estate-agents": Key, cooperatives: UsersFour };
 const REGION_ICONS = {
   europe: GlobeHemisphereEast,
   "north-america": GlobeHemisphereWest,
