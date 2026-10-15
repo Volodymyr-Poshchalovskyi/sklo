@@ -456,7 +456,20 @@
     "intro": "{count} questions clients ask about our services, our markets and the way we work, with the answers in one place. Each group links to its page.",
     "jumpTo": "Jump to",
     "toPage": "To the page",
-    "footerLink": "FAQ"
+    "footerLink": "FAQ",
+    "categories": {
+      "general": "Working with us",
+      "services": "Services",
+      "audiences": "Who it's for",
+      "regions": "Markets"
+    },
+    "searchLabel": "Search the questions",
+    "searchPlaceholder": "Search the questions",
+    "clear": "Clear",
+    "results": "Questions found: {count}",
+    "noResults": "No question matches “{query}”.",
+    "noResultsCta": "Ask us directly",
+    "onThisPage": "On this page"
   },
   "requirements": {
     "title": "Project requirements",

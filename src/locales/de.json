@@ -456,7 +456,20 @@
     "intro": "{count} Fragen, die Kunden zu unseren Leistungen, unseren Märkten und unserer Arbeitsweise stellen, mit den Antworten an einem Ort. Jede Gruppe verlinkt auf ihre Seite.",
     "jumpTo": "Springen zu",
     "toPage": "Zur Seite",
-    "footerLink": "FAQ"
+    "footerLink": "FAQ",
+    "categories": {
+      "general": "Zusammenarbeit",
+      "services": "Leistungen",
+      "audiences": "Für wen",
+      "regions": "Märkte"
+    },
+    "searchLabel": "Fragen durchsuchen",
+    "searchPlaceholder": "Fragen durchsuchen",
+    "clear": "Löschen",
+    "results": "Gefundene Fragen: {count}",
+    "noResults": "Keine Frage passt zu «{query}».",
+    "noResultsCta": "Fragen Sie uns direkt",
+    "onThisPage": "Auf dieser Seite"
   },
   "requirements": {
     "title": "Projektanforderungen",

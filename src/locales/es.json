@@ -456,7 +456,20 @@
     "intro": "{count} preguntas que los clientes hacen sobre nuestros servicios, nuestros mercados y nuestra forma de trabajar, con las respuestas en un solo lugar. Cada grupo enlaza con su página.",
     "jumpTo": "Ir a",
     "toPage": "A la página",
-    "footerLink": "Preguntas frecuentes"
+    "footerLink": "Preguntas frecuentes",
+    "categories": {
+      "general": "Trabajar con nosotros",
+      "services": "Servicios",
+      "audiences": "Para quién",
+      "regions": "Mercados"
+    },
+    "searchLabel": "Buscar en las preguntas",
+    "searchPlaceholder": "Buscar en las preguntas",
+    "clear": "Borrar",
+    "results": "Preguntas encontradas: {count}",
+    "noResults": "Ninguna pregunta coincide con «{query}».",
+    "noResultsCta": "Pregúntenos directamente",
+    "onThisPage": "En esta página"
   },
   "requirements": {
     "title": "Requisitos del proyecto",
