@@ -947,7 +947,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
               {/* Close button */}
               <button 
                 onClick={() => setActiveMediaIndex(null)}
-                className="w-12 h-12 bg-white/5 border border-white/10 hover:border-accent hover:bg-accent hover:text-black rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer shadow-lg"
+                className="w-12 h-12 bg-white/5 border border-white/10 hover:border-accent hover:bg-accent hover:text-bg rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer shadow-lg"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M18 6L6 18M6 6l12 12" />
@@ -960,7 +960,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
               {/* Prev button */}
               <button 
                 onClick={() => setActiveMediaIndex((prev) => (prev === 0 ? miniItems.length - 1 : prev - 1))}
-                className="absolute left-0 md:-left-16 w-12 h-12 bg-white/5 border border-white/10 hover:border-accent hover:bg-accent hover:text-black rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer z-50 shadow-lg"
+                className="absolute left-0 md:-left-16 w-12 h-12 bg-white/5 border border-white/10 hover:border-accent hover:bg-accent hover:text-bg rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer z-50 shadow-lg"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M15 19l-7-7 7-7" />
@@ -1003,7 +1003,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
               {/* Next button */}
               <button 
                 onClick={() => setActiveMediaIndex((prev) => (prev === miniItems.length - 1 ? 0 : prev + 1))}
-                className="absolute right-0 md:-right-16 w-12 h-12 bg-white/5 border border-white/10 hover:border-accent hover:bg-accent hover:text-black rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer z-50 shadow-lg"
+                className="absolute right-0 md:-right-16 w-12 h-12 bg-white/5 border border-white/10 hover:border-accent hover:bg-accent hover:text-bg rounded-full flex items-center justify-center text-white transition-all duration-300 cursor-pointer z-50 shadow-lg"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M9 5l7 7-7 7" />

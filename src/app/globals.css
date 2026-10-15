@@ -25,8 +25,10 @@
   --color-text:        #eceae6;   /* warm off-white       */
   --color-text-2:      #a2a4ad;
   --color-text-muted:  #6d707b;
-  --color-accent:      #c8ff00;      /* неоново-жовтий акцент */
-  --color-accent-hover:#b0e000;
+  /* No lime, ever (2026-10-15): the accent is a brighter off-white, so
+     emphasis comes from contrast, weight and size, not a hue. */
+  --color-accent:      #f7f5f0;
+  --color-accent-hover:#ffffff;
 
   /* Spacing */
   --spacing-section: clamp(4rem, 8vw, 8rem);
@@ -103,11 +105,10 @@ html {
   --color-text:        #15161a;   /* ink, not pure black       */
   --color-text-2:      #4c4e57;
   --color-text-muted:  #7c7f89;
-  /* Was #000000 — a pure-black "accent" is not an accent. This is the same
-     lime hue as the dark theme, dropped in lightness until it holds contrast
-     on paper, so `text-accent` stays recognisably brand in both. */
-  --color-accent:      #5f7a00;
-  --color-accent-hover:#4b6100;
+  /* The light-theme accent is ink, a step darker than the text — no hue
+     (the lime accent was removed site-wide on 2026-10-15). */
+  --color-accent:      #0e0f12;
+  --color-accent-hover:#000000;
   --color-border-stroke: rgba(18, 18, 20, 0.45);
   --color-progress-border: rgba(18, 18, 20, 0.08);
   --color-progress-border-muted: rgba(18, 18, 20, 0.18);
@@ -359,7 +360,7 @@ html {
 /* The light accent is a deep olive tuned for paper; on the overlay it reads as
    a smudge, so the counter keeps the dark theme's lime. */
 :root[data-theme="light"] .overlay-chrome .text-accent {
-  color: #c8ff00 !important;
+  color: #f7f5f0 !important;
 }
 :root[data-theme="light"] .overlay-chrome .bg-white\/5 {
   background-color: rgba(255, 255, 255, 0.05) !important;
@@ -569,7 +570,7 @@ html {
   color: #ffffff !important;
 }
 .media-caption .media-caption-accent {
-  color: #c8ff00 !important;
+  color: #f7f5f0 !important;
 }
 
 /* Carousel prev/next buttons. These deliberately avoid the `bg-white/5`
