@@ -156,16 +156,22 @@ html {
   color: #121214 !important;
 }
 :root[data-theme="light"] .text-white\/90,
+:root[data-theme="light"] .text-white\/85,
+:root[data-theme="light"] .text-white\/75,
 :root[data-theme="light"] .text-white\/80,
 :root[data-theme="light"] .text-white\/70 {
   color: #2c2c2e !important;
 }
 :root[data-theme="light"] .text-white\/60,
+:root[data-theme="light"] .text-white\/55,
+:root[data-theme="light"] .text-white\/45,
 :root[data-theme="light"] .text-white\/50,
 :root[data-theme="light"] .text-white\/40 {
   color: #555558 !important;
 }
+:root[data-theme="light"] .text-white\/35,
 :root[data-theme="light"] .text-white\/30,
+:root[data-theme="light"] .text-white\/25,
 :root[data-theme="light"] .text-white\/20 {
   color: #8e8e93 !important;
 }
