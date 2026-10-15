@@ -680,42 +680,43 @@ html {
   opacity: 0.5;
 }
 
-/* Route curtain — see RouteCurtain.js. It sits above the header so a page
-   change reads as one movement rather than a bar that stays while the page
-   under it swaps. Below the lightbox, which is only ever open within a page. */
-.route-curtain {
+/* Route window — see RouteCurtain.js. Above the header, so the whole
+   screen opens as one; below the lightbox. */
+.route-window {
   position: fixed;
   inset: 0;
   z-index: 95;
   pointer-events: none;
-  background-color: var(--shell-base);
+  border-radius: 28px;
+  box-shadow: 0 0 0 150vmax var(--shell-base);
+  /* Parked: invisible until a navigation opens it. */
   opacity: 0;
-  /* Parked out of the way until a navigation puts it back. */
-  clip-path: inset(0 0 100% 0);
+  visibility: hidden;
 }
-.route-curtain.is-lifting {
-  animation: routeCurtainLift 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.route-window.is-opening {
+  visibility: visible;
+  animation: routeWindowOpen 1.15s cubic-bezier(.77, 0, .175, 1) both;
 }
-@keyframes routeCurtainLift {
-  0% {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-  /* Holds solid for a beat so the new page has a frame to settle, then peels
-     from the bottom up — the same direction the reader is about to scroll. */
-  22% {
-    opacity: 1;
-    clip-path: inset(0 0 0 0);
-  }
-  100% {
-    opacity: 1;
-    clip-path: inset(0 0 100% 0);
-  }
+@keyframes routeWindowOpen {
+  0%   { opacity: 1; transform: scale(0.86); border-radius: 28px; }
+  /* Holds the framed view for a beat, so the page is seen as a picture
+     before it becomes the page. */
+  18%  { opacity: 1; transform: scale(0.86); border-radius: 28px; }
+  100% { opacity: 1; transform: scale(1.12); border-radius: 0; }
+}
+/* The page under the window: rises a few pixels into place. No fill mode —
+   a transform left on #main would turn every fixed child (the lightbox, the
+   wizard overlay) into one positioned against it. */
+#main.route-rise {
+  /* backwards: hold the first keyframe through the delay, nothing after. */
+  animation: routeRise 1.1s cubic-bezier(.165, .84, .44, 1) 0.18s backwards;
+}
+@keyframes routeRise {
+  from { transform: translateY(18px); }
+  to   { transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .route-curtain.is-lifting {
-    animation: none;
-  }
+  .route-window.is-opening, #main.route-rise { animation: none; }
 }
 
 /* Gallery tiles on a touch device. There is no hover there, so the caption
