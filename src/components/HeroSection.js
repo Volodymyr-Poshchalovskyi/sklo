@@ -208,7 +208,7 @@ export default function HeroSection({ t, locale }) {
     });
   }, [ready]);
 
-  // While the film's frame opens, the page holds still: scrolling during the
+  // On arrival, while the film's frame opens, the page holds still: scrolling during the
   // arrival tore the sequence (the frame was still widening as the next
   // section slid in). Released when the frame's own animation ends, with a
   // timeout in case animationend never arrives (background tab). Only from
@@ -218,6 +218,13 @@ export default function HeroSection({ t, locale }) {
     if (!ready) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     if (window.scrollY > 40) return;
+    // Only on arrival at the site: the document was loaded on this very page
+    // and the lock has not run yet. Coming back to the home page from another
+    // page is a client-side navigation and scrolls freely.
+    const entry = performance.getEntriesByType("navigation")[0];
+    const entryPath = entry ? new URL(entry.name).pathname.replace(/\/$/, "") : "";
+    if (window.__skloHeroLockDone || entryPath !== window.location.pathname.replace(/\/$/, "")) return;
+    window.__skloHeroLockDone = true;
     const media = mediaRef.current;
     const html = document.documentElement;
     const lenis = lenisRef?.current;
