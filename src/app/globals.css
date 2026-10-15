@@ -991,3 +991,73 @@ html {
 ::-webkit-scrollbar-corner {
   background: var(--color-bg);
 }
+
+/* ---- Cube cursor (src/components/CubeCursor.js) ------------------------ */
+.cube-cursor { display: none; }
+html.has-cube-cursor,
+html.has-cube-cursor * { cursor: none !important; }
+html.has-cube-cursor :is(input:not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]), textarea, [contenteditable="true"]) { cursor: text !important; }
+html.has-cube-cursor .cube-cursor {
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 2147483000;
+  pointer-events: none;
+  /* Inverts what is under it: white on black, black on white. */
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 180ms cubic-bezier(.165, .84, .44, 1);
+}
+html.has-cube-cursor .cube-cursor.is-visible { opacity: 1; }
+html.has-cube-cursor .cube-cursor.is-text { opacity: 0; }
+.cube-cursor-scale {
+  position: absolute;
+  left: -9px;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  perspective: 120px;
+  transition: scale 240ms cubic-bezier(.165, .84, .44, 1);
+}
+.cube-cursor.is-hover .cube-cursor-scale { scale: 1.75; }
+.cube-cursor.is-down .cube-cursor-scale { scale: 0.8; transition-duration: 120ms; transition-timing-function: cubic-bezier(.25, .46, .45, .94); }
+.cube-cursor-cube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: cubeCursorSpin 9s linear infinite;
+}
+.cube-cursor-cube span {
+  position: absolute;
+  inset: 0;
+  border: 1.25px solid #fff;
+  background: transparent;
+  transition: background-color 240ms cubic-bezier(.165, .84, .44, 1);
+}
+.cube-cursor.is-hover .cube-cursor-cube span { background: rgba(255, 255, 255, 0.08); }
+.cube-cursor-cube .f1 { transform: translateZ(9px); }
+.cube-cursor-cube .f2 { transform: rotateY(180deg) translateZ(9px); }
+.cube-cursor-cube .f3 { transform: rotateY(90deg) translateZ(9px); }
+.cube-cursor-cube .f4 { transform: rotateY(-90deg) translateZ(9px); }
+.cube-cursor-cube .f5 { transform: rotateX(90deg) translateZ(9px); }
+.cube-cursor-cube .f6 { transform: rotateX(-90deg) translateZ(9px); }
+.cube-cursor-dot {
+  position: absolute;
+  left: -1.5px;
+  top: -1.5px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff;
+  transition: opacity 180ms ease;
+}
+.cube-cursor.is-hover .cube-cursor-dot { opacity: 0; }
+@keyframes cubeCursorSpin {
+  from { transform: rotateX(-24deg) rotateY(0deg); }
+  to   { transform: rotateX(-24deg) rotateY(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cube-cursor-cube { animation: none; transform: rotateX(-24deg) rotateY(35deg); }
+}
