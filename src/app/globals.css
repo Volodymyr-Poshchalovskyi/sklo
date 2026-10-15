@@ -146,7 +146,6 @@ html {
   color: var(--color-text) !important;
 }
 
-:root[data-theme="light"] aside,
 :root[data-theme="light"] .bg-\[\#101012\],
 :root[data-theme="light"] .bg-\[\#121214\] {
   background-color: var(--color-surface) !important;
@@ -1013,4 +1012,60 @@ html.has-cursor-disc .cursor-disc.is-visible { opacity: 1; }
 .rolling-number[data-still="true"] .rolling-strip {
   transition: none;
   transform: translateY(calc(-100% + 1em)) !important;
+}
+
+/* ---- Light theme: hover states ----------------------------------------- */
+/* The dark baseline brightens links and icons to white on hover; on paper
+   that made them vanish (contact line, FAQ links, card arrows…). Map every
+   white hover to ink, the same way the resting text-white classes are
+   mapped above. Surfaces over photographs keep white: the hero and the
+   lightbox are restored right after. */
+:root[data-theme="light"] .hover\:text-white:hover,
+:root[data-theme="light"] .group:hover .group-hover\:text-white {
+  color: #121214 !important;
+}
+:root[data-theme="light"] .hover\:text-white\/80:hover,
+:root[data-theme="light"] .group:hover .group-hover\:text-white\/75 {
+  color: #2c2c2e !important;
+}
+:root[data-theme="light"] .hover\:border-white\/30:hover,
+:root[data-theme="light"] .group:hover .group-hover\:border-white\/30 {
+  border-color: rgba(18, 18, 20, 0.3) !important;
+}
+:root[data-theme="light"] .hover\:border-white\/40:hover,
+:root[data-theme="light"] .hover\:border-white\/50:hover,
+:root[data-theme="light"] .group:hover .group-hover\:border-white\/40,
+:root[data-theme="light"] .group:hover .group-hover\:border-white\/50 {
+  border-color: rgba(18, 18, 20, 0.45) !important;
+}
+:root[data-theme="light"] .hover\:border-white\/80:hover {
+  border-color: rgba(18, 18, 20, 0.7) !important;
+}
+:root[data-theme="light"] :is(.hero-section, .overlay-chrome, .media-caption) .hover\:text-white:hover,
+:root[data-theme="light"] :is(.hero-section, .overlay-chrome, .media-caption) .group:hover .group-hover\:text-white {
+  color: #ffffff !important;
+}
+
+/* ---- Accordions (<details>) ------------------------------------------- */
+/* Every FAQ on the site is a native <details>. Where the browser can animate
+   to `auto` (Chromium), the answer now slides open and shut and fades in,
+   instead of jumping; elsewhere it opens instantly, as before.
+   Motion-design skill: an on-screen surface changing size → ease-in-out
+   (cubic), 280ms; the fade is a touch shorter. */
+:root { interpolate-size: allow-keywords; }
+details::details-content {
+  block-size: 0;
+  overflow: clip;
+  opacity: 0;
+  transition:
+    block-size 280ms cubic-bezier(.645, .045, .355, 1),
+    opacity 220ms ease,
+    content-visibility 280ms allow-discrete;
+}
+details[open]::details-content {
+  block-size: auto;
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  details::details-content { transition: none; }
 }
