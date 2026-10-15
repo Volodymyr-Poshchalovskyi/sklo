@@ -692,6 +692,31 @@ html {
   animation-duration: 320ms;
   animation-timing-function: ease;
 }
+/* Only the page content fades. The header and the cursor get transition
+   names of their own with no animation, so they are swapped in place
+   instead of crossfading with the page — a header that blinked on every
+   click read as a reload. The root (everything else) does not animate. */
+header {
+  view-transition-name: site-header;
+}
+.cursor-disc {
+  view-transition-name: cursor-disc;
+}
+::view-transition-group(site-header),
+::view-transition-old(site-header),
+::view-transition-new(site-header),
+::view-transition-group(cursor-disc),
+::view-transition-old(cursor-disc),
+::view-transition-new(cursor-disc),
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+/* The new header and cursor sit on top; the old snapshots never show. */
+::view-transition-old(site-header),
+::view-transition-old(cursor-disc) {
+  display: none;
+}
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-group(*),
   ::view-transition-old(*),
