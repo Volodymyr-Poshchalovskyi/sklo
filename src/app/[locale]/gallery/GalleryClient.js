@@ -87,7 +87,7 @@ function GalleryCard({ item, onClick, label, alt, showCategory = true }) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{ aspectRatio: `${item.width} / ${item.height}`, ...blurStyle(item.src, item.width, item.height) }}
-      className="gallery-tile relative w-full bg-white/5 overflow-hidden rounded-lg group cursor-pointer border border-white/5 hover:border-white/15 transition-colors duration-500"
+      className="gallery-tile relative w-full bg-white/5 overflow-hidden rounded-lg group cursor-pointer border border-white/5 hover:border-white/40 transition-colors duration-300"
     >
       {item.type === "video" ? (
         <video
@@ -99,7 +99,7 @@ function GalleryCard({ item, onClick, label, alt, showCategory = true }) {
           loop
           muted
           playsInline
-          className="w-full h-full object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
       ) : (
         /* Plain <img> with the pre-built widths from scripts/media: no
@@ -113,7 +113,7 @@ function GalleryCard({ item, onClick, label, alt, showCategory = true }) {
           loading="lazy"
           decoding="async"
           ref={fadeInOnLoad}
-          className="fade-in absolute inset-0 w-full h-full object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+          className="fade-in absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
         />
       )}
       
@@ -122,7 +122,7 @@ function GalleryCard({ item, onClick, label, alt, showCategory = true }) {
           brings its own gradient, and just far enough to keep text legible. */}
 
       {showCategory && label && (
-        <div className="media-caption absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none">
+        <div className="media-caption absolute inset-0 flex flex-col justify-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none">
           <span className="text-sm font-bold uppercase tracking-wider text-white">
             {label}
           </span>

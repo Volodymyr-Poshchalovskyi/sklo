@@ -120,7 +120,7 @@ export default function ProjectsMenu({ open, mounted, data, theme, skin, surface
           <div key={active.slug} className="grid grid-cols-[minmax(0,3fr)_minmax(0,1fr)] gap-2.5 min-h-0">
             <Link href={active.href} onClick={onNavigate} className="group relative overflow-hidden rounded-xl bg-white/5" style={enter(0)}>
               {/* eslint-disable-next-line @next/next/no-img-element -- R2 variants, sized already */}
-              <img src={active.hero} alt={active.heroAlt} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02]" />
+              <img src={active.hero} alt={active.heroAlt} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" />
               <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.15) 55%, transparent)" }} />
               <div className="absolute left-6 right-6 bottom-5 flex items-end justify-between gap-6 pointer-events-none">
                 <div className="flex flex-col gap-1 min-w-0">
@@ -142,7 +142,7 @@ export default function ProjectsMenu({ open, mounted, data, theme, skin, surface
               {active.thumbs.map((th, i) => (
                 <Link key={th.src} href={active.href} onClick={onNavigate} tabIndex={-1} className="relative overflow-hidden rounded-xl bg-white/5" style={enter(i + 1)}>
                   {/* eslint-disable-next-line @next/next/no-img-element -- R2 variants, sized already */}
-                  <img src={th.src} alt={th.alt} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:scale-[1.03]" />
+                  <img src={th.src} alt={th.alt} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out hover:scale-105" />
                 </Link>
               ))}
             </div>
