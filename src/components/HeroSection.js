@@ -4,6 +4,7 @@ import { useVideoTier } from "@/lib/videoTier";
 import { useEffect, useRef, useContext, useState } from "react";
 import { LoaderContext } from "@/context/LoaderContext";
 import { HERO_READY_EVENT } from "@/components/ClientWrapper";
+import { useLenis } from "@/context/LenisContext";
 import Link from "next/link";
 
 // Fallback for the rotating line. The live list comes from `t.hero.words`,
@@ -122,6 +123,7 @@ function RotatingWord({ words = ROTATING_WORDS, hold = 1800 }) {
 export default function HeroSection({ t, locale }) {
   const tier = useVideoTier();
   const ready = useContext(LoaderContext);
+  const lenisRef = useLenis();
   const headRef = useRef(null);
   const subRef = useRef(null);
   const btnsRef = useRef(null);
@@ -205,6 +207,39 @@ export default function HeroSection({ t, locale }) {
       el.style.transform = "translateY(0)";
     });
   }, [ready]);
+
+  // While the film's frame opens, the page holds still: scrolling during the
+  // arrival tore the sequence (the frame was still widening as the next
+  // section slid in). Released when the frame's own animation ends, with a
+  // timeout in case animationend never arrives (background tab). Only from
+  // the top of the page — a reload that restores a scroll position is left
+  // alone — and never for reduced motion, where nothing animates.
+  useEffect(() => {
+    if (!ready) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.scrollY > 40) return;
+    const media = mediaRef.current;
+    const html = document.documentElement;
+    const lenis = lenisRef?.current;
+    const prevOverflow = html.style.overflow;
+    html.style.overflow = "hidden";
+    lenis?.stop?.();
+    let released = false;
+    const release = () => {
+      if (released) return;
+      released = true;
+      html.style.overflow = prevOverflow;
+      lenis?.start?.();
+    };
+    const onEnd = (e) => { if (e.animationName === "heroFrameOpen") release(); };
+    media?.addEventListener("animationend", onEnd);
+    const timer = setTimeout(release, 2400);
+    return () => {
+      clearTimeout(timer);
+      media?.removeEventListener("animationend", onEnd);
+      release();
+    };
+  }, [ready, lenisRef]);
 
   // Scroll: the film drifts down at a third of the scroll speed while the
   // text lifts away and fades, so leaving the hero has depth. Listens to the

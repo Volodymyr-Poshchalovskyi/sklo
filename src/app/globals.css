@@ -1084,3 +1084,8 @@ details[open]::details-content {
 .service-bento-tile:hover { border-color: rgba(255, 255, 255, 0.4); }
 :root[data-theme="light"] .service-bento-tile { border-color: rgba(18, 18, 20, 0.1) !important; }
 :root[data-theme="light"] .service-bento-tile:hover { border-color: rgba(18, 18, 20, 0.4) !important; }
+
+/* The scrollbar's room is kept even while the page is locked (the hero
+   holds scrolling during its arrival), so nothing shifts sideways when
+   overflow is hidden and restored. */
+html { scrollbar-gutter: stable; }
