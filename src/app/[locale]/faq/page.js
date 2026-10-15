@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { translations } from "@/locales";
 import { servicesData, localizeService } from "@/data/servicesData";
 import { localizeServiceContent } from "@/data/serviceContent";
@@ -99,6 +100,15 @@ export default async function FaqHubPage({ params }) {
         }}
         contactHref={page("/contact")}
       />
+      {/* The explainers and the glossary left the footer (2026-10-15); this
+          line keeps them one click from a page every visitor can reach. */}
+      <nav aria-label={h.furtherReading} className="w-full px-6 md:px-16 lg:px-28 xl:px-40 pt-12">
+        <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t border-white/10 pt-8 text-sm text-white/60">
+          <span>{h.furtherReading}</span>
+          <Link href={page("/knowledge")} className="text-white underline underline-offset-4 decoration-white/30 hover:decoration-white">{t.knowledge?.title}</Link>
+          <Link href={page("/glossary")} className="text-white underline underline-offset-4 decoration-white/30 hover:decoration-white">{t.glossary?.title}</Link>
+        </div>
+      </nav>
     </main>
   );
 }

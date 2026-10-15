@@ -190,7 +190,8 @@
       "requirements": "Projektanforderungen"
     },
     "follow": "Folgen Sie uns",
-    "phoneLead": "Anruf oder WhatsApp"
+    "phoneLead": "Anruf oder WhatsApp",
+    "resources": "Zusammenarbeit"
   },
   "about": {
     "eyebrow": "Das Studio",
@@ -469,7 +470,8 @@
     "results": "Gefundene Fragen: {count}",
     "noResults": "Keine Frage passt zu «{query}».",
     "noResultsCta": "Fragen Sie uns direkt",
-    "onThisPage": "Auf dieser Seite"
+    "onThisPage": "Auf dieser Seite",
+    "furtherReading": "Weiterlesen:"
   },
   "requirements": {
     "title": "Projektanforderungen",

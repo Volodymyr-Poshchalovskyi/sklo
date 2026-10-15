@@ -174,8 +174,8 @@ export default function Footer({ locale, t }) {
         </div>
       )}
 
-      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-        <div className="flex flex-col gap-4">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div className="lg:col-span-4 flex flex-col gap-4">
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 sm:w-12 sm:h-12 shrink-0 overflow-hidden rounded-md">
               <Image
@@ -200,75 +200,64 @@ export default function Footer({ locale, t }) {
             <a href={PHONE_HREF} className="text-white/70 hover:text-white transition-colors duration-300">{PHONE}</a>
             <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white transition-colors duration-300">WhatsApp</a>
           </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-12 sm:gap-20 w-full">
-          <div className="flex flex-col gap-3">
-            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mb-2">
-              {f.explore}
-            </span>
-            <Link href={`/${locale}/about`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              {links.about}
-            </Link>
-            <Link href={`/${locale}/contact`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              {links.contact}
-            </Link>
-            <Link href={`/${locale}/services`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              {links.services}
-            </Link>
-            <Link href={`/${locale}/projects`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              {links.projects}
-            </Link>
-            <Link href={`/${locale}/gallery`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              {links.portfolio}
-            </Link>
-            <Link href={`/${locale}/knowledge`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              {links.knowledge}
-            </Link>
-            <Link href={`/${locale}/requirements`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              {links.requirements}
-            </Link>
-            <Link href={`/${locale}/faq`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              {links.faq}
-            </Link>
-            <Link href={`/${locale}/glossary`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-              {links.glossary}
-            </Link>
-            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mt-6 mb-2">
-              {t?.regions?.footerTitle}
-            </span>
-            {["europe", "north-america", "middle-east", "oceania", "latin-america"].map((slug) => (
-              <Link key={slug} href={`/${locale}/regions/${slug}`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-                {t?.regions?.nav?.[slug]}
-              </Link>
-            ))}
-            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mt-6 mb-2">
-              {links.audiencesTitle}
-            </span>
-            {["developers", "architects", "estate-agents", "cooperatives"].map((slug) => (
-              <Link key={slug} href={`/${locale}/for/${slug}`} className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block">
-                {t?.audiences?.nav?.[slug]}
-              </Link>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-3">
-            <span className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-white/60 mb-2">
-              {f.follow}
-            </span>
-            {SOCIALS.map((social) => (
-              <a
-                key={social.key}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-base sm:text-lg font-medium text-white/70 hover:text-white transition-all duration-300 hover:translate-x-1 inline-block"
-              >
-                {social.label}
-              </a>
-            ))}
+          <div className="flex flex-col gap-2 mt-4">
+            <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-white/45">{f.follow}</span>
+            <ul className="flex flex-wrap gap-x-5 gap-y-2">
+              {SOCIALS.map((social) => (
+                <li key={social.key}>
+                  <a href={social.href} target="_blank" rel="noopener noreferrer" className="text-sm sm:text-[15px] text-white/70 hover:text-white transition-colors duration-300">
+                    {social.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
+
+        {/* Four short columns instead of one long list: the studio's own
+            pages, the two working documents, who we work for, where. */}
+        <nav aria-label={f.explore} className="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10">
+          {[
+            {
+              title: f.explore,
+              items: [
+                { href: "/services", label: links.services },
+                { href: "/projects", label: links.projects },
+                { href: "/gallery", label: links.portfolio },
+                { href: "/about", label: links.about },
+                { href: "/contact", label: links.contact },
+              ],
+            },
+            {
+              title: f.resources,
+              items: [
+                { href: "/requirements", label: links.requirements },
+                { href: "/faq", label: links.faq },
+              ],
+            },
+            {
+              title: t?.home?.links?.forTitle,
+              items: ["developers", "architects", "estate-agents", "cooperatives"].map((slug) => ({ href: `/for/${slug}`, label: t?.audiences?.nav?.[slug] })),
+            },
+            {
+              title: t?.regions?.footerTitle,
+              items: ["europe", "north-america", "middle-east", "oceania", "latin-america"].map((slug) => ({ href: `/regions/${slug}`, label: t?.regions?.nav?.[slug] })),
+            },
+          ].map((col) => (
+            <div key={col.title} className="flex flex-col gap-4">
+              <span className="text-[11px] font-semibold tracking-[0.2em] uppercase text-white/45">{col.title}</span>
+              <ul className="flex flex-col gap-2.5">
+                {col.items.map((item) => (
+                  <li key={item.href}>
+                    <Link href={`/${locale}${item.href}`} className="text-sm sm:text-[15px] text-white/70 hover:text-white transition-colors duration-300">
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
       </div>
       
       <div className="w-full mt-20 pt-6 border-t border-white/10 flex flex-wrap justify-between items-center gap-3 text-xs text-white/50">

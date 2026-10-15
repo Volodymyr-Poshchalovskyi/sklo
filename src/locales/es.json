@@ -190,7 +190,8 @@
       "requirements": "Requisitos del proyecto"
     },
     "follow": "Síganos",
-    "phoneLead": "Llame o escriba por WhatsApp"
+    "phoneLead": "Llame o escriba por WhatsApp",
+    "resources": "Trabajar con nosotros"
   },
   "about": {
     "eyebrow": "El estudio",
@@ -469,7 +470,8 @@
     "results": "Preguntas encontradas: {count}",
     "noResults": "Ninguna pregunta coincide con «{query}».",
     "noResultsCta": "Pregúntenos directamente",
-    "onThisPage": "En esta página"
+    "onThisPage": "En esta página",
+    "furtherReading": "Para seguir leyendo:"
   },
   "requirements": {
     "title": "Requisitos del proyecto",
