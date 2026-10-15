@@ -680,58 +680,54 @@ html {
   opacity: 0.5;
 }
 
-/* Route sheen — see RouteCurtain.js. Above the header so the whole screen
+/* Route glass — see RouteCurtain.js. Above the header so the whole screen
    clears as one; below the lightbox. */
-.route-sheen {
+.route-glass {
   position: fixed;
   inset: 0;
   z-index: 95;
   pointer-events: none;
   overflow: hidden;
   visibility: hidden;
-  --sheen: rgba(255, 255, 255, 0.11);
+  --glass-tint: color-mix(in srgb, var(--shell-base) 28%, transparent);
+  --glass-edge: rgba(255, 255, 255, 0.35);
 }
-:root[data-theme="light"] .route-sheen { --sheen: rgba(255, 255, 255, 0.75); }
-.route-sheen.is-clearing {
-  visibility: visible;
-  animation: routeClear 0.9s cubic-bezier(.165, .84, .44, 1) both;
+:root[data-theme="light"] .route-glass {
+  --glass-tint: rgba(255, 255, 255, 0.35);
+  --glass-edge: rgba(255, 255, 255, 0.95);
 }
-@keyframes routeClear {
-  from {
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    background-color: color-mix(in srgb, var(--shell-base) 45%, transparent);
-  }
-  to {
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-    background-color: color-mix(in srgb, var(--shell-base) 0%, transparent);
-  }
-}
-/* The band of light: wider than the screen, angled, crossing once. */
-.route-sheen::after {
-  content: "";
+.route-glass.is-sliding { visibility: visible; }
+/* The pane: wider and taller than the screen and leaned, so its leading
+   edge crosses as a diagonal. */
+.route-glass-pane {
   position: absolute;
-  top: -20%;
-  bottom: -20%;
-  left: 0;
-  width: 60%;
-  background: linear-gradient(105deg, transparent 0%, var(--sheen) 45%, var(--sheen) 55%, transparent 100%);
-  filter: blur(18px);
-  transform: translateX(-120%) skewX(-12deg);
-  opacity: 0;
+  top: -15%;
+  bottom: -15%;
+  left: -40%;
+  width: 180%;
+  transform: translateX(0) skewX(-14deg);
+  /* Unprefixed only: given both, the CSS build kept just the -webkit- one,
+     which Chrome ignores. It adds the prefix itself. */
+  backdrop-filter: blur(18px) saturate(1.2);
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 60%, rgba(255,255,255,0.12) 99.4%, transparent 99.4%),
+    var(--glass-tint);
+  /* The lit leading edge: a hairline plus a soft glow just inside it. */
+  box-shadow:
+    inset -1px 0 0 var(--glass-edge),
+    inset -24px 0 40px -24px var(--glass-edge);
 }
-.route-sheen.is-clearing::after {
-  animation: routeSheen 1.1s cubic-bezier(.645, .045, .355, 1) both;
+.route-glass.is-sliding .route-glass-pane {
+  animation: routeGlassSlide 1.05s cubic-bezier(.77, 0, .175, 1) both;
 }
-@keyframes routeSheen {
-  0%   { transform: translateX(-120%) skewX(-12deg); opacity: 0; }
-  15%  { opacity: 1; }
-  85%  { opacity: 1; }
-  100% { transform: translateX(260%) skewX(-12deg); opacity: 0; }
+@keyframes routeGlassSlide {
+  0%   { transform: translateX(0) skewX(-14deg); }
+  /* A beat with the glass in place, so it is seen as glass. */
+  12%  { transform: translateX(0) skewX(-14deg); }
+  100% { transform: translateX(78%) skewX(-14deg); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .route-sheen.is-clearing, .route-sheen.is-clearing::after { animation: none; }
+  .route-glass.is-sliding .route-glass-pane { animation: none; }
 }
 
 /* Gallery tiles on a touch device. There is no hover there, so the caption
