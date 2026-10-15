@@ -507,8 +507,12 @@ export default function Header({ t, locale, visible }) {
       }}
     >
       <div
-        className="relative mx-auto w-full max-w-[1600px]"
-        style={{ pointerEvents: "auto" }}
+        className="relative mx-auto w-full"
+        // 1600px, or the content width when the window is wider: the
+        // sections keep a 160px gutter (xl:px-40) at any width, so on a 4K or
+        // ultrawide screen a fixed 1600px capsule sat inside the content's
+        // edges. 280px = the two 160px gutters minus the header's own 20px.
+        style={{ pointerEvents: "auto", maxWidth: "max(1600px, calc(100% - 280px))" }}
       >
       <div
         className="flex items-center justify-between rounded-[20px]"
