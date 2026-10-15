@@ -920,9 +920,24 @@ function ContactWizardInner({ locale }) {
 
             {STEPS[step] === "materials" && (
               <div className="flex flex-col" style={{ gap: "clamp(0.25rem, min(1.3svh, 1.69vw), 1.5rem)" }}>
-                <StepHeading className="font-bold uppercase tracking-wider">
-                  {L("What materials do you already have?", "Welches Material haben Sie bereits?", "¿Qué material tiene ya?")}
-                </StepHeading>
+                {/* The requirements page answers "what should we send?" — it
+                    opens in a new tab so the half-filled wizard stays put, and
+                    it shares the heading's row so the step keeps fitting one
+                    screen. */}
+                <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                  <StepHeading className="font-bold uppercase tracking-wider">
+                    {L("What materials do you already have?", "Welches Material haben Sie bereits?", "¿Qué material tiene ya?")}
+                  </StepHeading>
+                  <a
+                    href={`/${locale}/requirements`}
+                    target="_blank"
+                    rel="noopener"
+                    className="inline-flex items-center gap-1.5 shrink-0 rounded-full border border-white/20 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-widest text-white/70 hover:text-white hover:border-white/50 transition-colors"
+                  >
+                    {L("Project requirements", "Projektanforderungen", "Requisitos del proyecto")}
+                    <svg aria-hidden="true" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10" /></svg>
+                  </a>
+                </div>
                 <div className="flex flex-wrap" style={{ gap: "clamp(0.25rem, min(0.8svh, 1.04vw), 0.75rem)" }}>
                   {MATERIAL_OPTIONS.map((m) => (
                     <Chip
