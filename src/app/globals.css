@@ -680,43 +680,58 @@ html {
   opacity: 0.5;
 }
 
-/* Route window — see RouteCurtain.js. Above the header, so the whole
-   screen opens as one; below the lightbox. */
-.route-window {
+/* Route sheen — see RouteCurtain.js. Above the header so the whole screen
+   clears as one; below the lightbox. */
+.route-sheen {
   position: fixed;
   inset: 0;
   z-index: 95;
   pointer-events: none;
-  border-radius: 28px;
-  box-shadow: 0 0 0 150vmax var(--shell-base);
-  /* Parked: invisible until a navigation opens it. */
-  opacity: 0;
+  overflow: hidden;
   visibility: hidden;
+  --sheen: rgba(255, 255, 255, 0.11);
 }
-.route-window.is-opening {
+:root[data-theme="light"] .route-sheen { --sheen: rgba(255, 255, 255, 0.75); }
+.route-sheen.is-clearing {
   visibility: visible;
-  animation: routeWindowOpen 1.15s cubic-bezier(.77, 0, .175, 1) both;
+  animation: routeClear 0.9s cubic-bezier(.165, .84, .44, 1) both;
 }
-@keyframes routeWindowOpen {
-  0%   { opacity: 1; transform: scale(0.86); border-radius: 28px; }
-  /* Holds the framed view for a beat, so the page is seen as a picture
-     before it becomes the page. */
-  18%  { opacity: 1; transform: scale(0.86); border-radius: 28px; }
-  100% { opacity: 1; transform: scale(1.12); border-radius: 0; }
+@keyframes routeClear {
+  from {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    background-color: color-mix(in srgb, var(--shell-base) 45%, transparent);
+  }
+  to {
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    background-color: color-mix(in srgb, var(--shell-base) 0%, transparent);
+  }
 }
-/* The page under the window: rises a few pixels into place. No fill mode —
-   a transform left on #main would turn every fixed child (the lightbox, the
-   wizard overlay) into one positioned against it. */
-#main.route-rise {
-  /* backwards: hold the first keyframe through the delay, nothing after. */
-  animation: routeRise 1.1s cubic-bezier(.165, .84, .44, 1) 0.18s backwards;
+/* The band of light: wider than the screen, angled, crossing once. */
+.route-sheen::after {
+  content: "";
+  position: absolute;
+  top: -20%;
+  bottom: -20%;
+  left: 0;
+  width: 60%;
+  background: linear-gradient(105deg, transparent 0%, var(--sheen) 45%, var(--sheen) 55%, transparent 100%);
+  filter: blur(18px);
+  transform: translateX(-120%) skewX(-12deg);
+  opacity: 0;
 }
-@keyframes routeRise {
-  from { transform: translateY(18px); }
-  to   { transform: translateY(0); }
+.route-sheen.is-clearing::after {
+  animation: routeSheen 1.1s cubic-bezier(.645, .045, .355, 1) both;
+}
+@keyframes routeSheen {
+  0%   { transform: translateX(-120%) skewX(-12deg); opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { transform: translateX(260%) skewX(-12deg); opacity: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .route-window.is-opening, #main.route-rise { animation: none; }
+  .route-sheen.is-clearing, .route-sheen.is-clearing::after { animation: none; }
 }
 
 /* Gallery tiles on a touch device. There is no hover there, so the caption
