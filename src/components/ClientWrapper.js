@@ -1,10 +1,11 @@
 "use client";
-import { useState, useEffect, useLayoutEffect, useRef, ViewTransition } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import Header from "@/components/Header";
 import Loader from "@/components/Loader";
 import Cursor from "@/components/Cursor";
+import PageFade from "@/components/PageFade";
 import { LoaderContext } from "@/context/LoaderContext";
 import { LenisContext } from "@/context/LenisContext";
 
@@ -179,12 +180,8 @@ export default function ClientWrapper({ children, locale, t }) {
         {showLoader && !ready && <Loader onComplete={() => setReady(true)} />}
         <Header t={t} locale={locale} visible={ready} />
         <Cursor />
-        {/* The page content crossfades on navigation (see the
-            ::view-transition rules in globals.css); the header and the
-            cursor sit outside it and simply stay. */}
-        <ViewTransition>
-          <div id="main">{children}</div>
-        </ViewTransition>
+        <PageFade />
+        <div id="main">{children}</div>
       </LoaderContext.Provider>
     </LenisContext.Provider>
   );
