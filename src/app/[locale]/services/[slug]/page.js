@@ -37,7 +37,7 @@ export async function generateMetadata({ params }) {
   return pageMetadata({
     locale,
     path: `/services/${slug}`,
-    title: pickL(locale, `${name} worldwide — Europe, North America, Middle East`, `${name} weltweit — Europa, Nordamerika, Naher Osten`, `${name} en todo el mundo — Europa, Norteamérica, Oriente Medio`),
+    title: pickL(locale, `${name} Services`, `${name} vom 3D-Studio`, `${name}: estudio 3D`),
     description: snippet(description.trim()),
     // A 1200×630 JPEG cut from the service's own hero (a poster frame for the
     // two video services): WhatsApp and LinkedIn ignore webp share images.

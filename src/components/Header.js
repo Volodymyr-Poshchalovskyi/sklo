@@ -64,32 +64,25 @@ function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick, o
         opacity: entered ? undefined : 0,
       }}
     >
+      {/* The word as text, for crawlers and copy-paste; the letters that
+          spin are drawn by CSS from data-ch (::before), so they add nothing
+          to the link's text — as real text they read "H o m e". */}
+      <span className="sr-only">{label}</span>
       {label.split("").map((char, i) => (
         <span
           key={i}
           aria-hidden="true"
+          data-ch={char === " " ? "\u00A0" : char}
+          className="nav-letter"
           ref={(el) => (lettersRef.current[i] = el)}
           style={{
             display: "inline-block",
             transformStyle: "preserve-3d",
             transformOrigin: "50% 50%",
           }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </span>
+        />
       ))}
 
-      <style>{`
-        @keyframes navItemIn {
-          from { opacity: 0; transform: translateY(-6px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes spinLetter {
-          0%   { transform: rotateY(0deg);   opacity: 1; }
-          50%  { transform: rotateY(180deg); opacity: 0.4; }
-          100% { transform: rotateY(360deg); opacity: 1; }
-        }
-      `}</style>
     </Link>
   );
 }

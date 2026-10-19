@@ -305,20 +305,22 @@ export default function HeroSection({ t, locale }) {
         {/* The film is the point of the hero, so the text keeps to the
             edges: headline and buttons bottom-left, the descriptive sentence
             small in the bottom-right corner on desktop (under the headline
-            on phones). Grid areas rather than DOM order, so the <h1> stays
-            where it is for readers and crawlers. */}
+            on phones). Grid areas rather than DOM order, so the reading
+            order stays headline, description, buttons. */}
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] xl:grid-cols-[minmax(0,1fr)_minmax(0,25rem)] lg:items-end gap-x-16">
-          {/* The big animated line is the visual headline, not the document
-              heading: its last word rotates. The <h1> is the static sentence
-              below it — the service, the market, the deliverables. */}
-          <p
+          {/* The document heading is the big line itself ("3D Visualization
+              services"): short and on-topic, which is what search results
+              and audits want from an <h1>. The rotating FOR line is a <p>
+              beside it, and the long descriptive sentence a <p> too — as the
+              <h1> it ran to 200+ characters. */}
+          <div
             ref={headRef}
             className="font-bold leading-[1.05] tracking-tight text-white mb-6 lg:col-span-2"
           >
             {/* `whitespace-nowrap` waits for `lg`: at the md size the headline
                 is 72px, which is 804px of unbreakable text in a 768px window —
                 the whole page scrolled sideways on a tablet. */}
-            <span className="block text-4xl sm:text-6xl md:text-7xl lg:whitespace-nowrap">
+            <h1 className="block text-4xl sm:text-6xl md:text-7xl lg:whitespace-nowrap">
               {/* Each word rises out of its own mask. The second, lighter
                   word is optional: German says the whole thing in one noun. */}
               {[
@@ -342,20 +344,20 @@ export default function HeroSection({ t, locale }) {
                   {i < all.length - 1 ? " " : null}
                 </span>
               ))}
-            </span>
-            <span ref={forRef} style={hidden} className="flex items-center gap-2 text-base sm:text-lg md:text-xl font-medium text-white/40 tracking-[0.2em] uppercase mt-4">
+            </h1>
+            <p ref={forRef} style={hidden} className="flex items-center gap-2 text-base sm:text-lg md:text-xl font-medium text-white/40 tracking-[0.2em] uppercase mt-4">
               {t?.hero?.for ?? "for"}
               <RotatingWord words={t?.hero?.words?.length ? t.hero.words : ROTATING_WORDS} />
-            </span>
-          </p>
+            </p>
+          </div>
 
-          <h1
+          <p
             ref={subRef}
             style={hidden}
             className="text-sm md:text-[15px] font-normal text-white/80 leading-relaxed max-w-[44ch] [text-shadow:0_1px_14px_rgba(0,0,0,0.55)] mb-8 lg:mb-0 lg:col-start-2 lg:row-start-2 lg:pl-6 lg:border-l lg:border-white/25"
           >
             {t?.hero?.subtitle}
-          </h1>
+          </p>
 
           <div ref={btnsRef} style={hidden} className="flex flex-wrap gap-3 lg:col-start-1 lg:row-start-2">
             <Link

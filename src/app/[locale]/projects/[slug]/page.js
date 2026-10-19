@@ -24,7 +24,9 @@ export async function generateMetadata({ params }) {
   return pageMetadata({
     locale,
     path: `/projects/${slug}`,
-    title: `${localized.name}, ${localized.city}`,
+    // The kind of page in the reader's language: names and cities are the
+    // same in every locale, and three identical titles read as duplicates.
+    title: `${localized.name}, ${localized.city} — ${locale === "de" ? "Referenz" : locale === "es" ? "Proyecto" : "Case study"}`,
     description: localized.summary.length > 158 ? `${localized.summary.slice(0, 158).replace(/\s+\S*$/, "")}…` : localized.summary,
     // The hero render itself, from R2 — share cards accept a full URL.
     image: localized.heroItem ? imageVariant(localized.heroItem.src, 1280) : undefined,

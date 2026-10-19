@@ -1089,3 +1089,17 @@ details[open]::details-content {
    holds scrolling during its arrival), so nothing shifts sideways when
    overflow is hidden and restored. */
 html { scrollbar-gutter: stable; }
+
+/* Header link animations (Header.js NavLink). Declared here rather than in a
+   <style> inside each link: inside the <a> the keyframes became part of every
+   menu link's text for crawlers and SEO audits. */
+@keyframes navItemIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spinLetter {
+  0%   { transform: rotateY(0deg);   opacity: 1; }
+  50%  { transform: rotateY(180deg); opacity: 0.4; }
+  100% { transform: rotateY(360deg); opacity: 1; }
+}
+.nav-letter::before { content: attr(data-ch); }

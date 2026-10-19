@@ -63,14 +63,46 @@ export function languageAlternates(path = "") {
 
 // `title` is the page's own name; the site name is appended here. `path` is
 // the route without the locale ("/services", "" for the home page).
-export function pageMetadata({ locale, path = "", title, description, image, type = "website" }) {
-  const fullTitle = title ? `${humanizeTitle(title)} — ${SITE_NAME}` : SITE_NAME;
+// Search results show about 60 characters of a title and 155–160 of a
+// description; audits flag titles under 30 too. So: a short page name gets
+// the longer, descriptive brand ("Gallery — SKLO 3D Visualisation Studio"),
+// a long one the short brand ("… — SKLO") or none, and a description is cut
+// back to its last full sentence (or word) inside 160 characters.
+const BRAND_LONG = {
+  en: "SKLO 3D Visualisation Studio",
+  de: "SKLO Studio für 3D-Visualisierung",
+  es: "SKLO, estudio de visualización 3D",
+};
+
+export function seoTitle(name, locale) {
+  if (!name) return SITE_NAME;
+  const variants = [`${name} — ${SITE_NAME}`, `${name} — SKLO`, name];
+  const long = `${name} — ${BRAND_LONG[locale] ?? BRAND_LONG.en}`;
+  if (variants[0].length < 30 && long.length <= 60) return long;
+  return variants.find((v) => v.length <= 60) ?? name;
+}
+
+export function seoDescription(text = "", max = 160) {
+  const t = text.replace(/\s+/g, " ").trim();
+  if (t.length <= max) return t;
+  const cut = t.slice(0, max);
+  const sentence = cut.lastIndexOf(". ");
+  if (sentence >= 90) return cut.slice(0, sentence + 1);
+  return `${cut.slice(0, max - 1).replace(/[\s,;:—–-]+\S*$/, "")}…`;
+}
+
+export function pageMetadata({ locale, path = "", title, description: rawDescription, image, type = "website" }) {
+  const fullTitle = seoTitle(title ? humanizeTitle(title) : "", locale);
+  const description = rawDescription ? seoDescription(rawDescription) : rawDescription;
   const url = absoluteUrl(`/${locale}${path}`);
   const og = image ? { url: image, alt: humanizeTitle(title || SITE_NAME) } : DEFAULT_OG_IMAGE;
   return {
     metadataBase: new URL(SITE_URL),
     title: fullTitle,
     description,
+    // Explicit, so audits stop flagging a missing tag. Off-production hosts
+    // still get the X-Robots-Tag noindex header from proxy.js, which wins.
+    robots: { index: true, follow: true },
     alternates: {
       canonical: `/${locale}${path}`,
       languages: languageAlternates(path),

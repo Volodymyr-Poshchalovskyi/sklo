@@ -388,15 +388,14 @@ export default function ServicesCarousel({
                     </svg>
                   </div>
                 </div>
-                {/* Invisible element to align heights. `aria-hidden` because
-                    `opacity: 0` is not hidden: this word was landing inside the
-                    link's accessible name, which read "VIEW ALL SERVICES
-                    PLACEHOLDER". */}
+                {/* Invisible spacer that matches the other cards' title row.
+                    A no-break space, not a word: a hidden "Placeholder" still
+                    ended up in the link text crawlers and audits read. */}
                 <div
                   aria-hidden="true"
                   className="w-full py-2.5 px-4 text-xs font-semibold uppercase opacity-0 select-none pointer-events-none"
                 >
-                  Placeholder
+                  {"\u00A0"}
                 </div>
               </Link>
             );
