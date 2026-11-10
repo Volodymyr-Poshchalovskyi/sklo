@@ -126,7 +126,7 @@ function OptionCard({ label, selected, onClick }) {
       )}
       <span
         className="font-bold uppercase tracking-wider text-white pr-5 leading-tight"
-        style={{ fontSize: "clamp(0.5rem, min(1.6svh, 2.08vw), 0.875rem)" }}
+        style={{ fontSize: "clamp(0.6875rem, min(1.6svh, 2.08vw), 0.875rem)" }}
       >
         {label}
       </span>
@@ -141,7 +141,7 @@ function Chip({ label, selected, onClick }) {
       intensity={4}
       style={{
         padding: "clamp(0.35rem, min(1.4svh, 1.82vw), 0.75rem) clamp(0.7rem, 2vw, 1.25rem)",
-        fontSize: "clamp(0.5625rem, min(1.4svh, 1.82vw), 0.75rem)",
+        fontSize: "clamp(0.6875rem, min(1.4svh, 1.82vw), 0.75rem)",
       }}
       className={`rounded-full border font-semibold uppercase tracking-widest ${
         selected
@@ -170,7 +170,7 @@ function ConsultToggle({ selected, onClick, locale }) {
       intensity={3}
       style={{
         padding: "clamp(0.4rem, min(1.8svh, 2.34vw), 1rem) clamp(0.75rem, 2vw, 1.25rem)",
-        fontSize: "clamp(0.5625rem, min(1.4svh, 1.82vw), 0.75rem)",
+        fontSize: "clamp(0.6875rem, min(1.4svh, 1.82vw), 0.75rem)",
       }}
       className={`w-full shrink-0 flex items-center gap-2 rounded-2xl border text-left font-semibold uppercase tracking-widest ${
         selected
@@ -204,7 +204,7 @@ function QuantityField({ label, value, onChange, needsQuantity, decreaseLabel, i
       className="flex flex-col items-start"
     >
       <span
-        style={{ fontSize: "clamp(0.625rem, min(1.6svh, 2.08vw), 0.875rem)" }}
+        style={{ fontSize: "clamp(0.6875rem, min(1.6svh, 2.08vw), 0.875rem)" }}
         className={`font-semibold uppercase tracking-wider leading-tight ${needsQuantity ? "text-accent" : "text-white/80"}`}
       >
         {label}
@@ -233,7 +233,7 @@ function TextField({ label, required, ...props }) {
   return (
     <label className="flex flex-col" style={{ gap: "clamp(0.0625rem, min(0.7svh, 0.91vw), 0.5rem)" }}>
       <span
-        style={{ fontSize: "clamp(0.5625rem, min(1.4svh, 1.82vw), 0.75rem)" }}
+        style={{ fontSize: "clamp(0.6875rem, min(1.4svh, 1.82vw), 0.75rem)" }}
         className="text-white/60 uppercase tracking-widest font-semibold leading-tight"
       >
         {label}
@@ -732,7 +732,7 @@ function ContactWizardInner({ locale }) {
           fields the visitor cannot reach at all. `overflow-x` is pinned
           because setting only `overflow-y` makes x compute to `auto`, and the
           horizontal step transition would flash a bar on every move. */}
-      <div style={{ perspective: 1000 }} className="flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
+      <div style={{ perspective: 1000 }} className="contact-step-scroll flex-1 min-h-0 overflow-y-auto overflow-x-hidden">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={step}
@@ -755,9 +755,13 @@ function ContactWizardInner({ locale }) {
                 {/* Three columns at every width. One column meant twelve rows
                     and two meant six, neither of which a phone fits; the
                     labels wrap to two or three short lines instead, which the
-                    tile's own min-height already allows. */}
+                    tile's own min-height already allows.
+                    Phones get two columns all the same: three squeezed the
+                    labels to 8px. No text in the wizard goes under 11px now —
+                    a phone screen may scroll a little rather than be
+                    unreadable. */}
                 <div
-                  className="grid grid-cols-3"
+                  className="grid grid-cols-2 sm:grid-cols-3"
                   style={{ gap: "clamp(0.375rem, min(1.2svh, 1.56vw), 1rem)" }}
                 >
                   {SERVICE_OPTIONS.map((service) => (
@@ -1039,7 +1043,7 @@ function ContactWizardInner({ locale }) {
                     </div>
                   )}
                   <p
-                    style={{ fontSize: "clamp(0.5625rem, min(1.2svh, 1.56vw), 0.6875rem)", lineHeight: 1.4 }}
+                    style={{ fontSize: "clamp(0.6875rem, min(1.2svh, 1.56vw), 0.75rem)", lineHeight: 1.4 }}
                     className="text-white/50"
                   >
                     {uploadsEnabled === false
@@ -1119,7 +1123,7 @@ function ContactWizardInner({ locale }) {
                   style={{
                     gap: "clamp(0.125rem, min(0.9svh, 1.17vw), 0.75rem)",
                     padding: "clamp(0.4rem, min(1.3svh, 1.7vw), 1.25rem)",
-                    fontSize: "clamp(0.5625rem, min(1.35svh, 1.76vw), 0.75rem)",
+                    fontSize: "clamp(0.6875rem, min(1.35svh, 1.76vw), 0.75rem)",
                     lineHeight: 1.45,
                   }}
                   className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] text-white/60"

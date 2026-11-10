@@ -273,7 +273,10 @@ export default function HeroSection({ t, locale }) {
   const hidden = { opacity: 0, transform: "translateY(16px)" };
 
   return (
-    <section className="hero-section relative min-h-[100svh] flex items-end">
+    // overflow-hidden: the film arrives scaled to 1.14 and drifts on scroll;
+    // unclipped, that made the page 7% wider than the screen while it
+    // settled — a sideways wobble on a phone.
+    <section className="hero-section relative min-h-[100svh] flex items-end overflow-hidden">
       {/* Autoplay is decided in an effect, not by the attribute: a reader who
           asked for reduced motion, or whose browser reports a metered
           connection, gets the first frame and nothing else. */}

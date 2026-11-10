@@ -9,6 +9,8 @@ import TourEmbed from "@/components/TourEmbed";
 import { formatPrice } from "@/data/serviceContent";
 import { Check } from "@phosphor-icons/react";
 import { deliverableIcons } from "@/lib/deliverableIcons";
+
+const HERO_TALL_MEDIA = "(max-width: 767px) and (orientation: portrait)";
 import { humanizeTitle } from "@/lib/seo";
 import ProjectCard from "@/components/ProjectCard";
 import BeforeAfterSlider from "@/components/BeforeAfterSlider";
@@ -169,7 +171,10 @@ const MiniGalleryGrid = React.memo(function MiniGalleryGrid({ items, categories,
           key={media.id}
           onClick={() => onSelect(idx)}
           style={{ aspectRatio: `${media.width} / ${media.height}`, ...blurStyle(media.src, media.width, media.height) }}
-          className="relative group mb-6 break-inside-avoid rounded-2xl border border-white/10 hover:border-white/30 bg-white/5 overflow-hidden cursor-pointer transition-colors duration-300"
+          // A phone shows the first six: twelve full-width renders made the
+          // section five screens long, and the button under it leads to the
+          // whole category anyway.
+          className={`${idx >= 6 ? "hidden sm:block" : ""} relative group mb-3 sm:mb-6 break-inside-avoid rounded-2xl border border-white/10 hover:border-white/30 bg-white/5 overflow-hidden cursor-pointer transition-colors duration-300`}
         >
           {media.type === "video" ? (
             <MiniGalleryVideo
@@ -219,6 +224,7 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
   const g = t?.gallery ?? {};
   const hasPipeline = PIPELINE_SERVICE_SLUGS.includes(service.slug);
   const deliverableIconList = deliverableIcons(service.slug);
+  const heroTall = servicePosterFor(service.slug);
 
   // The mini gallery is fed from the real gallery archive rather than from the
   // handful of placeholders in servicesData, so a service page shows its own
@@ -395,21 +401,30 @@ export default function ServiceDetailClient({ service, otherServices, locale, t,
       <section className="hero-section relative w-full h-svh flex items-center justify-center overflow-hidden">
         {/* Background Visual */}
         <div className="absolute inset-0 z-0">
+          {/* A phone held upright gets the tall 4:5 crop — the one the
+              services overview uses — instead of the middle slice of the
+              21:9 frame. `media` on <source> lets the browser fetch only the
+              one it will show, for the stills and the films alike. */}
           {service.type === "video" ? (
             <video
-              src={service.src}
               autoPlay
               loop
               muted
               playsInline
               className="w-full h-full object-cover service-hero-media"
-            />
+            >
+              {heroTall?.type === "video" && <source src={heroTall.src} media={HERO_TALL_MEDIA} />}
+              <source src={service.src} />
+            </video>
           ) : (
-            <img
-              src={service.src}
-              alt={service.title}
-              className="w-full h-full object-cover service-hero-media"
-            />
+            <picture className="block w-full h-full">
+              {heroTall?.type === "image" && <source srcSet={heroTall.src} media={HERO_TALL_MEDIA} />}
+              <img
+                src={service.src}
+                alt={service.title}
+                className="w-full h-full object-cover service-hero-media"
+              />
+            </picture>
           )}
           {/* The scrim is a fixed dark gradient rather than one built from the
               `bg` token: in light theme that token is near-white, so the hero

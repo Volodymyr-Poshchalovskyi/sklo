@@ -1103,3 +1103,100 @@ html { scrollbar-gutter: stable; }
   100% { transform: rotateY(360deg); opacity: 1; }
 }
 .nav-letter::before { content: attr(data-ch); }
+
+/* ---- Phones and touch ------------------------------------------------- */
+/* Three rules that apply everywhere rather than per component:
+   1. no text under 11px on a phone — the 10px mono labels and chips were
+      below what is comfortably readable at arm's length;
+   2. form fields at 16px on touch devices — under that, iOS Safari zooms the
+      page in on focus and leaves it zoomed;
+   3. small text links and accordion rows get a larger hit area through an
+      invisible ::after, so the layout does not move but a thumb has ~40px
+      to land on instead of 16–24px. */
+@media (max-width: 767px) {
+  .text-\[10px\] { font-size: 11px; }
+}
+@media (pointer: coarse) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+  footer a:not(.absolute):not(.fixed),
+  #main a[class*="font-mono"][class*="uppercase"]:not(.absolute):not(.fixed),
+  .tap-pad,
+  details > summary {
+    position: relative;
+  }
+  footer a:not(.absolute):not(.fixed)::after,
+  #main a[class*="font-mono"][class*="uppercase"]:not(.absolute):not(.fixed)::after,
+  .tap-pad::after {
+    content: "";
+    position: absolute;
+    /* Vertical only: a sideways margin made links at the right edge stick
+       6px out of their column. */
+    inset: -10px 0;
+  }
+  details > summary::after {
+    content: "";
+    position: absolute;
+    inset: -14px 0;
+  }
+}
+
+/* The contact page is sized to exactly one screen, with the step body as the
+   only scroller — right on a laptop, wrong on a phone: with readable type
+   (11px floor) twelve services do not fit 100svh, and a scroll area inside a
+   card inside a page is a trap for a thumb. On phones the page simply grows
+   and scrolls as a page. */
+@media (max-width: 639px) {
+  .contact-screen {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 100svh;
+  }
+  .contact-step-scroll {
+    flex: none !important;
+    overflow-x: clip !important;
+    overflow-y: visible !important;
+  }
+}
+
+/* The narrowest phones (320–380px). The page headings are set uppercase with
+   wide tracking at 36px; one long word — "VISUALISATION", "Zusammenarbeit" —
+   is then wider than the 272px column and pushed the page sideways. Smaller
+   and tighter there, and any word that still does not fit may break. */
+@media (max-width: 380px) {
+  h1.text-4xl,
+  h2.text-4xl,
+  .title-3d.text-4xl {
+    font-size: 1.75rem;
+    letter-spacing: 0.05em;
+  }
+  h1.text-3xl,
+  h2.text-3xl,
+  .title-3d.text-3xl {
+    font-size: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+}
+/* On any phone a heading word longer than the column breaks (with a hyphen
+   where the language allows) instead of widening the page: German compounds
+   — "Projektanforderungen", "Genossenschaften" — at heading size are wider
+   than a 414px screen. `anywhere`, not `break-word`: only `anywhere` lowers
+   the element's min-content width, which is what lets it shrink inside a
+   flex or grid cell. */
+@media (max-width: 767px) {
+  h1, h2, h3 {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+    min-width: 0;
+  }
+  footer li a {
+    overflow-wrap: anywhere;
+    hyphens: auto;
+  }
+  footer nav > div {
+    min-width: 0;
+  }
+}

@@ -46,13 +46,13 @@ export default function ContactPage({ params }) {
             {t.contact.intro}
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-white/70">
-            <a href={`mailto:${CONTACT_EMAIL}`} className="hover:text-white transition-colors">
+            <a href={`mailto:${CONTACT_EMAIL}`} className="tap-pad hover:text-white transition-colors">
               {CONTACT_EMAIL}
             </a>
-            <a href={PHONE_HREF} className="hover:text-white transition-colors">
+            <a href={PHONE_HREF} className="tap-pad hover:text-white transition-colors">
               {PHONE}
             </a>
-            <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+            <a href={WHATSAPP_HREF} target="_blank" rel="noopener noreferrer" className="tap-pad hover:text-white transition-colors">
               WhatsApp
             </a>
             <span className="contact-intro text-white/50">{t.contactLine.reply}</span>

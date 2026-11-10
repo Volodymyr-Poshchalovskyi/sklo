@@ -143,11 +143,13 @@ export default async function ProjectPage({ params }) {
               <div className="flex flex-col gap-5 text-base md:text-lg text-white/75 leading-relaxed lg:pt-2">
                 <Paragraphs text={text} />
                 {key === "result" && (
-                  <dl className="grid grid-cols-3 gap-4 pt-4">
+                  <dl className="grid grid-cols-3 gap-3 sm:gap-4 pt-4">
                     {d.metrics.map((m) => (
-                      <div key={m.label} className="flex flex-col gap-1 border-l border-white/15 pl-4">
+                      <div key={m.label} className="min-w-0 flex flex-col gap-1 border-l border-white/15 pl-3 sm:pl-4">
                         <dd className="text-2xl md:text-3xl font-bold tracking-tight text-white">{m.value}</dd>
-                        <dt className="text-[10px] md:text-[11px] font-mono uppercase tracking-widest text-white/60">{m.label}</dt>
+                        {/* Three columns on a phone are ~95px each: a long
+                            German label has to be allowed to break. */}
+                        <dt className="text-[10px] md:text-[11px] font-mono uppercase tracking-wider sm:tracking-widest text-white/60 hyphens-auto [overflow-wrap:anywhere]">{m.label}</dt>
                       </div>
                     ))}
                   </dl>

@@ -49,7 +49,9 @@ function NavLink({ href, label, isActive, onMouseEnter, onMouseLeave, onClick, o
       // decoration; the accessible name comes from the label.
       aria-label={label}
       aria-expanded={ariaExpanded}
-      className="relative px-5 py-2.5 text-lg font-medium transition-all duration-300 flex items-center rounded-full"
+      // Tighter between md and lg: at tablet width six full-size links plus
+      // the theme toggle ran 44px past the capsule's right edge.
+      className="relative px-2.5 lg:px-5 py-2.5 text-base lg:text-lg font-medium transition-all duration-300 flex items-center rounded-full"
       style={{
         perspective: "600px",
         background: "transparent",
@@ -138,7 +140,7 @@ function LangDropdown({ locale, theme, inline = false, onPick }) {
 
   if (inline) {
     return (
-      <div className="flex gap-2" role="group" aria-label={current.label}>
+      <div className="flex flex-wrap gap-2" role="group" aria-label={current.label}>
         {langs.map((lang) => {
           const isActive = lang.code === locale;
           return (
@@ -577,7 +579,7 @@ export default function Header({ t, locale, visible }) {
             than the capsule, so it all used to wait for `lg` and a tablet got
             a bar holding nothing but a logo and a hamburger. The links alone
             fit with room to spare. */}
-        <div className="hidden md:flex items-center gap-2.5">
+        <div className="hidden md:flex items-center gap-1 lg:gap-2.5">
           {navItems.map(({ key, label, href }, navIndex) => {
             const hasMenu = key === "services" || key === "gallery" || key === "projects";
             const isActive = checkIsActive(href) || menu === key;
