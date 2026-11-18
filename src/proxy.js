@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { CONTACT_EMAIL, PHONE, PHONE_HREF } from "@/data/studio";
 
 // Next 16 renamed the middleware convention to proxy; same job, same file
 // shape, no more deprecation notice on every dev start.
@@ -76,7 +75,7 @@ function maintenanceGate(request) {
 const MAINTENANCE_HTML = `<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SKLO — back soon</title>
+<title>SKLO — website in development</title>
 <style>
   :root{color-scheme:dark}
   body{margin:0;min-height:100svh;display:grid;place-items:center;background:#0d0d0f;color:#f2f2f2;
@@ -84,15 +83,10 @@ const MAINTENANCE_HTML = `<!doctype html>
   main{max-width:34rem}
   h1{font-size:clamp(2rem,8vw,3.5rem);letter-spacing:.2em;margin:0 0 1.5rem;font-weight:700}
   p{margin:0 0 .75rem;color:rgba(255,255,255,.7)}
-  a{color:#fff}
-  .c{margin-top:2rem;font-size:.9rem;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem}
 </style></head>
 <body><main>
   <h1>SKLO</h1>
-  <p>We are updating the site and will be back in a few days.</p>
-  <p lang="de">Wir aktualisieren die Website und sind in wenigen Tagen zurück.</p>
-  <p lang="es">Estamos actualizando el sitio y volveremos en unos días.</p>
-  <div class="c"><a href="mailto:${CONTACT_EMAIL}">${CONTACT_EMAIL}</a><a href="${PHONE_HREF}">${PHONE}</a></div>
+  <p>Website in development</p>
 </main></body></html>`;
 
 export function proxy(request) {
